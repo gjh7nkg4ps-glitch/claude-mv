@@ -60,7 +60,8 @@ async function kør(arg) {
     let f = nyeFejl(); T.tjek(!f.length, 'motoren uden fejl', f.slice(0, 3).join(' | '));
 
     /* Visningen */
-    await side.evaluate(() => { brugFor('fuld1', true); const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === 'Router'); t.click(); });
+    /* Fra v9.11 er standardvisningen Kompakt; denne test ser på alle dele af boksen, så den bruger Fuld. */
+    await side.evaluate(() => { if ('r2vis' in set) set.r2vis = 'fuld'; brugFor('fuld1', true); const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === 'Router'); t.click(); });
     await side.waitForTimeout(1200);
     const vis = await side.evaluate(() => ({ maps: maps.length, bokse: document.querySelectorAll('#r2 .r2-boks').length, linjer: document.querySelectorAll('#r2 .r2-linjer path').length,
       kilder: document.querySelectorAll('#r2 .r2-kilder .r2-chip').length, maal: document.querySelectorAll('#r2 .r2-maal .r2-chip').length, uk: new Set(maps.map(m => m.band)).size, um: new Set(maps.map(m => m.effect)).size,

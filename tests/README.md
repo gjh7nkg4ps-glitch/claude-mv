@@ -39,6 +39,7 @@ Filnavnet skrives altid øverst, så vi ser, at det er den rigtige fil, der test
 | `4-lydmotor.js` | 4 · Det nye i v9.8 | Lydmotor 2: alle 7 genrer med Ny og Klassisk uden at spille (ingen klip, ikke stille, forskellige); betoninger og spøgelsesslag; akkorden lyser, takten tæller, Fill i takt 4; skift motor og *Tilbage til standard*; *Send til editor*. Gemmer lydprøver i `tests/ud/lyd/` |
 | `5-router.js` | 4 · Det nye i v9.9 | Router 2.0: motoren regner præcis som før uden de nye trin; hysterese, Hold 300 ms og Slew 2/s måles; de virker ikke på klods-spor; fanen, boksene, linjerne og chipsene; træk i VU-måleren, drejeknap, Hold ∞ gør Release grå, Spærretid grå, ↺ Standard, Mapping-linjen, + Ny og ✕; levende med en lydfil |
 | `6-spaerretid.js` | 4 · Det nye i v9.10 | Spærretid for alle slag: præcis som før med spærretid 0, for glidende kilder og for klods-spor; to anslag 50 ms fra hinanden bliver til ét; signaltyperne (D2); Spærretid grå i Router for glidende kilder; M-knappen i W4 er smal |
+| `7-router-d2.js` | 4 · Det nye i v9.11 | Router kompakt og D2: standard Kompakt og D2; kompakte bokse og Detaljer ▸; Fuld; kildernes rækkefølge og mappe-overskrifter efter D2; Rækkefølge; farve efter type; "bruges af …"; Lydkort og de 31 bånd har faste pladser; Vis kilder, der ikke bruges, og ＋; Standard-visning; tallene lever med lyd |
 | `testlyd.js` | hjælp | laver testlydfilen: 30 s ved 120 BPM med kick, hihat, bas og en akkord i a-mol |
 | `faelles.js` | hjælp | finder programfilen og læser dens `<script>`-dele |
 | `koer-alle.js` | | kører det hele i rækkefølge: 1, 2, 3 og så alle test af det nye (4, 5 …) |
@@ -55,4 +56,5 @@ Filnavnet skrives altid øverst, så vi ser, at det er den rigtige fil, der test
 ## Kendte faldgruber
 
 - Uden grafikkort (SwiftShader, fagudtryk) er 3D meget langsomt. Mesh 3D og Øjet får 10 sekunder til at starte.
+- Testbrowseren tegner kun 2 til 7 billeder i sekundet (uden grafikkort), så korte slag kan gå tabt mellem billederne. Testene af levende tal bruger derfor kilder, der glider, og venter på, at visningen er bygget om, i stedet for faste pauser.
 - Analysen af testlydfilen tog cirka 3 sekunder i Claude Codes skybrowser. På en langsommere maskine kan den tage over et minut; testen venter op til 4 minutter.
