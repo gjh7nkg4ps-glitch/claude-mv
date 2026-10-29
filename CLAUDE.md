@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 1.3 · 29. oktober 2026 · gælder fra Claude MV v9.8 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 1.4 · 29. oktober 2026 · gælder fra Claude MV v9.9 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -11,7 +11,7 @@ Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hv
 Claude MV er et personligt værksted, der gør musik til levende billeder. En lydfil (oftest mp3) analyseres, og målingerne (fx bas, kick, hihat, taktslag, afsnit og drop) styrer figurer, lys og 3D-grafik gennem **forbindelser** (fagudtryk: mapping). Det er bygget sammen med Claude over mange versioner.
 
 - Hele programmet er **én HTML-fil** (cirka 1,8 MB), der kører i browseren uden server og uden internet. Three.js r128 og dets glød-værktøjer (MIT) ligger inde i filen.
-- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Mapping, Tidslinje, Analyse og Lydkilde.
+- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Mapping, Tidslinje, Analyse, Lydkilde og Router.
 - Det er et **privat program**. Det skal være let at gå til, men kunne blive rigtig dybt.
 
 ## 2. Sådan vil jeg arbejde sammen med dig
@@ -37,14 +37,14 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_9.html`
-  2. i **programmet**: `<title>Claude MV v9.9 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v10_0.html`
+  2. i **programmet**: `<title>Claude MV v10.0 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v99">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v100">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
 
 ### GitHub
-- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_9.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
-- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.9: graf-editor (Router 2.0)`.
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v10_0.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v10.0: spærretid for alle slag`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
@@ -86,12 +86,13 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | Lyd (W25) | **Arbejdsfelt** |
 | Generator-fanen | **Lydkilde** (W31) |
 | Ny lydmotor (v9.8) | **Lydmotor 2**; den gamle hedder **Klassisk** |
+| Graf-editor (v9.9) | **Router 2.0**, fanen **Router** (W32); én boks pr. forbindelse hedder **Router-boks** |
 
 ### Analyse og mapping
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
 - Hovedanalysen bruger FFT 2048 (21,5 Hz pr. trin); tone-analysen og de 31 bånd bruger 8192. Under 50 Hz er det groft.
 
-## 4. Hvad der er sket fra v8.0 til v9.8
+## 4. Hvad der er sket fra v8.0 til v9.9
 
 | Version | Hvad |
 | --- | --- |
@@ -112,6 +113,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.6 | Fanen **Lydkilde** (vores navn, W31) i Arbejdsfeltet i stedet for Generator: træk en lydfil ind, se navn, længde, tempo, toneart og analyse-status; en enklere generator-flade (samme lydmotor; den fulde flade, W4, åbnes med *Avanceret …*); små kort for Lyd ind og Lydkort |
 | v9.7 | **Indholdsfortegnelsen** i koden lavet forfra ud fra blokkenes markeringer (85 blokke; v9.3 til v9.6 manglede); henvisningen til PLAN_FASE2.md fjernet; **testpakken** lagt i `tests/` |
 | v9.8 | **Lydmotor 2** (vores navn): nye lyde (kick med klik og mætning, 808-hihat med choke, bas med sub og filter-kontur, lead med vibrato), **akkordrække** pr. genre, som bas og lead følger, **akkord-flade** (pad), betoninger og spøgelsesslag, fill hver 4. takt, rumklang, kompressor, begrænser og blød klipper. *Lydmotor: Ny · Klassisk* og *Tilbage til standard*; akkorden lige nu lyser |
+| v9.9 | **Router 2.0** (vores navn; fagudtryk: graf-editor), fanen Router: kilder → Router-bokse → mål med levende linjer; VU-måler med gul tærskel, man trækker i, hysterese-bånd og peak hold; signalet før og efter kæden; Gain, Attack, Release og Hold (Fra · 50 ms til 2 s · ∞); Styrke brugt; drejeknapper til Hysterese, Kurve, Slew og Spærretid. Motoren har fået **hysterese, Hold med tid og slew** i den faste kæde; uden dem regner den præcis som før |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -120,6 +122,10 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Send til editor** laver ikke tempo-profilen (SHOWPROFIL); det gør kun en lydfil. Bundbaren viser derfor ikke tempo og toneart for generatorens lyd.
 - **W4 (den fulde generator):** M-knapperne (mute) er strakt ud over hele bredden, så trinene presses ud til højre.
 - **Akkord-fladen og fill** står ikke i trinene og giver ikke klodser.
+- **Router 2.0:** hver Router-boks er cirka 450 px høj, så mange forbindelser giver en lang side. En kompakt visning er ikke lavet.
+- **Router 2.0:** sorteringen af signaler efter D2 (mapper efter musik, farve efter type) er ikke lavet; kilderne står i den rækkefølge, de bruges.
+- **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
+- **Hysterese, Hold med tid og Slew** virker ikke på klods-spor, og Mapping har ingen skydere til dem (Mapping viser en linje, når de er sat).
 - **Spærretid** virker kun for Klods-effekter og Lyd-mål. Beslutningen er, at den skal gælde for **alle** slag (planlagt til MV2).
 - **Den levende baggrund** er meget diskret, fordi zonerne dækker næsten hele skærmen. Valget mellem at lade den være diskret eller gøre flere flader gennemsigtige er ikke truffet.
 - **Fuld visning:** bjælken *Afslut fuld visning* er kun testet ved måling, ikke ved skærmbillede (testbrowseren kan ikke). Der er et sikkerhedstjek hvert halve sekund, der laver bjælken, hvis skiftet blev overset.
@@ -132,9 +138,10 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Graf-editor (Router 2.0, vores navn)** med levende bokse | at se og bygge mapping; hjertet i MV2-planen |
+| **Spærretid for alle slag** (grå, hvor den ikke virker) | besluttet til MV2; Router-boksen har allerede drejeknappen |
+| **Router 2.0 videre**: kompakt visning og sortering efter D2 | så mange forbindelser kan overskues |
 
-**Router-boksen** (designet, ikke bygget) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
+**Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
 
 ### MV2 (sat ned i fart)
 Claude MV2 er en planlagt ombygning omkring **én signalgraf** (én datamodel for alle forbindelser). Den er sat ned i fart; vi arbejder videre på MV. To beslutninger, der også gælder for Router 2.0:
