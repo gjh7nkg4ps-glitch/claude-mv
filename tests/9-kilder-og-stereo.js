@@ -124,8 +124,8 @@ async function kør(arg) {
     T.tjek(s.venstre.pan < .3, `10–20 s (mest venstre): panorering ${s.venstre.pan}`);
     /* Grænsen er 0,6 og ikke 0,7: den brede støj ligger lige kraftigt i begge sider og trækker panoreringen mod midten. */
     T.tjek(s.hoejre.pan > .6 && s.hoejre.bredde > s.mono.bredde + .1, `20–30 s (mest højre og bred): panorering ${s.hoejre.pan}, bredde ${s.hoejre.bredde}`);
-    /* Opdaget i v9.13: bredde stiger også, når lyden bare ligger til den ene side (side-signal i forhold til midte). Det er målt her, ikke ændret. */
-    console.log('     bemærk: stereobredde er ' + s.venstre.bredde + ', når lyden kun ligger til venstre (ikke bred)');
+    /* Opdaget i v9.13 (bredde steg, når lyden lå til den ene side); rettet i v9.14, se tests/10-stereobredde.js. */
+    console.log('     stereobredde, når lyden ligger mest til venstre: ' + s.venstre.bredde + ' (fra v9.14 skal den være 0)');
     T.tjek(s.hoejre.fase < s.mono.fase - .05, `faselighed falder, når lyden bliver bred (mono ${s.mono.fase}, bred ${s.hoejre.fase})`);
     f = nyeFejl(); T.tjek(!f.length, 'stereo-filen uden fejl', f.slice(0, 3).join(' | '));
   } catch (e) {

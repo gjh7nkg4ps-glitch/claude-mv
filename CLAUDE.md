@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 1.8 · 29. oktober 2026 · gælder fra Claude MV v9.13 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 1.9 · 29. oktober 2026 · gælder fra Claude MV v9.14 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -37,15 +37,15 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_14.html`
-  2. i **programmet**: `<title>Claude MV v9.14 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v9_15.html`
+  2. i **programmet**: `<title>Claude MV v9.15 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
 - Efter v9.9 kommer **v9.10**, v9.11 og så videre. **v10.0** venter vi med, til jeg siger til.
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v914">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v915">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
 
 ### GitHub
-- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_14.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
-- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.14: startskærm med demosang`.
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_15.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.15: startskærm med demosang`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
@@ -103,8 +103,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **De 31 smalle bånd** står foldet sammen under hvert af de fire brede bånd (Bas 11, Mid 9, Høj-mid 5, Brilliance 6) i kildelisterne og i Router (fra Niveau 3). *▸ Vis* og *▾ Skjul* ændrer ikke forbindelsen; valget huskes.
 - **Kun på Niveau 4:** de høje smalle bånd (5 kHz og op), Spectral rolloff og Zero crossing rate. Der står, hvor mange der er skjult; en forbindelse, der bruger en af dem, viser den stadig.
 - **Taktslag og takt** (fra filen = Analysen; mens det spiller = takturet): reglen **Auto** er *fil → fra filen*, *Lyd ind eller generator → mens det spiller*, altid med grunden vist ved forbindelsen (fx "Auto: fra filen, fordi du spiller en fil"). Vælger man selv, står der **Manuel** og hvad Auto ville have brugt.
+- **Stereobredde** (v9.14) = **1 minus korrelationen** mellem venstre og højre, højst 1; er den ene kanal stille (under 0,001 i RMS eller 40 dB under den anden), er bredden 0. Den måler bredde, ikke placering; **Panorering** måler placeringen. Bred og modfase giver begge 1; forskellen ses i **Faselighed**.
 
-## 4. Hvad der er sket fra v8.0 til v9.13
+## 4. Hvad der er sket fra v8.0 til v9.14
 
 | Version | Hvad |
 | --- | --- |
@@ -130,6 +131,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.11 | **Router 2.0 videre**: *Visning: Kompakt · Fuld* (kompakt cirka 210 px pr. boks; *Detaljer ▸* åbner én), *Sortér: D2 · Rækkefølge* med mappe-overskrifter, farve efter type, hver kilde med sit tal lige nu og "bruges af …", *Vis kilder, der ikke bruges* med ＋, *Standard-visning*; Lydkort og de 31 bånd har faste pladser i D2 |
 | v9.12 | **Lydkort fjernet** (kildegruppen lk:, kortet i Lydkilde, knappen under 🎵 Musik, gruppen i Radial Mesh, Mesh 3D og Dublet, afsnittet i manualen); gamle forbindelser med lk: slås fra med en tydelig besked. Tagget `milepael-med-lydkort` er den sidste version med Lydkort |
 | v9.13 | **Dobbelte målinger foldet sammen**: de 31 smalle bånd under de fire brede bånd (*▸ Vis* / *▾ Skjul*); høje bånd, Rolloff og Zero crossing rate kun på Niveau 4; **Taktslag Auto** (fil → fra filen, Lyd ind/generator → mens det spiller) med grund og Manuel; rettet type for de tre glidende hændelser; **stereo-testfil** |
+| v9.14 | **Stereobredde** regnes som 1 minus korrelationen (højst 1; 0, når den ene kanal er stille), så den ikke længere stiger, når lyden bare ligger til én side (før 0,37, nu 0); manual og ordliste rettet (panorering og stereobredde stod som "findes ikke endnu") |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -141,7 +143,6 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Router 2.0:** "den, der bruges, er markeret" er lavet som "bruges af forbindelse …" på chippen. En regel for, hvilken af to ens målinger der er bedst, findes ikke.
 - **Dobbelte målinger:** besluttet og lavet i v9.13 (se afsnit 3). Ikke ændret: Spectral centroid og rolloff (følges 0,94; rolloff kun på Niveau 4) og Toneklasse og de 12 toner.
 - **Taktslag Auto** gælder motoren (Rytme.koer). Klodser, der forudsiges fra filen, bruger kilden, som den står i forbindelsen.
-- **Stereobredde** stiger også, når lyden bare ligger til den ene side (målt 0,37 for lyd kun til venstre), fordi den regnes som side-signal i forhold til midte (fagudtryk: mid/side). Opdaget med stereo-testfilen i v9.13; rettelsen står i planen til v9.14 (afsnit 6).
 - **Tags fra Claude Code:** sessionens forbindelse til GitHub må sende gem og grene op, men ikke lave eller slette tags (og ikke slette grene). Tagget `milepael-med-lydkort` blev derfor lavet på GitHub under *Releases*; det peger på `87fcc93` (v9.11). Grenen `v9_11-med-lydkort` peger på det samme gem og kan slettes, når du vil.
 - **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
 - **Hysterese, Hold med tid og Slew** virker ikke på klods-spor, og Mapping har ingen skydere til dem (Mapping viser en linje, når de er sat).
@@ -157,7 +158,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **v9.14 (lille rettelse): Stereobredde skal måle bredde, ikke placering.** Regn den som **1 minus korrelationen** mellem venstre og højre kanal, **højst 1** (valg A: forskellige lyde og modfase giver begge 1; forskellen ses i Faselighed). Er den ene kanal stille, er bredden **0**. **Panorering** skal fortsat måle, hvor lyden er. Opdater forklaringen af stereobredde i manualen. **Test:** samme lyd i begge kanaler = 0 · samme lyd kun i venstre = 0 · forskellige lyde i hver kanal = høj | i dag regnes bredde som side-signal i forhold til midte (mid/side), så den viser 0,37, når lyden kun ligger til venstre (fundet med stereo-testfilen i v9.13) |
+| *(ingen faste opgaver lige nu)* | vælg fra idé-kassen nedenfor |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
 
