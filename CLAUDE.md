@@ -141,7 +141,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Router 2.0:** "den, der bruges, er markeret" er lavet som "bruges af forbindelse …" på chippen. En regel for, hvilken af to ens målinger der er bedst, findes ikke.
 - **Dobbelte målinger:** besluttet og lavet i v9.13 (se afsnit 3). Ikke ændret: Spectral centroid og rolloff (følges 0,94; rolloff kun på Niveau 4) og Toneklasse og de 12 toner.
 - **Taktslag Auto** gælder motoren (Rytme.koer). Klodser, der forudsiges fra filen, bruger kilden, som den står i forbindelsen.
-- **Stereobredde** stiger også, når lyden bare ligger til den ene side (målt 0,37 for lyd kun til venstre), fordi den regnes som side-signal i forhold til midte (fagudtryk: mid/side). Opdaget med stereo-testfilen i v9.13; ikke ændret.
+- **Stereobredde** stiger også, når lyden bare ligger til den ene side (målt 0,37 for lyd kun til venstre), fordi den regnes som side-signal i forhold til midte (fagudtryk: mid/side). Opdaget med stereo-testfilen i v9.13; rettelsen står i planen til v9.14 (afsnit 6).
 - **Tags fra Claude Code:** sessionens forbindelse til GitHub må sende gem og grene op, men ikke lave eller slette tags (og ikke slette grene). Tagget `milepael-med-lydkort` blev derfor lavet på GitHub under *Releases*; det peger på `87fcc93` (v9.11). Grenen `v9_11-med-lydkort` peger på det samme gem og kan slettes, når du vil.
 - **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
 - **Hysterese, Hold med tid og Slew** virker ikke på klods-spor, og Mapping har ingen skydere til dem (Mapping viser en linje, når de er sat).
@@ -157,7 +157,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| *(ingen faste opgaver lige nu)* | vælg fra idé-kassen nedenfor |
+| **v9.14 (lille rettelse): Stereobredde skal måle bredde, ikke placering.** Regn den som **1 minus korrelationen** mellem venstre og højre kanal. Er den ene kanal stille, er bredden **0**. **Panorering** skal fortsat måle, hvor lyden er. Opdater forklaringen af stereobredde i manualen. **Test:** samme lyd i begge kanaler = 0 · samme lyd kun i venstre = 0 · forskellige lyde i hver kanal = høj | i dag regnes bredde som side-signal i forhold til midte (mid/side), så den viser 0,37, når lyden kun ligger til venstre (fundet med stereo-testfilen i v9.13) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
 
