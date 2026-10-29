@@ -1,7 +1,7 @@
 # Testpakken · Claude MV
 
 Testene følger den faste rækkefølge i `CLAUDE.md` afsnit 2 (*Test før aflevering*).
-De bruger kun Node og Playwright (fagudtryk: testbrowser). Der skal ikke installeres noget ekstra.
+De bruger Node og Playwright (fagudtryk: testbrowser). Testen af 4 spor bruger også Python med numpy til at lave test-sporene.
 
 ## Sådan kører du dem
 
@@ -32,7 +32,7 @@ Filnavnet skrives altid øverst, så vi ser, at det er den rigtige fil, der test
 | --- | --- | --- |
 | `1-syntaks.js` | 1 · Syntaks | `node --check` på hvert `<script>` i filen |
 | `2-indhold.js` | 2 · Indhold | versionen er ens i filnavn, `<title>`, versionsmærke og manual (*Nyt i v…* og `man-vXY`); indholdsfortegnelsen passer med blokkenes markeringer; ingen henvisning til `PLAN_FASE2` i koden eller manualen |
-| `3-browser.js` | 3 · Opstart | ingen `pageerror` og ingen konsolfejl |
+| `3-browser.js` | 3 · Opstart | ingen `pageerror` og ingen konsolfejl; fra v9.15 også opstart med hver Scene-fane gemt som valgt |
 | | 3 · Arbejdsfeltet | ingen gammel Generator-fane; Generator-vinduet (W4) findes og åbnes med *Avanceret …* i Lydkilde |
 | | 3 · Lyd | en testlydfil analyseres, og tempoet findes til cirka 120 BPM |
 | | 3 · Fast testpakke | alle forudindstillinger (`FORINDST`, `brugFor`) indlæses uden fejl · alle 5 layouts (`lay3Anvend`) uden overlap mellem synlige vinduer · Mesh 3D og Øjet starter · gem og hent plads A (`slotSave`/`slotLoad`) · tilføj og fjern en forbindelse |
@@ -43,6 +43,8 @@ Filnavnet skrives altid øverst, så vi ser, at det er den rigtige fil, der test
 | `8-lydkort-fjernet.js` | 4 · Det nye i v9.12 | Lydkort er fjernet: ingen lk:-kilder, intet kort i Lydkilde, ingen knap, ingen funktioner, intet afsnit i manualen; en gammel plads med lk:-kilde og lk:-port hentes uden fejl, forbindelserne slås fra, og beskeden står i statuslinjen, Mapping og Router; det samme ved opstart; afspilning uden fejl |
 | `9-kilder-og-stereo.js` | 4 · Det nye i v9.13 | kildelisterne pr. Niveau (smalle bånd foldet sammen under de brede bånd; høje bånd, Rolloff og Zero crossing rate kun på Niveau 4); fold ud og ind uden at ændre forbindelsen; Router-listen; typerne for de glidende hændelser; taktslag Auto og Manuel (uden lyd, generator, fil) og hvad motoren læser; panorering, stereobredde og faselighed med stereo-testfilen |
 | `10-stereobredde.js` | 4 · Det nye i v9.14 | Stereobredde = 1 minus korrelationen, højst 1: samme lyd i begge kanaler = 0, kun i venstre = 0, forskellige lyde = høj, svagere højre = 0, modfase = 1, stilhed og en næsten stille kanal = 0; panorering uændret; i programmet med stereo-testfilen; navn og manual |
+| `11-stems.js` | 4 · Det nye i v9.15 | 4 spor (stems): kortet i Lydkilde, de 4 filer og deres længder, den samlede lyd; hver måling reagerer kun på sit eget spor (test-spor fra `lav-stems.py`, der spiller på hver sin tid); kildelisten med en gruppe pr. spor; Auto og Manuel; gul besked ved forskellige længder; besked ved .stem.mp4; en almindelig fil fjerner sporene |
+| `lav-stems.py` | hjælp | laver 4 test-spor med **numpy** (trommer 0–20 s, bas 5–25 s, vokal 10–30 s, resten 15–30 s); `--kort-bas` gør bassen 1 s kortere |
 | `testlyd.js` | hjælp | laver testlydfilen: 30 s ved 120 BPM med kick, hihat, bas og en akkord i a-mol. `testlyd.stereo(fil)` laver den i stereo i tre dele: mono, venstre, højre og bred |
 | `faelles.js` | hjælp | finder programfilen og læser dens `<script>`-dele |
 | `koer-alle.js` | | kører det hele i rækkefølge: 1, 2, 3 og så alle test af det nye (4, 5 …) |

@@ -29,6 +29,18 @@ async function kør(arg, { udenLyd = false } = {}) {
     let f = nyeFejl(); T.tjek(!f.length, 'opstart uden fejl', f.slice(0, 3).join(' | '));
     await side.screenshot({ path: path.join(UD, 'opstart.png') });
 
+    /* Opstart med hver Scene-fane gemt som valgt (v9.15): før stoppede scriptet, hvis Lyd i 3D var gemt, og der kom ingen grafik */
+    const scFaner = await side.evaluate(() => SC_FANER.map(f => f[0]));
+    const stopFejl = [];
+    for (const id of scFaner) {
+      await side.evaluate(id => { const s = JSON.parse(localStorage.getItem('rytme-set') || '{}'); s.scene = s.scene || {}; s.scene.aktiv = id; s.niv = 4; localStorage.setItem('rytme-set', JSON.stringify(s)); }, id);
+      await side.reload(); await side.waitForTimeout(3000);
+      const ok = await side.evaluate(() => { try { return !!D3ST && typeof R2 === 'object'; } catch (e) { return false; } });
+      const ff = nyeFejl(); if (ff.length || !ok) stopFejl.push(id + ': ' + (ff[0] || 'scriptet stoppede'));
+    }
+    T.tjek(!stopFejl.length, `opstart uden fejl med hver af de ${scFaner.length} Scene-faner gemt som valgt (${scFaner.join(', ')})`, stopFejl.slice(0, 3).join(' | '));
+    await side.evaluate(() => localStorage.clear()); await side.reload(); await side.waitForTimeout(3500); nyeFejl();
+
     /* Arbejdsfeltets faner */
     const faner = await side.evaluate(() => ({
       plan: FG.lyd.faner.map(x => x[1]),
