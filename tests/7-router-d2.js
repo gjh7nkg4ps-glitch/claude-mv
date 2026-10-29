@@ -2,7 +2,7 @@
    - Standard: Kompakt og D2. Kompakte bokse er lave, og skyderne er skjult; Detaljer ▸ åbner én boks; Fuld viser alt.
    - D2: kilderne står i mapper efter musik med en overskrift pr. mappe, og slag → glidende → rampe → valg inden i mappen; boksene følger kilderne.
    - Rækkefølge: kilderne står, som forbindelserne bruger dem.
-   - Farve efter type; hver kilde har sin chip med tal lige nu og "bruges af …".
+   - Farve efter type; hver kilde har sin chip med tal lige nu og "bruges af …"; de 31 bånd står i Frekvens.
    - Vis kilder, der ikke bruges: de står i deres mapper; ＋ laver en ny forbindelse.
    - Standard-visning sætter alt tilbage.
    - Med en lydfil, der spiller, viser chipsene deres tal lige nu.
@@ -51,8 +51,9 @@ async function kør(arg) {
     T.tjek(d2.hue.kick === '22' && d2.hue.bas === '195', `farve efter type: kick (slag) ${d2.hue.kick}, bas (glidende) ${d2.hue.bas}`);
     await side.locator('#w25').screenshot({ path: path.join(UD, 'router-kompakt.png') });
 
-    const lk = await side.evaluate(() => ['lk:mid', 'lk:kick', 'lk:fase', 'lk:rms', 'ana:ls3'].map(k => k + '=' + sigInfo(k).mappe + '/' + sigInfo(k).type).join(' '));
-    T.tjek(lk === 'lk:mid=Frekvens/glidende lk:kick=Rytme/slag lk:fase=Rytme/rampe lk:rms=Dynamik/glidende ana:ls3=Frekvens/glidende', 'Lydkort og de 31 bånd har faste pladser: ' + lk);
+    /* v9.12: Lydkort er fjernet, så kun de 31 bånd tjekkes her. */
+    const ls = await side.evaluate(() => ['ana:ls0', 'ana:ls3', 'ana:ls30'].map(k => k + '=' + sigInfo(k).mappe + '/' + sigInfo(k).type).join(' '));
+    T.tjek(ls === 'ana:ls0=Frekvens/glidende ana:ls3=Frekvens/glidende ana:ls30=Frekvens/glidende', 'de 31 bånd har faste pladser: ' + ls);
     /* Detaljer og Fuld */
     const det = await side.evaluate(async () => { const b = document.querySelector('#r2 .r2-boks'), i = b.dataset.i; b.querySelector('[data-r2="det"]').click(); await new Promise(r => setTimeout(r, 300));
       const nb = document.querySelector('#r2 .r2-boks[data-i="' + i + '"]'); const r1 = { aaben: !nb.classList.contains('kompakt'), h: Math.round(nb.getBoundingClientRect().height), andre: document.querySelectorAll('#r2 .r2-boks.kompakt').length };

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Claude MV v9.11 (Rytme-editor)</title>
+<title>Claude MV v9.12 (Rytme-editor)</title>
 
 <style>
 :root{--ok:#2fb86a;--adv:#e5a50a;--fejl:#e04b45;--info:#3b8eea;--bg:#e8e6df;--panel:#f4f2ec;--ink:#1c2321;--mute:#5d6560;--line:#c7c3b8;--acc:#0a7d6b;--bad:#b3261e;--wave:#fbfaf6;
@@ -62,7 +62,7 @@ dialog{background:var(--panel);color:var(--ink);border:2px solid var(--ink);bord
 .gen{overflow:auto;padding:8px}.pad{width:20px;height:24px;margin:1px;padding:0;border:1px solid var(--line);background:var(--bg);border-radius:4px}.pad.on{background:var(--acc)}.pad.now{outline:2px solid var(--ink)}.pad.g{margin-right:6px}.gl{display:inline-block;width:46px;font-size:12px}
 #keys{display:flex;height:60px;margin:6px 0}.key{flex:1;border:1px solid var(--ink);background:#fff;padding:0;border-radius:0 0 4px 4px}.key.b{background:#111;height:60%;margin:0 -6px;z-index:1;flex:.7;align-self:flex-start}
 
-#keys{height:90px}.key.hit{background:var(--acc)!important}.pad.m{opacity:.35}/* v9.10: M-knappen (mute) deler klassenavnet mt med en tabel, der er 100 % bred */#pads button.mt{width:auto;min-width:26px;padding:2px 7px;flex:none}#pads .gl{display:inline-block;width:62px;flex:none}/* v9.8: Lydmotor 2 */.pad.on.acc{background:var(--acc);box-shadow:0 0 8px var(--acc);border-color:#fff}.pad.on.gh{opacity:.45}.lm-rad{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.03);font-size:12.5px}.lm-l{font-weight:600;opacity:.85}.lm-seg{display:inline-flex;gap:0}.lm-seg button{border-radius:0;padding:3px 10px}.lm-seg button:first-child{border-radius:8px 0 0 8px}.lm-seg button:last-child{border-radius:0 8px 8px 0}.lm-t{display:inline-flex;align-items:center;gap:4px}.lm-t input[type=range]{width:80px;accent-color:var(--acc)}.lm-akk{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}.lm-akk i{opacity:.4;font-style:normal}.lm-a{min-width:30px;text-align:center;padding:2px 6px;border:1px solid var(--line);border-radius:6px;opacity:.6}.lm-a.nu{opacity:1;background:var(--acc);color:#04121c;box-shadow:0 0 10px var(--acc)}.lm-takt{opacity:.7;margin-left:6px}.lm-fill{padding:2px 6px;border:1px solid var(--line);border-radius:6px;opacity:.3}.lm-fill.nu{opacity:1;background:#ffcc40;color:#1a1200;box-shadow:0 0 10px #ffcc40}/* v9.9: Router 2.0 */.r2{padding:8px 10px}.r2-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-bottom:10px}.r2-forkl{flex-basis:100%;opacity:.75}.r2-graf{position:relative;display:grid;grid-template-columns:minmax(120px,170px) minmax(300px,380px) minmax(120px,170px);justify-content:space-between;gap:0 70px}.r2-linjer{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}.r2-linjer path{fill:none;stroke:hsl(var(--hue) 85% 62%);stroke-width:2;opacity:.2;filter:drop-shadow(0 0 3px hsl(var(--hue) 90% 55%))}.r2-kol{position:relative}.r2-bokse{display:flex;flex-direction:column;gap:14px}.r2-chip{position:absolute;left:0;right:0;padding:6px 8px;border:1px solid var(--line);border-left:3px solid hsl(var(--hue,200) 70% 55%);border-radius:9px;background:rgba(20,28,44,.85);font-size:12px;display:flex;flex-direction:column;gap:2px}.r2-maal .r2-chip{border-left:1px solid var(--line);border-right:3px solid var(--acc)}.r2-chip small{opacity:.65}.r2-chip i{display:block;height:4px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden}.r2-chip u{display:block;height:100%;width:0;background:hsl(var(--hue,195) 90% 60%)}.r2-maal .r2-chip u{background:var(--acc)}.r2-maal .r2-chip.aktiv{box-shadow:0 0 12px rgba(76,201,240,.35)}.r2-boks{border:1px solid var(--line);border-top:3px solid hsl(var(--hue) 70% 55%);border-radius:12px;padding:8px 10px;background:linear-gradient(180deg,rgba(32,42,64,.92),rgba(18,24,38,.92));font-size:12px;display:flex;flex-direction:column;gap:6px}.r2-boks.aktiv{box-shadow:0 0 16px hsl(var(--hue) 80% 50% / .28)}.r2-boks.slukket{opacity:.5}.r2-hd{display:flex;align-items:center;gap:6px}.r2-hd select{flex:1;min-width:0}.r2-nr{font-size:11px;opacity:.6;min-width:16px}.r2-x{padding:2px 8px}.r2-hvor{display:flex;justify-content:space-between;align-items:center;opacity:.8;font-size:11.5px}.r2-mode{padding:1px 8px;border-radius:10px;border:1px solid var(--line)}.r2-mode.auto{background:rgba(76,201,240,.18);border-color:var(--acc)}.wb .r2-boks canvas.r2-vu,.wb .r2-boks canvas.r2-hist{position:static;inset:auto;width:100%;border-radius:6px;display:block;background:transparent}.wb .r2-boks canvas.r2-vu{cursor:ew-resize;height:30px}.wb .r2-boks canvas.r2-hist{height:38px}.r2-tal{display:flex;justify-content:space-between;font-size:11.5px;opacity:.9}.r2-tal small{opacity:.6}.r2-kaede{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;font-size:10.5px}.r2-kaede span{padding:1px 5px;border-radius:5px;border:1px solid var(--line);opacity:.45}.r2-kaede span.on{opacity:1;border-color:hsl(var(--hue) 70% 55%);background:hsl(var(--hue) 70% 50% / .18)}.r2-kaede i{opacity:.35;font-style:normal}.r2-sls{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}.r2-sl{display:flex;flex-direction:column;gap:1px}.r2-sl span{display:flex;justify-content:space-between}.r2-sl input{width:100%;accent-color:hsl(var(--hue) 80% 60%)}.r2-sl.graa{opacity:.35}.r2-stak{font-size:11px;opacity:.85}.r2-stak span{opacity:.5}.r2-stak span.on{opacity:1}.r2-knapper{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 10px}.r2-knap{display:flex;flex-direction:column;align-items:center;width:58px;cursor:ns-resize;user-select:none;touch-action:none;font-size:10.5px;border-radius:8px;outline-offset:2px}.r2-knap svg{width:34px;height:34px}.r2-knap .rk-bg{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.18);stroke-width:2}.r2-knap .rk-bue{fill:none;stroke:hsl(var(--hue) 85% 62%);stroke-width:3;stroke-linecap:round}.r2-knap .rk-vis{stroke:#fff;stroke-width:2;stroke-linecap:round}.r2-knap b{font-size:10.5px}.r2-knap.graa{opacity:.35}.r2-inv,.r2-std{padding:3px 8px;font-size:11px}.r2-ft{display:flex;align-items:center;gap:6px}.r2-ft select{flex:1;min-width:0}.r2-mapnote{margin-top:4px;color:var(--acc)}/* v9.11: Router kompakt og D2 */.r2-boks.kompakt .r2-mere{display:none}.r2-det{margin-left:auto;padding:2px 8px;font-size:11px}.r2-valg{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 8px}.r2-seg{display:inline-flex}.r2-seg button{border-radius:0;padding:3px 9px;font-size:12px}.r2-seg button:first-child{border-radius:8px 0 0 8px}.r2-seg button:last-child{border-radius:0 8px 8px 0}.r2-type{display:inline-block;padding:0 6px;border-radius:6px;border:1px solid hsl(var(--hue) 70% 55%);color:hsl(var(--hue) 85% 72%);margin-left:2px}.r2-mappe{position:absolute;left:0;right:0;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.75;border-bottom:1px solid var(--line);padding-bottom:2px}.r2-chip .r2-nu{font-size:11px;opacity:.9}.r2-chip .r2-brug{opacity:.55}.r2-kilder .r2-chip.aktiv{box-shadow:0 0 12px hsl(var(--hue) 85% 55% / .35)}.r2-ubrugt{margin-top:22px;border-top:1px solid var(--line);padding-top:10px}.r2-ubrugt h4{margin:0 0 4px}.r2-ugrp{margin:8px 0}.r2-mappe-n{font-size:11px;text-transform:uppercase;letter-spacing:.04em;opacity:.75}.r2-ub{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.r2-uchip{color:var(--ink,#e8ecff);display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid var(--line);border-left:3px solid hsl(var(--hue) 70% 55%);border-radius:8px;background:rgba(20,28,44,.7);font-size:11.5px;opacity:.75}.r2-uchip.aktiv{opacity:1;box-shadow:0 0 8px hsl(var(--hue) 85% 55% / .35)}.r2-uchip small{opacity:.6}.r2-uchip .r2-plus{color:var(--acc);font-weight:700}.mt.on{background:var(--bad);color:#fff;border-color:var(--bad)}
+#keys{height:90px}.key.hit{background:var(--acc)!important}.pad.m{opacity:.35}/* v9.10: M-knappen (mute) deler klassenavnet mt med en tabel, der er 100 % bred */#pads button.mt{width:auto;min-width:26px;padding:2px 7px;flex:none}#pads .gl{display:inline-block;width:62px;flex:none}/* v9.8: Lydmotor 2 */.pad.on.acc{background:var(--acc);box-shadow:0 0 8px var(--acc);border-color:#fff}.pad.on.gh{opacity:.45}.lm-rad{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.03);font-size:12.5px}.lm-l{font-weight:600;opacity:.85}.lm-seg{display:inline-flex;gap:0}.lm-seg button{border-radius:0;padding:3px 10px}.lm-seg button:first-child{border-radius:8px 0 0 8px}.lm-seg button:last-child{border-radius:0 8px 8px 0}.lm-t{display:inline-flex;align-items:center;gap:4px}.lm-t input[type=range]{width:80px;accent-color:var(--acc)}.lm-akk{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}.lm-akk i{opacity:.4;font-style:normal}.lm-a{min-width:30px;text-align:center;padding:2px 6px;border:1px solid var(--line);border-radius:6px;opacity:.6}.lm-a.nu{opacity:1;background:var(--acc);color:#04121c;box-shadow:0 0 10px var(--acc)}.lm-takt{opacity:.7;margin-left:6px}.lm-fill{padding:2px 6px;border:1px solid var(--line);border-radius:6px;opacity:.3}.lm-fill.nu{opacity:1;background:#ffcc40;color:#1a1200;box-shadow:0 0 10px #ffcc40}/* v9.9: Router 2.0 */.r2{padding:8px 10px}.r2-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-bottom:10px}.r2-forkl{flex-basis:100%;opacity:.75}.r2-graf{position:relative;display:grid;grid-template-columns:minmax(120px,170px) minmax(300px,380px) minmax(120px,170px);justify-content:space-between;gap:0 70px}.r2-linjer{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}.r2-linjer path{fill:none;stroke:hsl(var(--hue) 85% 62%);stroke-width:2;opacity:.2;filter:drop-shadow(0 0 3px hsl(var(--hue) 90% 55%))}.r2-kol{position:relative}.r2-bokse{display:flex;flex-direction:column;gap:14px}.r2-chip{position:absolute;left:0;right:0;padding:6px 8px;border:1px solid var(--line);border-left:3px solid hsl(var(--hue,200) 70% 55%);border-radius:9px;background:rgba(20,28,44,.85);font-size:12px;display:flex;flex-direction:column;gap:2px}.r2-maal .r2-chip{border-left:1px solid var(--line);border-right:3px solid var(--acc)}.r2-chip small{opacity:.65}.r2-chip i{display:block;height:4px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden}.r2-chip u{display:block;height:100%;width:0;background:hsl(var(--hue,195) 90% 60%)}.r2-maal .r2-chip u{background:var(--acc)}.r2-maal .r2-chip.aktiv{box-shadow:0 0 12px rgba(76,201,240,.35)}.r2-boks{border:1px solid var(--line);border-top:3px solid hsl(var(--hue) 70% 55%);border-radius:12px;padding:8px 10px;background:linear-gradient(180deg,rgba(32,42,64,.92),rgba(18,24,38,.92));font-size:12px;display:flex;flex-direction:column;gap:6px}.r2-boks.aktiv{box-shadow:0 0 16px hsl(var(--hue) 80% 50% / .28)}.r2-boks.slukket{opacity:.5}.r2-hd{display:flex;align-items:center;gap:6px}.r2-hd select{flex:1;min-width:0}.r2-nr{font-size:11px;opacity:.6;min-width:16px}.r2-x{padding:2px 8px}.r2-hvor{display:flex;justify-content:space-between;align-items:center;opacity:.8;font-size:11.5px}.r2-mode{padding:1px 8px;border-radius:10px;border:1px solid var(--line)}.r2-mode.auto{background:rgba(76,201,240,.18);border-color:var(--acc)}.wb .r2-boks canvas.r2-vu,.wb .r2-boks canvas.r2-hist{position:static;inset:auto;width:100%;border-radius:6px;display:block;background:transparent}.wb .r2-boks canvas.r2-vu{cursor:ew-resize;height:30px}.wb .r2-boks canvas.r2-hist{height:38px}.r2-tal{display:flex;justify-content:space-between;font-size:11.5px;opacity:.9}.r2-tal small{opacity:.6}.r2-kaede{display:flex;flex-wrap:wrap;align-items:center;gap:2px 4px;font-size:10.5px}.r2-kaede span{padding:1px 5px;border-radius:5px;border:1px solid var(--line);opacity:.45}.r2-kaede span.on{opacity:1;border-color:hsl(var(--hue) 70% 55%);background:hsl(var(--hue) 70% 50% / .18)}.r2-kaede i{opacity:.35;font-style:normal}.r2-sls{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}.r2-sl{display:flex;flex-direction:column;gap:1px}.r2-sl span{display:flex;justify-content:space-between}.r2-sl input{width:100%;accent-color:hsl(var(--hue) 80% 60%)}.r2-sl.graa{opacity:.35}.r2-stak{font-size:11px;opacity:.85}.r2-stak span{opacity:.5}.r2-stak span.on{opacity:1}.r2-knapper{display:flex;flex-wrap:wrap;align-items:flex-end;gap:6px 10px}.r2-knap{display:flex;flex-direction:column;align-items:center;width:58px;cursor:ns-resize;user-select:none;touch-action:none;font-size:10.5px;border-radius:8px;outline-offset:2px}.r2-knap svg{width:34px;height:34px}.r2-knap .rk-bg{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.18);stroke-width:2}.r2-knap .rk-bue{fill:none;stroke:hsl(var(--hue) 85% 62%);stroke-width:3;stroke-linecap:round}.r2-knap .rk-vis{stroke:#fff;stroke-width:2;stroke-linecap:round}.r2-knap b{font-size:10.5px}.r2-knap.graa{opacity:.35}.r2-inv,.r2-std{padding:3px 8px;font-size:11px}.r2-ft{display:flex;align-items:center;gap:6px}.r2-ft select{flex:1;min-width:0}.r2-mapnote{margin-top:4px;color:var(--acc)}/* v9.12: fjernede kilder */.fj-banner{margin:6px 0 10px;padding:8px 10px;border:1px solid #ffcc40;border-radius:9px;background:rgba(255,204,64,.12);color:#ffe199;font-size:12.5px}.fj-note{margin-top:4px;color:#ffcc40}/* v9.11: Router kompakt og D2 */.r2-boks.kompakt .r2-mere{display:none}.r2-det{margin-left:auto;padding:2px 8px;font-size:11px}.r2-valg{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 8px}.r2-seg{display:inline-flex}.r2-seg button{border-radius:0;padding:3px 9px;font-size:12px}.r2-seg button:first-child{border-radius:8px 0 0 8px}.r2-seg button:last-child{border-radius:0 8px 8px 0}.r2-type{display:inline-block;padding:0 6px;border-radius:6px;border:1px solid hsl(var(--hue) 70% 55%);color:hsl(var(--hue) 85% 72%);margin-left:2px}.r2-mappe{position:absolute;left:0;right:0;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.75;border-bottom:1px solid var(--line);padding-bottom:2px}.r2-chip .r2-nu{font-size:11px;opacity:.9}.r2-chip .r2-brug{opacity:.55}.r2-kilder .r2-chip.aktiv{box-shadow:0 0 12px hsl(var(--hue) 85% 55% / .35)}.r2-ubrugt{margin-top:22px;border-top:1px solid var(--line);padding-top:10px}.r2-ubrugt h4{margin:0 0 4px}.r2-ugrp{margin:8px 0}.r2-mappe-n{font-size:11px;text-transform:uppercase;letter-spacing:.04em;opacity:.75}.r2-ub{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.r2-uchip{color:var(--ink,#e8ecff);display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid var(--line);border-left:3px solid hsl(var(--hue) 70% 55%);border-radius:8px;background:rgba(20,28,44,.7);font-size:11.5px;opacity:.75}.r2-uchip.aktiv{opacity:1;box-shadow:0 0 8px hsl(var(--hue) 85% 55% / .35)}.r2-uchip small{opacity:.6}.r2-uchip .r2-plus{color:var(--acc);font-weight:700}.mt.on{background:var(--bad);color:#fff;border-color:var(--bad)}
 .gr{display:flex;align-items:center;white-space:nowrap;gap:4px}.gr input[type=range]{width:70px;accent-color:var(--acc)}#pads{overflow-x:auto;padding-bottom:6px}#pads .gr{margin-bottom:2px}.gen .ab{margin:6px 0}
 #pv,#mesh{touch-action:none}#mesh{width:100%;height:100%;display:block}#w5.meshstor #meshbar,#w5.meshstor #multibar,#w5.meshstor #meshctl{display:none!important}#w5:fullscreen{background:#0b0f14;display:flex;flex-direction:column}#w5:fullscreen .wb{flex:1 1 auto;min-height:0}
 #multibar[hidden]{display:none!important}
@@ -1080,7 +1080,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 </script>
 </head>
 <body>
-<h1 class="sr-only">Claude MV: musik bliver til billeder</h1><div id="tb-hot" aria-hidden="true"></div><header id="tb" data-tb="fuld" data-dock="fast"><div class="tbm"><div class="brand"><svg class="logo" viewBox="0 0 36 28" width="30" height="24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#59d2ff"/><stop offset="1" stop-color="#b57bff"/></linearGradient></defs><g fill="url(#lg)"><rect x="1" y="11" width="4" height="6" rx="2"/><rect x="8" y="5" width="4" height="18" rx="2"/><rect x="15" y="1" width="4" height="26" rx="2"/><rect x="22" y="7" width="4" height="14" rx="2"/><rect x="29" y="12" width="4" height="4" rx="2"/></g></svg><b>Rytme</b><small title="Versionsnummer. Det stiger med 0,1, hver gang filen samles til udgivelse.">v9.11</small></div><button id="tb-udv" class="ghost" aria-expanded="false" title="Vis eller skjul hele topbaren. Knappen findes kun i størrelsen Minimal.">☰</button><label class="filebtn" title="Vælg en lydfil fra din computer (mp3, wav, ogg ...). Filen sendes ikke væk: alt sker i din browser."><input type="file" id="file" accept="audio/*" aria-label="Vælg lydfil"><span id="tb-filtekst">Vælg lydfil</span></label><button id="play" disabled title="Afspil fra der, hvor du er. Mellemrumstasten skifter mellem afspil og pause.">▶ Afspil</button><button id="pause" disabled title="Sæt på pause. Afspil fortsætter derfra.">❚❚ Pause</button><span id="tid" class="small" style="min-width:96px" aria-live="off"></span><div id="player" class="player" role="group" aria-label="Afspiller"><button id="pl-start" disabled>⏮ Start</button><button id="pl-back" disabled>−5 s</button><button id="pl-stop" disabled>■ Stop</button><button id="pl-fwd" disabled>+5 s</button><input type="range" id="pl-pos" min="0" max="1000" value="0" step="1" disabled aria-label="Position i nummeret"><button id="pl-mute" aria-pressed="false">Lyd</button><input type="range" id="pl-vol" min="0" max="100" value="100" step="1" aria-label="Volumen"><span id="pl-db" class="small">0 dB</span><canvas id="pl-meter" width="120" height="14" aria-label="Niveaumåler: styrken af det, der spilles" title="Niveaumåler: styrken af det, der spilles (efter volumen). Rød øverst betyder, at lyden er tæt på at klippe."></canvas></div><label class="tbl" title="Når nummeret er slut, starter det forfra af sig selv, så showet bliver ved. Slået til fra start."><input type="checkbox" id="tb-gentag" checked> Gentag</label><label class="tbl tb-niv" title="Niveau for hele programmet: hvor meget du ser. 1 Simpel: det vigtigste. 2 Medium: almindelige ting. 3 Høj: næsten alt. 4 Ekstrem: alt. Alle vinduer følger det, også Form-editoren. Intet slettes ved at gå ned; det skjules og virker stadig.">Niveau <select id="tb-niv" aria-label="Niveau for hele programmet"><option value="1">1 · Simpel</option><option value="2">2 · Medium</option><option value="3">3 · Høj</option><option value="4">4 · Ekstrem</option></select></label><nav class="menuer" aria-label="Menuer"><div class="menu"><button class="menub" id="mn-ops" aria-expanded="false" aria-controls="mp-ops" title="Hent og gem opsætninger: forudindstillinger, dine egne opsætninger, kopi som tekst og nulstil">Opsætning<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-ops" role="group" aria-label="Opsætning" hidden><h4>Hent</h4><label class="tbl">Forudindstilling <select id="tb-ops" data-ms="tb-ops" aria-label="Hent en forudindstilling"><option value="">Vælg …</option></select></label><label class="tbl">Mine opsætninger <select id="tb-mine" data-ms="tb-mine" aria-label="Hent en af dine egne opsætninger"><option value="">Vælg …</option></select></label><h4>Gem og del</h4><button class="ghost" data-ma="klik:copy">Kopiér preset</button><button class="ghost" data-ma="gaa:json">Preset som tekst</button><h4>Start forfra</h4><button class="ghost fare" data-ma="klik:s-reset">Nulstil alt…</button></div></div><div class="menu"><button class="menub" id="mn-show" aria-expanded="false" aria-controls="mp-show" title="Lav et show til sangen: Kør Auto, Rolig, Balanceret eller Vild, og Fortryd">Show<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-show" role="group" aria-label="Show" hidden><h4>Lav en opsætning</h4><button class="ghost" data-ma="klik:show-rolig">Lav show: Rolig</button><button class="ghost" data-ma="klik:show-bal">Lav show: Balanceret</button><button class="ghost" data-ma="klik:show-vild">Lav show: Vild</button><button class="ghost" data-ma="klik:show-fortryd">Fortryd sidste show</button><h4>Automatik</h4><label class="tbl">Random alt skifter <select id="tb-skift" data-ms="tb-skift" aria-label="Automatisk skift af Random alt"><option value="0">Fra</option><option value="10">hvert 10. sek.</option><option value="20">hvert 20. sek.</option><option value="40">hvert 40. sek.</option><option value="60">hvert 60. sek.</option></select></label><h4>Mere</h4><button class="ghost" data-ma="gaa:showsec">Gå til Show-panelet</button></div></div><div class="menu"><button class="menub" id="mn-vin" aria-expanded="false" aria-controls="mp-vin" title="Dublet, Lyd i 3D, flyt effekter og orden i vinduerne">Vinduer<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-vin" role="group" aria-label="Vinduer" hidden><h4>Udgang (projektor)</h4><label class="tbl">Udgangsvinduet viser <select id="ud-kilde" aria-label="Hvad udgangsvinduet viser"><option value="pv">Live preview</option><option value="mesh">Radial Mesh</option><option value="mesh3d">Mesh 3D</option><option value="oeje">Øjet</option><option value="d3">Lyd i 3D</option></select></label><h4>Skærme</h4><button id="tb-gen" class="ghost" title="Find Musik-generatoren (beats): genrerne, trommemønstret du selv kan tegne, og keyboardet">Musik-generator (beats)</button><button id="dubbtn" class="ghost">Dublet</button><button id="d3btn" class="ghost">Lyd i 3D</button><button id="rtbtn" class="ghost">Routing-overblik</button><button id="mmpbtn" class="ghost">Master Morph Pad</button><button id="galbtn" class="ghost">Idé-galleri</button><h4>Visning</h4><button id="enkelbtn" class="ghost" aria-pressed="false" title="Enkel tilstand: skjul alle vinduer undtagen Live preview, og vis et lille panel med tempo, bølgeform, EQ og fem følsomhedsknapper. Slå fra for at få alt tilbage.">Enkel tilstand</button><h4>Redigér</h4><button class="ghost" data-ma="klik:mvbtn" id="tb-mv"></button><button class="ghost" data-ma="klik:mvrst">Nulstil pos.</button><h4>Orden</h4><button id="rwin" class="ghost">Ordn vinduer</button><button id="mina" class="ghost">Minimér alle vinduer</button><h4>Layouts</h4><label class="tbl">Vælg layout <select id="lay-vaelg" aria-label="Vælg et layout"></select></label><button class="ghost" id="lay-brug" title="Layoutet bruges, så snart du vælger det. Denne knap bruger det igen, fx hvis du har flyttet vinduerne.">Brug igen</button><label class="tbl">Navn <input type="text" id="lay-navn" maxlength="24" placeholder="fx Disco" aria-label="Navn til et nyt layout" title="Giv det nuværende layout et navn (højst 24 tegn), og tryk Gem layout."></label><button class="ghost" id="lay-gem" title="Gem alle vinduers placering, størrelse og minimering under dette navn.">Gem layout</button><button class="ghost fare" id="lay-slet" title="Slet det valgte layout (kun dine egne).">Slet layout</button><h4>Topbar</h4><label class="tbl">Størrelse <select id="tb-stoerrelse" aria-label="Topbarens størrelse"><option value="fuld">Fuld</option><option value="kompakt">Kompakt (halv)</option><option value="minimal">Minimal (kvart)</option></select></label><label class="tbl">Dock <select id="tb-dock" aria-label="Topbarens dock"><option value="fast">Fastgjort øverst</option><option value="auto">Skjul automatisk</option></select></label></div></div><div class="menu"><button class="menub" id="mn-lyd" aria-expanded="false" aria-controls="mp-lyd" title="Kvalitet og ydelse, normalisering, lydlag og indstillinger">Lyd og ydelse<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-lyd" role="group" aria-label="Lyd og ydelse" hidden><h4>Ydelse</h4><label class="tbl">Kvalitet <select id="tb-kval" data-ms="tb-kval" aria-label="Kvalitetsniveau"><option value="disco">Disco</option><option value="undervisning">Undervisning</option><option value="spar">Spar</option><option value="fuld">Fuld</option><option value="egen">Egen</option></select></label><label class="tbl"><input type="checkbox" id="tb-reg" data-ms="tb-reg"> Kvalitetsregulator</label><button class="ghost" data-ma="klik:bench-start">Kør måletest</button><h4>Lyd</h4><button id="norm" class="ghost">Normalisering: Auto</button><button class="ghost" data-ma="klik:lmute">Mute lydlag</button><h4>Mere</h4><button id="sbtn" class="ghost">Indstillinger</button></div></div><div class="menu hoejre"><button class="menub" id="mn-hjp" aria-expanded="false" aria-controls="mp-hjp" title="Ordliste, manual og hurtige genveje til forklaringer">Hjælp<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-hjp" role="group" aria-label="Hjælp" hidden><h4>Slå op</h4><button id="hjbtn" class="ghost">Ordliste (søg i begreber)</button><button id="gbtn" class="ghost">Manual (bruger og teknik)</button><h4>Hurtigt</h4><button class="ghost" data-ma="manual:genveje">Tastaturgenveje</button><button class="ghost" data-ma="manual:figur-form">Figur og form: forskellen</button></div></div></nav><div class="chips" role="group" aria-label="Visning og sikkerhed"><button id="tb-sikker" class="chip" aria-pressed="true">Sikker visning: Til</button><button id="ud-btn" class="chip" aria-pressed="false">Udgangsvindue: Fra</button><button id="ud-sort" class="chip" aria-pressed="false">Sort skærm</button><button id="rec-btn" class="chip" aria-pressed="false">Optag: Fra</button><button id="lin-btn" class="chip" aria-pressed="false">Lyd ind: Fra</button></div></div><div class="tbs"><span id="status" role="status" aria-live="polite">Vælg en lydfil for at starte</span></div></header>
+<h1 class="sr-only">Claude MV: musik bliver til billeder</h1><div id="tb-hot" aria-hidden="true"></div><header id="tb" data-tb="fuld" data-dock="fast"><div class="tbm"><div class="brand"><svg class="logo" viewBox="0 0 36 28" width="30" height="24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#59d2ff"/><stop offset="1" stop-color="#b57bff"/></linearGradient></defs><g fill="url(#lg)"><rect x="1" y="11" width="4" height="6" rx="2"/><rect x="8" y="5" width="4" height="18" rx="2"/><rect x="15" y="1" width="4" height="26" rx="2"/><rect x="22" y="7" width="4" height="14" rx="2"/><rect x="29" y="12" width="4" height="4" rx="2"/></g></svg><b>Rytme</b><small title="Versionsnummer. Det stiger med 0,1, hver gang filen samles til udgivelse.">v9.12</small></div><button id="tb-udv" class="ghost" aria-expanded="false" title="Vis eller skjul hele topbaren. Knappen findes kun i størrelsen Minimal.">☰</button><label class="filebtn" title="Vælg en lydfil fra din computer (mp3, wav, ogg ...). Filen sendes ikke væk: alt sker i din browser."><input type="file" id="file" accept="audio/*" aria-label="Vælg lydfil"><span id="tb-filtekst">Vælg lydfil</span></label><button id="play" disabled title="Afspil fra der, hvor du er. Mellemrumstasten skifter mellem afspil og pause.">▶ Afspil</button><button id="pause" disabled title="Sæt på pause. Afspil fortsætter derfra.">❚❚ Pause</button><span id="tid" class="small" style="min-width:96px" aria-live="off"></span><div id="player" class="player" role="group" aria-label="Afspiller"><button id="pl-start" disabled>⏮ Start</button><button id="pl-back" disabled>−5 s</button><button id="pl-stop" disabled>■ Stop</button><button id="pl-fwd" disabled>+5 s</button><input type="range" id="pl-pos" min="0" max="1000" value="0" step="1" disabled aria-label="Position i nummeret"><button id="pl-mute" aria-pressed="false">Lyd</button><input type="range" id="pl-vol" min="0" max="100" value="100" step="1" aria-label="Volumen"><span id="pl-db" class="small">0 dB</span><canvas id="pl-meter" width="120" height="14" aria-label="Niveaumåler: styrken af det, der spilles" title="Niveaumåler: styrken af det, der spilles (efter volumen). Rød øverst betyder, at lyden er tæt på at klippe."></canvas></div><label class="tbl" title="Når nummeret er slut, starter det forfra af sig selv, så showet bliver ved. Slået til fra start."><input type="checkbox" id="tb-gentag" checked> Gentag</label><label class="tbl tb-niv" title="Niveau for hele programmet: hvor meget du ser. 1 Simpel: det vigtigste. 2 Medium: almindelige ting. 3 Høj: næsten alt. 4 Ekstrem: alt. Alle vinduer følger det, også Form-editoren. Intet slettes ved at gå ned; det skjules og virker stadig.">Niveau <select id="tb-niv" aria-label="Niveau for hele programmet"><option value="1">1 · Simpel</option><option value="2">2 · Medium</option><option value="3">3 · Høj</option><option value="4">4 · Ekstrem</option></select></label><nav class="menuer" aria-label="Menuer"><div class="menu"><button class="menub" id="mn-ops" aria-expanded="false" aria-controls="mp-ops" title="Hent og gem opsætninger: forudindstillinger, dine egne opsætninger, kopi som tekst og nulstil">Opsætning<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-ops" role="group" aria-label="Opsætning" hidden><h4>Hent</h4><label class="tbl">Forudindstilling <select id="tb-ops" data-ms="tb-ops" aria-label="Hent en forudindstilling"><option value="">Vælg …</option></select></label><label class="tbl">Mine opsætninger <select id="tb-mine" data-ms="tb-mine" aria-label="Hent en af dine egne opsætninger"><option value="">Vælg …</option></select></label><h4>Gem og del</h4><button class="ghost" data-ma="klik:copy">Kopiér preset</button><button class="ghost" data-ma="gaa:json">Preset som tekst</button><h4>Start forfra</h4><button class="ghost fare" data-ma="klik:s-reset">Nulstil alt…</button></div></div><div class="menu"><button class="menub" id="mn-show" aria-expanded="false" aria-controls="mp-show" title="Lav et show til sangen: Kør Auto, Rolig, Balanceret eller Vild, og Fortryd">Show<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-show" role="group" aria-label="Show" hidden><h4>Lav en opsætning</h4><button class="ghost" data-ma="klik:show-rolig">Lav show: Rolig</button><button class="ghost" data-ma="klik:show-bal">Lav show: Balanceret</button><button class="ghost" data-ma="klik:show-vild">Lav show: Vild</button><button class="ghost" data-ma="klik:show-fortryd">Fortryd sidste show</button><h4>Automatik</h4><label class="tbl">Random alt skifter <select id="tb-skift" data-ms="tb-skift" aria-label="Automatisk skift af Random alt"><option value="0">Fra</option><option value="10">hvert 10. sek.</option><option value="20">hvert 20. sek.</option><option value="40">hvert 40. sek.</option><option value="60">hvert 60. sek.</option></select></label><h4>Mere</h4><button class="ghost" data-ma="gaa:showsec">Gå til Show-panelet</button></div></div><div class="menu"><button class="menub" id="mn-vin" aria-expanded="false" aria-controls="mp-vin" title="Dublet, Lyd i 3D, flyt effekter og orden i vinduerne">Vinduer<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-vin" role="group" aria-label="Vinduer" hidden><h4>Udgang (projektor)</h4><label class="tbl">Udgangsvinduet viser <select id="ud-kilde" aria-label="Hvad udgangsvinduet viser"><option value="pv">Live preview</option><option value="mesh">Radial Mesh</option><option value="mesh3d">Mesh 3D</option><option value="oeje">Øjet</option><option value="d3">Lyd i 3D</option></select></label><h4>Skærme</h4><button id="tb-gen" class="ghost" title="Find Musik-generatoren (beats): genrerne, trommemønstret du selv kan tegne, og keyboardet">Musik-generator (beats)</button><button id="dubbtn" class="ghost">Dublet</button><button id="d3btn" class="ghost">Lyd i 3D</button><button id="rtbtn" class="ghost">Routing-overblik</button><button id="mmpbtn" class="ghost">Master Morph Pad</button><button id="galbtn" class="ghost">Idé-galleri</button><h4>Visning</h4><button id="enkelbtn" class="ghost" aria-pressed="false" title="Enkel tilstand: skjul alle vinduer undtagen Live preview, og vis et lille panel med tempo, bølgeform, EQ og fem følsomhedsknapper. Slå fra for at få alt tilbage.">Enkel tilstand</button><h4>Redigér</h4><button class="ghost" data-ma="klik:mvbtn" id="tb-mv"></button><button class="ghost" data-ma="klik:mvrst">Nulstil pos.</button><h4>Orden</h4><button id="rwin" class="ghost">Ordn vinduer</button><button id="mina" class="ghost">Minimér alle vinduer</button><h4>Layouts</h4><label class="tbl">Vælg layout <select id="lay-vaelg" aria-label="Vælg et layout"></select></label><button class="ghost" id="lay-brug" title="Layoutet bruges, så snart du vælger det. Denne knap bruger det igen, fx hvis du har flyttet vinduerne.">Brug igen</button><label class="tbl">Navn <input type="text" id="lay-navn" maxlength="24" placeholder="fx Disco" aria-label="Navn til et nyt layout" title="Giv det nuværende layout et navn (højst 24 tegn), og tryk Gem layout."></label><button class="ghost" id="lay-gem" title="Gem alle vinduers placering, størrelse og minimering under dette navn.">Gem layout</button><button class="ghost fare" id="lay-slet" title="Slet det valgte layout (kun dine egne).">Slet layout</button><h4>Topbar</h4><label class="tbl">Størrelse <select id="tb-stoerrelse" aria-label="Topbarens størrelse"><option value="fuld">Fuld</option><option value="kompakt">Kompakt (halv)</option><option value="minimal">Minimal (kvart)</option></select></label><label class="tbl">Dock <select id="tb-dock" aria-label="Topbarens dock"><option value="fast">Fastgjort øverst</option><option value="auto">Skjul automatisk</option></select></label></div></div><div class="menu"><button class="menub" id="mn-lyd" aria-expanded="false" aria-controls="mp-lyd" title="Kvalitet og ydelse, normalisering, lydlag og indstillinger">Lyd og ydelse<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-lyd" role="group" aria-label="Lyd og ydelse" hidden><h4>Ydelse</h4><label class="tbl">Kvalitet <select id="tb-kval" data-ms="tb-kval" aria-label="Kvalitetsniveau"><option value="disco">Disco</option><option value="undervisning">Undervisning</option><option value="spar">Spar</option><option value="fuld">Fuld</option><option value="egen">Egen</option></select></label><label class="tbl"><input type="checkbox" id="tb-reg" data-ms="tb-reg"> Kvalitetsregulator</label><button class="ghost" data-ma="klik:bench-start">Kør måletest</button><h4>Lyd</h4><button id="norm" class="ghost">Normalisering: Auto</button><button class="ghost" data-ma="klik:lmute">Mute lydlag</button><h4>Mere</h4><button id="sbtn" class="ghost">Indstillinger</button></div></div><div class="menu hoejre"><button class="menub" id="mn-hjp" aria-expanded="false" aria-controls="mp-hjp" title="Ordliste, manual og hurtige genveje til forklaringer">Hjælp<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-hjp" role="group" aria-label="Hjælp" hidden><h4>Slå op</h4><button id="hjbtn" class="ghost">Ordliste (søg i begreber)</button><button id="gbtn" class="ghost">Manual (bruger og teknik)</button><h4>Hurtigt</h4><button class="ghost" data-ma="manual:genveje">Tastaturgenveje</button><button class="ghost" data-ma="manual:figur-form">Figur og form: forskellen</button></div></div></nav><div class="chips" role="group" aria-label="Visning og sikkerhed"><button id="tb-sikker" class="chip" aria-pressed="true">Sikker visning: Til</button><button id="ud-btn" class="chip" aria-pressed="false">Udgangsvindue: Fra</button><button id="ud-sort" class="chip" aria-pressed="false">Sort skærm</button><button id="rec-btn" class="chip" aria-pressed="false">Optag: Fra</button><button id="lin-btn" class="chip" aria-pressed="false">Lyd ind: Fra</button></div></div><div class="tbs"><span id="status" role="status" aria-live="polite">Vælg en lydfil for at starte</span></div></header>
 <div id="dockL" class="dock" role="region" aria-label="Minimerede vinduer, venstre side"></div><div id="dockR" class="dock" role="region" aria-label="Minimerede vinduer, højre side"></div>
 <div id="mvk" class="mvk" hidden role="dialog" aria-label="Kort over forbindelserne"><div class="mvk-bar"><b>🗺 Kort over forbindelserne</b><span id="mvk-info" class="small"></span><label class="small"><input type="checkbox" id="mvk-tal" checked> Tal på pilene</label><span class="mvk-sk"></span><button class="ghost" id="mvk-zud" aria-label="Zoom ud">−</button><span id="mvk-z" class="small">100 %</span><button class="ghost" id="mvk-zind" aria-label="Zoom ind">＋</button><button class="ghost" id="mvk-tilpas">Tilpas</button><button class="ghost" id="mvk-kode">📋 Kopiér Mermaid-kode</button><button class="ghost" id="mvk-png">⬇ PNG</button><button class="ghost" id="mvk-svg">⬇ SVG</button><button id="mvk-luk">Luk (Esc)</button></div><div class="mvk-flade" id="mvk-flade"><div id="mvk-ud"></div></div><textarea id="mvk-txt" class="mvk-txt" hidden readonly aria-label="Mermaid-kode"></textarea></div>
 <div id="ws">
@@ -1089,7 +1089,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
   <div class="win" id="w3" style="left:0;top:430px;width:62%;height:550px"><div class="wh"><span>EQ-visualizer (klik og træk i en søjle for tærskel)</span><span><span id="eq-tilpas-maerke" class="eq-maerke" hidden title="Auto-tærskel er slået til: tærsklerne følger sangen. Klik for at åbne Opsætning.">◉ Auto-tærskel</span> <button id="eq-ops" class="ghost" aria-expanded="false" title="Ekstra indstillinger for EQ og slag-detektionen. EQ-billedet ændres ikke.">⚙ Opsætning</button> <button class="mx">Maksimér</button></span></div><div id="eq-panel" class="eq-panel" hidden><div class="ab"><label class="eq-kontakt" title="Tærsklerne for de 14 lydtræk følger sangen: de sænker sig i stille passager og hæver sig i høje, så slagene findes i begge. Din egen tærskel bestemmer, hvor følsom den er. Lyden ændres ikke."><input type="checkbox" id="eq-tilpas"> <b>Auto-tærskel</b></label><span class="small">Tærsklerne følger sangen, så slagene findes både i stille vers og i høje omkvæd. Lyden ændres ikke.</span></div><div class="ab"><label class="small">Hvor hurtigt den følger <input type="range" id="eq-tilpas-tid" min="1" max="8" step="0.5" value="3"> <b id="eq-tilpas-tid-v">3 s</b></label><label class="small" title="Tærsklen går aldrig under denne grænse, så stille musik ikke giver falske slag.">Bundgrænse <input type="range" id="eq-tilpas-bund" min="0" max="0.3" step="0.01" value="0.05"> <b id="eq-tilpas-bund-v">0,05</b></label></div><p class="small eq-forkl">Den hvide streg er din tærskel. Når Auto-tærskel er slået til, viser en <b style="color:#ffb347">orange streg</b> den tærskel, der bruges lige nu.</p></div><div class="wb"><canvas id="eq" aria-label="EQ-visualizer: de 14 lydtræk som søjler"></canvas></div><div id="eqctl"></div></div>
   <div class="win" id="w4" style="left:63%;top:0;width:37%;height:550px"><div class="wh"><span>Musik-generator</span><button class="mx">Maksimér</button></div><div class="wb gen" id="gen"></div></div>
   <div class="win" id="w5" style="left:0;top:990px;width:62%;height:620px"><div class="wh"><span>Radial Mesh (træk fra lydtræk til effekt)</span><span><button id="mstor" class="ghost" aria-pressed="false" title="Skjul bjælkerne foroven og forneden, så nettet fylder hele vinduet. Tryk igen for at se kontrollerne.">Stor visning</button> <button id="mfuld" class="ghost" aria-pressed="false" title="Vis nettet over hele skærmen i fuld opløsning. Escape eller knappen igen afslutter.">Fuld skærm</button> <button class="mx">Maksimér</button></span></div><div id="meshbar" class="mbar"><div class="mgrp"><span class="mlbl">Tilfældigt</span><button id="mb-rnd" class="ghost" title="Lav tilfældige forbindelser i alle tre kategorier på én gang (slag, flydende og figur-egenskaber), med antal, frø og Behold eller Erstat fra panelet Tilfældigt i Mapping. Fortryd tilfældigt sætter tilbage.">Tilfældigt (alle)</button></div>
-<div class="mgrp"><span class="mlbl">Lydtræk (yderst)</span><select id="mb-kilder" aria-label="Hvilke lydtræk der ligger yderst i spindelvævet" title="Lydtræk: de 14 lydtræk. Toner og klang: de 12 toneklasser og klang-målingerne (kræver en analyseret fil eller generatoren)."><option value="bånd">De 14 lydtræk</option><option value="analyse">Toner og klang (20)</option><option value="pad">Master Morph Pad (18)</option><option value="hnd">Hændelser (18)</option><option value="lk">Lydkort (17)</option></select></div>
+<div class="mgrp"><span class="mlbl">Lydtræk (yderst)</span><select id="mb-kilder" aria-label="Hvilke lydtræk der ligger yderst i spindelvævet" title="Lydtræk: de 14 lydtræk. Toner og klang: de 12 toneklasser og klang-målingerne (kræver en analyseret fil eller generatoren)."><option value="bånd">De 14 lydtræk</option><option value="analyse">Toner og klang (20)</option><option value="pad">Master Morph Pad (18)</option><option value="hnd">Hændelser (18)</option></select></div>
 <div class="mgrp"><span class="mlbl">Visning</span><div class="gr small"><select id="mb-vis" aria-label="Hvad spindelvævet viser" title="Oversigt: alle forbindelser. Vælg en figur for at se dets egenskaber i midten og koble dem til lydtræk. Du kan også dobbeltklikke på en knude i den indre ring."><option value="">Oversigt (alle forbindelser)</option></select><select id="mb-lag" hidden aria-label="Lag"></select><button id="mb-tilbage" class="ghost" hidden>← Oversigt</button></div></div>
 <div class="mgrp"><span class="mlbl">Opsætning (vælg én)</span><div class="seg" role="group" aria-label="Opsætning">
 <button id="mb-std" class="segb" aria-pressed="false" title="Hent den indbyggede standardopsætning">Standard</button><button id="mb-a" class="segb" aria-pressed="false" title="Hent din gemte A">A <i id="mb-as">tom</i></button><button id="mb-b" class="segb" aria-pressed="false" title="Hent din gemte B">B <i id="mb-bs">tom</i></button></div></div>
@@ -1108,7 +1108,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <div class="small" style="flex:1;min-width:180px">Træk punktet i firkanten. Det <b>bliver stående</b>, hvor du slipper det, og værdierne følger med. Højre og venstre ændrer X, op og ned ændrer Y, for alle de valgte forbindelser. Ændrer du en forbindelse på anden vis, bliver det nyt udgangspunkt, og punktet går tilbage til midten.</div></div>
 <div class="wb"><canvas id="mesh" aria-label="Radial Mesh: forbindelser mellem lydtræk og effekter som et net"></canvas></div><p id="mesh-hjaelp" class="sr-only">Radial Mesh med tastatur: venstre og højre pil flytter rundt på ringen, op og ned pil skifter mellem den ydre ring (lydtræk) og den indre (effekter, figurer eller egenskaber). Home og End går til første og sidste prik. Enter vælger en prik, og Enter på en prik på den anden ring laver forbindelsen. Escape afbryder. Delete sletter den valgte forbindelse. Skarpe parenteser eller Page up og Page down vælger forrige og næste forbindelse. Z går ind i en figur. Tasterne bruges ikke til klaveret, mens lærredet har fokus.</p><div id="meshctl"></div></div>
   <div class="win" id="w7" style="left:0;top:1260px;width:62%;height:430px"><div class="wh"><span>Analyse: toner og klang (log-spektrum, toneklasser, tonehøjde)</span><button class="mx">Maksimér</button></div><div class="wb"><canvas id="an" aria-label="Analyse: toner og klang over tid" role="img"></canvas></div></div>
-  <div class="win" id="w8" hidden style="left:26%;top:70px;width:72%;height:540px"><div class="wh"><span>Preview-dublet: træk og forbind</span><span><button id="dubx" class="ghost">Luk</button> <button class="mx">Maksimér</button></span></div><div class="dubbar"><input id="dubfind" type="search" placeholder="Find mål …" aria-label="Find mål (effekter og egenskaber)" style="width:130px"><label class="small">Lydtræk <select id="dubkild" aria-label="Hvilke lydtræk der vises til venstre"><option value="bånd">De 14 lydtræk</option><option value="analyse">Toner og klang</option><option value="rytme">Rytme (taktslag)</option><option value="pad">Master Morph Pad</option><option value="hnd">Hændelser</option><option value="lk">Lydkort</option></select></label><label class="small">Opløsning <select id="dubres" aria-label="Opløsning i dubletten"><option value="1">100 %</option><option value="0.5" selected>50 %</option><option value="0.25">25 %</option></select></label><label class="small"><input type="checkbox" id="dubkoblet"> Kun koblede</label></div><div class="wb"><canvas id="dub" aria-label="Preview-dublet: træk fra et lydtræk til en effekt eller en figur" tabindex="0" role="application" aria-describedby="dub-hjaelp"></canvas><p id="dub-hjaelp" class="sr-only">Dublet med tastatur: op og ned pil går op og ned i en kolonne, venstre og højre pil skifter mellem lydtræk til venstre og mål og figurer til højre. Home og End går til første og sidste. Enter på et lydtræk vælger det, og Enter på et mål bagefter laver forbindelsen. Enter på en figur åbner menuen med dens egenskaber. Enter på en overskrift åbner eller lukker kassen. Escape afbryder. Delete sletter den valgte forbindelse. Skarpe parenteser eller Page up og Page down vælger forrige og næste forbindelse. Tasterne bruges ikke til klaveret, mens lærredet har fokus.</p><div id="dubmenu" hidden></div></div><div id="dubsel" class="small"></div></div>
+  <div class="win" id="w8" hidden style="left:26%;top:70px;width:72%;height:540px"><div class="wh"><span>Preview-dublet: træk og forbind</span><span><button id="dubx" class="ghost">Luk</button> <button class="mx">Maksimér</button></span></div><div class="dubbar"><input id="dubfind" type="search" placeholder="Find mål …" aria-label="Find mål (effekter og egenskaber)" style="width:130px"><label class="small">Lydtræk <select id="dubkild" aria-label="Hvilke lydtræk der vises til venstre"><option value="bånd">De 14 lydtræk</option><option value="analyse">Toner og klang</option><option value="rytme">Rytme (taktslag)</option><option value="pad">Master Morph Pad</option><option value="hnd">Hændelser</option></select></label><label class="small">Opløsning <select id="dubres" aria-label="Opløsning i dubletten"><option value="1">100 %</option><option value="0.5" selected>50 %</option><option value="0.25">25 %</option></select></label><label class="small"><input type="checkbox" id="dubkoblet"> Kun koblede</label></div><div class="wb"><canvas id="dub" aria-label="Preview-dublet: træk fra et lydtræk til en effekt eller en figur" tabindex="0" role="application" aria-describedby="dub-hjaelp"></canvas><p id="dub-hjaelp" class="sr-only">Dublet med tastatur: op og ned pil går op og ned i en kolonne, venstre og højre pil skifter mellem lydtræk til venstre og mål og figurer til højre. Home og End går til første og sidste. Enter på et lydtræk vælger det, og Enter på et mål bagefter laver forbindelsen. Enter på en figur åbner menuen med dens egenskaber. Enter på en overskrift åbner eller lukker kassen. Escape afbryder. Delete sletter den valgte forbindelse. Skarpe parenteser eller Page up og Page down vælger forrige og næste forbindelse. Tasterne bruges ikke til klaveret, mens lærredet har fokus.</p><div id="dubmenu" hidden></div></div><div id="dubsel" class="small"></div></div>
   <div class="win" id="w9" hidden style="left:3%;top:90px;width:70%;height:540px"><div class="wh"><span>Lyd i 3D: musikken som landskab og striber</span><span><button id="d3x" class="ghost">Luk</button> <button class="mx">Maksimér</button></span></div><div class="dubbar"><label class="small">Kamera <select id="d3kam" aria-label="Kamera"><option value="A">A Flyvning (fremtiden er synlig)</option><option value="B">B Horisont (nutid og fortid)</option><option value="C">C Skulptur (alt bliver stående)</option></select></label><label class="small">Farve følger <select id="d3farve" aria-label="Hvad farven følger"><option value="frekvens">Frekvensområde (virker altid)</option><option value="toneklasse">Toneklasse (tydelige toner)</option><option value="klang">Klang (lys eller mørk)</option><option value="styrke">Styrke</option><option value="sektion">Sektion</option></select></label><label class="small">Signaler forsvinder <select id="d3forsvind" aria-label="Hvornår striber, udbrud og taktlinjer forsvinder"><option value="klang">når klangen er væk</option><option value="lyd">efter lydens egen udtoning</option><option value="kort">efter cirka et sekund</option><option value="vindue">først når de forlader vinduet</option></select></label><label class="small"><input type="checkbox" id="d3sikker" checked> Sikker tilstand (højst 3 blink pr. sekund)</label><span class="small" id="d3info"></span></div><div class="wb"><canvas id="d3" aria-label="Lyd i 3D: landskab og striber, der følger musikken"></canvas><p id="d3-hjaelp" class="sr-only">Lyd i 3D er et landskab og striber, der følger musikken. Det har ingen musestyring. Med fokus på lærredet vælger tallene 1, 2 og 3 kamera A, B og C, pil op og ned skifter, hvad farven følger, og pil venstre og højre skifter, hvornår signaler forsvinder. Enter læser indstillingerne op. Tasterne bruges ikke til klaveret, mens lærredet har fokus.</p></div></div>
   <div class="win" id="w10" hidden style="left:14%;top:80px;width:72%;height:580px"><div class="wh"><span>Routing-overblik: lydtræk → mål → figurer og kasser</span><span><button id="rtx" class="ghost">Luk</button> <button class="mx">Maksimér</button></span></div><div class="dubbar"><label class="small">Layout <select id="rtlay" aria-label="Layout for routing-overblikket"><option value="kol">Kolonner</option><option value="fri">Frit netværk (kræfter)</option><option value="matrix">Matrix</option><option value="strom">Strømme</option><option value="tid">Tidslinje</option><option value="trae">Træ</option><option value="treemap">Treemap</option><option value="bue">Bue-diagram</option><option value="hive">Hive plot</option><option value="ring">Ring (chord)</option><option value="d3">3D-netværk</option></select></label><input id="rtfind" type="search" placeholder="Find …" aria-label="Find lydtræk, mål eller figur" style="width:140px"><label class="small" title="Linjerne lyser og bliver tykkere, når forbindelsen slår ud (envelope)."><input type="checkbox" id="rtpuls" checked> Levende linjer</label><label class="small" title="Vis også forbindelser, der er slået fra (stiplede)."><input type="checkbox" id="rtfra" checked> Vis slået fra</label><button id="rtryd" class="ghost">Ryd fokus</button><span class="small" id="rtinfo" aria-live="off"></span></div><div class="dubbar" id="rtkraft" hidden><span class="small"><b>Kræfter</b></span><label class="small" title="Hvor hårdt alle knuder skubber til hinanden. Højere giver mere luft.">Frastødning <input type="range" data-k="rep" id="rtk-rep" min="0" max="3" step=".05"> <span id="rtv-rep"></span></label><label class="small" title="Hver linje er en fjeder; dette er den længde, fjederen helst vil have.">Fjederlængde <input type="range" data-k="len" id="rtk-len" min="30" max="220" step="5"> <span id="rtv-len"></span></label><label class="small" title="Trækker alle knuder mod midten, så netværket holder sammen.">Tyngdekraft <input type="range" data-k="grav" id="rtk-grav" min="0" max="3" step=".05"> <span id="rtv-grav"></span></label><label class="small" title="Trækker lydtræk mod venstre, mål mod midten og figurer mod højre. 0 er rent kraftlayout.">Retning <input type="range" data-k="ret" id="rtk-ret" min="0" max="1" step=".05"> <span id="rtv-ret"></span></label><label class="small" title="Tegn den samlede kraft på hver knude som en gul pil."><input type="checkbox" id="rtk-vis"> Vis kræfter</label><button id="rtk-ryst" class="ghost">Ryst</button><button id="rtk-los" class="ghost">Løsn fastgjorte</button><button id="rtk-nul" class="ghost">Standard</button><span class="small" id="rtk-ro"></span></div><div class="wb"><canvas id="rt" aria-label="Routing-overblik: alle forbindelser i tre kolonner, lydtræk, mål og figurer"></canvas><p id="rt-hjaelp" class="sr-only">Routing-overblik med tastatur: op og ned pil går i en kolonne, venstre og højre pil skifter mellem lydtræk, mål og figurer og kasser. Home og End går til første og sidste. Enter sætter fokus på knuden, så kun dens forbindelser er fremhævet, og Enter igen slår fokus fra. Skarpe parenteser eller Page up og Page down vælger forrige og næste forbindelse (inden for fokus). Delete sletter den valgte forbindelse. Escape rydder fokus og valg. I layoutet Frit netværk fastgør eller løsner P den aktuelle knude, og op og ned pil følger knudernes højde. Layout-menuen har 11 layouts; tastaturet går gennem lydtræk, mål og figurer på samme måde i dem alle. Tasterne bruges ikke til klaveret, mens lærredet har fokus.</p></div><div id="rtsel" class="small"></div></div>
   <div class="win" id="w11" hidden style="left:18%;top:90px;width:64%;height:600px"><div class="wh"><span>Master Morph Pad</span><span><button id="mmpx" class="ghost">Luk</button> <button class="mx">Maksimér</button></span></div><div class="dubbar"><label class="small">Model <select id="mmpmod" aria-label="Model for Master Morph Pad"><option value="fjeder">1. Fjeder (elastik)</option><option value="uden">2. Uden fjeder (morph)</option><option value="kreds">5. Kredsløb</option><option value="flok">6. Flok</option><option value="magnet">7. Magnet</option></select></label><label class="small" title="Master bevæger sig selv, når du ikke har rørt den i halvandet sekund."><input type="checkbox" id="mmpauto" checked> Selvkørsel</label><button id="mmphjem" class="ghost">Centrér</button><button id="mmpnul" class="ghost">Standard</button><button id="mmpforb" class="ghost" title="Åbn Dublet med pad'ets kilder til venstre, så du kan trække fra en cirkel til en effekt eller en egenskab.">Forbind i Dublet</button><span class="small" id="mmpforkl"></span></div><div class="dubbar" id="mmpskyd"></div><div class="dubbar" id="mmpbland" hidden><label class="small" title="Master blander forbindelserne fra de fire valgte opsætninger efter, hvor tæt den er på hver cirkel."><input type="checkbox" id="mmpbl-til"> <b>Bland opsætninger</b></label><span id="mmpbl-valg"></span><span class="small" title="Hvad blandingen også tager med. Forbindelser og master blandes altid.">Også: <label><input type="checkbox" data-blx="fig"> Figurer</label> <label><input type="checkbox" data-blx="pos"> Positioner</label> <label><input type="checkbox" data-blx="scene"> Bane og scene</label></span><span class="small" id="mmpbl-st"></span></div><div class="wb"><canvas id="mmp" aria-label="Master Morph Pad: træk i den store cirkel"></canvas><p id="mmp-hjaelp" class="sr-only">Master Morph Pad med tastatur: piletasterne flytter master-cirklen, Shift og en piletast giver små skridt, Home sætter den i midten. Værdierne for hver cirkel står under fladen. Tasterne bruges ikke til klaveret eller lydstyrken, mens fladen har fokus.</p></div><div id="mmpval" class="small"></div></div>
@@ -1240,7 +1240,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
  <div id="g1">
 <h2 id="man-del-bruger">Brugermanual</h2>
 <p class="small">Manualen er ordnet efter <b>emne</b>. Inden for hvert emne står vejledningerne først, så referencen (de nummererede afsnit) og til sidst nyhederne fra hver version. Søg i feltet øverst, hvis du leder efter et bestemt ord. Den <b>tekniske manual</b> og <b>visionen</b> ligger i de andre faner.</p>
-<div class="man-nyt"><b>Nyt i v9.11:</b> <a href="#man-v911" onclick="return !manualGaa('man-v911')">Router: kompakt visning og sortering efter musik (D2)</a>. De forrige: <a href="#man-v910" onclick="return !manualGaa('man-v910')">v9.10</a> · <a href="#man-v99" onclick="return !manualGaa('man-v99')">v9.9</a> · <a href="#man-v98" onclick="return !manualGaa('man-v98')">v9.8</a> · <a href="#man-v97" onclick="return !manualGaa('man-v97')">v9.7</a> · <a href="#man-v96" onclick="return !manualGaa('man-v96')">v9.6</a> · <a href="#man-v95" onclick="return !manualGaa('man-v95')">v9.5</a> · <a href="#man-v94" onclick="return !manualGaa('man-v94')">v9.4</a> · <a href="#man-v93" onclick="return !manualGaa('man-v93')">v9.3</a> · <a href="#man-v92" onclick="return !manualGaa('man-v92')">v9.2</a> · <a href="#man-v91" onclick="return !manualGaa('man-v91')">v9.1</a> · <a href="#man-v90" onclick="return !manualGaa('man-v90')">v9.0</a> · <a href="#man-v89" onclick="return !manualGaa('man-v89')">v8.9</a> · <a href="#man-v88" onclick="return !manualGaa('man-v88')">v8.8</a> · <a href="#man-v87" onclick="return !manualGaa('man-v87')">v8.7</a> · <a href="#man-v86" onclick="return !manualGaa('man-v86')">v8.6</a> · <a href="#man-v85" onclick="return !manualGaa('man-v85')">v8.5</a> · <a href="#man-v84" onclick="return !manualGaa('man-v84')">v8.4</a> · <a href="#man-v83" onclick="return !manualGaa('man-v83')">v8.3</a> · <a href="#man-v82" onclick="return !manualGaa('man-v82')">v8.2</a> · <a href="#man-v81" onclick="return !manualGaa('man-v81')">v8.1</a> · <a href="#man-v80" onclick="return !manualGaa('man-v80')">v8.0</a> · <a href="#man-v79" onclick="return !manualGaa('man-v79')">v7.9</a> · <a href="#man-v78" onclick="return !manualGaa('man-v78')">v7.8</a> · <a href="#man-v77" onclick="return !manualGaa('man-v77')">v7.7</a> · <a href="#man-v76" onclick="return !manualGaa('man-v76')">v7.6</a> · <a href="#man-v75" onclick="return !manualGaa('man-v75')">v7.5</a> · <a href="#man-v74" onclick="return !manualGaa('man-v74')">v7.4</a> · <a href="#man-v73" onclick="return !manualGaa('man-v73')">v7.3</a> · <a href="#man-v72" onclick="return !manualGaa('man-v72')">v7.2</a> · <a href="#man-v71" onclick="return !manualGaa('man-v71')">v7.1</a> · <a href="#man-v70" onclick="return !manualGaa('man-v70')">v7.0</a> · <a href="#man-v69" onclick="return !manualGaa('man-v69')">v6.9</a> · <a href="#man-v68" onclick="return !manualGaa('man-v68')">v6.8</a> · <a href="#man-v67" onclick="return !manualGaa('man-v67')">v6.7</a> · <a href="#man-v66" onclick="return !manualGaa('man-v66')">v6.6</a> · <a href="#man-v65" onclick="return !manualGaa('man-v65')">v6.5</a></div>
+<div class="man-nyt"><b>Nyt i v9.12:</b> <a href="#man-v912" onclick="return !manualGaa('man-v912')">Lydkort er fjernet</a>. De forrige: <a href="#man-v911" onclick="return !manualGaa('man-v911')">v9.11</a> · <a href="#man-v910" onclick="return !manualGaa('man-v910')">v9.10</a> · <a href="#man-v99" onclick="return !manualGaa('man-v99')">v9.9</a> · <a href="#man-v98" onclick="return !manualGaa('man-v98')">v9.8</a> · <a href="#man-v97" onclick="return !manualGaa('man-v97')">v9.7</a> · <a href="#man-v96" onclick="return !manualGaa('man-v96')">v9.6</a> · <a href="#man-v95" onclick="return !manualGaa('man-v95')">v9.5</a> · <a href="#man-v94" onclick="return !manualGaa('man-v94')">v9.4</a> · <a href="#man-v93" onclick="return !manualGaa('man-v93')">v9.3</a> · <a href="#man-v92" onclick="return !manualGaa('man-v92')">v9.2</a> · <a href="#man-v91" onclick="return !manualGaa('man-v91')">v9.1</a> · <a href="#man-v90" onclick="return !manualGaa('man-v90')">v9.0</a> · <a href="#man-v89" onclick="return !manualGaa('man-v89')">v8.9</a> · <a href="#man-v88" onclick="return !manualGaa('man-v88')">v8.8</a> · <a href="#man-v87" onclick="return !manualGaa('man-v87')">v8.7</a> · <a href="#man-v86" onclick="return !manualGaa('man-v86')">v8.6</a> · <a href="#man-v85" onclick="return !manualGaa('man-v85')">v8.5</a> · <a href="#man-v84" onclick="return !manualGaa('man-v84')">v8.4</a> · <a href="#man-v83" onclick="return !manualGaa('man-v83')">v8.3</a> · <a href="#man-v82" onclick="return !manualGaa('man-v82')">v8.2</a> · <a href="#man-v81" onclick="return !manualGaa('man-v81')">v8.1</a> · <a href="#man-v80" onclick="return !manualGaa('man-v80')">v8.0</a> · <a href="#man-v79" onclick="return !manualGaa('man-v79')">v7.9</a> · <a href="#man-v78" onclick="return !manualGaa('man-v78')">v7.8</a> · <a href="#man-v77" onclick="return !manualGaa('man-v77')">v7.7</a> · <a href="#man-v76" onclick="return !manualGaa('man-v76')">v7.6</a> · <a href="#man-v75" onclick="return !manualGaa('man-v75')">v7.5</a> · <a href="#man-v74" onclick="return !manualGaa('man-v74')">v7.4</a> · <a href="#man-v73" onclick="return !manualGaa('man-v73')">v7.3</a> · <a href="#man-v72" onclick="return !manualGaa('man-v72')">v7.2</a> · <a href="#man-v71" onclick="return !manualGaa('man-v71')">v7.1</a> · <a href="#man-v70" onclick="return !manualGaa('man-v70')">v7.0</a> · <a href="#man-v69" onclick="return !manualGaa('man-v69')">v6.9</a> · <a href="#man-v68" onclick="return !manualGaa('man-v68')">v6.8</a> · <a href="#man-v67" onclick="return !manualGaa('man-v67')">v6.7</a> · <a href="#man-v66" onclick="return !manualGaa('man-v66')">v6.6</a></div>
 <h2 id="man-emne-kom">Kom i gang</h2>
 <h3 id="man-kom-i-gang">Kom i gang på fem minutter</h3>
 <ol>
@@ -1416,12 +1416,18 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li><b>Søg</b> (Ctrl+K, på Mac ⌘K): skriv et par bogstaver, fx <i>udgang</i>, <i>pigernes</i>, <i>editor</i> eller <i>glød</i>, og vælg med pilene og Enter. Søgningen finder knapper i menuerne, vinduer, Scene-faner, forudindstillinger og layouts.</li>
 <li>Knapperne er flyttet, ikke lavet om, så alt virker som før.</li>
 </ul>
+<h3 id="man-v912">Lydkort er fjernet (v9.12)</h3>
+<ul>
+<li>Kildegruppen <b>Lydkort</b> (lk:, en lydkort-fil fra Lydkosmos) er fjernet fra Claude MV, fordi den gjorde tingene for komplicerede. Kortet i Lydkilde, knappen i sidebjælken under 🎵 Musik og gruppen i kildelisterne, Radial Mesh, Mesh 3D og Dublet er væk.</li>
+<li>Gemte opsætninger, pladser og forudindstillinger med en Lydkort-kilde går ikke i stykker. Forbindelsen bliver stående, men er <b>slået fra</b> og giver 0. Der står en gul besked i statuslinjen, øverst i Mapping og Router og ved forbindelsen. Fjern den selv, når du vil.</li>
+<li>Den sidste version med Lydkort er gemt i repoet med mærket (fagudtryk: tag) <code>milepael-med-lydkort</code>.</li>
+</ul>
 <h3 id="man-v911">Router: kompakt visning og sortering efter musik (v9.11)</h3>
 <ul>
 <li><b>Visning: Kompakt · Fuld.</b> Kompakt (standard) viser for hver forbindelse kilden, Manuel eller Auto, VU-måleren, Ind, Tærskel og Ud, kæden og målet. Så kan mange forbindelser ses på én gang. <b>Detaljer ▸</b> åbner én boks med skyderne, drejeknapperne, Styrke brugt og signalet over tid. <i>Fuld</i> viser alt i alle bokse.</li>
 <li><b>Sortér: D2 · Rækkefølge.</b> D2 (vores navn for valget) sorterer kilderne i mapper efter musik: Rytme, Tone og harmoni, Klang, Dynamik, Frekvens, Rum, Struktur og Styring. Hver mappe har en overskrift. Inden i mappen står slag først, så glidende, rampe og valg. <i>Rækkefølge</i> er den rækkefølge, forbindelserne bruger kilderne i.</li>
 <li><b>Farve efter type:</b> slag er orange, glidende blå, rampe grøn og valg lilla. Det gælder kilderne, boksene og linjerne.</li>
-<li><b>Intet lægges sammen:</b> hver kilde har sin egen chip med sit tal lige nu og hvilke forbindelser, der bruger den (fx <i>bruges af forbindelserne 1, 9</i>). Kick fra Lydtræk og Kick fra Lydkort står hver for sig.</li>
+<li><b>Intet lægges sammen:</b> hver kilde har sin egen chip med sit tal lige nu og hvilke forbindelser, der bruger den (fx <i>bruges af forbindelserne 1, 9</i>).</li>
 <li><b>Vis kilder, der ikke bruges:</b> alle andre kilder står nederst i deres mapper med deres tal lige nu. Tryk <b>＋</b> for at lave en forbindelse fra en af dem.</li>
 <li><b>Standard-visning</b> sætter Kompakt og D2 og skjuler de ubrugte kilder.</li>
 </ul>
@@ -1465,12 +1471,12 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li>Den gamle henvisning til en planfil for fase 2 er fjernet fra koden og fra manualen. Planen står i <code>CLAUDE.md</code> i repoet (afsnit 6).</li>
 <li>Repoet har fået en <b>testpakke</b> (mappen <code>tests/</code>): syntaks, opstart, alle forudindstillinger, alle 5 layouts, Mesh 3D og Øjet, gem og hent en plads, tilføj og fjern en forbindelse, og et tjek af indholdsfortegnelsen.</li>
 </ul>
-<h3 id="man-v96">Lydkilde: fil, generator, lyd ind og lydkort ét sted (v9.6)</h3>
+<h3 id="man-v96">Lydkilde: fil, generator og lyd ind ét sted (v9.6)</h3>
 <ul>
 <li>Arbejdsfeltet har en ny fane, <b>Lydkilde</b>, i stedet for Generator. Den samler alt, hvor lyden kommer fra, i fire kort.</li>
 <li><b>Lydfil</b>: træk en mp3 (eller wav, ogg …) ind i feltet, eller klik for at vælge. Under feltet står filens navn, længde, tempo, toneart, og om analysen kører.</li>
 <li><b>Generator</b>: vælg genre, tempo og tæthed, tryk <b>▶ Afspil generator</b> og <b>✦ Nyt mønster</b>. Det er den samme generator som før, med en enklere flade; den fulde flade med toneart, lyde og trin åbnes med <b>Avanceret …</b>.</li>
-<li><b>Lyd ind</b> (mikrofon eller fanelyd) og <b>Lydkort</b> (fra Lydkosmos) har fået hver sit lille kort, fordi de bruges sjældnere.</li>
+<li><b>Lyd ind</b> (mikrofon eller fanelyd) har fået sit eget lille kort, fordi det bruges sjældnere.</li>
 </ul>
 <h3 id="man-v95">Forklaringer til danserens og diskokuglens egenskaber (v9.5)</h3>
 <ul>
@@ -1580,7 +1586,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li>Taktslag er ringe (det første slag i takten er lyserødt), og afsnit med et energispring (omkvæd eller drop) er <b>gyldne lysvægge</b>, som man ser komme mange sekunder i forvejen.</li>
 <li><b>Fremtid</b> (1 til 20 sekunder, standard 6) bestemmer, hvor langt frem man ser. 5 til 10 sekunder er godt til at mærke et omkvæd nærme sig.</li>
 <li>Mus: træk = drej (lidt), hjul = zoom, dobbeltklik = forfra. <b>Stå alene</b>, <b>Fuld skærm</b> og <b>Send til skærm</b> virker som i Mesh 3D.</li>
-<li>Fremtiden findes kun med en <b>analyseret lydfil</b> (og Lydkort). Med mikrofon og generator viser øjet kun nuet. Hændelser som akkordskift og Morph Pad har ingen fremtid; taktslag, sektionsskift og drop bruger analysens taktslag og afsnit.</li>
+<li>Fremtiden findes kun med en <b>analyseret lydfil</b>. Med mikrofon og generator viser øjet kun nuet. Hændelser som akkordskift og Morph Pad har ingen fremtid; taktslag, sektionsskift og drop bruger analysens taktslag og afsnit.</li>
 </ul>
 <h3 id="man-v79">Pumpede dioder og gemte lys i Mesh 3D (v7.9)</h3>
 <ul>
@@ -1657,7 +1663,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li><b>Mus:</b> træk for at dreje, hjulet for at zoome, dobbeltklik for at nulstille kameraet.</li>
 <li><b>Knapper:</b> Drej selv, Navne, Partikler, Nulstil kamera, <b>✦ Stå alene</b> (knapperne skjules, og kameraet svæver rundt af sig selv: et show for sig selv; Esc eller ⚙ i hjørnet giver knapperne igen) og ⛶ Fuld skærm.</li>
 <li><b>▸ Send til skærm</b> i Scene (eller 📽 Vis → Udgangsvindue med kilden Mesh 3D) viser den på projektoren, tegnet direkte i skærmens fulde opløsning.</li>
-<li>Du laver og ændrer forbindelserne i Radial Mesh (og Mapping, Form-editoren og ★ Adfærd); Mesh 3D viser dem. Kildegruppen (Lydtræk, Toner og klang, Hændelser, Morph Pad, Lydkort) følger Radial Mesh.</li>
+<li>Du laver og ændrer forbindelserne i Radial Mesh (og Mapping, Form-editoren og ★ Adfærd); Mesh 3D viser dem. Kildegruppen (Lydtræk, Toner og klang, Hændelser, Morph Pad) følger Radial Mesh.</li>
 <li>Mesh 3D er bygget med Three.js (MIT-licens), som ligger inde i filen, så den virker uden internet. Den kræver WebGL, som alle nyere browsere har.</li>
 </ul>
 <h3 id="man-v68">Samlinger, oprydning og manualen efter emne (v6.8)</h3>
@@ -1778,13 +1784,6 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li><b>31 bånd:</b> viser 31 smalle frekvensbånd i stedet for de 14 lydtræk.</li>
 <li><b>Hvad ligger her?:</b> når musen er over en søjle, står der, hvad båndet typisk fanger, fx <i>bækkener, hihat, luft og glans</i>.</li>
 <li>EQ+ hører til niveau 2 og op. Valgene huskes.</li>
-</ul>
-<h3 id="man-v65">Lydkort fra Lydkosmos (v6.5)</h3>
-<ul>
-<li>Claude MV kan nu læse et <b>lydkort</b> (.json), som Lydkosmos har gemt med knappen <i>Gem lydkort</i>. Indlæs det under <b>🎵 Musik → 🗺 Indlæs lydkort fra Lydkosmos</b>. Lydkortet skal høre til den samme sang som lydfilen; passer længden ikke (mere end et halvt sekund forskel), siger programmet det.</li>
-<li>Det giver den nye kildegruppe <b>Lydkort</b> (fra niveau 2) i alle kildelister og i Radial Mesh og Dublet: 7 bånd (sub-bas, bas, lav-mellem, mellemtone, høj-mellem, presence, brilliance), <b>Kick</b>, <b>Snare</b> og <b>Hi-hat</b> som impulser, <b>Beat</b>, <b>Takt</b>, <b>Beat-fase</b>, <b>Forvarsel kick</b> og <b>Forvarsel snare</b> (stiger op mod det næste kraftige slag, højst 1,3 sekunder før) samt <b>Niveau</b> og <b>Peak</b> (1 eller mere betyder clipping).</li>
-<li>Lydkortet følger sangens tid, også når du spoler, sætter på pause eller bruger Sløjfe. Med generatoren og Lyd ind giver det 0, fordi der ikke er nogen sang at slå op i.</li>
-<li>Modulet er skrevet i Lydkosmos-chatten og koblet ind efter samme mønster som Hændelserne.</li>
 </ul>
 <h2 id="man-emne-forb">Forbindelser og kilder</h2>
 <h3 id="man-mesh-dublet">Radial Mesh eller Dublet? Og hvor klikker jeg, når der står ⚡ Klik nu på et lydtræk</h3>
@@ -3391,73 +3390,73 @@ if(typeof module!=='undefined'&&module.exports)module.exports=Rytme;
      4. v9.8: LYDMOTOR 2
      5. FASE 2: MESH-FUNKTIONER
      6. FASE 2: SCENE (trin 3): fundamentet
-     7. Indkobling i Claude MV (v6.5)
-     8. FASE 2: KLODS-TIMING (trin 4)
-     9. FASE 2: LYDLAG (trin 5)
-    10. FASE 2: OPSÆTNINGER OG SIKKERHED
-    11. v5.6: NYE FORUDINDSTILLINGER
-    12. v6.6: DISKODRONNINGERNE
-    13. v7.6: SINGLEN: GULD OG DIAMANT
-    14. v5.7: 11 NYE FORUDINDSTILLINGER
-    15. KVALITET OG YDELSE
-    16. FEST: én knap, så det hele kommer i gang
-    17. TOPBAR I FEM TRIN, HJÆLP OG TOOLTIPS
-    18. SHOW: tilpas figurer og effekter til sangen
-    19. PLAYER: volumen, mute, niveaumåler, spol og tastaturgenveje
-    20. KNAPPERNES FARVER: en knap, der er trykket, lyser, og farven fortæller, hvad der skete
-    21. SIKKER VISNING: blinkbegrænsning og bevægelsesdæmpning
-    22. UDGANGSVINDUE: billedet til projektoren
-    23. TIDSLINJE: zoom, valg af klip og A/B-sløjfe
-    24. TILFÆLDIGT: forbindelser (slag, flydende, figur-egenskaber) med antal, behold eller erstat, frø og Fortryd
-    25. FIGUR-GENERATOR: mange figurer på én gang (antal, lag, former, farver efter toneart, tekstur, ringe, kobling, frø og Fortryd)
-    26. VINDUER: snap, aktivt vindue, layouts og topbarens størrelse
-    27. LIVE PREVIEW: format og fuld skærm
-    28. OPTAG VIDEO
-    29. LYD IND (live)
-    30. TAKTFØLGER (live)
-    31. TRYK-OG-HOLD-TOOLTIPS (berøringsskærm)
-    32. TASTATURSTYRING AF RADIAL MESH
-    33. TASTATURSTYRING AF LYD I 3D
-    34. LYDSTATUS, LYDTEST OG FEJLLOG
-    35. NUMRE PÅ VINDUER OG BOKSE
-    36. DANSER: eksempel, Dansemapping og udseender
-    37. FASE 2: FORM-EDITOR (trin 1 og 2)
-    38. PERFECT 1 OG PERFECT 2 (lyd og vision)
-    39. v5.1: NIVEAUER I FORM-EDITOREN
-    40. v5.2: HÆNDELSER PÅ DE FÆRDIGE FIGURER
-    41. v6.0: ADFÆRD OG LEVENDE PRIKKER
-    42. v6.1: HÅNDTAG I EDITORENS BILLEDE
-    43. v6.2: TILPAS TIL SANGEN (dynamiske tærskler)
-    44. v6.4: EQ+ (udvidet EQ ved siden af den gamle)
-    45. v7.0: VINDUER HOLDER SIG FRI AF SIDEBJÆLKEN OG BUNDBJÆLKEN
-    46. v7.1: ALLE VINDUER ALTID ÅBNE (ingen mini-vinduer i hjørnerne)
-    47. v7.0: SKABELON ERSTATTER DEN URØRTE FIGUR 1
-    48. v6.9 / v7.1: MESH 3D (Radial Mesh i rigtig 3D med shaders)
-    49. v7.5: DANSER BAGVED i Mesh 3D
-    50. v7.9: Lys-opsætninger (gem og hent lys)
-    51. v7.2: 💡 Lys-panelet
-    52. v8.0: ØJET (fremtidslys)
-    53. v8.1: Øjet, cyberpunk-finish
-    54. v8.2: Øjet til lange mix: blokke og Auto-tærskel
-    55. v8.2: 💡 Lys til Øjet
-    56. v8.2: øjenlåg, blink og pupil ved drop
-    57. v6.7: AKTIVT VINDUE ØVERST
-    58. v6.8: SAMLINGER (faner som i Scene)
-    59. v8.3: ARBEJDSFLADE, TOPBAR-LAYOUTS OG OPRYDNING
-    60. v8.4: GAIN-STAKKEN VISES OG KORT OVER FORBINDELSERNE
-    61. v8.5: LÅS VINDUER OG STORT SKRIVEBORD
-    62. v8.6: MESH 3D-LYSPANELET I NY STIL, DIODER FØLGER ATTACK OG RELEASE, FULD VISNING MED EN VEJ UD, VINDUER INDENFOR
-    63. v8.7: ZONE-TILSTAND (vinduessystem A)
-    64. v8.8: NY BUNDBAR OG SIDEBJÆLKE
-    65. v8.9: LEVENDE BAGGRUND OG GLØD PÅ MÅLERNE
-    66. v9.0: INTET LIGGER FRIT OVEN PÅ ZONERNE
-    67. v9.3: EDITOREN RYDDET OP
-    68. v9.4: EDITORENS EGENSKABER I NY STIL
-    69. v9.5: FORKLARINGER TIL DANSERENS OG DISKOKUGLENS EGENSKABER
-    70. v9.6: LYDKILDE (W31)
-    71. v9.10: SIGNALTYPER (D2)
-    72. v9.9: ROUTER 2.0 MOTOR
-    73. v9.9: ROUTER 2.0
+     7. FASE 2: KLODS-TIMING (trin 4)
+     8. FASE 2: LYDLAG (trin 5)
+     9. FASE 2: OPSÆTNINGER OG SIKKERHED
+    10. v5.6: NYE FORUDINDSTILLINGER
+    11. v6.6: DISKODRONNINGERNE
+    12. v7.6: SINGLEN: GULD OG DIAMANT
+    13. v5.7: 11 NYE FORUDINDSTILLINGER
+    14. KVALITET OG YDELSE
+    15. FEST: én knap, så det hele kommer i gang
+    16. TOPBAR I FEM TRIN, HJÆLP OG TOOLTIPS
+    17. SHOW: tilpas figurer og effekter til sangen
+    18. PLAYER: volumen, mute, niveaumåler, spol og tastaturgenveje
+    19. KNAPPERNES FARVER: en knap, der er trykket, lyser, og farven fortæller, hvad der skete
+    20. SIKKER VISNING: blinkbegrænsning og bevægelsesdæmpning
+    21. UDGANGSVINDUE: billedet til projektoren
+    22. TIDSLINJE: zoom, valg af klip og A/B-sløjfe
+    23. TILFÆLDIGT: forbindelser (slag, flydende, figur-egenskaber) med antal, behold eller erstat, frø og Fortryd
+    24. FIGUR-GENERATOR: mange figurer på én gang (antal, lag, former, farver efter toneart, tekstur, ringe, kobling, frø og Fortryd)
+    25. VINDUER: snap, aktivt vindue, layouts og topbarens størrelse
+    26. LIVE PREVIEW: format og fuld skærm
+    27. OPTAG VIDEO
+    28. LYD IND (live)
+    29. TAKTFØLGER (live)
+    30. TRYK-OG-HOLD-TOOLTIPS (berøringsskærm)
+    31. TASTATURSTYRING AF RADIAL MESH
+    32. TASTATURSTYRING AF LYD I 3D
+    33. LYDSTATUS, LYDTEST OG FEJLLOG
+    34. NUMRE PÅ VINDUER OG BOKSE
+    35. DANSER: eksempel, Dansemapping og udseender
+    36. FASE 2: FORM-EDITOR (trin 1 og 2)
+    37. PERFECT 1 OG PERFECT 2 (lyd og vision)
+    38. v5.1: NIVEAUER I FORM-EDITOREN
+    39. v5.2: HÆNDELSER PÅ DE FÆRDIGE FIGURER
+    40. v6.0: ADFÆRD OG LEVENDE PRIKKER
+    41. v6.1: HÅNDTAG I EDITORENS BILLEDE
+    42. v6.2: TILPAS TIL SANGEN (dynamiske tærskler)
+    43. v6.4: EQ+ (udvidet EQ ved siden af den gamle)
+    44. v7.0: VINDUER HOLDER SIG FRI AF SIDEBJÆLKEN OG BUNDBJÆLKEN
+    45. v7.1: ALLE VINDUER ALTID ÅBNE (ingen mini-vinduer i hjørnerne)
+    46. v7.0: SKABELON ERSTATTER DEN URØRTE FIGUR 1
+    47. v6.9 / v7.1: MESH 3D (Radial Mesh i rigtig 3D med shaders)
+    48. v7.5: DANSER BAGVED i Mesh 3D
+    49. v7.9: Lys-opsætninger (gem og hent lys)
+    50. v7.2: 💡 Lys-panelet
+    51. v8.0: ØJET (fremtidslys)
+    52. v8.1: Øjet, cyberpunk-finish
+    53. v8.2: Øjet til lange mix: blokke og Auto-tærskel
+    54. v8.2: 💡 Lys til Øjet
+    55. v8.2: øjenlåg, blink og pupil ved drop
+    56. v6.7: AKTIVT VINDUE ØVERST
+    57. v6.8: SAMLINGER (faner som i Scene)
+    58. v8.3: ARBEJDSFLADE, TOPBAR-LAYOUTS OG OPRYDNING
+    59. v8.4: GAIN-STAKKEN VISES OG KORT OVER FORBINDELSERNE
+    60. v8.5: LÅS VINDUER OG STORT SKRIVEBORD
+    61. v8.6: MESH 3D-LYSPANELET I NY STIL, DIODER FØLGER ATTACK OG RELEASE, FULD VISNING MED EN VEJ UD, VINDUER INDENFOR
+    62. v8.7: ZONE-TILSTAND (vinduessystem A)
+    63. v8.8: NY BUNDBAR OG SIDEBJÆLKE
+    64. v8.9: LEVENDE BAGGRUND OG GLØD PÅ MÅLERNE
+    65. v9.0: INTET LIGGER FRIT OVEN PÅ ZONERNE
+    66. v9.3: EDITOREN RYDDET OP
+    67. v9.4: EDITORENS EGENSKABER I NY STIL
+    68. v9.5: FORKLARINGER TIL DANSERENS OG DISKOKUGLENS EGENSKABER
+    69. v9.6: LYDKILDE (W31)
+    70. v9.10: SIGNALTYPER (D2)
+    71. v9.9: ROUTER 2.0 MOTOR
+    72. v9.9: ROUTER 2.0
+    73. v9.12: FJERNEDE KILDER
     74. v6.3: SIDEBJÆLKE, TRANSPORT NEDERST OG SØG (Ctrl+K)
     75. Søg (kommandopalet)
     76. FASE 2: MESH-LINJER (tykkelse og lys-flow)
@@ -3595,7 +3594,7 @@ $('file').onchange=async e=>{
   actx=actx||new (window.AudioContext||window.webkitAudioContext)();
   $('status').textContent='Afkoder lyd…';
   try{buf=await actx.decodeAudioData(await f.arrayBuffer())}catch(de){$('status').textContent='Browseren kunne ikke afkode filen. Prøv en MP3, WAV eller OGG.';return}
-  dur=buf.duration;sr=buf.sampleRate;setTimeout(()=>{try{if(LK.kort)lkTjekSang()}catch(e){}},0);
+  dur=buf.duration;sr=buf.sampleRate;
   A=null;ARAW=null;TONER=[];SHOWPROFIL=null;const key='v2|'+f.name+'|'+f.size+'|'+f.lastModified,key3='v3|'+f.name+'|'+f.size+'|'+f.lastModified;SHOWKEY=key3;SHOWNAVN=f.name;let c=await cacheGet(key3);
   if(Rytme.cacheGyldig(c)){RAW=c.F;ARAW=c.A;$('status').textContent='Analyse hentet fra cache'}
   else{const c2=(c&&c.F)?c:await cacheGet(key);if(c2&&c2.F)RAW=c2.F;else{RAW=await analyze(buf);cachePut(key,{F:RAW})}ARAW=await analyzeAna(buf);cachePut(key3,{F:RAW,A:ARAW});$('status').textContent='Analyse færdig og gemt i cache'}
@@ -4108,7 +4107,7 @@ $('mvbtn').onclick=e=>{moveMode=!moveMode;e.target.textContent='Flyt effekter: '
 $('mvrst').onclick=()=>{pos=JSON.parse(JSON.stringify(POS0));fase2.objekter.forEach(o=>{if(o.pos0)o.pos={x:o.pos0.x,y:o.pos0.y}});savePos();if(fase2.objekter[selO])posUI(fase2.objekter[selO]);if(typeof msg==='function')msg('Placeringer nulstillet: effekterne og figurerne er tilbage på deres standardplads.')};
 
 /* ---------- Radial Mesh ---------- */
-const kildeV=(k,t)=>k.startsWith('lk:')?lkV(k,t):k.startsWith('hnd:')?hndV(k):k.startsWith('pad:')?mmpKilde(k):k.startsWith('ana:')?(live?(la[k]||0):(A&&(playing||offset>0)?sampleA(k,t):0)):(live?(lv[k]||0):(F&&(playing||offset>0)?sample(k,t):0));
+const kildeV=(k,t)=>k.startsWith('lk:')?0:k.startsWith('hnd:')?hndV(k):k.startsWith('pad:')?mmpKilde(k):k.startsWith('ana:')?(live?(la[k]||0):(A&&(playing||offset>0)?sampleA(k,t):0)):(live?(lv[k]||0):(F&&(playing||offset>0)?sample(k,t):0));
 const mc=$('mesh'),bandV=k=>kildeV(k,now());
 /* v3.9: Radial Mesh tegnes skarpt (i skærmens rigtige pixels, op til 3 gange) og skaleres op i store vinduer, så streger, prikker og tekst vokser med nettet: nettet regnes i en virtuel størrelse (lærredets pixels / meshS), og meshS = pixeltæthed × zoom, zoom = mindste side / 480 holdt mellem 1 og 3. Størrelsen tjekkes i hver frame (meshTjek), så nettet altid finder sin plads igen, fx efter fuld skærm, eller når vinduet har været skjult. */
 let meshS=1,meshSig='';
@@ -4119,7 +4118,7 @@ $('meshctl').innerHTML='<div class="ab" style="margin:0"><b id="mlab" class="sma
 const BAND_KORT={kick:'Slag dyb',snare:'Slag midt',hihat:'Slag høj'};
 const ANA_KORT={'ana:pitch':'Tonehøjde','ana:pitchsik':'Sikkerhed','ana:toneklasse':'Toneklasse','ana:tonestyrke':'Tonestyrke','ana:dissonans':'Dissonans','ana:rigdom':'Overtoner','ana:ulige':'Ulige','ana:spredning':'Spredning'};
 const ANA20=Rytme.ANA_KILDER.filter(q=>q.gruppe==='Toner (12 toneklasser)'||q.gruppe==='Tone og klang').map(q=>({key:q.key,label:q.label,kort:/^ana:c\d+$/.test(q.key)?Rytme.TONE_NAVNE[+q.key.slice(5)]:ANA_KORT[q.key]}));
-function meshGeom(){const MC=meshCv||mc,W=MC.width/meshS,H=MC.height/meshS,cx=W/2,cy=H/2,R=Math.min(W,H)*.4,r=R*.5,BL=meshKilder==='analyse'?ANA20:meshKilder==='pad'?MMP_KILDER:meshKilder==='hnd'?HND_KILDER:meshKilder==='lk'?LK_KO:BANDS.map(b=>({key:b[0],label:b[1],kort:BAND_KORT[b[0]]})),n=BL.length,fk=meshFokus?fokusNoder():null;if(meshFokus&&!fk)meshFokus=null;const NE=fk?fk.noder:meshEff(),m=NE.length,rr=fk?(m>1?R*.62:0):r;
+function meshGeom(){const MC=meshCv||mc,W=MC.width/meshS,H=MC.height/meshS,cx=W/2,cy=H/2,R=Math.min(W,H)*.4,r=R*.5,BL=meshKilder==='analyse'?ANA20:meshKilder==='pad'?MMP_KILDER:meshKilder==='hnd'?HND_KILDER:BANDS.map(b=>({key:b[0],label:b[1],kort:BAND_KORT[b[0]]})),n=BL.length,fk=meshFokus?fokusNoder():null;if(meshFokus&&!fk)meshFokus=null;const NE=fk?fk.noder:meshEff(),m=NE.length,rr=fk?(m>1?R*.62:0):r;
  return{W,H,cx,cy,R,r,exact:!!fk,titel:fk?fk.titel:null,
   bn:BL.map((b,i)=>{const a=-Math.PI/2+i/n*2*Math.PI;return{kind:'b',key:b.key,label:b.label,kort:b.kort,i,a,x:cx+Math.cos(a)*R,y:cy+Math.sin(a)*R}}),
   en:NE.map((e,i)=>{const a=-Math.PI/2+i/m*2*Math.PI;return{kind:'e',key:e.key,label:e.label,kort:e.kort,i,a,x:cx+Math.cos(a)*rr,y:cy+Math.sin(a)*rr}})}}
@@ -4277,146 +4276,12 @@ const sikrEgenskaber=o=>{Rytme.sikrEgenskaber(o);if(!o.pos0&&o.pos)o.pos0={x:o.p
 const MMP_KILDER=[{key:'pad:x',label:'Pad · master X',kort:'MX'},{key:'pad:y',label:'Pad · master Y',kort:'MY'},...[1,2,3,4,5,6,7,8].map(i=>({key:'pad:v'+i,label:'Pad · cirkel '+i,kort:'C'+i})),...[1,2,3,4,5,6,7,8].map(i=>({key:'pad:f'+i,label:'Pad · cirkel '+i+' fart',kort:'F'+i}))];
 /* v5.0: Hændelser som kilder. Hver hændelse er et kort blink fra 0 til 1 (1 i 60 ms, derefter aftagende), som kan kobles til alt ligesom et lydtræk. Tre er glidende værdier: akkordens grundtone (0 C til 1 H), dur eller mol (0 eller 1) og sidste MIDI-tone (0 lavest til 1 højest). */
 const HND_KILDER=[['hnd:takt','Hændelse · taktslag','Tak'],['hnd:takt2','Hændelse · hvert 2. slag','T2'],['hnd:takt4','Hændelse · hver takt','T4'],['hnd:takt8','Hændelse · hver 2. takt','T8'],['hnd:akkord','Hændelse · akkordskift','Akk'],['hnd:klang:slag','Hændelse · slag','Slg'],['hnd:klang:tone','Hændelse · tone','Ton'],['hnd:klang:stoej','Hændelse · støj','Stø'],['hnd:drop','Hændelse · drop eller løft','Drp'],['hnd:pause:stop','Hændelse · musikken stopper','Stp'],['hnd:pause:start','Hændelse · musikken starter','Str'],['hnd:sektion','Hændelse · sektionsskift','Sek'],['hnd:midi','Hændelse · MIDI-tangent','Mid'],['hnd:tast','Hændelse · tast B','Tst'],['hnd:pad','Hændelse · pad-cirkel ramt','Pad'],['hnd:akkordrod','Glidende · akkordens grundtone','Rod'],['hnd:akkordmol','Glidende · dur (0) eller mol (1)','Mol'],['hnd:midinote','Glidende · sidste MIDI-tone','MNo']].map(([key,label,kort])=>({key,label,kort}));
-/* =====================================================================
-   LYDKORT-MODUL til Claude MV  ·  kildegruppe  lk:
-   Skrevet i Lydkosmos-chatten. Læser et lydkort (.json) fra Lydkosmos'
-   knap «Gem lydkort» og giver værdier gennem kildeV(k, t).
-   Selvstændigt: bruger kun now(), live, buf, dur og msg() fra Claude MV.
-   ===================================================================== */
-const LK_KILDER = [
-  ['lk:sub',   'Sub-bas 20–60 Hz',       'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:bas',   'Bas 60–250 Hz',          'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:lmid',  'Lav-mellem 250–500 Hz',  'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:mid',   'Mellemtone 0,5–2 kHz',   'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:hmid',  'Høj-mellem 2–4 kHz',     'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:pres',  'Presence 4–6 kHz',       'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:brill', 'Brilliance 6–20 kHz',    'Båndniveau 0–1 (−60…0 dB)'],
-  ['lk:kick',  'Kick',                   'Impuls på slaget, falder af over ca. 150 ms'],
-  ['lk:snare', 'Snare',                  'Impuls på slaget, falder af over ca. 150 ms'],
-  ['lk:hihat', 'Hi-hat',                 'Impuls på slaget, falder af over ca. 80 ms'],
-  ['lk:beat',  'Beat',                   'Puls på hvert beat'],
-  ['lk:takt',  'Takt (hver 4.)',         'Puls på hvert 4. beat (gæt på 1-slaget)'],
-  ['lk:fase',  'Beat-fase',              'Rampe 0→1 fra ét beat til det næste'],
-  ['lk:forvarsel-kick',  'Forvarsel kick',  'Rampe 0→1 frem mod næste kraftige kick (højst 1,3 s), nulstilles på slaget'],
-  ['lk:forvarsel-snare', 'Forvarsel snare', 'Rampe 0→1 frem mod næste kraftige snare (højst 1,3 s), nulstilles på slaget'],
-  ['lk:rms',   'Niveau (RMS)',           'Samlet niveau 0–1 (−60…0 dBFS)'],
-  ['lk:peak',  'Peak',                   'Spidsværdi. ≥ 1 betyder clipping'],
-];
-const LK_GRUPPE = 'Lydkort';
-function lkNavn(k){ const r = LK_KILDER.find(x => x[0] === k); return r ? r[1] : null; }
-const LK_CFG = {
-  impulsKick: .15, impulsSnare: .15, impulsHat: .08,
-  beatPuls: .12,
-  forvarsel: 1.3,
-  forvarselMinStyrke: .35,
-};
-const LK = { kort: null };
-function lkIndlaesFil(file){
-  if(!file) return;
-  const r = new FileReader();
-  r.onload = () => { try { lkIndlaes(JSON.parse(r.result), file.name); }
-                     catch(e){ lkBesked('Lydkortet kunne ikke læses: filen er ikke gyldig JSON.'); } };
-  r.readAsText(file);
-}
-function lkIndlaes(json, filnavn){
-  if(!json || json.format !== 'lydkosmos-lydkort'){ lkBesked('Filen er ikke et lydkort fra Lydkosmos.'); return false; }
-  if(json.version !== 1){ lkBesked('Lydkortet har version ' + json.version + '. Modulet kender kun version 1.'); return false; }
-  const kol = json.kolonner || [];
-  const ix = n => kol.indexOf(n);
-  const bandKol = ['sub','bas','lavmellem','mellem','hoejmellem','presence','brilliance'].map(ix);
-  const iT = ix('t'), iR = ix('rms'), iP = ix('peak');
-  if(iT < 0 || bandKol.some(i => i < 0) || iR < 0 || iP < 0){ lkBesked('Lydkortet mangler kolonner.'); return false; }
-  const F = json.frames || [], n = F.length;
-  if(n < 2){ lkBesked('Lydkortet er tomt.'); return false; }
-  const bands = new Float32Array(n * 7), rms = new Float32Array(n), peak = new Float32Array(n);
-  for(let i = 0; i < n; i++){
-    const r = F[i];
-    for(let b = 0; b < 7; b++) bands[i*7 + b] = r[bandKol[b]];
-    rms[i] = r[iR]; peak[i] = r[iP];
-  }
-  const t0 = F[0][iT], dt = (F[n-1][iT] - t0) / (n - 1);
-  const baner = { kick: [], snare: [], hihat: [] };
-  (json.haendelser || []).forEach(e => { if(baner[e.bane]) baner[e.bane].push(e); });
-  const lav = arr => { arr.sort((a,b) => a.t - b.t);
-    return { t: Float64Array.from(arr, e => e.t), s: Float32Array.from(arr, e => e.styrke) }; };
-  const kraftige = arr => lav(arr.filter(e => e.styrke >= LK_CFG.forvarselMinStyrke));
-  LK.kort = {
-    navn: json.fil || '', varighed: json.varighed || (t0 + dt * n), bpm: json.bpm || 0,
-    n, t0, dt, bands, rms, peak,
-    kick: lav(baner.kick.slice()), snare: lav(baner.snare.slice()), hihat: lav(baner.hihat.slice()),
-    kickK: kraftige(baner.kick), snareK: kraftige(baner.snare),
-    beats: Float64Array.from(json.beats || []),
-  };
-  lkTjekSang(filnavn);
-  return true;
-}
-function lkTjekSang(){
-  const k = LK.kort; if(!k) return;
-  const harSang = typeof buf !== 'undefined' && buf && typeof dur === 'number' && dur > 0;
-  if(harSang && Math.abs(k.varighed - dur) > .5){
-    lkBesked(`Lydkortet (${k.navn}, ${lkTid(k.varighed)}) passer ikke til sangen (${lkTid(dur)}). Analysér sangen i Lydkosmos og gem et nyt lydkort.`);
-  }else{
-    lkBesked(`Lydkort indlæst: ${k.navn} · ${Math.round(k.bpm)} BPM · ${k.kick.t.length} kick, ${k.snare.t.length} snare, ${k.hihat.t.length} hi-hat`);
-  }
-}
-function lkTid(s){ return Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0'); }
-function lkBesked(s){ if(typeof msg === 'function') msg(s); else console.log('[Lydkort] ' + s); }
-function lkFoer(arr, t){ let lo = 0, hi = arr.length; while(lo < hi){ const m = (lo + hi) >> 1; if(arr[m] <= t) lo = m + 1; else hi = m; } return lo - 1; }
-function lkDB(db){ return Math.max(0, Math.min(1, (db + 60) / 60)); }
-function lkImpuls(bane, t, varighed){
-  const i = lkFoer(bane.t, t); if(i < 0) return 0;
-  const a = t - bane.t[i]; if(a > varighed * 4) return 0;
-  return Math.min(1, bane.s[i]) * Math.exp(-a / (varighed / 2.3));
-}
-function lkForvarsel(bane, t){
-  const i = lkFoer(bane.t, t) + 1; if(i >= bane.t.length) return 0;
-  const naeste = bane.t[i], start = Math.max(naeste - LK_CFG.forvarsel, i > 0 ? bane.t[i-1] : -1e9);
-  if(t < start) return 0;
-  return (t - start) / Math.max(1e-6, naeste - start);
-}
-function lkV(k, t){
-  const K = LK.kort;
-  if(!K) return 0;
-  if(typeof live !== 'undefined' && live) return 0;
-  if(t === undefined || t === null) t = (typeof now === 'function') ? now() : 0;
-  if(t < 0 || t > K.varighed) return 0;
-  const i = Math.max(0, Math.min(K.n - 1, Math.round((t - K.t0) / K.dt)));
-  switch(k){
-    case 'lk:sub':   return lkDB(K.bands[i*7]);
-    case 'lk:bas':   return lkDB(K.bands[i*7 + 1]);
-    case 'lk:lmid':  return lkDB(K.bands[i*7 + 2]);
-    case 'lk:mid':   return lkDB(K.bands[i*7 + 3]);
-    case 'lk:hmid':  return lkDB(K.bands[i*7 + 4]);
-    case 'lk:pres':  return lkDB(K.bands[i*7 + 5]);
-    case 'lk:brill': return lkDB(K.bands[i*7 + 6]);
-    case 'lk:kick':  return lkImpuls(K.kick,  t, LK_CFG.impulsKick);
-    case 'lk:snare': return lkImpuls(K.snare, t, LK_CFG.impulsSnare);
-    case 'lk:hihat': return lkImpuls(K.hihat, t, LK_CFG.impulsHat);
-    case 'lk:beat': case 'lk:takt': {
-      const b = lkFoer(K.beats, t); if(b < 0) return 0;
-      if(k === 'lk:takt' && b % 4 !== 0) return 0;
-      return Math.exp(-(t - K.beats[b]) / (LK_CFG.beatPuls / 2.3));
-    }
-    case 'lk:fase': {
-      const b = lkFoer(K.beats, t); if(b < 0 || b + 1 >= K.beats.length) return 0;
-      return (t - K.beats[b]) / (K.beats[b + 1] - K.beats[b]);
-    }
-    case 'lk:forvarsel-kick':  return lkForvarsel(K.kickK,  t);
-    case 'lk:forvarsel-snare': return lkForvarsel(K.snareK, t);
-    case 'lk:rms':  return lkDB(20 * Math.log10(K.rms[i] + 1e-9));
-    case 'lk:peak': return K.peak[i];
-  }
-  return 0;
-}
-/* ===== Indkobling i Claude MV (v6.5) ===== */
-/* LK_KILDER som objekter i samme form som HND_KILDER ({key,label,kort}), til Radial Mesh, Dublet og kildelisterne */
-const LK_KO=LK_KILDER.map(([key,label,hj])=>({key,label:'Lydkort · '+label,kort:label.split(' ')[0].slice(0,4),hj}));
+/* v9.12: Lydkort-modulet (kildegruppen lk: fra Lydkosmos) er fjernet her. Se blokken FJERNEDE KILDER. */
 
 const HND={t:{},v:{}};function hndFyr(k){HND.t[k]=performance.now()}
 function hndV(k){if(k in HND.v)return HND.v[k];const t=HND.t[k];if(t===undefined)return 0;const d=performance.now()-t;return d<60?1:Math.exp(-(d-60)/140)}
-const bandNavn=k=>(BANDS.find(b=>b[0]===k)||(Rytme.ANA_KILDER.find(q=>q.key===k)&&[0,Rytme.ANA_KILDER.find(q=>q.key===k).label])||(MMP_KILDER.find(q=>q.key===k)&&[0,MMP_KILDER.find(q=>q.key===k).label])||(HND_KILDER.find(q=>q.key===k)&&[0,HND_KILDER.find(q=>q.key===k).label])||(lkNavn(k)&&[0,'Lydkort · '+lkNavn(k)])||[0,k])[1];
-const bandOpts=v=>feKildeOpts(v),bandOptsAlle=v=>{let h=opts(BANDS,v);const g=[];Rytme.ANA_KILDER.forEach(k=>{let x=g.find(q=>q.n===k.gruppe);if(!x){x={n:k.gruppe,l:[]};g.push(x)}x.l.push(k)});g.forEach(x=>{h+='<optgroup label="'+esc(x.n)+'">'+x.l.map(k=>`<option value="${k.key}"${k.key===v?' selected':''}>${esc(k.label)}</option>`).join('')+'</optgroup>'});h+='<optgroup label="Master Morph Pad">'+MMP_KILDER.map(k=>`<option value="${k.key}"${k.key===v?' selected':''}>${esc(k.label)}</option>`).join('')+'</optgroup>';h+='<optgroup label="Hændelser">'+HND_KILDER.map(k=>`<option value="${k.key}"${k.key===v?' selected':''}>${esc(k.label)}</option>`).join('')+'</optgroup>';h+=lkOptgruppe(v);return h};
-function lkOptgruppe(v){return '<optgroup label="'+LK_GRUPPE+(LK.kort?'':' (indlæs et lydkort fra Lydkosmos)')+'">'+LK_KILDER.map(([k,n])=>'<option value="'+k+'"'+(k===v?' selected':'')+'>'+esc(n)+'</option>').join('')+'</optgroup>'}
+const bandNavn=k=>(BANDS.find(b=>b[0]===k)||(Rytme.ANA_KILDER.find(q=>q.key===k)&&[0,Rytme.ANA_KILDER.find(q=>q.key===k).label])||(MMP_KILDER.find(q=>q.key===k)&&[0,MMP_KILDER.find(q=>q.key===k).label])||(HND_KILDER.find(q=>q.key===k)&&[0,HND_KILDER.find(q=>q.key===k).label])||(k.startsWith('lk:')&&[0,'Fjernet kilde: Lydkort '+k.slice(3)])||[0,k])[1];
+const bandOpts=v=>feKildeOpts(v),bandOptsAlle=v=>{let h=opts(BANDS,v);const g=[];Rytme.ANA_KILDER.forEach(k=>{let x=g.find(q=>q.n===k.gruppe);if(!x){x={n:k.gruppe,l:[]};g.push(x)}x.l.push(k)});g.forEach(x=>{h+='<optgroup label="'+esc(x.n)+'">'+x.l.map(k=>`<option value="${k.key}"${k.key===v?' selected':''}>${esc(k.label)}</option>`).join('')+'</optgroup>'});h+='<optgroup label="Master Morph Pad">'+MMP_KILDER.map(k=>`<option value="${k.key}"${k.key===v?' selected':''}>${esc(k.label)}</option>`).join('')+'</optgroup>';h+='<optgroup label="Hændelser">'+HND_KILDER.map(k=>`<option value="${k.key}"${k.key===v?' selected':''}>${esc(k.label)}</option>`).join('')+'</optgroup>';return h};
 function persistScene(){try{localStorage.setItem('rytme-scene',JSON.stringify(scene))}catch(e){}$('json').value=presetJSON();meshUI()}
 /* Bane-skabeloner: 4 spor (som normalt) og 16 spor (mindre klodser og længere rejsetid). Forbindelserne lægges kun til spor, der ingen har. */
 const BANE_KILDER={4:['kick','snare','hihat','bas'],16:['kick','snare','hihat','bas','flux','hmid','brill','vokal','mid','ana:c0','ana:c2','ana:c4','ana:c5','ana:c7','ana:c9','ana:c11']};
@@ -5931,7 +5796,7 @@ const LIV_M=[['anslag','Slag','lyd'],['tone','Tone','lyd'],['takt','Taktslag','l
 const LIV_TEKST={anslag:'Kobl <b>Fødsel</b> til en kilde nedenfor, så fødes en levende kopi ved hvert <b>slag</b> (når kilden går over tærsklen).',tone:'Der fødes en levende kopi for hver <b>fundet tone</b>, uden en forbindelse. Vælg Toneklasse som x og Tonehøjde som y, så står hver tone på sin plads.',takt:'Der fødes en kopi på <b>taktslagene</b>, som analysen har fundet. Virker kun med en analyseret lydfil, mens den spiller.',akkord:'Der fødes en kopi, hver gang <b>harmonien skifter</b> (fx fra C-dur til A-mol), ved akkordens grundtone. Vælg Toneklasse som x for at stille akkorderne op efter tone.',klang:'Der fødes en kopi ved hvert anslag af den valgte <b>klangtype</b>: slag (trommer), tone (melodi) eller støj (fx bækkener).',drop:'Der fødes en kopi ved et <b>drop eller løft</b>: når energien pludselig stiger meget.',pause:'Der fødes en kopi, når musikken <b>stopper</b> eller <b>starter igen</b>.',sektion:'Der fødes en kopi ved hvert <b>sektionsskift</b> (fx vers til omkvæd), som analysen har fundet. Virker kun med en analyseret lydfil.',midi:'Der fødes en kopi for hver <b>tangent</b>, du spiller på et MIDI-keyboard, ved tangentens tone. Tryk Tilslut MIDI (virker i Chrome og Edge).',tast:'Der fødes en kopi, når du trykker på <b>tasten</b> nedenfor (ikke mens du skriver i et felt) eller på <b>Fød nu</b>. Klaveret bruger A til P og Æ, så vælg et andet bogstav.',pad:'Der fødes en kopi, når <b>master</b> i Master Morph Pad rammer en af de små cirkler.'};
 const FE_METODER=[[],['anslag','tone','takt'],['anslag','tone','takt','akkord','tast'],null,null];
 function feKildeOpts(v){const n=feNiv();if(n>=4)return bandOptsAlle(v);const o=(k,l)=>'<option value="'+k+'"'+(k===v?' selected':'')+'>'+esc(l)+'</option>';
- let h='<optgroup label="De 14 lydtræk">'+BANDS.map(b=>o(b[0],b[1])).join('')+'</optgroup>';const hn=n===1?HND_KILDER.filter(k=>['hnd:takt','hnd:takt4','hnd:klang:slag'].includes(k.key)):HND_KILDER;h+='<optgroup label="Hændelser">'+hn.map(k=>o(k.key,k.label)).join('')+'</optgroup>';if(n>=2)h+=lkOptgruppe(v);
+ let h='<optgroup label="De 14 lydtræk">'+BANDS.map(b=>o(b[0],b[1])).join('')+'</optgroup>';const hn=n===1?HND_KILDER.filter(k=>['hnd:takt','hnd:takt4','hnd:klang:slag'].includes(k.key)):HND_KILDER;h+='<optgroup label="Hændelser">'+hn.map(k=>o(k.key,k.label)).join('')+'</optgroup>';
  if(n>=3){const g=[];Rytme.ANA_KILDER.filter(k=>!/^Eksperimentel/.test(k.gruppe)).forEach(k=>{let x=g.find(q=>q.n===k.gruppe);if(!x){x={n:k.gruppe,l:[]};g.push(x)}x.l.push(k)});g.forEach(x=>{h+='<optgroup label="'+esc(x.n)+'">'+x.l.map(k=>o(k.key,k.label)).join('')+'</optgroup>'});h+='<optgroup label="Master Morph Pad">'+MMP_KILDER.map(k=>o(k.key,k.label)).join('')+'</optgroup>'}
  if(v&&h.indexOf('value="'+v+'"')<0)h+='<optgroup label="Valgt (fra et højere niveau)">'+o(v,bandNavn(v))+'</optgroup>';return h}
 function feNivSaet(n){nivSaet(n)}
@@ -6100,7 +5965,7 @@ const M3_LYS0={bloom:.05,bloomR:.05,bloomT:.11,film:true,eks:1,vig:.3,korn:.03,s
 function m3L(){return Object.assign({},M3_LYS0,(typeof scene!=='undefined'&&scene&&scene.m3)||{})}
 const M3={r:null,sc:null,cam:null,rod:null,sig:'',noder:{},links:[],kerne:null,az:Math.PI/2,el:0,dist:30,auto:true,lbl:true,part:true,alene:false,sidstT:0,traek:null,glod:null,udSize:null,form:'flad',frit:false,tTot:0};
 try{const f=localStorage.getItem('rytme-m3form');if(f==='kugle'||f==='flad')M3.form=f}catch(e){}
-function m3Kilder(){const BL=meshKilder==='analyse'?ANA20:meshKilder==='pad'?MMP_KILDER:meshKilder==='hnd'?HND_KILDER:meshKilder==='lk'?LK_KO:BANDS.map(b=>({key:b[0],label:b[1]}));const set2=new Map(BL.map(b=>[b.key,b.label]));maps.forEach(m=>{if(!set2.has(m.band))set2.set(m.band,bandNavn(m.band))});return [...set2].map(([key,label])=>({key,label}))}
+function m3Kilder(){const BL=meshKilder==='analyse'?ANA20:meshKilder==='pad'?MMP_KILDER:meshKilder==='hnd'?HND_KILDER:BANDS.map(b=>({key:b[0],label:b[1]}));const set2=new Map(BL.map(b=>[b.key,b.label]));maps.forEach(m=>{if(!set2.has(m.band))set2.set(m.band,bandNavn(m.band))});return [...set2].map(([key,label])=>({key,label}))}
 function m3Data(){const v=k=>{let x=0;try{x=+bandV(k)}catch(e){}return Number.isFinite(x)?Math.max(0,Math.min(1,x)):0};
  const kilder=m3Kilder().map(k=>({key:k.key,navn:k.label,hue:rtHue(k.key),v:v(k.key)}));const mid=[...new Set(maps.map(m=>m.effect))];
  const maal=mid.map(id=>{let mx=0;maps.forEach((m,i)=>{if(m.effect===id)mx=Math.max(mx,+(env[i]||0))});let n=id;try{n=effName(id)}catch(e){}return{id,navn:n,v:Math.max(0,Math.min(1,mx))}});
@@ -6247,7 +6112,7 @@ $('m3-lysk').onclick=()=>{const p=$('m3-lys'),aab=p.hidden;p.hidden=!aab;$('m3-l
    Slag findes ved at gennemgå hele sangen én gang (trin = analysens opløsning, ca. 23 ms) for hver forbindelse: et slag er, når værdien går over forbindelsens tærskel, med mindst forbindelsens pause imellem (dog mindst 110 ms). Det gøres igen, når forbindelserne eller sangen ændres. Hændelses-kilder bruger analysens taktslag og afsnit; andre hændelser og Morph Pad har ingen fremtid. Med live lyd (mikrofon eller generator) findes ingen fremtid, så øjet viser kun nuet. */
 const OJ={r:null,sc:null,cam:null,sig:'',slag:[],tider:[],kilder:[],noder:{},auto:true,alene:false,sidstT:0,tTot:0,traek:null,az:0,el:0,dist:30,H:6,L:140};
 try{const d=JSON.parse(localStorage.getItem('rytme-oje')||'{}');if(d.H)OJ.H=Math.max(1,Math.min(20,+d.H))}catch(e){}
-function ojFutV(k,t){if(k.startsWith('lk:'))return lkV(k,t);if(k.startsWith('ana:'))return A?sampleA(k,t):0;if(BANDS.some(b=>b[0]===k))return F?sample(k,t):0;return null}
+function ojFutV(k,t){if(k.startsWith('lk:'))return 0;if(k.startsWith('ana:'))return A?sampleA(k,t):0;if(BANDS.some(b=>b[0]===k))return F?sample(k,t):0;return null}
 function ojHndTider(k){const P=SHOWPROFIL;if(!P||!P.beats)return null;const bt=P.beats.map(f=>f*P.dtf),fa=P.fase||0;
  if(k==='hnd:takt')return bt.map(t=>({t,a:.8}));if(k==='hnd:takt2')return bt.filter((t,i)=>(i-fa)%2===0).map(t=>({t,a:.85}));if(k==='hnd:takt4')return bt.filter((t,i)=>((i-fa)%4+4)%4===0).map(t=>({t,a:1}));if(k==='hnd:takt8')return bt.filter((t,i)=>((i-fa)%8+8)%8===0).map(t=>({t,a:1}));
  const S=P.sektioner||[];if(k==='hnd:sektion')return S.slice(1).map(s=>({t:s.t0,a:1}));if(k==='hnd:drop')return S.filter((s,i)=>i>0&&(s.energi||0)-(S[i-1].energi||0)>.15).map(s=>({t:s.t0,a:1}));return null}
@@ -6299,7 +6164,7 @@ $('oj-bar').addEventListener('click',e=>{const b=e.target.closest('[data-oj]');i
 $('oj-vis').onclick=()=>{OJ.alene=false;ojUI()};document.addEventListener('keydown',e=>{if(e.key==='Escape'&&OJ.alene){OJ.alene=false;ojUI()}});
 /* v8.1: slagene regnes ud forbindelse for forbindelse og huskes (nøgle: kilde, tærskel, pause og sangens data). Der regnes kun, når sangen er færdiganalyseret, og arbejdet deles ud over flere billeder (højst ca. 5 ms pr. billede), så intet hakker. Ændres en tærskel, regnes kun den forbindelse om. */
 OJ.cache=new Map();OJ.jobs=[];OJ.dataSig='';
-function ojDataSig(){return [live?1:0,F?1:0,A?1:0,typeof dur==='number'?dur.toFixed(2):'0',SHOWPROFIL&&SHOWPROFIL.beats?SHOWPROFIL.beats.length:0,LK.kort?LK.kort.n:0].join('|')}
+function ojDataSig(){return [live?1:0,F?1:0,A?1:0,typeof dur==='number'?dur.toFixed(2):'0',SHOWPROFIL&&SHOWPROFIL.beats?SHOWPROFIL.beats.length:0].join('|')}
 /* ===== v8.1: Øjet, cyberpunk-finish ===== */
 const OJ_FX0={glod:1,hornhinde:true,holo:true,gitter:true,scan:true};
 OJ.fx=Object.assign({},OJ_FX0);try{const d=JSON.parse(localStorage.getItem('rytme-oje')||'{}');if(d.fx)Object.assign(OJ.fx,d.fx)}catch(e){}
@@ -6452,7 +6317,7 @@ setInterval(stakTik,400);
 $('maps').addEventListener('click',e=>{const b=e.target.closest('[data-stak-k]');if(!b)return;const i=+b.dataset.stakK;STAK_AABEN.has(i)?STAK_AABEN.delete(i):STAK_AABEN.add(i);stakTik()});
 /* ---- kort over forbindelserne ---- */
 const MVK={zoom:1,tal:true,nr:0,kode:''};
-function mvkKode(){const ren=t=>String(t==null?'':t).replace(/["<>#|]/g,' ').replace(/\s+/g,' ').trim(),kort=n=>n.length>34?n.slice(0,33)+'…':n,fam=k=>k.startsWith('ana:')?'Analyse':k.startsWith('hnd:')?'Hændelser':k.startsWith('lk:')?'Lydkort':k.startsWith('pad:')?'Morph Pad':'Lydtræk';
+function mvkKode(){const ren=t=>String(t==null?'':t).replace(/["<>#|]/g,' ').replace(/\s+/g,' ').trim(),kort=n=>n.length>34?n.slice(0,33)+'…':n,fam=k=>k.startsWith('ana:')?'Analyse':k.startsWith('hnd:')?'Hændelser':k.startsWith('lk:')?'Fjernet (Lydkort)':k.startsWith('pad:')?'Morph Pad':'Lydtræk';
  const L=['flowchart LR','  %% Claude MV v8.4 · dine forbindelser lige nu ('+maps.length+')'];if(!maps.length){L.push('  A["Ingen forbindelser endnu"]');return L.join('\n')}
  const kil=[...new Set(maps.map(m=>m.band))],kid={};kil.forEach((k,i)=>kid[k]='k'+i);
  L.push('  subgraph KILDER["Kilder · '+kil.length+'"]','    direction TB');kil.forEach(k=>L.push('    '+kid[k]+'(["'+kort(ren(bandNavn(k)))+'<br/>'+fam(k)+'"])'));L.push('  end');
@@ -6698,7 +6563,7 @@ Object.keys(PROP_FORKL).filter(k=>/^d[A-Z]/.test(k)).forEach(k=>{if(!PROP_MAN[k]
 Object.keys(PROP_FORKL).filter(k=>/^k[A-Z]/.test(k)).forEach(k=>PROP_MAN[k]='man-disko');
 /* ========== SLUT: FORKLARINGER TIL DANSER OG DISKOKUGLE ========== */
 /* ========== v9.6: LYDKILDE (W31) ==========
-   Ny fane i Arbejdsfeltet i stedet for Generator. Fire kort: Lydfil (træk en fil ind eller klik; navn, længde, tempo, toneart og om analysen kører), Generator (genre, tempo, tæthed, afspil, nyt mønster; styrer den eksisterende generator, hvis fulde flade kan åbnes under Avanceret), Lyd ind (mikrofon eller fanelyd) og Lydkort (fra Lydkosmos). */
+   Ny fane i Arbejdsfeltet i stedet for Generator. Fire kort: Lydfil (træk en fil ind eller klik; navn, længde, tempo, toneart og om analysen kører), Generator (genre, tempo, tæthed, afspil, nyt mønster; styrer den eksisterende generator, hvis fulde flade kan åbnes under Avanceret), Lyd ind (mikrofon eller fanelyd). v9.12: kortet Lydkort er fjernet. */
 function lksTal(t){t=Math.max(0,t||0);return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
 function lksByg(){const box=$('lks');if(!box||box.dataset.klar)return;box.dataset.klar='1';
  const g=s=>document.querySelector('#gen [data-g="'+s+'"]');const gen=g('gen'),bpm=g('bpm'),dens=g('dens');
@@ -6708,20 +6573,19 @@ function lksByg(){const box=$('lks');if(!box||box.dataset.klar)return;box.datase
  +'<label class="lks-r"><span>Tempo <b id="lks-bpmv"></b></span><input type="range" id="lks-bpm" min="'+(bpm?bpm.min:60)+'" max="'+(bpm?bpm.max:180)+'" step="'+(bpm?bpm.step:1)+'"></label>'
  +'<label class="lks-r"><span>Tæthed <b id="lks-densv"></b></span><input type="range" id="lks-dens" min="'+(dens?dens.min:0)+'" max="'+(dens?dens.max:1)+'" step="'+(dens?dens.step:.05)+'"></label>'
  +'<div class="lks-knapper"><button id="lks-play" class="lks-hoved">▶ Afspil generator</button><button id="lks-ny" class="ghost">✦ Nyt mønster</button><button id="lks-mut" class="ghost">Muter lidt</button></div></section>'
- +'<section class="lks-kort lks-lille"><div class="lks-top"><h4>Lyd ind</h4><span class="lks-tag">sjældent</span></div><p class="lks-f">Mikrofon eller lyden fra en anden fane. Fremtidslys og afsnit virker kun med filer.</p><button id="lks-lin" class="ghost"></button></section>'
- +'<section class="lks-kort lks-lille"><div class="lks-top"><h4>Lydkort</h4><span class="lks-tag">sjældent</span></div><p class="lks-f">Et lydkort fra Lydkosmos (vores navn) for den samme sang. Giver kildegruppen Lydkort.</p><button id="lks-lk" class="ghost">🗺 Indlæs lydkort</button><p id="lks-lkst" class="lks-f"></p></section>';
+ +'<section class="lks-kort lks-lille"><div class="lks-top"><h4>Lyd ind</h4><span class="lks-tag">sjældent</span></div><p class="lks-f">Mikrofon eller lyden fra en anden fane. Fremtidslys og afsnit virker kun med filer.</p><button id="lks-lin" class="ghost"></button></section>';
  const d=$('lks-drop');d.onclick=()=>$('file').click();d.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('file').click()}};
  ['dragenter','dragover'].forEach(t=>d.addEventListener(t,e=>{e.preventDefault();d.classList.add('over')}));['dragleave','drop'].forEach(t=>d.addEventListener(t,()=>d.classList.remove('over')));
  d.addEventListener('drop',e=>{e.preventDefault();const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(!f)return;if(!/^audio\//.test(f.type)&&!/\.(mp3|wav|ogg|m4a|flac|aac)$/i.test(f.name)){msg('Det er ikke en lydfil: '+f.name);return}try{const dt=new DataTransfer();dt.items.add(f);$('file').files=dt.files;$('file').dispatchEvent(new Event('change',{bubbles:true}))}catch(x){msg('Filen kunne ikke hentes. Klik i feltet i stedet.')}});
  const saet=(org,v,ev)=>{if(!org)return;org.value=v;org.dispatchEvent(new Event(ev,{bubbles:true}))};
  $('lks-gen').onchange=e=>saet(gen,e.target.value,'change');$('lks-bpm').oninput=e=>saet(bpm,e.target.value,'input');$('lks-dens').oninput=e=>saet(dens,e.target.value,'input');
  $('lks-play').onclick=()=>{const b=$('gp');if(b)b.click()};$('lks-ny').onclick=()=>{const b=$('gauto');if(b)b.click()};$('lks-mut').onclick=()=>{const b=$('gmut');if(b)b.click()};
- $('lks-adv').onclick=()=>{try{sbAabn('w4')}catch(x){}};$('lks-lin').onclick=()=>{const b=$('lin-btn');if(b)b.click()};$('lks-lk').onclick=()=>{const i=$('lk-fil');if(i)i.click()}}
+ $('lks-adv').onclick=()=>{try{sbAabn('w4')}catch(x){}};$('lks-lin').onclick=()=>{const b=$('lin-btn');if(b)b.click()}}
 function lksTik(){const box=$('lks');if(!box)return;if(!box.dataset.klar){if($('gen')&&$('gen').querySelector('[data-g]'))lksByg();else return}
  const g=s=>document.querySelector('#gen [data-g="'+s+'"]');const gen=g('gen'),bpm=g('bpm'),dens=g('dens');const sync=(id,org)=>{const e=$(id);if(e&&org&&document.activeElement!==e&&e.value!==org.value)e.value=org.value};sync('lks-gen',gen);sync('lks-bpm',bpm);sync('lks-dens',dens);
  const bv=$('lks-bpmv');if(bv&&bpm)bv.textContent=bpm.value+' BPM';const dv=$('lks-densv');if(dv&&dens)dv.textContent=String(dens.value).replace('.',',');
  const gp=$('gp'),lp=$('lks-play');if(gp&&lp){const spil=/stop|pause/i.test(gp.textContent);const t=spil?'■ Stop generator':'▶ Afspil generator';if(lp.textContent!==t)lp.textContent=t;lp.classList.toggle('on',spil)}
- const lin=$('lin-btn'),ll=$('lks-lin');if(lin&&ll&&ll.textContent!==lin.textContent)ll.textContent=lin.textContent;const lst=$('lk-st'),lk=$('lks-lkst');if(lst&&lk&&lk.textContent!==lst.textContent)lk.textContent=lst.textContent;
+ const lin=$('lin-btn'),ll=$('lks-lin');if(lin&&ll&&ll.textContent!==lin.textContent)ll.textContent=lin.textContent;
  const f=$('file'),fil=f&&f.files&&f.files[0],P=typeof SHOWPROFIL!=='undefined'?SHOWPROFIL:null,pl=$('play'),analyse=!!(fil&&pl&&pl.disabled);
  let h='';if(fil){h='<dt>Fil</dt><dd>'+esc(fil.name)+'</dd><dt>Længde</dt><dd>'+(typeof dur==='number'&&dur>0?lksTal(dur):'…')+'</dd><dt>Tempo</dt><dd>'+(P&&P.bpm?Math.round(P.bpm)+' BPM':'…')+'</dd><dt>Toneart</dt><dd>'+(P&&P.toneart&&P.toneart.navn?esc(P.toneart.navn):'…')+'</dd><dt>Status</dt><dd>'+(analyse?'<span class="lks-analyse">Analyserer …</span>':'Klar')+'</dd>'}else h='<dt>Fil</dt><dd>Ingen fil valgt endnu</dd>';
  const info=$('lks-info');if(info&&info.__h!==h){info.__h=h;info.innerHTML=h}}
@@ -6733,7 +6597,7 @@ setInterval(lksTik,300);
    type: slag (korte anslag, fx kick og taktslag) · glidende (går jævnt op og ned, fx bas og RMS) · rampe (går fra 0 til 1 og starter forfra, fx taktfase) · valg (et af nogle få trin, fx toneklasse).
    mappe: Rytme, Tone og harmoni, Klang, Dynamik, Frekvens, Rum, Struktur eller Styring.
    Spærretid bruger typen (den virker for slag); Router 2.0 bruger mappen og typen til at sortere og farve kilderne.
-   Lydkort-kilder (lk:) har faste pladser i tabellen (fra v9.11); kun ukendte Lydkort-kilder får type og mappe ud fra navnet. Kick fra Lydkort står for sig selv, ved siden af Kick fra Lydtræk. */
+   v9.12: Lydkort (lk:) er fjernet; en gammel lk:-kilde får standarden (Klang, glidende). */
 const SIG_MAPPER=['Rytme','Tone og harmoni','Klang','Dynamik','Frekvens','Rum','Struktur','Styring'];
 const SIG_TYPER={slag:'Slag',glidende:'Glidende',rampe:'Rampe',valg:'Valg'};
 const SIG_TAB={kick:['Rytme','slag'],snare:['Rytme','slag'],hihat:['Rytme','slag'],flux:['Rytme','slag'],
@@ -6745,8 +6609,6 @@ const SIG_TAB={kick:['Rytme','slag'],snare:['Rytme','slag'],hihat:['Rytme','slag
  bas:['Frekvens','glidende'],mid:['Frekvens','glidende'],hmid:['Frekvens','glidende'],brill:['Frekvens','glidende'],
  'ana:pan':['Rum','glidende'],'ana:bredde':['Rum','glidende'],'ana:fase':['Rum','glidende'],
  'hnd:akkord':['Tone og harmoni','slag'],'hnd:klang:tone':['Tone og harmoni','slag'],'hnd:klang:slag':['Rytme','slag'],'hnd:klang:stoej':['Klang','slag'],
- 'lk:sub':['Frekvens','glidende'],'lk:bas':['Frekvens','glidende'],'lk:lmid':['Frekvens','glidende'],'lk:mid':['Frekvens','glidende'],'lk:hmid':['Frekvens','glidende'],'lk:pres':['Frekvens','glidende'],'lk:brill':['Frekvens','glidende'],
- 'lk:kick':['Rytme','slag'],'lk:snare':['Rytme','slag'],'lk:hihat':['Rytme','slag'],'lk:beat':['Rytme','slag'],'lk:takt':['Rytme','slag'],'lk:fase':['Rytme','rampe'],'lk:forvarsel-kick':['Rytme','rampe'],'lk:forvarsel-snare':['Rytme','rampe'],'lk:rms':['Dynamik','glidende'],'lk:peak':['Dynamik','glidende'],
  'hnd:drop':['Struktur','slag'],'hnd:pause:stop':['Struktur','slag'],'hnd:pause:start':['Struktur','slag'],'hnd:sektion':['Struktur','slag'],'hnd:midi':['Styring','slag'],'hnd:tast':['Styring','slag']};
 function sigInfo(k){k=String(k||'');if(SIG_TAB[k])return{mappe:SIG_TAB[k][0],type:SIG_TAB[k][1]};
  if(/^ana:c\d+$/.test(k))return{mappe:'Tone og harmoni',type:'glidende'};
@@ -6754,13 +6616,6 @@ function sigInfo(k){k=String(k||'');if(SIG_TAB[k])return{mappe:SIG_TAB[k][0],typ
  if(k.startsWith('hnd:takt'))return{mappe:'Rytme',type:'slag'};
  if(k.startsWith('hnd:'))return{mappe:'Styring',type:'slag'};
  if(k.startsWith('pad:'))return{mappe:'Styring',type:'glidende'};
- if(k.startsWith('lk:')){const n=(typeof lkNavn==='function'&&lkNavn(k)||k).toLowerCase();
-  if(/kick|snare|hihat|hat|clap|slag|onset|anslag|perc|tromme/.test(n))return{mappe:'Rytme',type:'slag'};
-  if(/tone|pitch|akkord|chord|vokal|melodi/.test(n))return{mappe:'Tone og harmoni',type:'glidende'};
-  if(/rms|loud|energi|styrke|dynamik/.test(n))return{mappe:'Dynamik',type:'glidende'};
-  if(/bas|mid|brill|diskant|frekv/.test(n))return{mappe:'Frekvens',type:'glidende'};
-  if(/sektion|drop|afsnit|struktur/.test(n))return{mappe:'Struktur',type:'slag'};
-  return{mappe:'Klang',type:'glidende'}}
  return{mappe:'Klang',type:'glidende'}}
 const sigSlag=k=>sigInfo(k).type==='slag';
 /* ========== SLUT: SIGNALTYPER ========== */
@@ -6818,7 +6673,7 @@ function r2HoldTxt(k){const v=R2_HOLD[k];return v===0?'Fra':v===Infinity?'∞':v
 const r2Tal=x=>String(Math.round((+x||0)*100)/100).replace('.',',');
 function r2Kl(m){return/^klods\d+$/.test(m.effect)}
 function r2SpaerVirker(m){return r2Kl(m)||String(m.effect).startsWith('lyd:')||sigSlag(m.band)}
-function r2Hvor(k){const g=k.startsWith('lk:')?'Lydkort':k.startsWith('hnd:')?'Hændelse':k.startsWith('pad:')?'Morph pad':k.startsWith('ana:')?'Analyse':'Lydtræk';
+function r2Hvor(k){const g=k.startsWith('lk:')?'Fjernet kilde':k.startsWith('hnd:')?'Hændelse':k.startsWith('pad:')?'Morph pad':k.startsWith('ana:')?'Analyse':'Lydtræk';
  const kilde=g==='Morph pad'?'din pad':g==='Hændelse'?'taktslag og akkorder':(typeof live!=='undefined'&&live)?(gPlaying?'generator':'lyd ind'):(typeof F!=='undefined'&&F?'lydfil':'ingen lyd endnu');return g+' · målt i '+kilde}
 function r2Hue(k){return R2_TYPEHUE[sigInfo(k).type]}
 function r2Knap(f,navn,min,max,step,val,txt,graa,tip){const p=(val-min)/(max-min),a0=-135,a=a0+270*Math.max(0,Math.min(1,p)),R=13,rad=d=>(d-90)*Math.PI/180,pt=d=>[18+R*Math.cos(rad(d)),18+R*Math.sin(rad(d))],[x0,y0]=pt(a0),[x1,y1]=pt(a);
@@ -6851,7 +6706,7 @@ function r2Boks(m,i){const S=stakFor(m,i),hk=r2HoldIdx(m),inf=hk===R2_HOLD.lengt
   +'<div class="r2-ft"><span class="small">Mål</span><select data-f="effect" aria-label="Mål">'+effEn(m)+'</select>'+(set.r2vis==='kompakt'?'<button class="ghost r2-det" data-r2="det" aria-expanded="'+!kompakt+'" title="Vis eller skjul skyderne, drejeknapperne, Styrke brugt og signalet over tid for denne boks.">Detaljer '+(kompakt?'▸':'▾')+'</button>':'')+'</div></div>'}
 /* Kildernes rækkefølge: D2 (mappe efter musik, så type, så navn) eller den rækkefølge, de bruges i. */
 function r2Orden(kilder){if(set.r2sort!=='d2')return kilder.slice();return kilder.slice().sort((a,b)=>{const A=sigInfo(a),B=sigInfo(b);return SIG_MAPPER.indexOf(A.mappe)-SIG_MAPPER.indexOf(B.mappe)||R2_TYPEORD.indexOf(A.type)-R2_TYPEORD.indexOf(B.type)||String(bandNavn(a)).localeCompare(String(bandNavn(b)),'da')})}
-function r2AlleKilder(){const L=[];const add=k=>{if(k&&!L.includes(k))L.push(k)};try{BANDS.forEach(b=>add(b[0]));Rytme.ANA_KILDER.forEach(k=>add(k.key));HND_KILDER.forEach(k=>add(k.key||k[0]));MMP_KILDER.forEach(k=>add(k.key));(typeof LK_KO!=='undefined'?LK_KO:[]).forEach(k=>add(k.key))}catch(e){}return L}
+function r2AlleKilder(){const L=[];const add=k=>{if(k&&!L.includes(k))L.push(k)};try{BANDS.forEach(b=>add(b[0]));Rytme.ANA_KILDER.forEach(k=>add(k.key));HND_KILDER.forEach(k=>add(k.key||k[0]));MMP_KILDER.forEach(k=>add(k.key))}catch(e){}return L}
 function r2Seg(k,valg){return '<span class="r2-seg" role="group">'+valg.map(([v,n,tip])=>'<button class="'+(set[k]===v?'on':'ghost')+'" data-r2set="'+k+'" data-v="'+v+'" title="'+esc(tip)+'">'+n+'</button>').join('')+'</span>'}
 function r2Byg(){const box=$('r2');if(!box)return;const sc=box.closest('.wb'),top=sc?sc.scrollTop:0;
  const kilder=r2Orden([...new Set(maps.map(m=>m.band))]),maal=[...new Set(maps.map(m=>m.effect))],d2=set.r2sort==='d2';
@@ -6941,6 +6796,27 @@ document.addEventListener('keydown',e=>{const k=e.target.closest&&e.target.close
 if($('w32'))new ResizeObserver(()=>{if(R2.byg)r2Layout()}).observe($('w32'));
 R2.raf=requestAnimationFrame(r2Tegn);
 /* ========== SLUT: ROUTER 2.0 ========== */
+/* ========== v9.12: FJERNEDE KILDER ==========
+   Lydkort (kildegruppen lk: fra Lydkosmos) er fjernet i v9.12, fordi det gjorde tingene for komplicerede (se CLAUDE.md). Tagget milepael-med-lydkort er den sidste version med Lydkort.
+   Gemte opsætninger, pladser og forudindstillinger, der bruger en lk:-kilde (som kilde eller som port), går ikke i stykker: forbindelsen bliver stående, men slås fra (m.off), og der kommer en tydelig besked.
+   Beskeden står i statuslinjen, øverst i Mapping og Router, og ved hver forbindelse. En fjernet kilde giver altid 0. Intet slettes; du fjerner selv forbindelsen, hvis du vil. */
+function fjernetKilde(k){return typeof k==='string'&&k.startsWith('lk:')}
+function fjernetHvad(m){return fjernetKilde(m.band)?'Kilden <b>'+esc(m.band)+'</b>':'Porten <b>'+esc(m.port)+'</b>'}
+function fjernetTjek(){const nye=[];maps.forEach((m,i)=>{if((fjernetKilde(m.band)||fjernetKilde(m.port))&&!m.fjernet){m.fjernet='lk';m.off=true;nye.push(i+1)}});
+ /* Beskeden vises lidt efter, så den ikke bliver overskrevet af fx "Plads A hentet"; den besked står bagefter. */
+ if(nye.length){const tx='⚠ '+(nye.length===1?'Forbindelse ':'Forbindelserne ')+nye.join(', ')+' bruger en Lydkort-kilde (lk:), som er fjernet i v9.12. '+(nye.length===1?'Den er':'De er')+' slået fra og står stadig i Mapping og Router.';setTimeout(()=>{const st=$('status'),foer=st?st.textContent:'';msg(tx+(foer&&!foer.startsWith('⚠')?' · '+foer:''))},60);try{save()}catch(e){}}
+ return maps.filter(m=>m.fjernet).length}
+function fjernetBanner(){const n=maps.filter(m=>m.fjernet).length;if(!n)return'';return '<div class="fj-banner" role="status">⚠ '+(n===1?'1 forbindelse bruger':n+' forbindelser bruger')+' en Lydkort-kilde (lk:), som er fjernet i v9.12. '+(n===1?'Den er':'De er')+' slået fra og giver 0. Fjern '+(n===1?'den':'dem')+' selv, når du vil.</div>'}
+const fjGammelRender=renderMaps;
+renderMaps=function(){fjernetTjek();fjGammelRender();const box=$('maps');if(box){const b=fjernetBanner();if(b)box.insertAdjacentHTML('afterbegin',b);
+ box.querySelectorAll('.row').forEach(r=>{const m=maps[+r.dataset.i];if(m&&m.fjernet)r.insertAdjacentHTML('beforeend','<div class="fj-note small">⚠ '+fjernetHvad(m)+' (Lydkort) er fjernet i v9.12. Forbindelsen er slået fra.</div>')})}};
+const fjGammelR2Byg=r2Byg;
+r2Byg=function(){fjGammelR2Byg();const box=$('r2');if(!box)return;const b=fjernetBanner();if(b){const top=box.querySelector('.r2-top');if(top)top.insertAdjacentHTML('afterend',b)}
+ box.querySelectorAll('.r2-boks').forEach(x=>{const m=maps[+x.dataset.i];if(m&&m.fjernet)x.querySelector('.r2-hvor').insertAdjacentHTML('afterend','<div class="fj-note small">⚠ '+fjernetHvad(m)+' (Lydkort) er fjernet i v9.12. Forbindelsen er slået fra.</div>')})};
+/* Kildelisten mister lk:-kilderne; en forbindelse, der står på en fjernet kilde, skal stadig vise den. */
+const fjGammelFyld=fyldMapListe;
+fyldMapListe=function(s){const v=s&&s.value;fjGammelFyld(s);if(s&&fjernetKilde(v)&&s.value!==v){s.insertAdjacentHTML('afterbegin','<option value="'+esc(v)+'">'+esc(bandNavn(v))+'</option>');s.value=v}};
+/* ========== SLUT: FJERNEDE KILDER ========== */
 
 
 
@@ -6971,7 +6847,7 @@ setTimeout(function(){
  document.body.appendChild(sb);const nl=sb.querySelector('.sb-niv');const ns=$('tb-niv');if(ns){nl.appendChild(ns);const gl=tbm.querySelector('label.tb-niv');if(gl)gl.remove()}
  /* flyout */
  const fly=document.createElement('div');fly.id='sb-fly';fly.hidden=true;fly.innerHTML='<div class="sbf-h"><b id="sbf-titel"></b><button class="ghost" id="sbf-x" aria-label="Luk">×</button></div><div id="sbf-musik" class="sbf"></div><div id="sbf-vis" class="sbf"></div><div id="sbf-mere" class="sbf"></div><div id="sbf-hjaelp" class="sbf"></div>';document.body.appendChild(fly);
- $('sbf-musik').innerHTML='<button data-sbg="fil">📂 Vælg lydfil</button><button data-sbg="lk" title="Indlæs et lydkort (.json), som Lydkosmos har gemt for den samme sang. Giver kildegruppen Lydkort (lk:).">🗺 Indlæs lydkort fra Lydkosmos</button><input type="file" id="lk-fil" accept=".json,application/json" hidden><p class="small" id="lk-st">Intet lydkort indlæst.</p><button data-sbg="gen">🎹 Musik-generator</button><button data-sbg="linind">🎙 Lyd ind (mikrofon eller fanelyd)</button><p class="small">Lyd ind og tempoet ses også i bjælken nederst.</p>';
+ $('sbf-musik').innerHTML='<button data-sbg="fil">📂 Vælg lydfil</button><button data-sbg="gen">🎹 Musik-generator</button><button data-sbg="linind">🎙 Lyd ind (mikrofon eller fanelyd)</button><p class="small">Lyd ind og tempoet ses også i bjælken nederst.</p>';
  const vis=$('sbf-vis');vis.innerHTML='<p class="small">Det, publikum ser.</p>';[$('ud-btn'),$('ud-sort'),$('tb-sikker'),$('rec-btn')].forEach(e=>{if(e)vis.appendChild(e)});vis.insertAdjacentHTML('beforeend','<button data-sbg="fuld">⛶ Live preview i fuld skærm</button><button data-sbg="scud">▸ Send Scene-fanen til skærm</button>');
  const nav=tbm.querySelector('nav.menuer'),mere=$('sbf-mere'),hj=$('sbf-hjaelp');
  if(nav){[...nav.querySelectorAll('.menu')].forEach(m=>{const b=m.querySelector('.menub'),p=m.querySelector('.menup');if(!p)return;const h=document.createElement('h3');h.className='sbf-sek';h.textContent=b?b.textContent.replace(/[▾▼]/g,'').trim():'';const box=b&&b.id==='mn-hjp'?hj:mere;box.appendChild(h);box.appendChild(p);p.hidden=false;if(b)b.remove()});nav.remove()}
@@ -6987,9 +6863,7 @@ setTimeout(function(){
  function flyVis(k){if(!k||(!fly.hidden&&fly.dataset.k===k)){fly.hidden=true;fly.dataset.k='';sbUI();return}fly.dataset.k=k;fly.hidden=false;fly.querySelectorAll('.sbf').forEach(x=>x.hidden=x.id!=='sbf-'+k);$('sbf-titel').textContent=(K.find(x=>x[0]===k)||[0,0,''])[2];sbUI()}
  sb.addEventListener('click',e=>{const b=e.target.closest('[data-sb]');if(!b)return;const k=b.dataset.sb;if(VIN[k]){flyVis(null);sbAabn(VIN[k]);sbUI();return}if(k==='galleri'){flyVis(null);galVis(true);sbUI();return}flyVis(k)});
  $('sbf-x').onclick=()=>flyVis(null);
- $('lk-fil').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];e.target.value='';if(f)lkIndlaesFil(f)});
- setInterval(()=>{const st=$('lk-st');if(!st)return;const k=LK.kort,t=k?'Lydkort: '+(k.navn||'uden navn')+' · '+Math.round(k.bpm)+' BPM · '+lkTid(k.varighed):'Intet lydkort indlæst.';if(st.textContent!==t)st.textContent=t},800);
- fly.addEventListener('click',e=>{const b=e.target.closest('[data-sbg]');if(!b)return;const g=b.dataset.sbg;if(g==='fil')$('file').click();else if(g==='lk')$('lk-fil').click();else if(g==='gen'){flyVis(null);sbAabn('w4')}else if(g==='linind')$('lin-btn').click();else if(g==='fuld'){try{pvFuld()}catch(x){}}else if(g==='scud'){const s=document.querySelector('#sc-faner [data-scud]');if(s&&!s.disabled)s.click();else msg('Vælg Live preview, Radial Mesh eller Lyd i 3D i Scene først.')}});
+ fly.addEventListener('click',e=>{const b=e.target.closest('[data-sbg]');if(!b)return;const g=b.dataset.sbg;if(g==='fil')$('file').click();else if(g==='gen'){flyVis(null);sbAabn('w4')}else if(g==='linind')$('lin-btn').click();else if(g==='fuld'){try{pvFuld()}catch(x){}}else if(g==='scud'){const s=document.querySelector('#sc-faner [data-scud]');if(s&&!s.disabled)s.click();else msg('Vælg Live preview, Radial Mesh eller Lyd i 3D i Scene først.')}});
  document.addEventListener('pointerdown',e=>{if(!fly.hidden&&!fly.contains(e.target)&&!sb.contains(e.target)&&!e.target.closest('#bd'))flyVis(null)},true);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!fly.hidden)flyVis(null)});
  function sbUI(){sb.querySelectorAll('[data-sb]').forEach(b=>{const k=b.dataset.sb;let on=false;if(VIN[k]){const w=$(VIN[k]);on=!!(w&&!w.hidden&&!w.classList.contains('min')&&!w.classList.contains('niv-skjult'))}else if(k==='galleri')on=galSynlig();else on=!fly.hidden&&fly.dataset.k===k;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}
@@ -7213,7 +7087,7 @@ function dubVis(on){if(on&&typeof scIScene==='function'&&scIScene('w8')&&!$('w8'
 $('dubbtn').onclick=()=>dubVis(!dubSynlig());$('dubx').onclick=()=>dubVis(false);
 const dubKort=(t,w)=>{t=String(t);const n=Math.max(3,Math.floor(w/5.8));return t.length>n?t.slice(0,n-1)+'…':t};
 function dubAntal(c){if(c.kind==='s')return maps.filter(m=>m.band===c.key).length;if(c.kind==='f')return maps.filter(m=>m.effect.startsWith('obj:'+c.id+':')||m.effect==='liv:'+c.id).length;return maps.filter(m=>m.effect===c.key).length}
-function dubKilder(q,kunK){return(dub.kild==='analyse'?ANA20:dub.kild==='pad'?MMP_KILDER:dub.kild==='hnd'?HND_KILDER:dub.kild==='lk'?LK_KO:dub.kild==='rytme'?Rytme.ANA_KILDER.filter(k=>(k.gruppe==='Rytme'||k.gruppe==='Rytme (kun lydfiler)')):BANDS.map(b=>({key:b[0],label:b[1]}))).map(c=>({key:c.key,label:c.label,kind:'s'})).filter(c=>(!q||c.label.toLowerCase().includes(q))&&(!kunK||dubAntal(c)>0))}
+function dubKilder(q,kunK){return(dub.kild==='analyse'?ANA20:dub.kild==='pad'?MMP_KILDER:dub.kild==='hnd'?HND_KILDER:dub.kild==='rytme'?Rytme.ANA_KILDER.filter(k=>(k.gruppe==='Rytme'||k.gruppe==='Rytme (kun lydfiler)')):BANDS.map(b=>({key:b[0],label:b[1]}))).map(c=>({key:c.key,label:c.label,kind:'s'})).filter(c=>(!q||c.label.toLowerCase().includes(q))&&(!kunK||dubAntal(c)>0))}
 function dubMaal(q,kunK){const bokse=DUB_KASSER.map(n=>({navn:n,items:[]}));
  TARGETS.forEach(t=>{if(t.gruppe==='objekt')return;const k=/^klods\d+$/.test(t.id)?'Bane':t.id.startsWith('lyd:')?'Lyd':DUB_KASSE[t.id],b=bokse.find(x=>x.navn===k);if(b)b.items.push({key:t.id,label:DUB_KORT[t.id]||t.navn,full:t.navn,kind:'t'})});
  const fb=bokse.find(x=>x.navn==='Figurer');fase2.objekter.forEach(o=>{if(!o.skabelon)fb.items.push({key:'fig:'+o.id,label:o.navn,full:'Figur: '+o.navn,kind:'f',id:o.id})});
@@ -7239,7 +7113,7 @@ function drawDub(){const w=$('w8');if(!w||w.hidden||w.classList.contains('min'))
  g.fillStyle=mute;g.textAlign='left';g.fillText('Lydtræk',6,12);g.fillText('Mål i kasser',W-L.Rw+6,12);
  // venstre: lydtræk
  g.save();g.beginPath();g.rect(0,TOP-2,L.Lw,H-TOP+2);g.clip();
- L.kc.forEach((c2,i)=>{const v=Math.min(1,Math.max(0,bandV(c2.key)||0)),on=dub.sel&&dub.sel.t==='src'&&dub.sel.key===c2.key,hh=dub.kild==='analyse'||dub.kild==='pad'||dub.kild==='hnd'||dub.kild==='lk'?i*26:BANDS.findIndex(b=>b[0]===c2.key)*26;
+ L.kc.forEach((c2,i)=>{const v=Math.min(1,Math.max(0,bandV(c2.key)||0)),on=dub.sel&&dub.sel.t==='src'&&dub.sel.key===c2.key,hh=dub.kild==='analyse'||dub.kild==='pad'||dub.kild==='hnd'?i*26:BANDS.findIndex(b=>b[0]===c2.key)*26;
   g.fillStyle=on?'#2b3b4d':'#18212b';g.fillRect(c2.x,c2.y,c2.w,c2.h);g.fillStyle='hsla('+hh+',80%,50%,.55)';g.fillRect(c2.x,c2.y,c2.w*v,c2.h);g.strokeStyle=on?'#fff':'rgba(255,255,255,.18)';g.strokeRect(c2.x,c2.y,c2.w,c2.h);
   const n=dubAntal(c2);g.fillStyle='#e6edf4';g.textAlign='left';g.fillText(dubKort(c2.label,c2.w-26),c2.x+5,c2.y+c2.h/2);if(n){g.fillStyle=acc;g.textAlign='right';g.fillText(String(n),c2.x+c2.w-4,c2.y+c2.h/2);
     /* En lille farvet prik viser, at lydtrækket har en forbindelse. Farven er lydtrækkets egen (som i Radial Mesh), og prikken lyser og får glød, når forbindelsen er aktiv (størst af forbindelsernes envelope). */
@@ -7834,7 +7708,7 @@ function nivVinduer(n){const ok=new Set();for(let k=1;k<=n;k++)NIV_VIN[k].forEac
 function nivAnvend(){const n=feNiv(),ok=nivVinduer(n);document.body.dataset.niv=n;const tb=$('tb-niv');if(tb&&+tb.value!==n)tb.value=String(n);
  document.querySelectorAll('.win').forEach(w=>w.classList.toggle('niv-skjult',!ok.has(w.id)));
  Object.entries(NIV_KNAP).forEach(([id,k])=>{const b=$(id);if(b)b.classList.toggle('niv-skjult',n<k)});
- const kildeOk={'bånd':1,hnd:1,rytme:2,analyse:3,pad:3,lk:2};['mb-kilder','dubkild'].forEach(id=>{const sel=$(id);if(sel)[...sel.options].forEach(o=>{const k=kildeOk[o.value]||1;o.hidden=n<k;o.disabled=n<k&&o.value!==sel.value})});
+ const kildeOk={'bånd':1,hnd:1,rytme:2,analyse:3,pad:3};['mb-kilder','dubkild'].forEach(id=>{const sel=$(id);if(sel)[...sel.options].forEach(o=>{const k=kildeOk[o.value]||1;o.hidden=n<k;o.disabled=n<k&&o.value!==sel.value})});
  try{dockOpdat()}catch(e){}try{if(typeof fgFaner==='function')Object.keys(FG).forEach(g=>{fgFaner(g);const a=set.fg[g].aktiv;if(fgIGruppe(a)&&$(a).classList.contains('niv-skjult')){const f=FG[g].faner.find(x=>fgIGruppe(x[0])&&!$(x[0]).classList.contains('niv-skjult'));if(f)fgVaelg(g,f[0],true)}})}catch(e){}try{if(typeof scFaner==='function'){scFaner();if(scIScene(set.scene.aktiv)&&$(set.scene.aktiv).classList.contains('niv-skjult')){const f=SC_FANER.find(x=>scIScene(x[0])&&!$(x[0]).classList.contains('niv-skjult'));if(f)scVaelg(f[0],true)}}}catch(e){}}
 function nivSaet(v){const n=Math.max(1,Math.min(4,+v||2));set.niv=n;set.feNiv=n;feGemSet();if(n===1&&set.feFane==='D')set.feFane='C';if(n===1)selL=0;nivAnvend();try{formUI();renderMaps();fokusUI()}catch(e){}
  const skj=[...document.querySelectorAll('.win.niv-skjult')].length;msg('Niveau '+FE_NIV_NAVN[n]+' for hele programmet.'+(skj?' '+skj+' vinduer er skjult på dette niveau; de kommer tilbage, når du vælger et højere.':' Alle vinduer er med.')+' Intet er slettet.')}

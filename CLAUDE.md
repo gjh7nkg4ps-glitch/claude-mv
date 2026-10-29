@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 1.6 · 29. oktober 2026 · gælder fra Claude MV v9.11 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 1.7 · 29. oktober 2026 · gælder fra Claude MV v9.12 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -37,15 +37,15 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_12.html`
-  2. i **programmet**: `<title>Claude MV v9.12 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v9_13.html`
+  2. i **programmet**: `<title>Claude MV v9.13 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
 - Efter v9.9 kommer **v9.10**, v9.11 og så videre. **v10.0** venter vi med, til jeg siger til.
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v912">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v913">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
 
 ### GitHub
-- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_12.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
-- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.12: startskærm med demosang`.
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_13.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.13: startskærm med demosang`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
@@ -93,7 +93,12 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
 - Hovedanalysen bruger FFT 2048 (21,5 Hz pr. trin); tone-analysen og de 31 bånd bruger 8192. Under 50 Hz er det groft.
 
-## 4. Hvad der er sket fra v8.0 til v9.11
+### Lydkort er fjernet (v9.12)
+- **Lydkort** (kildegruppen `lk:`, en `.json`-fil fra Lydkosmos) er fjernet helt, fordi det gjorde tingene for komplicerede: endnu en kildegruppe med 17 kilder, der målte det samme som Lydtræk og Analysen (bas, kick, beat, RMS …), en ekstra fil, der skulle passe til sangen, og et ekstra kort og en knap.
+- Den sidste version med Lydkort er v9.11, mærket med tagget **`milepael-med-lydkort`** (commit `87fcc93`).
+- Gemte opsætninger med en `lk:`-kilde (eller `lk:`-port) går ikke i stykker: forbindelsen bliver stående, slås fra, giver 0, og der står en gul besked i statuslinjen, Mapping og Router (blokken *FJERNEDE KILDER*). Tilføj ikke Lydkort igen uden at spørge.
+
+## 4. Hvad der er sket fra v8.0 til v9.12
 
 | Version | Hvad |
 | --- | --- |
@@ -117,6 +122,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.9 | **Router 2.0** (vores navn; fagudtryk: graf-editor), fanen Router: kilder → Router-bokse → mål med levende linjer; VU-måler med gul tærskel, man trækker i, hysterese-bånd og peak hold; signalet før og efter kæden; Gain, Attack, Release og Hold (Fra · 50 ms til 2 s · ∞); Styrke brugt; drejeknapper til Hysterese, Kurve, Slew og Spærretid. Motoren har fået **hysterese, Hold med tid og slew** i den faste kæde; uden dem regner den præcis som før |
 | v9.10 | **Spærretid for alle slag**: virker nu for alle forbindelser fra en slag-kilde (grå i Router, når kilden glider); **signaltyper** efter D2 (type: slag, glidende, rampe, valg; mappe: Rytme … Styring); M-knappen i W4 er rettet (den delte klassenavn med en tabel) |
 | v9.11 | **Router 2.0 videre**: *Visning: Kompakt · Fuld* (kompakt cirka 210 px pr. boks; *Detaljer ▸* åbner én), *Sortér: D2 · Rækkefølge* med mappe-overskrifter, farve efter type, hver kilde med sit tal lige nu og "bruges af …", *Vis kilder, der ikke bruges* med ＋, *Standard-visning*; Lydkort og de 31 bånd har faste pladser i D2 |
+| v9.12 | **Lydkort fjernet** (kildegruppen lk:, kortet i Lydkilde, knappen under 🎵 Musik, gruppen i Radial Mesh, Mesh 3D og Dublet, afsnittet i manualen); gamle forbindelser med lk: slås fra med en tydelig besked. Tagget `milepael-med-lydkort` er den sidste version med Lydkort |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -125,10 +131,12 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Send til editor** laver ikke tempo-profilen (SHOWPROFIL); det gør kun en lydfil. Bundbaren viser derfor ikke tempo og toneart for generatorens lyd.
 - **Akkord-fladen og fill** står ikke i trinene og giver ikke klodser.
 - **Router 2.0:** D2-sorteringen gælder kun Router. Mapping og de andre lister over kilder sorterer som før.
-- **Router 2.0:** "den, der bruges, er markeret" er lavet som "bruges af forbindelse …" på chippen. En regel for, hvilken af to ens målinger (fx Kick fra Lydtræk og Kick fra Lydkort) der er bedst, findes ikke.
+- **Router 2.0:** "den, der bruges, er markeret" er lavet som "bruges af forbindelse …" på chippen. En regel for, hvilken af to ens målinger der er bedst, findes ikke.
+- **Dobbelte målinger** (talt i v9.12, ikke ændret): fx Bas (Lydtræk) og de 11 bas-bånd af de 31 (følges 0,88), Brilliance og 6–16 kHz-båndene (0,88), Spectral centroid og rolloff (0,94), Taktslag fra Analysen og Hændelse · taktslag (samme slag, målt to steder), Toneklasse og de 12 toner. Panorering og Stereobredde var altid 0 på testfilen (mono). Listen står i svaret fra v9.12-sessionen; der er ikke besluttet noget.
+- **Tagget `milepael-med-lydkort`** er sat lokalt, men kunne ikke sendes op til GitHub fra Claude Code-sessionen (forbindelsen blev afbrudt hver gang; almindelige gem virker). Lav det på GitHub, hvis det ikke findes: commit `87fcc93`.
 - **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
 - **Hysterese, Hold med tid og Slew** virker ikke på klods-spor, og Mapping har ingen skydere til dem (Mapping viser en linje, når de er sat).
-- **Spærretid for alle slag** (v9.10): standarden er 120 ms for alle forbindelser, så to anslag fra en slag-kilde tættere end 120 ms bliver til ét. Lydkort-kilder har faste pladser fra v9.11; kun ukendte kilder får type ud fra navnet.
+- **Spærretid for alle slag** (v9.10): standarden er 120 ms for alle forbindelser, så to anslag fra en slag-kilde tættere end 120 ms bliver til ét. Ukendte kilder får typen glidende i mappen Klang.
 - **Den levende baggrund** er meget diskret, fordi zonerne dækker næsten hele skærmen. Valget mellem at lade den være diskret eller gøre flere flader gennemsigtige er ikke truffet.
 - **Fuld visning:** bjælken *Afslut fuld visning* er kun testet ved måling, ikke ved skærmbillede (testbrowseren kan ikke). Der er et sikkerhedstjek hvert halve sekund, der laver bjælken, hvis skiftet blev overset.
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
@@ -146,7 +154,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 
 ### MV2 (sat ned i fart)
 Claude MV2 er en planlagt ombygning omkring **én signalgraf** (én datamodel for alle forbindelser). Den er sat ned i fart; vi arbejder videre på MV. To beslutninger, der også gælder for Router 2.0:
-- **Sortering af signaler (valg K1, vores navn): D2.** Mapper efter musik (Rytme, Tone og harmoni, Klang, Dynamik, Frekvens, Rum, Struktur, Styring) og farve efter type (slag, glidende, rampe, valg). **Intet lægges sammen:** hver måling (fx Kick fra Lydtræk og Kick fra Lydkort, vores navne) har sin egen linje med sit tal lige nu; den, der bruges, er markeret, og der står hvorfor.
+- **Sortering af signaler (valg K1, vores navn): D2.** Mapper efter musik (Rytme, Tone og harmoni, Klang, Dynamik, Frekvens, Rum, Struktur, Styring) og farve efter type (slag, glidende, rampe, valg). **Intet lægges sammen:** hver måling (fx Bas fra Lydtræk og bas fra de 31 bånd) har sin egen linje med sit tal lige nu; den, der bruges, er markeret, og der står hvorfor.
 - **Spærretid for alle slag**, grå hvor den ikke virker; release vises grå, når Hold står på ∞ (begge lavet i v9.9 og v9.10).
 
 ### Idé-kassen (senere)
