@@ -33,9 +33,10 @@ async function kør(arg) {
     });
     await vent(1200);
     const std = await side.evaluate(() => ({ vis: set.r2vis, sort: set.r2sort, kompakte: document.querySelectorAll('#r2 .r2-boks.kompakt').length, bokse: document.querySelectorAll('#r2 .r2-boks').length,
-      h: Math.round(document.querySelector('#r2 .r2-boks').getBoundingClientRect().height), sl: [...document.querySelectorAll('#r2 .r2-boks .r2-sls')].some(e => e.offsetParent) }));
+      h: Math.round(Math.max(...[...document.querySelectorAll('#r2 .r2-boks')].filter(b => !b.querySelector('.tk-rad')).map(b => b.getBoundingClientRect().height))), hTakt: Math.round(Math.max(0, ...[...document.querySelectorAll('#r2 .r2-boks')].filter(b => b.querySelector('.tk-rad')).map(b => b.getBoundingClientRect().height))), sl: [...document.querySelectorAll('#r2 .r2-boks .r2-sls')].some(e => e.offsetParent) }));
     T.tjek(std.vis === 'kompakt' && std.sort === 'd2', 'standard: Kompakt og D2');
-    T.tjek(std.kompakte === std.bokse && std.h < 260 && !std.sl, `alle ${std.bokse} bokse er kompakte (${std.h} px høje), og skyderne er skjult`);
+    /* fra v9.13 har taktslag-bokse en ekstra linje med Auto · Fra filen · Mens det spiller */
+    T.tjek(std.kompakte === std.bokse && std.h < 260 && std.hTakt < 300 && !std.sl, `alle ${std.bokse} bokse er kompakte (${std.h} px høje; taktslag-boksen ${std.hTakt} px), og skyderne er skjult`);
 
     const d2 = await side.evaluate(() => ({ chips: [...document.querySelectorAll('#r2 .r2-kilder .r2-chip')].sort((a, b) => parseFloat(a.style.top) - parseFloat(b.style.top)).map(c => c.dataset.kk),
       mapper: [...document.querySelectorAll('#r2 .r2-kilder .r2-mappe')].filter(h => h.style.display !== 'none').sort((a, b) => parseFloat(a.style.top) - parseFloat(b.style.top)).map(h => h.dataset.mp),
@@ -69,9 +70,10 @@ async function kør(arg) {
 
     /* Ubrugte kilder */
     const ub = await side.evaluate(async () => { document.getElementById('r2-alle').click(); await (async () => { const klar = () => new Promise(r => { const t0 = performance.now(); const f = () => { if ((R2.byg && document.querySelector('#r2 .r2-graf')) || performance.now() - t0 > 5000) requestAnimationFrame(() => requestAnimationFrame(r)); else requestAnimationFrame(f); }; requestAnimationFrame(f); }); await klar(); })();
-      const u = [...document.querySelectorAll('#r2 .r2-uchip')], alle = r2AlleKilder().length, brugt = new Set(maps.map(m => m.band)).size;
+      /* fra v9.13 er de smalle bånd foldet sammen, og Rolloff og Zero crossing rate er skjult under Niveau 4 */
+      const u = [...document.querySelectorAll('#r2 .r2-uchip')], brugtS = new Set(maps.map(m => m.band)), ubrugt = r2AlleKilder().filter(k => !brugtS.has(k)), n = feNiv(), skjult = ubrugt.filter(k => { const m = /^ana:ls(\d+)$/.exec(k); return m ? (!lsSynlig(+m[1], n) || !set.lsAaben.includes(lsBred(+m[1]))) : (n < 4 && NIV4_KILDER.includes(k)); }).length, alle = ubrugt.length + brugtS.size - skjult, brugt = brugtS.size;
       return { n: u.length, forvent: alle - brugt, harKick: u.some(c => c.dataset.kk === 'kick'), grupper: [...document.querySelectorAll('#r2 .r2-ugrp .r2-mappe-n')].map(b => b.textContent) }; });
-    T.tjek(ub.n === ub.forvent && !ub.harKick, `Vis kilder, der ikke bruges: ${ub.n} kilder (alle minus de brugte), i mapperne ${ub.grupper.join(', ')}`);
+    T.tjek(ub.n === ub.forvent && !ub.harKick, `Vis kilder, der ikke bruges: ${ub.n} kilder (alle minus de brugte og de foldede eller skjulte), i mapperne ${ub.grupper.join(', ')}`);
     await side.evaluate(() => { const h = document.querySelector('#r2 .r2-ubrugt'); if (h) h.scrollIntoView(); });
     await vent(400);
     await side.locator('#w25').screenshot({ path: path.join(UD, 'router-ubrugte.png') });

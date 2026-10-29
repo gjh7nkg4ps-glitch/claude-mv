@@ -41,7 +41,8 @@ Filnavnet skrives altid øverst, så vi ser, at det er den rigtige fil, der test
 | `6-spaerretid.js` | 4 · Det nye i v9.10 | Spærretid for alle slag: præcis som før med spærretid 0, for glidende kilder og for klods-spor; to anslag 50 ms fra hinanden bliver til ét; signaltyperne (D2); Spærretid grå i Router for glidende kilder; M-knappen i W4 er smal |
 | `7-router-d2.js` | 4 · Det nye i v9.11 | Router kompakt og D2: standard Kompakt og D2; kompakte bokse og Detaljer ▸; Fuld; kildernes rækkefølge og mappe-overskrifter efter D2; Rækkefølge; farve efter type; "bruges af …"; Lydkort og de 31 bånd har faste pladser; Vis kilder, der ikke bruges, og ＋; Standard-visning; tallene lever med lyd |
 | `8-lydkort-fjernet.js` | 4 · Det nye i v9.12 | Lydkort er fjernet: ingen lk:-kilder, intet kort i Lydkilde, ingen knap, ingen funktioner, intet afsnit i manualen; en gammel plads med lk:-kilde og lk:-port hentes uden fejl, forbindelserne slås fra, og beskeden står i statuslinjen, Mapping og Router; det samme ved opstart; afspilning uden fejl |
-| `testlyd.js` | hjælp | laver testlydfilen: 30 s ved 120 BPM med kick, hihat, bas og en akkord i a-mol |
+| `9-kilder-og-stereo.js` | 4 · Det nye i v9.13 | kildelisterne pr. Niveau (smalle bånd foldet sammen under de brede bånd; høje bånd, Rolloff og Zero crossing rate kun på Niveau 4); fold ud og ind uden at ændre forbindelsen; Router-listen; typerne for de glidende hændelser; taktslag Auto og Manuel (uden lyd, generator, fil) og hvad motoren læser; panorering, stereobredde og faselighed med stereo-testfilen |
+| `testlyd.js` | hjælp | laver testlydfilen: 30 s ved 120 BPM med kick, hihat, bas og en akkord i a-mol. `testlyd.stereo(fil)` laver den i stereo i tre dele: mono, venstre, højre og bred |
 | `faelles.js` | hjælp | finder programfilen og læser dens `<script>`-dele |
 | `koer-alle.js` | | kører det hele i rækkefølge: 1, 2, 3 og så alle test af det nye (4, 5 …) |
 

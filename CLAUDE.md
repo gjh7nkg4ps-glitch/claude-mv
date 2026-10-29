@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 1.7 · 29. oktober 2026 · gælder fra Claude MV v9.12 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 1.8 · 29. oktober 2026 · gælder fra Claude MV v9.13 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -37,15 +37,15 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_13.html`
-  2. i **programmet**: `<title>Claude MV v9.13 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v9_14.html`
+  2. i **programmet**: `<title>Claude MV v9.14 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
 - Efter v9.9 kommer **v9.10**, v9.11 og så videre. **v10.0** venter vi med, til jeg siger til.
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v913">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v914">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
 
 ### GitHub
-- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_13.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
-- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.13: startskærm med demosang`.
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_14.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.14: startskærm med demosang`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
@@ -57,7 +57,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
   2. **Opstart:** åbn filen i en testbrowser (Playwright, fagudtryk) og tjek, at der ingen fejl er (`pageerror` og konsolfejl). Giv altid tjekket det rigtige filnavn; vi har en gang testet en gammel fil i flere versioner uden at opdage det.
   3. **Fast testpakke:** alle forudindstillinger (`FORINDST`, kør hver med `brugFor(id,true)`) uden fejl; alle 5 layouts (`lay3Anvend`) uden overlap mellem synlige vinduer; Mesh 3D og Øjet starter; gem og hent en plads (`slotSave`/`slotLoad`); tilføj og fjern en forbindelse.
   4. **Det nye:** en test af netop det, der er ændret, plus et skærmbillede.
-- **Kendte faldgruber i testbrowseren:** uden grafikkort (SwiftShader, fagudtryk) er 3D meget langsomt; analysen af en lydfil tager over et minut (uden SwiftShader cirka 11 sekunder); skærmbilleder af fuld skærm virker ikke. Testpakken laver selv en testlydfil (30 s ved 120 BPM, `tests/testlyd.js`).
+- **Kendte faldgruber i testbrowseren:** uden grafikkort (SwiftShader, fagudtryk) er 3D meget langsomt; analysen af en lydfil tager over et minut (uden SwiftShader cirka 11 sekunder); skærmbilleder af fuld skærm virker ikke. Testpakken laver selv testlydfiler (30 s ved 120 BPM, `tests/testlyd.js`), i mono og i stereo (mono, venstre, højre og bred), så panorering og stereobredde også testes.
 
 ### Sådan har vi rettet i koden
 - Små, præcise tekst-erstatninger, hvor den gamle tekst skal passe **præcis ét sted**; ellers stop.
@@ -98,7 +98,13 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - Den sidste version med Lydkort er v9.11, mærket med tagget **`milepael-med-lydkort`** (commit `87fcc93`).
 - Gemte opsætninger med en `lk:`-kilde (eller `lk:`-port) går ikke i stykker: forbindelsen bliver stående, slås fra, giver 0, og der står en gul besked i statuslinjen, Mapping og Router (blokken *FJERNEDE KILDER*). Tilføj ikke Lydkort igen uden at spørge.
 
-## 4. Hvad der er sket fra v8.0 til v9.12
+### Dobbelte målinger (v9.13)
+- **Intet fjernes.** Det, der hjælper, er at folde de detaljerede sammen og have én tydelig regel.
+- **De 31 smalle bånd** står foldet sammen under hvert af de fire brede bånd (Bas 11, Mid 9, Høj-mid 5, Brilliance 6) i kildelisterne og i Router (fra Niveau 3). *▸ Vis* og *▾ Skjul* ændrer ikke forbindelsen; valget huskes.
+- **Kun på Niveau 4:** de høje smalle bånd (5 kHz og op), Spectral rolloff og Zero crossing rate. Der står, hvor mange der er skjult; en forbindelse, der bruger en af dem, viser den stadig.
+- **Taktslag og takt** (fra filen = Analysen; mens det spiller = takturet): reglen **Auto** er *fil → fra filen*, *Lyd ind eller generator → mens det spiller*, altid med grunden vist ved forbindelsen (fx "Auto: fra filen, fordi du spiller en fil"). Vælger man selv, står der **Manuel** og hvad Auto ville have brugt.
+
+## 4. Hvad der er sket fra v8.0 til v9.13
 
 | Version | Hvad |
 | --- | --- |
@@ -123,6 +129,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.10 | **Spærretid for alle slag**: virker nu for alle forbindelser fra en slag-kilde (grå i Router, når kilden glider); **signaltyper** efter D2 (type: slag, glidende, rampe, valg; mappe: Rytme … Styring); M-knappen i W4 er rettet (den delte klassenavn med en tabel) |
 | v9.11 | **Router 2.0 videre**: *Visning: Kompakt · Fuld* (kompakt cirka 210 px pr. boks; *Detaljer ▸* åbner én), *Sortér: D2 · Rækkefølge* med mappe-overskrifter, farve efter type, hver kilde med sit tal lige nu og "bruges af …", *Vis kilder, der ikke bruges* med ＋, *Standard-visning*; Lydkort og de 31 bånd har faste pladser i D2 |
 | v9.12 | **Lydkort fjernet** (kildegruppen lk:, kortet i Lydkilde, knappen under 🎵 Musik, gruppen i Radial Mesh, Mesh 3D og Dublet, afsnittet i manualen); gamle forbindelser med lk: slås fra med en tydelig besked. Tagget `milepael-med-lydkort` er den sidste version med Lydkort |
+| v9.13 | **Dobbelte målinger foldet sammen**: de 31 smalle bånd under de fire brede bånd (*▸ Vis* / *▾ Skjul*); høje bånd, Rolloff og Zero crossing rate kun på Niveau 4; **Taktslag Auto** (fil → fra filen, Lyd ind/generator → mens det spiller) med grund og Manuel; rettet type for de tre glidende hændelser; **stereo-testfil** |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -132,7 +139,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Akkord-fladen og fill** står ikke i trinene og giver ikke klodser.
 - **Router 2.0:** D2-sorteringen gælder kun Router. Mapping og de andre lister over kilder sorterer som før.
 - **Router 2.0:** "den, der bruges, er markeret" er lavet som "bruges af forbindelse …" på chippen. En regel for, hvilken af to ens målinger der er bedst, findes ikke.
-- **Dobbelte målinger** (talt i v9.12, ikke ændret): fx Bas (Lydtræk) og de 11 bas-bånd af de 31 (følges 0,88), Brilliance og 6–16 kHz-båndene (0,88), Spectral centroid og rolloff (0,94), Taktslag fra Analysen og Hændelse · taktslag (samme slag, målt to steder), Toneklasse og de 12 toner. Panorering og Stereobredde var altid 0 på testfilen (mono). Listen står i svaret fra v9.12-sessionen; der er ikke besluttet noget.
+- **Dobbelte målinger:** besluttet og lavet i v9.13 (se afsnit 3). Ikke ændret: Spectral centroid og rolloff (følges 0,94; rolloff kun på Niveau 4) og Toneklasse og de 12 toner.
+- **Taktslag Auto** gælder motoren (Rytme.koer). Klodser, der forudsiges fra filen, bruger kilden, som den står i forbindelsen.
+- **Stereobredde** stiger også, når lyden bare ligger til den ene side (målt 0,37 for lyd kun til venstre), fordi den regnes som side-signal i forhold til midte (fagudtryk: mid/side). Opdaget med stereo-testfilen i v9.13; ikke ændret.
 - **Tags fra Claude Code:** sessionens forbindelse til GitHub må sende gem og grene op, men ikke lave eller slette tags (og ikke slette grene). Tagget `milepael-med-lydkort` blev derfor lavet på GitHub under *Releases*; det peger på `87fcc93` (v9.11). Grenen `v9_11-med-lydkort` peger på det samme gem og kan slettes, når du vil.
 - **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
 - **Hysterese, Hold med tid og Slew** virker ikke på klods-spor, og Mapping har ingen skydere til dem (Mapping viser en linje, når de er sat).
