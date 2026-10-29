@@ -38,6 +38,7 @@ Filnavnet skrives altid øverst, så vi ser, at det er den rigtige fil, der test
 | | 3 · Fast testpakke | alle forudindstillinger (`FORINDST`, `brugFor`) indlæses uden fejl · alle 5 layouts (`lay3Anvend`) uden overlap mellem synlige vinduer · Mesh 3D og Øjet starter · gem og hent plads A (`slotSave`/`slotLoad`) · tilføj og fjern en forbindelse |
 | `4-lydmotor.js` | 4 · Det nye i v9.8 | Lydmotor 2: alle 7 genrer med Ny og Klassisk uden at spille (ingen klip, ikke stille, forskellige); betoninger og spøgelsesslag; akkorden lyser, takten tæller, Fill i takt 4; skift motor og *Tilbage til standard*; *Send til editor*. Gemmer lydprøver i `tests/ud/lyd/` |
 | `5-router.js` | 4 · Det nye i v9.9 | Router 2.0: motoren regner præcis som før uden de nye trin; hysterese, Hold 300 ms og Slew 2/s måles; de virker ikke på klods-spor; fanen, boksene, linjerne og chipsene; træk i VU-måleren, drejeknap, Hold ∞ gør Release grå, Spærretid grå, ↺ Standard, Mapping-linjen, + Ny og ✕; levende med en lydfil |
+| `6-spaerretid.js` | 4 · Det nye i v9.10 | Spærretid for alle slag: præcis som før med spærretid 0, for glidende kilder og for klods-spor; to anslag 50 ms fra hinanden bliver til ét; signaltyperne (D2); Spærretid grå i Router for glidende kilder; M-knappen i W4 er smal |
 | `testlyd.js` | hjælp | laver testlydfilen: 30 s ved 120 BPM med kick, hihat, bas og en akkord i a-mol |
 | `faelles.js` | hjælp | finder programfilen og læser dens `<script>`-dele |
 | `koer-alle.js` | | kører det hele i rækkefølge: 1, 2, 3 og så alle test af det nye (4, 5 …) |

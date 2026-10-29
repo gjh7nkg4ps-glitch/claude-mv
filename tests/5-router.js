@@ -7,7 +7,7 @@
    - De nye trin virker ikke på klods-spor.
    Visningen:
    - Fanen Router findes; én boks pr. forbindelse, to linjer pr. forbindelse, én chip pr. kilde og pr. mål.
-   - Træk i VU-måleren sætter tærsklen; piletast på en drejeknap; Hold-skyderen på ∞ gør Release grå; Spærretid er grå for et mål, hvor den ikke virker; ↺ Standard; Mapping viser en Router-linje.
+   - Træk i VU-måleren sætter tærsklen; piletast på en drejeknap; Hold-skyderen på ∞ gør Release grå; Spærretid er grå, hvor den ikke virker; ↺ Standard; Mapping viser en Router-linje.
    - + Ny forbindelse og ✕.
    - Med en lydfil, der spiller, lever målerne og linjerne. */
 const fs = require('fs'), os = require('os'), path = require('path');
@@ -87,8 +87,10 @@ async function kør(arg) {
     const mid = await side.evaluate(async () => { const s = document.querySelector('#r2 .r2-boks[data-i="0"] input[data-rf="hold"]'); s.value = 11; s.dispatchEvent(new Event('input', { bubbles: true })); s.dispatchEvent(new Event('change', { bubbles: true })); await new Promise(r => setTimeout(r, 200)); return { hold: maps[0].hold, holdMs: maps[0].holdMs }; });
     T.tjek(mid.hold === false && mid.holdMs > 50 && mid.holdMs < 2000, `Hold midt på skyderen giver ${mid.holdMs} ms`);
 
-    const sp = await side.evaluate(() => { const i = maps.findIndex(m => !/^klods\d+$/.test(m.effect) && !String(m.effect).startsWith('lyd:')); const k = document.querySelector('#r2 .r2-boks[data-i="' + i + '"] .r2-knap[data-k="gap"]'); return k && k.classList.contains('graa'); });
-    T.tjek(sp, 'Spærretid er grå for et mål, hvor den ikke virker');
+    /* Fra v9.10 virker spærretid for alle slag-kilder; den er grå, når kilden glider (og målet ikke er klods eller Lyd). */
+    const sp = await side.evaluate(async () => { maps.push({ band: 'bas', effect: 'ring', thr: .3, gain: 1, att: 20, rel: 200, curve: 1, gap: 120, min: true }); renderMaps(); await new Promise(r => setTimeout(r, 400));
+      const i = maps.length - 1, k = document.querySelector('#r2 .r2-boks[data-i="' + i + '"] .r2-knap[data-k="gap"]'), g = !!(k && k.classList.contains('graa')); maps.pop(); renderMaps(); return g; });
+    T.tjek(sp, 'Spærretid er grå, hvor den ikke virker (kilden glider)');
 
     const std = await side.evaluate(async () => { document.querySelector('#r2 .r2-boks[data-i="0"] [data-r2="std"]').click(); await new Promise(r => setTimeout(r, 200)); const m = maps[0]; return { hyst: m.hyst, holdMs: m.holdMs, hold: m.hold, slew: m.slew, curve: m.curve, thr: m.thr }; });
     T.tjek(std.hyst === 0 && std.holdMs === 0 && !std.hold && std.slew === 0 && std.curve === 1 && Math.abs(std.thr - .6) < .02, '↺ Standard sætter kæden tilbage, men tærsklen bliver');
