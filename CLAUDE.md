@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 1.0 · 28. oktober 2026 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 1.1 · 28. oktober 2026 · gælder fra Claude MV v9.6 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -11,7 +11,7 @@ Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hv
 Claude MV er et personligt værksted, der gør musik til levende billeder. En lydfil (oftest mp3) analyseres, og målingerne (fx bas, kick, hihat, taktslag, afsnit og drop) styrer figurer, lys og 3D-grafik gennem **forbindelser** (fagudtryk: mapping). Det er bygget sammen med Claude over mange versioner.
 
 - Hele programmet er **én HTML-fil** (cirka 1,8 MB), der kører i browseren uden server og uden internet. Three.js r128 og dets glød-værktøjer (MIT) ligger inde i filen.
-- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med Mapping og Tidslinje.
+- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Mapping, Tidslinje, Analyse og Lydkilde.
 - Det er et **privat program**. Det skal være let at gå til, men kunne blive rigtig dybt.
 
 ## 2. Sådan vil jeg arbejde sammen med dig
@@ -37,10 +37,15 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_5.html`
-  2. i **programmet**: `<title>Claude MV v9.5 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v9_7.html`
+  2. i **programmet**: `<title>Claude MV v9.7 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v95">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v97">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+
+### GitHub
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_7.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.7: ny lydmotor til generatoren`.
+- Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
 - **Test, før du afleverer**, og vis mig skærmbilleder af det nye.
@@ -78,12 +83,13 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | Pause ved en forbindelse | **Spærretid** (fagudtryk: refractory period) |
 | Show-vægte | **Afsnits-dynamik** (kun brugt i forklaringen af gain-stakken indtil videre) |
 | Lyd (W25) | **Arbejdsfelt** |
+| Generator-fanen | **Lydkilde** (W31) |
 
 ### Analyse og mapping
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
 - Hovedanalysen bruger FFT 2048 (21,5 Hz pr. trin); tone-analysen og de 31 bånd bruger 8192. Under 50 Hz er det groft.
 
-## 4. Hvad der er sket fra v8.0 til v9.4
+## 4. Hvad der er sket fra v8.0 til v9.6
 
 | Version | Hvad |
 | --- | --- |
@@ -100,12 +106,13 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.2 | **Indholdsfortegnelse** øverst i koden (81 blokke); to ubrugte rester fjernet |
 | v9.3 | **Editoren ryddet op**: faner uden bogstaver, ⋯ Mere-menu, forklaringer bag *? Forklaring*, Editorens Niveau hedder *Detaljer* |
 | v9.4 | Editorens egenskaber i ny stil med kort forklaring og ?-knap ved hver af de 35 almindelige egenskaber |
+| v9.5 | Forklaringer til alle danserens (58) og diskokuglens (12) egenskaber; ved bevægelserne står, hvilken lyd der plejer at passe (fx Hop på kick, Hofte på bas, Hår på hihat) |
+| v9.6 | Fanen **Lydkilde** (vores navn, W31) i Arbejdsfeltet i stedet for Generator: træk en lydfil ind, se navn, længde, tempo, toneart og analyse-status; en enklere generator-flade (samme lydmotor; den fulde flade, W4, åbnes med *Avanceret …*); små kort for Lyd ind og Lydkort |
 
 ## 5. Halvfærdigt og kendte fejl
 
-- **v9.5 og v9.6 er lavet, men ikke i repoet** (se afsnit 6). Spørg mig, om filen er lagt op, før du bygger videre fra v9.4.
 - **Testpakken er ikke i repoet.** Testene lå i chatten Claudes egen arbejdsmappe. Genopbyg dem som filer i repoet (fx en mappe `tests/`), så de kan køres igen.
-- **Danserens og diskokuglens egenskaber** har kun en fælles forklaring i v9.4 (rettet i v9.5).
+- **Generatoren** har fået en ny flade i v9.6, men lydmotoren er den gamle; den lyder som før.
 - **Spærretid** virker kun for Klods-effekter og Lyd-mål. Beslutningen er, at den skal gælde for **alle** slag (planlagt til MV2).
 - **Den levende baggrund** er meget diskret, fordi zonerne dækker næsten hele skærmen. Valget mellem at lade den være diskret eller gøre flere flader gennemsigtige er ikke truffet.
 - **Fuld visning:** bjælken *Afslut fuld visning* er kun testet ved måling, ikke ved skærmbillede (testbrowseren kan ikke). Der er et sikkerhedstjek hvert halve sekund, der laver bjælken, hvis skiftet blev overset.
@@ -114,10 +121,6 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
 
 ## 6. Planen: det næste
-
-### Lavet uden for repoet (skal lægges op)
-- **v9.5:** forklaringer til alle danserens (58) og diskokuglens (12) egenskaber, fx Hop "godt på kick eller drop".
-- **v9.6:** fanen **Lydkilde** (vores navn) i Arbejdsfeltet i stedet for Generator: træk en lydfil ind, se navn, længde, tempo, toneart og analyse-status; en enklere generator-flade (samme lydmotor); små kort for Lyd ind og Lydkort.
 
 ### Næste opgaver
 | Opgave | Hvorfor |
