@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 1.2 · 29. oktober 2026 · gælder fra Claude MV v9.7 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 1.3 · 29. oktober 2026 · gælder fra Claude MV v9.8 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -37,20 +37,20 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_8.html`
-  2. i **programmet**: `<title>Claude MV v9.8 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v9_9.html`
+  2. i **programmet**: `<title>Claude MV v9.9 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v98">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v99">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
 
 ### GitHub
-- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_8.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
-- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.8: ny lydmotor til generatoren`.
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_9.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.9: graf-editor (Router 2.0)`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
 - **Test, før du afleverer**, og vis mig skærmbilleder af det nye.
 - **Vær ærlig** om, hvad der ikke er testet, eller hvad der ikke kan lade sig gøre.
-- **Testpakken ligger i `tests/`** og kører trin 1 til 3 med `node tests/koer-alle.js` (se `tests/README.md`). Trin 4 skrives til hver version.
+- **Testpakken ligger i `tests/`** og kører alle trin med `node tests/koer-alle.js` (se `tests/README.md`). Trin 4 (det nye) får sin egen testfil pr. version, fx `tests/4-lydmotor.js`, som bliver i pakken.
 - Den faste rækkefølge, vi har brugt:
   1. **Syntaks:** kør `node --check` på hvert `<script>` i filen. Et opstartstjek alene fanger ikke syntaksfejl.
   2. **Opstart:** åbn filen i en testbrowser (Playwright, fagudtryk) og tjek, at der ingen fejl er (`pageerror` og konsolfejl). Giv altid tjekket det rigtige filnavn; vi har en gang testet en gammel fil i flere versioner uden at opdage det.
@@ -85,12 +85,13 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | Show-vægte | **Afsnits-dynamik** (kun brugt i forklaringen af gain-stakken indtil videre) |
 | Lyd (W25) | **Arbejdsfelt** |
 | Generator-fanen | **Lydkilde** (W31) |
+| Ny lydmotor (v9.8) | **Lydmotor 2**; den gamle hedder **Klassisk** |
 
 ### Analyse og mapping
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
 - Hovedanalysen bruger FFT 2048 (21,5 Hz pr. trin); tone-analysen og de 31 bånd bruger 8192. Under 50 Hz er det groft.
 
-## 4. Hvad der er sket fra v8.0 til v9.7
+## 4. Hvad der er sket fra v8.0 til v9.8
 
 | Version | Hvad |
 | --- | --- |
@@ -110,10 +111,15 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.5 | Forklaringer til alle danserens (58) og diskokuglens (12) egenskaber; ved bevægelserne står, hvilken lyd der plejer at passe (fx Hop på kick, Hofte på bas, Hår på hihat) |
 | v9.6 | Fanen **Lydkilde** (vores navn, W31) i Arbejdsfeltet i stedet for Generator: træk en lydfil ind, se navn, længde, tempo, toneart og analyse-status; en enklere generator-flade (samme lydmotor; den fulde flade, W4, åbnes med *Avanceret …*); små kort for Lyd ind og Lydkort |
 | v9.7 | **Indholdsfortegnelsen** i koden lavet forfra ud fra blokkenes markeringer (85 blokke; v9.3 til v9.6 manglede); henvisningen til PLAN_FASE2.md fjernet; **testpakken** lagt i `tests/` |
+| v9.8 | **Lydmotor 2** (vores navn): nye lyde (kick med klik og mætning, 808-hihat med choke, bas med sub og filter-kontur, lead med vibrato), **akkordrække** pr. genre, som bas og lead følger, **akkord-flade** (pad), betoninger og spøgelsesslag, fill hver 4. takt, rumklang, kompressor, begrænser og blød klipper. *Lydmotor: Ny · Klassisk* og *Tilbage til standard*; akkorden lige nu lyser |
 
 ## 5. Halvfærdigt og kendte fejl
 
-- **Generatoren** har fået en ny flade i v9.6, men lydmotoren er den gamle; den lyder som før.
+- **Lydmotor 2** er målt (ingen klip, bassen følger akkorderne), men lyden er ikke lyttet til af et menneske endnu. Lydprøver laves af `tests/4-lydmotor.js`.
+- **Klassisk** (den gamle lydmotor) klipper i alle genrer (peak 1,1 til 1,7). Den er ikke rettet, fordi Klassisk skal være uændret.
+- **Send til editor** laver ikke tempo-profilen (SHOWPROFIL); det gør kun en lydfil. Bundbaren viser derfor ikke tempo og toneart for generatorens lyd.
+- **W4 (den fulde generator):** M-knapperne (mute) er strakt ud over hele bredden, så trinene presses ud til højre.
+- **Akkord-fladen og fill** står ikke i trinene og giver ikke klodser.
 - **Spærretid** virker kun for Klods-effekter og Lyd-mål. Beslutningen er, at den skal gælde for **alle** slag (planlagt til MV2).
 - **Den levende baggrund** er meget diskret, fordi zonerne dækker næsten hele skærmen. Valget mellem at lade den være diskret eller gøre flere flader gennemsigtige er ikke truffet.
 - **Fuld visning:** bjælken *Afslut fuld visning* er kun testet ved måling, ikke ved skærmbillede (testbrowseren kan ikke). Der er et sikkerhedstjek hvert halve sekund, der laver bjælken, hvis skiftet blev overset.
@@ -126,7 +132,6 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Ny lydmotor til generatoren** med bedre lyde og mønstre | den nuværende generator lyder som før og irriterer mig |
 | **Graf-editor (Router 2.0, vores navn)** med levende bokse | at se og bygge mapping; hjertet i MV2-planen |
 
 **Router-boksen** (designet, ikke bygget) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.

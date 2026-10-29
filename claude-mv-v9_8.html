@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Claude MV v9.7 (Rytme-editor)</title>
+<title>Claude MV v9.8 (Rytme-editor)</title>
 
 <style>
 :root{--ok:#2fb86a;--adv:#e5a50a;--fejl:#e04b45;--info:#3b8eea;--bg:#e8e6df;--panel:#f4f2ec;--ink:#1c2321;--mute:#5d6560;--line:#c7c3b8;--acc:#0a7d6b;--bad:#b3261e;--wave:#fbfaf6;
@@ -62,7 +62,7 @@ dialog{background:var(--panel);color:var(--ink);border:2px solid var(--ink);bord
 .gen{overflow:auto;padding:8px}.pad{width:20px;height:24px;margin:1px;padding:0;border:1px solid var(--line);background:var(--bg);border-radius:4px}.pad.on{background:var(--acc)}.pad.now{outline:2px solid var(--ink)}.pad.g{margin-right:6px}.gl{display:inline-block;width:46px;font-size:12px}
 #keys{display:flex;height:60px;margin:6px 0}.key{flex:1;border:1px solid var(--ink);background:#fff;padding:0;border-radius:0 0 4px 4px}.key.b{background:#111;height:60%;margin:0 -6px;z-index:1;flex:.7;align-self:flex-start}
 
-#keys{height:90px}.key.hit{background:var(--acc)!important}.pad.m{opacity:.35}.mt.on{background:var(--bad);color:#fff;border-color:var(--bad)}
+#keys{height:90px}.key.hit{background:var(--acc)!important}.pad.m{opacity:.35}/* v9.8: Lydmotor 2 */.pad.on.acc{background:var(--acc);box-shadow:0 0 8px var(--acc);border-color:#fff}.pad.on.gh{opacity:.45}.lm-rad{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.03);font-size:12.5px}.lm-l{font-weight:600;opacity:.85}.lm-seg{display:inline-flex;gap:0}.lm-seg button{border-radius:0;padding:3px 10px}.lm-seg button:first-child{border-radius:8px 0 0 8px}.lm-seg button:last-child{border-radius:0 8px 8px 0}.lm-t{display:inline-flex;align-items:center;gap:4px}.lm-t input[type=range]{width:80px;accent-color:var(--acc)}.lm-akk{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}.lm-akk i{opacity:.4;font-style:normal}.lm-a{min-width:30px;text-align:center;padding:2px 6px;border:1px solid var(--line);border-radius:6px;opacity:.6}.lm-a.nu{opacity:1;background:var(--acc);color:#04121c;box-shadow:0 0 10px var(--acc)}.lm-takt{opacity:.7;margin-left:6px}.lm-fill{padding:2px 6px;border:1px solid var(--line);border-radius:6px;opacity:.3}.lm-fill.nu{opacity:1;background:#ffcc40;color:#1a1200;box-shadow:0 0 10px #ffcc40}.mt.on{background:var(--bad);color:#fff;border-color:var(--bad)}
 .gr{display:flex;align-items:center;white-space:nowrap;gap:4px}.gr input[type=range]{width:70px;accent-color:var(--acc)}#pads{overflow-x:auto;padding-bottom:6px}#pads .gr{margin-bottom:2px}.gen .ab{margin:6px 0}
 #pv,#mesh{touch-action:none}#mesh{width:100%;height:100%;display:block}#w5.meshstor #meshbar,#w5.meshstor #multibar,#w5.meshstor #meshctl{display:none!important}#w5:fullscreen{background:#0b0f14;display:flex;flex-direction:column}#w5:fullscreen .wb{flex:1 1 auto;min-height:0}
 #multibar[hidden]{display:none!important}
@@ -1080,7 +1080,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 </script>
 </head>
 <body>
-<h1 class="sr-only">Claude MV: musik bliver til billeder</h1><div id="tb-hot" aria-hidden="true"></div><header id="tb" data-tb="fuld" data-dock="fast"><div class="tbm"><div class="brand"><svg class="logo" viewBox="0 0 36 28" width="30" height="24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#59d2ff"/><stop offset="1" stop-color="#b57bff"/></linearGradient></defs><g fill="url(#lg)"><rect x="1" y="11" width="4" height="6" rx="2"/><rect x="8" y="5" width="4" height="18" rx="2"/><rect x="15" y="1" width="4" height="26" rx="2"/><rect x="22" y="7" width="4" height="14" rx="2"/><rect x="29" y="12" width="4" height="4" rx="2"/></g></svg><b>Rytme</b><small title="Versionsnummer. Det stiger med 0,1, hver gang filen samles til udgivelse.">v9.7</small></div><button id="tb-udv" class="ghost" aria-expanded="false" title="Vis eller skjul hele topbaren. Knappen findes kun i størrelsen Minimal.">☰</button><label class="filebtn" title="Vælg en lydfil fra din computer (mp3, wav, ogg ...). Filen sendes ikke væk: alt sker i din browser."><input type="file" id="file" accept="audio/*" aria-label="Vælg lydfil"><span id="tb-filtekst">Vælg lydfil</span></label><button id="play" disabled title="Afspil fra der, hvor du er. Mellemrumstasten skifter mellem afspil og pause.">▶ Afspil</button><button id="pause" disabled title="Sæt på pause. Afspil fortsætter derfra.">❚❚ Pause</button><span id="tid" class="small" style="min-width:96px" aria-live="off"></span><div id="player" class="player" role="group" aria-label="Afspiller"><button id="pl-start" disabled>⏮ Start</button><button id="pl-back" disabled>−5 s</button><button id="pl-stop" disabled>■ Stop</button><button id="pl-fwd" disabled>+5 s</button><input type="range" id="pl-pos" min="0" max="1000" value="0" step="1" disabled aria-label="Position i nummeret"><button id="pl-mute" aria-pressed="false">Lyd</button><input type="range" id="pl-vol" min="0" max="100" value="100" step="1" aria-label="Volumen"><span id="pl-db" class="small">0 dB</span><canvas id="pl-meter" width="120" height="14" aria-label="Niveaumåler: styrken af det, der spilles" title="Niveaumåler: styrken af det, der spilles (efter volumen). Rød øverst betyder, at lyden er tæt på at klippe."></canvas></div><label class="tbl" title="Når nummeret er slut, starter det forfra af sig selv, så showet bliver ved. Slået til fra start."><input type="checkbox" id="tb-gentag" checked> Gentag</label><label class="tbl tb-niv" title="Niveau for hele programmet: hvor meget du ser. 1 Simpel: det vigtigste. 2 Medium: almindelige ting. 3 Høj: næsten alt. 4 Ekstrem: alt. Alle vinduer følger det, også Form-editoren. Intet slettes ved at gå ned; det skjules og virker stadig.">Niveau <select id="tb-niv" aria-label="Niveau for hele programmet"><option value="1">1 · Simpel</option><option value="2">2 · Medium</option><option value="3">3 · Høj</option><option value="4">4 · Ekstrem</option></select></label><nav class="menuer" aria-label="Menuer"><div class="menu"><button class="menub" id="mn-ops" aria-expanded="false" aria-controls="mp-ops" title="Hent og gem opsætninger: forudindstillinger, dine egne opsætninger, kopi som tekst og nulstil">Opsætning<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-ops" role="group" aria-label="Opsætning" hidden><h4>Hent</h4><label class="tbl">Forudindstilling <select id="tb-ops" data-ms="tb-ops" aria-label="Hent en forudindstilling"><option value="">Vælg …</option></select></label><label class="tbl">Mine opsætninger <select id="tb-mine" data-ms="tb-mine" aria-label="Hent en af dine egne opsætninger"><option value="">Vælg …</option></select></label><h4>Gem og del</h4><button class="ghost" data-ma="klik:copy">Kopiér preset</button><button class="ghost" data-ma="gaa:json">Preset som tekst</button><h4>Start forfra</h4><button class="ghost fare" data-ma="klik:s-reset">Nulstil alt…</button></div></div><div class="menu"><button class="menub" id="mn-show" aria-expanded="false" aria-controls="mp-show" title="Lav et show til sangen: Kør Auto, Rolig, Balanceret eller Vild, og Fortryd">Show<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-show" role="group" aria-label="Show" hidden><h4>Lav en opsætning</h4><button class="ghost" data-ma="klik:show-rolig">Lav show: Rolig</button><button class="ghost" data-ma="klik:show-bal">Lav show: Balanceret</button><button class="ghost" data-ma="klik:show-vild">Lav show: Vild</button><button class="ghost" data-ma="klik:show-fortryd">Fortryd sidste show</button><h4>Automatik</h4><label class="tbl">Random alt skifter <select id="tb-skift" data-ms="tb-skift" aria-label="Automatisk skift af Random alt"><option value="0">Fra</option><option value="10">hvert 10. sek.</option><option value="20">hvert 20. sek.</option><option value="40">hvert 40. sek.</option><option value="60">hvert 60. sek.</option></select></label><h4>Mere</h4><button class="ghost" data-ma="gaa:showsec">Gå til Show-panelet</button></div></div><div class="menu"><button class="menub" id="mn-vin" aria-expanded="false" aria-controls="mp-vin" title="Dublet, Lyd i 3D, flyt effekter og orden i vinduerne">Vinduer<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-vin" role="group" aria-label="Vinduer" hidden><h4>Udgang (projektor)</h4><label class="tbl">Udgangsvinduet viser <select id="ud-kilde" aria-label="Hvad udgangsvinduet viser"><option value="pv">Live preview</option><option value="mesh">Radial Mesh</option><option value="mesh3d">Mesh 3D</option><option value="oeje">Øjet</option><option value="d3">Lyd i 3D</option></select></label><h4>Skærme</h4><button id="tb-gen" class="ghost" title="Find Musik-generatoren (beats): genrerne, trommemønstret du selv kan tegne, og keyboardet">Musik-generator (beats)</button><button id="dubbtn" class="ghost">Dublet</button><button id="d3btn" class="ghost">Lyd i 3D</button><button id="rtbtn" class="ghost">Routing-overblik</button><button id="mmpbtn" class="ghost">Master Morph Pad</button><button id="galbtn" class="ghost">Idé-galleri</button><h4>Visning</h4><button id="enkelbtn" class="ghost" aria-pressed="false" title="Enkel tilstand: skjul alle vinduer undtagen Live preview, og vis et lille panel med tempo, bølgeform, EQ og fem følsomhedsknapper. Slå fra for at få alt tilbage.">Enkel tilstand</button><h4>Redigér</h4><button class="ghost" data-ma="klik:mvbtn" id="tb-mv"></button><button class="ghost" data-ma="klik:mvrst">Nulstil pos.</button><h4>Orden</h4><button id="rwin" class="ghost">Ordn vinduer</button><button id="mina" class="ghost">Minimér alle vinduer</button><h4>Layouts</h4><label class="tbl">Vælg layout <select id="lay-vaelg" aria-label="Vælg et layout"></select></label><button class="ghost" id="lay-brug" title="Layoutet bruges, så snart du vælger det. Denne knap bruger det igen, fx hvis du har flyttet vinduerne.">Brug igen</button><label class="tbl">Navn <input type="text" id="lay-navn" maxlength="24" placeholder="fx Disco" aria-label="Navn til et nyt layout" title="Giv det nuværende layout et navn (højst 24 tegn), og tryk Gem layout."></label><button class="ghost" id="lay-gem" title="Gem alle vinduers placering, størrelse og minimering under dette navn.">Gem layout</button><button class="ghost fare" id="lay-slet" title="Slet det valgte layout (kun dine egne).">Slet layout</button><h4>Topbar</h4><label class="tbl">Størrelse <select id="tb-stoerrelse" aria-label="Topbarens størrelse"><option value="fuld">Fuld</option><option value="kompakt">Kompakt (halv)</option><option value="minimal">Minimal (kvart)</option></select></label><label class="tbl">Dock <select id="tb-dock" aria-label="Topbarens dock"><option value="fast">Fastgjort øverst</option><option value="auto">Skjul automatisk</option></select></label></div></div><div class="menu"><button class="menub" id="mn-lyd" aria-expanded="false" aria-controls="mp-lyd" title="Kvalitet og ydelse, normalisering, lydlag og indstillinger">Lyd og ydelse<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-lyd" role="group" aria-label="Lyd og ydelse" hidden><h4>Ydelse</h4><label class="tbl">Kvalitet <select id="tb-kval" data-ms="tb-kval" aria-label="Kvalitetsniveau"><option value="disco">Disco</option><option value="undervisning">Undervisning</option><option value="spar">Spar</option><option value="fuld">Fuld</option><option value="egen">Egen</option></select></label><label class="tbl"><input type="checkbox" id="tb-reg" data-ms="tb-reg"> Kvalitetsregulator</label><button class="ghost" data-ma="klik:bench-start">Kør måletest</button><h4>Lyd</h4><button id="norm" class="ghost">Normalisering: Auto</button><button class="ghost" data-ma="klik:lmute">Mute lydlag</button><h4>Mere</h4><button id="sbtn" class="ghost">Indstillinger</button></div></div><div class="menu hoejre"><button class="menub" id="mn-hjp" aria-expanded="false" aria-controls="mp-hjp" title="Ordliste, manual og hurtige genveje til forklaringer">Hjælp<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-hjp" role="group" aria-label="Hjælp" hidden><h4>Slå op</h4><button id="hjbtn" class="ghost">Ordliste (søg i begreber)</button><button id="gbtn" class="ghost">Manual (bruger og teknik)</button><h4>Hurtigt</h4><button class="ghost" data-ma="manual:genveje">Tastaturgenveje</button><button class="ghost" data-ma="manual:figur-form">Figur og form: forskellen</button></div></div></nav><div class="chips" role="group" aria-label="Visning og sikkerhed"><button id="tb-sikker" class="chip" aria-pressed="true">Sikker visning: Til</button><button id="ud-btn" class="chip" aria-pressed="false">Udgangsvindue: Fra</button><button id="ud-sort" class="chip" aria-pressed="false">Sort skærm</button><button id="rec-btn" class="chip" aria-pressed="false">Optag: Fra</button><button id="lin-btn" class="chip" aria-pressed="false">Lyd ind: Fra</button></div></div><div class="tbs"><span id="status" role="status" aria-live="polite">Vælg en lydfil for at starte</span></div></header>
+<h1 class="sr-only">Claude MV: musik bliver til billeder</h1><div id="tb-hot" aria-hidden="true"></div><header id="tb" data-tb="fuld" data-dock="fast"><div class="tbm"><div class="brand"><svg class="logo" viewBox="0 0 36 28" width="30" height="24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#59d2ff"/><stop offset="1" stop-color="#b57bff"/></linearGradient></defs><g fill="url(#lg)"><rect x="1" y="11" width="4" height="6" rx="2"/><rect x="8" y="5" width="4" height="18" rx="2"/><rect x="15" y="1" width="4" height="26" rx="2"/><rect x="22" y="7" width="4" height="14" rx="2"/><rect x="29" y="12" width="4" height="4" rx="2"/></g></svg><b>Rytme</b><small title="Versionsnummer. Det stiger med 0,1, hver gang filen samles til udgivelse.">v9.8</small></div><button id="tb-udv" class="ghost" aria-expanded="false" title="Vis eller skjul hele topbaren. Knappen findes kun i størrelsen Minimal.">☰</button><label class="filebtn" title="Vælg en lydfil fra din computer (mp3, wav, ogg ...). Filen sendes ikke væk: alt sker i din browser."><input type="file" id="file" accept="audio/*" aria-label="Vælg lydfil"><span id="tb-filtekst">Vælg lydfil</span></label><button id="play" disabled title="Afspil fra der, hvor du er. Mellemrumstasten skifter mellem afspil og pause.">▶ Afspil</button><button id="pause" disabled title="Sæt på pause. Afspil fortsætter derfra.">❚❚ Pause</button><span id="tid" class="small" style="min-width:96px" aria-live="off"></span><div id="player" class="player" role="group" aria-label="Afspiller"><button id="pl-start" disabled>⏮ Start</button><button id="pl-back" disabled>−5 s</button><button id="pl-stop" disabled>■ Stop</button><button id="pl-fwd" disabled>+5 s</button><input type="range" id="pl-pos" min="0" max="1000" value="0" step="1" disabled aria-label="Position i nummeret"><button id="pl-mute" aria-pressed="false">Lyd</button><input type="range" id="pl-vol" min="0" max="100" value="100" step="1" aria-label="Volumen"><span id="pl-db" class="small">0 dB</span><canvas id="pl-meter" width="120" height="14" aria-label="Niveaumåler: styrken af det, der spilles" title="Niveaumåler: styrken af det, der spilles (efter volumen). Rød øverst betyder, at lyden er tæt på at klippe."></canvas></div><label class="tbl" title="Når nummeret er slut, starter det forfra af sig selv, så showet bliver ved. Slået til fra start."><input type="checkbox" id="tb-gentag" checked> Gentag</label><label class="tbl tb-niv" title="Niveau for hele programmet: hvor meget du ser. 1 Simpel: det vigtigste. 2 Medium: almindelige ting. 3 Høj: næsten alt. 4 Ekstrem: alt. Alle vinduer følger det, også Form-editoren. Intet slettes ved at gå ned; det skjules og virker stadig.">Niveau <select id="tb-niv" aria-label="Niveau for hele programmet"><option value="1">1 · Simpel</option><option value="2">2 · Medium</option><option value="3">3 · Høj</option><option value="4">4 · Ekstrem</option></select></label><nav class="menuer" aria-label="Menuer"><div class="menu"><button class="menub" id="mn-ops" aria-expanded="false" aria-controls="mp-ops" title="Hent og gem opsætninger: forudindstillinger, dine egne opsætninger, kopi som tekst og nulstil">Opsætning<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-ops" role="group" aria-label="Opsætning" hidden><h4>Hent</h4><label class="tbl">Forudindstilling <select id="tb-ops" data-ms="tb-ops" aria-label="Hent en forudindstilling"><option value="">Vælg …</option></select></label><label class="tbl">Mine opsætninger <select id="tb-mine" data-ms="tb-mine" aria-label="Hent en af dine egne opsætninger"><option value="">Vælg …</option></select></label><h4>Gem og del</h4><button class="ghost" data-ma="klik:copy">Kopiér preset</button><button class="ghost" data-ma="gaa:json">Preset som tekst</button><h4>Start forfra</h4><button class="ghost fare" data-ma="klik:s-reset">Nulstil alt…</button></div></div><div class="menu"><button class="menub" id="mn-show" aria-expanded="false" aria-controls="mp-show" title="Lav et show til sangen: Kør Auto, Rolig, Balanceret eller Vild, og Fortryd">Show<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-show" role="group" aria-label="Show" hidden><h4>Lav en opsætning</h4><button class="ghost" data-ma="klik:show-rolig">Lav show: Rolig</button><button class="ghost" data-ma="klik:show-bal">Lav show: Balanceret</button><button class="ghost" data-ma="klik:show-vild">Lav show: Vild</button><button class="ghost" data-ma="klik:show-fortryd">Fortryd sidste show</button><h4>Automatik</h4><label class="tbl">Random alt skifter <select id="tb-skift" data-ms="tb-skift" aria-label="Automatisk skift af Random alt"><option value="0">Fra</option><option value="10">hvert 10. sek.</option><option value="20">hvert 20. sek.</option><option value="40">hvert 40. sek.</option><option value="60">hvert 60. sek.</option></select></label><h4>Mere</h4><button class="ghost" data-ma="gaa:showsec">Gå til Show-panelet</button></div></div><div class="menu"><button class="menub" id="mn-vin" aria-expanded="false" aria-controls="mp-vin" title="Dublet, Lyd i 3D, flyt effekter og orden i vinduerne">Vinduer<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-vin" role="group" aria-label="Vinduer" hidden><h4>Udgang (projektor)</h4><label class="tbl">Udgangsvinduet viser <select id="ud-kilde" aria-label="Hvad udgangsvinduet viser"><option value="pv">Live preview</option><option value="mesh">Radial Mesh</option><option value="mesh3d">Mesh 3D</option><option value="oeje">Øjet</option><option value="d3">Lyd i 3D</option></select></label><h4>Skærme</h4><button id="tb-gen" class="ghost" title="Find Musik-generatoren (beats): genrerne, trommemønstret du selv kan tegne, og keyboardet">Musik-generator (beats)</button><button id="dubbtn" class="ghost">Dublet</button><button id="d3btn" class="ghost">Lyd i 3D</button><button id="rtbtn" class="ghost">Routing-overblik</button><button id="mmpbtn" class="ghost">Master Morph Pad</button><button id="galbtn" class="ghost">Idé-galleri</button><h4>Visning</h4><button id="enkelbtn" class="ghost" aria-pressed="false" title="Enkel tilstand: skjul alle vinduer undtagen Live preview, og vis et lille panel med tempo, bølgeform, EQ og fem følsomhedsknapper. Slå fra for at få alt tilbage.">Enkel tilstand</button><h4>Redigér</h4><button class="ghost" data-ma="klik:mvbtn" id="tb-mv"></button><button class="ghost" data-ma="klik:mvrst">Nulstil pos.</button><h4>Orden</h4><button id="rwin" class="ghost">Ordn vinduer</button><button id="mina" class="ghost">Minimér alle vinduer</button><h4>Layouts</h4><label class="tbl">Vælg layout <select id="lay-vaelg" aria-label="Vælg et layout"></select></label><button class="ghost" id="lay-brug" title="Layoutet bruges, så snart du vælger det. Denne knap bruger det igen, fx hvis du har flyttet vinduerne.">Brug igen</button><label class="tbl">Navn <input type="text" id="lay-navn" maxlength="24" placeholder="fx Disco" aria-label="Navn til et nyt layout" title="Giv det nuværende layout et navn (højst 24 tegn), og tryk Gem layout."></label><button class="ghost" id="lay-gem" title="Gem alle vinduers placering, størrelse og minimering under dette navn.">Gem layout</button><button class="ghost fare" id="lay-slet" title="Slet det valgte layout (kun dine egne).">Slet layout</button><h4>Topbar</h4><label class="tbl">Størrelse <select id="tb-stoerrelse" aria-label="Topbarens størrelse"><option value="fuld">Fuld</option><option value="kompakt">Kompakt (halv)</option><option value="minimal">Minimal (kvart)</option></select></label><label class="tbl">Dock <select id="tb-dock" aria-label="Topbarens dock"><option value="fast">Fastgjort øverst</option><option value="auto">Skjul automatisk</option></select></label></div></div><div class="menu"><button class="menub" id="mn-lyd" aria-expanded="false" aria-controls="mp-lyd" title="Kvalitet og ydelse, normalisering, lydlag og indstillinger">Lyd og ydelse<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-lyd" role="group" aria-label="Lyd og ydelse" hidden><h4>Ydelse</h4><label class="tbl">Kvalitet <select id="tb-kval" data-ms="tb-kval" aria-label="Kvalitetsniveau"><option value="disco">Disco</option><option value="undervisning">Undervisning</option><option value="spar">Spar</option><option value="fuld">Fuld</option><option value="egen">Egen</option></select></label><label class="tbl"><input type="checkbox" id="tb-reg" data-ms="tb-reg"> Kvalitetsregulator</label><button class="ghost" data-ma="klik:bench-start">Kør måletest</button><h4>Lyd</h4><button id="norm" class="ghost">Normalisering: Auto</button><button class="ghost" data-ma="klik:lmute">Mute lydlag</button><h4>Mere</h4><button id="sbtn" class="ghost">Indstillinger</button></div></div><div class="menu hoejre"><button class="menub" id="mn-hjp" aria-expanded="false" aria-controls="mp-hjp" title="Ordliste, manual og hurtige genveje til forklaringer">Hjælp<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-hjp" role="group" aria-label="Hjælp" hidden><h4>Slå op</h4><button id="hjbtn" class="ghost">Ordliste (søg i begreber)</button><button id="gbtn" class="ghost">Manual (bruger og teknik)</button><h4>Hurtigt</h4><button class="ghost" data-ma="manual:genveje">Tastaturgenveje</button><button class="ghost" data-ma="manual:figur-form">Figur og form: forskellen</button></div></div></nav><div class="chips" role="group" aria-label="Visning og sikkerhed"><button id="tb-sikker" class="chip" aria-pressed="true">Sikker visning: Til</button><button id="ud-btn" class="chip" aria-pressed="false">Udgangsvindue: Fra</button><button id="ud-sort" class="chip" aria-pressed="false">Sort skærm</button><button id="rec-btn" class="chip" aria-pressed="false">Optag: Fra</button><button id="lin-btn" class="chip" aria-pressed="false">Lyd ind: Fra</button></div></div><div class="tbs"><span id="status" role="status" aria-live="polite">Vælg en lydfil for at starte</span></div></header>
 <div id="dockL" class="dock" role="region" aria-label="Minimerede vinduer, venstre side"></div><div id="dockR" class="dock" role="region" aria-label="Minimerede vinduer, højre side"></div>
 <div id="mvk" class="mvk" hidden role="dialog" aria-label="Kort over forbindelserne"><div class="mvk-bar"><b>🗺 Kort over forbindelserne</b><span id="mvk-info" class="small"></span><label class="small"><input type="checkbox" id="mvk-tal" checked> Tal på pilene</label><span class="mvk-sk"></span><button class="ghost" id="mvk-zud" aria-label="Zoom ud">−</button><span id="mvk-z" class="small">100 %</span><button class="ghost" id="mvk-zind" aria-label="Zoom ind">＋</button><button class="ghost" id="mvk-tilpas">Tilpas</button><button class="ghost" id="mvk-kode">📋 Kopiér Mermaid-kode</button><button class="ghost" id="mvk-png">⬇ PNG</button><button class="ghost" id="mvk-svg">⬇ SVG</button><button id="mvk-luk">Luk (Esc)</button></div><div class="mvk-flade" id="mvk-flade"><div id="mvk-ud"></div></div><textarea id="mvk-txt" class="mvk-txt" hidden readonly aria-label="Mermaid-kode"></textarea></div>
 <div id="ws">
@@ -1239,7 +1239,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
  <div id="g1">
 <h2 id="man-del-bruger">Brugermanual</h2>
 <p class="small">Manualen er ordnet efter <b>emne</b>. Inden for hvert emne står vejledningerne først, så referencen (de nummererede afsnit) og til sidst nyhederne fra hver version. Søg i feltet øverst, hvis du leder efter et bestemt ord. Den <b>tekniske manual</b> og <b>visionen</b> ligger i de andre faner.</p>
-<div class="man-nyt"><b>Nyt i v9.7:</b> <a href="#man-v97" onclick="return !manualGaa('man-v97')">Ny indholdsfortegnelse i koden og en testpakke</a>. De forrige: <a href="#man-v96" onclick="return !manualGaa('man-v96')">v9.6</a> · <a href="#man-v95" onclick="return !manualGaa('man-v95')">v9.5</a> · <a href="#man-v94" onclick="return !manualGaa('man-v94')">v9.4</a> · <a href="#man-v93" onclick="return !manualGaa('man-v93')">v9.3</a> · <a href="#man-v92" onclick="return !manualGaa('man-v92')">v9.2</a> · <a href="#man-v91" onclick="return !manualGaa('man-v91')">v9.1</a> · <a href="#man-v90" onclick="return !manualGaa('man-v90')">v9.0</a> · <a href="#man-v89" onclick="return !manualGaa('man-v89')">v8.9</a> · <a href="#man-v88" onclick="return !manualGaa('man-v88')">v8.8</a> · <a href="#man-v87" onclick="return !manualGaa('man-v87')">v8.7</a> · <a href="#man-v86" onclick="return !manualGaa('man-v86')">v8.6</a> · <a href="#man-v85" onclick="return !manualGaa('man-v85')">v8.5</a> · <a href="#man-v84" onclick="return !manualGaa('man-v84')">v8.4</a> · <a href="#man-v83" onclick="return !manualGaa('man-v83')">v8.3</a> · <a href="#man-v82" onclick="return !manualGaa('man-v82')">v8.2</a> · <a href="#man-v81" onclick="return !manualGaa('man-v81')">v8.1</a> · <a href="#man-v80" onclick="return !manualGaa('man-v80')">v8.0</a> · <a href="#man-v79" onclick="return !manualGaa('man-v79')">v7.9</a> · <a href="#man-v78" onclick="return !manualGaa('man-v78')">v7.8</a> · <a href="#man-v77" onclick="return !manualGaa('man-v77')">v7.7</a> · <a href="#man-v76" onclick="return !manualGaa('man-v76')">v7.6</a> · <a href="#man-v75" onclick="return !manualGaa('man-v75')">v7.5</a> · <a href="#man-v74" onclick="return !manualGaa('man-v74')">v7.4</a> · <a href="#man-v73" onclick="return !manualGaa('man-v73')">v7.3</a> · <a href="#man-v72" onclick="return !manualGaa('man-v72')">v7.2</a> · <a href="#man-v71" onclick="return !manualGaa('man-v71')">v7.1</a> · <a href="#man-v70" onclick="return !manualGaa('man-v70')">v7.0</a> · <a href="#man-v69" onclick="return !manualGaa('man-v69')">v6.9</a> · <a href="#man-v68" onclick="return !manualGaa('man-v68')">v6.8</a> · <a href="#man-v67" onclick="return !manualGaa('man-v67')">v6.7</a> · <a href="#man-v66" onclick="return !manualGaa('man-v66')">v6.6</a> · <a href="#man-v65" onclick="return !manualGaa('man-v65')">v6.5</a></div>
+<div class="man-nyt"><b>Nyt i v9.8:</b> <a href="#man-v98" onclick="return !manualGaa('man-v98')">Lydmotor 2: ny lydmotor til generatoren</a>. De forrige: <a href="#man-v97" onclick="return !manualGaa('man-v97')">v9.7</a> · <a href="#man-v96" onclick="return !manualGaa('man-v96')">v9.6</a> · <a href="#man-v95" onclick="return !manualGaa('man-v95')">v9.5</a> · <a href="#man-v94" onclick="return !manualGaa('man-v94')">v9.4</a> · <a href="#man-v93" onclick="return !manualGaa('man-v93')">v9.3</a> · <a href="#man-v92" onclick="return !manualGaa('man-v92')">v9.2</a> · <a href="#man-v91" onclick="return !manualGaa('man-v91')">v9.1</a> · <a href="#man-v90" onclick="return !manualGaa('man-v90')">v9.0</a> · <a href="#man-v89" onclick="return !manualGaa('man-v89')">v8.9</a> · <a href="#man-v88" onclick="return !manualGaa('man-v88')">v8.8</a> · <a href="#man-v87" onclick="return !manualGaa('man-v87')">v8.7</a> · <a href="#man-v86" onclick="return !manualGaa('man-v86')">v8.6</a> · <a href="#man-v85" onclick="return !manualGaa('man-v85')">v8.5</a> · <a href="#man-v84" onclick="return !manualGaa('man-v84')">v8.4</a> · <a href="#man-v83" onclick="return !manualGaa('man-v83')">v8.3</a> · <a href="#man-v82" onclick="return !manualGaa('man-v82')">v8.2</a> · <a href="#man-v81" onclick="return !manualGaa('man-v81')">v8.1</a> · <a href="#man-v80" onclick="return !manualGaa('man-v80')">v8.0</a> · <a href="#man-v79" onclick="return !manualGaa('man-v79')">v7.9</a> · <a href="#man-v78" onclick="return !manualGaa('man-v78')">v7.8</a> · <a href="#man-v77" onclick="return !manualGaa('man-v77')">v7.7</a> · <a href="#man-v76" onclick="return !manualGaa('man-v76')">v7.6</a> · <a href="#man-v75" onclick="return !manualGaa('man-v75')">v7.5</a> · <a href="#man-v74" onclick="return !manualGaa('man-v74')">v7.4</a> · <a href="#man-v73" onclick="return !manualGaa('man-v73')">v7.3</a> · <a href="#man-v72" onclick="return !manualGaa('man-v72')">v7.2</a> · <a href="#man-v71" onclick="return !manualGaa('man-v71')">v7.1</a> · <a href="#man-v70" onclick="return !manualGaa('man-v70')">v7.0</a> · <a href="#man-v69" onclick="return !manualGaa('man-v69')">v6.9</a> · <a href="#man-v68" onclick="return !manualGaa('man-v68')">v6.8</a> · <a href="#man-v67" onclick="return !manualGaa('man-v67')">v6.7</a> · <a href="#man-v66" onclick="return !manualGaa('man-v66')">v6.6</a> · <a href="#man-v65" onclick="return !manualGaa('man-v65')">v6.5</a></div>
 <h2 id="man-emne-kom">Kom i gang</h2>
 <h3 id="man-kom-i-gang">Kom i gang på fem minutter</h3>
 <ol>
@@ -1414,6 +1414,17 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li><b>Øverst</b> står kun <b>🔍 Søg</b> og statuslinjen, så vinduerne får mere plads.</li>
 <li><b>Søg</b> (Ctrl+K, på Mac ⌘K): skriv et par bogstaver, fx <i>udgang</i>, <i>pigernes</i>, <i>editor</i> eller <i>glød</i>, og vælg med pilene og Enter. Søgningen finder knapper i menuerne, vinduer, Scene-faner, forudindstillinger og layouts.</li>
 <li>Knapperne er flyttet, ikke lavet om, så alt virker som før.</li>
+</ul>
+<h3 id="man-v98">Lydmotor 2: ny lydmotor til generatoren (v9.8)</h3>
+<ul>
+<li>Generatoren har fået en ny lydmotor, <b>Lydmotor 2</b>. Vælg <b>Lydmotor: Ny · Klassisk</b> i Lydkilde eller i den fulde generator (W4). <i>Klassisk</i> er den gamle lyd, uændret. Valget gemmes med sangen.</li>
+<li><b>Lydene:</b> kick med tonefald, klik og mætning (fagudtryk: saturation); snare med to toner og støj; clap af fire små klap; hihat af seks metalliske toner (808-princippet), hvor den lukkede hihat afbryder den åbne (fagudtryk: choke); bas med to stemmer, en dyb sub-tone og et filter, der åbner og lukker (fagudtryk: filter envelope); lead med tre stemmer og vibrato.</li>
+<li><b>Akkorder:</b> hver takt har sin akkord fra genrens akkordrække, fx Am → F → C → G i House. Bassen følger akkorden. Leaden følger med i Dur, Mol og Dorisk; i Mol-pentaton og Blues bliver den i sin skala. <b>Akkord-flade</b> (fagudtryk: pad) spiller akkorden blødt i baggrunden. Akkorden, der spilles lige nu, lyser.</li>
+<li><b>Mønstre:</b> <i>Generér automatisk</i> laver nu betoninger (fagudtryk: accent; lyser stærkere i trinene) og spøgelsesslag (fagudtryk: ghost notes; svagere i trinene), en baslinje i genrens stil (fx bas mellem slagene i House, oktav-bas i Disco, lange 808-toner i Trap) og et lille melodimotiv.</li>
+<li><b>Fill hver 4. takt:</b> de sidste 4 trin i takt 4 spiller snare og tom et lille fill. Når det sker, lyser <b>Fill</b>.</li>
+<li><b>Rumklang</b> (fagudtryk: reverb) har sin egen skyder. Der er også en kompressor og en begrænser (fagudtryk: limiter) til sidst, så lyden er fyldig uden at klippe.</li>
+<li><b>Tilbage til standard</b> sætter Lydmotor til Ny, akkord-flade og fill til og rumklang til 0,25.</li>
+<li>Akkord-fladen og fill står ikke i trinene og giver ikke klodser. Klodser, Lyd-mål og Mapping følger mønstret som før.</li>
 </ul>
 <h3 id="man-v97">Ny indholdsfortegnelse i koden og en testpakke (v9.7)</h3>
 <ul>
@@ -3341,92 +3352,93 @@ if(typeof module!=='undefined'&&module.exports)module.exports=Rytme;
    Det forrige <script> indeholder Three.js r128 og dets glød-værktøjer (MIT) og motoren Rytme (analyse, kilder, forbindelsernes motor, figurtegning).
    Vigtige tilstande: maps (forbindelserne), fase2.objekter (figurerne), set (indstillinger, rytme-set), scene (bane, klods og Mesh 3D-lys, rytme-scene),
    F, A og SHOWPROFIL (analysen af sangen), M3 (Mesh 3D), OJ (Øjet), FG (samlinger med faner), SC_FANER (Scenens faner), LAY3 (topbarens layouts).
-   Blokke i dette script (85), i den rækkefølge de står:
+   Blokke i dette script (86), i den rækkefølge de står:
      1. FASE 2: MÅLREGISTER
      2. FASE 2: PRESET-MIGRERING
      3. FASE 2: AFSPILNING (robusthed og synlighed)
-     4. FASE 2: MESH-FUNKTIONER
-     5. FASE 2: SCENE (trin 3): fundamentet
-     6. Indkobling i Claude MV (v6.5)
-     7. FASE 2: KLODS-TIMING (trin 4)
-     8. FASE 2: LYDLAG (trin 5)
-     9. FASE 2: OPSÆTNINGER OG SIKKERHED
-    10. v5.6: NYE FORUDINDSTILLINGER
-    11. v6.6: DISKODRONNINGERNE
-    12. v7.6: SINGLEN: GULD OG DIAMANT
-    13. v5.7: 11 NYE FORUDINDSTILLINGER
-    14. KVALITET OG YDELSE
-    15. FEST: én knap, så det hele kommer i gang
-    16. TOPBAR I FEM TRIN, HJÆLP OG TOOLTIPS
-    17. SHOW: tilpas figurer og effekter til sangen
-    18. PLAYER: volumen, mute, niveaumåler, spol og tastaturgenveje
-    19. KNAPPERNES FARVER: en knap, der er trykket, lyser, og farven fortæller, hvad der skete
-    20. SIKKER VISNING: blinkbegrænsning og bevægelsesdæmpning
-    21. UDGANGSVINDUE: billedet til projektoren
-    22. TIDSLINJE: zoom, valg af klip og A/B-sløjfe
-    23. TILFÆLDIGT: forbindelser (slag, flydende, figur-egenskaber) med antal, behold eller erstat, frø og Fortryd
-    24. FIGUR-GENERATOR: mange figurer på én gang (antal, lag, former, farver efter toneart, tekstur, ringe, kobling, frø og Fortryd)
-    25. VINDUER: snap, aktivt vindue, layouts og topbarens størrelse
-    26. LIVE PREVIEW: format og fuld skærm
-    27. OPTAG VIDEO
-    28. LYD IND (live)
-    29. TAKTFØLGER (live)
-    30. TRYK-OG-HOLD-TOOLTIPS (berøringsskærm)
-    31. TASTATURSTYRING AF RADIAL MESH
-    32. TASTATURSTYRING AF LYD I 3D
-    33. LYDSTATUS, LYDTEST OG FEJLLOG
-    34. NUMRE PÅ VINDUER OG BOKSE
-    35. DANSER: eksempel, Dansemapping og udseender
-    36. FASE 2: FORM-EDITOR (trin 1 og 2)
-    37. PERFECT 1 OG PERFECT 2 (lyd og vision)
-    38. v5.1: NIVEAUER I FORM-EDITOREN
-    39. v5.2: HÆNDELSER PÅ DE FÆRDIGE FIGURER
-    40. v6.0: ADFÆRD OG LEVENDE PRIKKER
-    41. v6.1: HÅNDTAG I EDITORENS BILLEDE
-    42. v6.2: TILPAS TIL SANGEN (dynamiske tærskler)
-    43. v6.4: EQ+ (udvidet EQ ved siden af den gamle)
-    44. v7.0: VINDUER HOLDER SIG FRI AF SIDEBJÆLKEN OG BUNDBJÆLKEN
-    45. v7.1: ALLE VINDUER ALTID ÅBNE (ingen mini-vinduer i hjørnerne)
-    46. v7.0: SKABELON ERSTATTER DEN URØRTE FIGUR 1
-    47. v6.9 / v7.1: MESH 3D (Radial Mesh i rigtig 3D med shaders)
-    48. v7.5: DANSER BAGVED i Mesh 3D
-    49. v7.9: Lys-opsætninger (gem og hent lys)
-    50. v7.2: 💡 Lys-panelet
-    51. v8.0: ØJET (fremtidslys)
-    52. v8.1: Øjet, cyberpunk-finish
-    53. v8.2: Øjet til lange mix: blokke og Auto-tærskel
-    54. v8.2: 💡 Lys til Øjet
-    55. v8.2: øjenlåg, blink og pupil ved drop
-    56. v6.7: AKTIVT VINDUE ØVERST
-    57. v6.8: SAMLINGER (faner som i Scene)
-    58. v8.3: ARBEJDSFLADE, TOPBAR-LAYOUTS OG OPRYDNING
-    59. v8.4: GAIN-STAKKEN VISES OG KORT OVER FORBINDELSERNE
-    60. v8.5: LÅS VINDUER OG STORT SKRIVEBORD
-    61. v8.6: MESH 3D-LYSPANELET I NY STIL, DIODER FØLGER ATTACK OG RELEASE, FULD VISNING MED EN VEJ UD, VINDUER INDENFOR
-    62. v8.7: ZONE-TILSTAND (vinduessystem A)
-    63. v8.8: NY BUNDBAR OG SIDEBJÆLKE
-    64. v8.9: LEVENDE BAGGRUND OG GLØD PÅ MÅLERNE
-    65. v9.0: INTET LIGGER FRIT OVEN PÅ ZONERNE
-    66. v9.3: EDITOREN RYDDET OP
-    67. v9.4: EDITORENS EGENSKABER I NY STIL
-    68. v9.5: FORKLARINGER TIL DANSERENS OG DISKOKUGLENS EGENSKABER
-    69. v9.6: LYDKILDE (W31)
-    70. v6.3: SIDEBJÆLKE, TRANSPORT NEDERST OG SØG (Ctrl+K)
-    71. Søg (kommandopalet)
-    72. FASE 2: MESH-LINJER (tykkelse og lys-flow)
-    73. FASE 2: SOLO OG MÆRK PREVIEW
-    74. PREVIEW-DUBLET: træk og forbind
-    75. TASTATURSTYRING AF DUBLET
-    76. ROUTING-OVERBLIK (v3.4)
-    77. MASTER MORPH PAD (v3.6)
-    78. v4.0: NUMRE PÅ KNAPPER, DROPDOWNS OG FELTER
-    79. v4.9: FLERE MÅDER AT FØDES PÅ
-    80. v5.9: TAKT I REALTID SOM KILDE OG HÆNDELSE
-    81. v5.3: ÉT NIVEAU FOR HELE PROGRAMMET
-    82. v5.5: IDÉ-GALLERI
-    83. v5.8: SCENE-VINDUET
-    84. v4.1: OPSÆTNINGER PÅ COMPUTEREN
-    85. LYD I 3D
+     4. v9.8: LYDMOTOR 2
+     5. FASE 2: MESH-FUNKTIONER
+     6. FASE 2: SCENE (trin 3): fundamentet
+     7. Indkobling i Claude MV (v6.5)
+     8. FASE 2: KLODS-TIMING (trin 4)
+     9. FASE 2: LYDLAG (trin 5)
+    10. FASE 2: OPSÆTNINGER OG SIKKERHED
+    11. v5.6: NYE FORUDINDSTILLINGER
+    12. v6.6: DISKODRONNINGERNE
+    13. v7.6: SINGLEN: GULD OG DIAMANT
+    14. v5.7: 11 NYE FORUDINDSTILLINGER
+    15. KVALITET OG YDELSE
+    16. FEST: én knap, så det hele kommer i gang
+    17. TOPBAR I FEM TRIN, HJÆLP OG TOOLTIPS
+    18. SHOW: tilpas figurer og effekter til sangen
+    19. PLAYER: volumen, mute, niveaumåler, spol og tastaturgenveje
+    20. KNAPPERNES FARVER: en knap, der er trykket, lyser, og farven fortæller, hvad der skete
+    21. SIKKER VISNING: blinkbegrænsning og bevægelsesdæmpning
+    22. UDGANGSVINDUE: billedet til projektoren
+    23. TIDSLINJE: zoom, valg af klip og A/B-sløjfe
+    24. TILFÆLDIGT: forbindelser (slag, flydende, figur-egenskaber) med antal, behold eller erstat, frø og Fortryd
+    25. FIGUR-GENERATOR: mange figurer på én gang (antal, lag, former, farver efter toneart, tekstur, ringe, kobling, frø og Fortryd)
+    26. VINDUER: snap, aktivt vindue, layouts og topbarens størrelse
+    27. LIVE PREVIEW: format og fuld skærm
+    28. OPTAG VIDEO
+    29. LYD IND (live)
+    30. TAKTFØLGER (live)
+    31. TRYK-OG-HOLD-TOOLTIPS (berøringsskærm)
+    32. TASTATURSTYRING AF RADIAL MESH
+    33. TASTATURSTYRING AF LYD I 3D
+    34. LYDSTATUS, LYDTEST OG FEJLLOG
+    35. NUMRE PÅ VINDUER OG BOKSE
+    36. DANSER: eksempel, Dansemapping og udseender
+    37. FASE 2: FORM-EDITOR (trin 1 og 2)
+    38. PERFECT 1 OG PERFECT 2 (lyd og vision)
+    39. v5.1: NIVEAUER I FORM-EDITOREN
+    40. v5.2: HÆNDELSER PÅ DE FÆRDIGE FIGURER
+    41. v6.0: ADFÆRD OG LEVENDE PRIKKER
+    42. v6.1: HÅNDTAG I EDITORENS BILLEDE
+    43. v6.2: TILPAS TIL SANGEN (dynamiske tærskler)
+    44. v6.4: EQ+ (udvidet EQ ved siden af den gamle)
+    45. v7.0: VINDUER HOLDER SIG FRI AF SIDEBJÆLKEN OG BUNDBJÆLKEN
+    46. v7.1: ALLE VINDUER ALTID ÅBNE (ingen mini-vinduer i hjørnerne)
+    47. v7.0: SKABELON ERSTATTER DEN URØRTE FIGUR 1
+    48. v6.9 / v7.1: MESH 3D (Radial Mesh i rigtig 3D med shaders)
+    49. v7.5: DANSER BAGVED i Mesh 3D
+    50. v7.9: Lys-opsætninger (gem og hent lys)
+    51. v7.2: 💡 Lys-panelet
+    52. v8.0: ØJET (fremtidslys)
+    53. v8.1: Øjet, cyberpunk-finish
+    54. v8.2: Øjet til lange mix: blokke og Auto-tærskel
+    55. v8.2: 💡 Lys til Øjet
+    56. v8.2: øjenlåg, blink og pupil ved drop
+    57. v6.7: AKTIVT VINDUE ØVERST
+    58. v6.8: SAMLINGER (faner som i Scene)
+    59. v8.3: ARBEJDSFLADE, TOPBAR-LAYOUTS OG OPRYDNING
+    60. v8.4: GAIN-STAKKEN VISES OG KORT OVER FORBINDELSERNE
+    61. v8.5: LÅS VINDUER OG STORT SKRIVEBORD
+    62. v8.6: MESH 3D-LYSPANELET I NY STIL, DIODER FØLGER ATTACK OG RELEASE, FULD VISNING MED EN VEJ UD, VINDUER INDENFOR
+    63. v8.7: ZONE-TILSTAND (vinduessystem A)
+    64. v8.8: NY BUNDBAR OG SIDEBJÆLKE
+    65. v8.9: LEVENDE BAGGRUND OG GLØD PÅ MÅLERNE
+    66. v9.0: INTET LIGGER FRIT OVEN PÅ ZONERNE
+    67. v9.3: EDITOREN RYDDET OP
+    68. v9.4: EDITORENS EGENSKABER I NY STIL
+    69. v9.5: FORKLARINGER TIL DANSERENS OG DISKOKUGLENS EGENSKABER
+    70. v9.6: LYDKILDE (W31)
+    71. v6.3: SIDEBJÆLKE, TRANSPORT NEDERST OG SØG (Ctrl+K)
+    72. Søg (kommandopalet)
+    73. FASE 2: MESH-LINJER (tykkelse og lys-flow)
+    74. FASE 2: SOLO OG MÆRK PREVIEW
+    75. PREVIEW-DUBLET: træk og forbind
+    76. TASTATURSTYRING AF DUBLET
+    77. ROUTING-OVERBLIK (v3.4)
+    78. MASTER MORPH PAD (v3.6)
+    79. v4.0: NUMRE PÅ KNAPPER, DROPDOWNS OG FELTER
+    80. v4.9: FLERE MÅDER AT FØDES PÅ
+    81. v5.9: TAKT I REALTID SOM KILDE OG HÆNDELSE
+    82. v5.3: ÉT NIVEAU FOR HELE PROGRAMMET
+    83. v5.5: IDÉ-GALLERI
+    84. v5.8: SCENE-VINDUET
+    85. v4.1: OPSÆTNINGER PÅ COMPUTEREN
+    86. LYD I 3D
    ====================================================================== */
 
 
@@ -3914,6 +3926,133 @@ const KM={a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12,o:13,l:14,p:15,
 document.addEventListener('keydown',e=>{if(!kbOn||e.repeat||e.ctrlKey||e.metaKey||e.altKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;const k=KM[e.key.toLowerCase()];if(k===undefined)return;
  keyOn(60+gs.oct*12+k);const el=document.querySelector('#keys [data-k="'+(60+k)+'"]');if(el){el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),120)}});
 function stepHL(){if(gShow!==shown){shown=gShow;document.querySelectorAll('#pads .pad').forEach(p=>p.classList.toggle('now',+p.dataset.s===gShow))}}
+
+/* ========== v9.8: LYDMOTOR 2 ==========
+   Ny lydmotor til generatoren (vores navn: Lydmotor 2). Den nuværende generator lød tyndt, fordi hver lyd var én oscillator eller lidt støj, og fordi bas og lead spillede de samme toner i hver takt.
+   Samme 8 spor og samme mønster (pat) som før, så klodser, Lyd-mål og Mapping virker uændret. Valget står i gs.motor ('ny' eller 'klassisk') og gemmes med sangen; Klassisk er den gamle motor uændret.
+   Lydene: kick med tonefald, klik og mætning (saturation) · snare med to toner og støj · clap af fire små klap · hihat af seks firkant-oscillatorer (808-princippet) og lidt luftig støj; den lukkede hihat afbryder den åbne (choke) ·
+   tom med tonefald · bas med to sav-oscillatorer, sub-tone og filter-kontur (filter envelope); en ny basnote stopper den forrige · lead med tre stemmer, filter-kontur og vibrato.
+   Harmoni: hver takt (16 trin) har en akkord fra genrens akkordrække; bas og lead flyttes med akkorden. Akkord-fladen (pad) spiller akkorden blødt i baggrunden.
+   Mønstre: Generér automatisk laver betoninger (accent, X) og spøgelsesslag (ghost notes, g), en baslinje i genrens stil og et lille melodimotiv. Fill: i hver 4. takt spiller snare og tom de sidste 4 trin.
+   Mix: rumklang (reverb), kompressor og begrænser (limiter), så lyden er fyldig uden at klippe.
+   Alt, der lyder uden at stå i mønstret (akkord-fladen og fill), kan ses: akkorden lige nu, takten og "Fill" lyser ved Lydmotor-rækken. */
+const LM={vis:[],nulstil:true,stat:new WeakMap(),
+ /* Genrens akkordrække som trin i skalaen (0 = grundtonen). mol bruges til mol-skalaer, dur til dur. */
+ PROG:{house:{mol:[0,5,2,6],dur:[0,4,5,3]},techno:{mol:[0,0,5,6],dur:[0,0,3,4]},brk:{mol:[0,3,5,4],dur:[0,3,4,4]},hip:{mol:[0,5,3,4],dur:[0,5,3,4]},trap:{mol:[0,5,0,6],dur:[0,5,0,4]},dnb:{mol:[0,5,2,6],dur:[0,4,5,3]},disco:{mol:[0,3,6,2],dur:[0,3,4,3]}},
+ /* Trommer pr. genre (16 trin): X = betonet, x = normal, g = spøgelsesslag. Rækkefølge: kick, snare, clap, hihat, åben hat. Bas: x = note. bl = basnotens længde i trin. */
+ TROM:{house:['X...x...X...x...','..............g.','....X.......X...','xg.gxg.gxg.gxg.g','..X...X...X...X.','..x...x...x...x.',1.6],
+  techno:['X...x...X...x...','............g...','....x.......x...','g.X.g.X.g.X.g.Xg','................','..xx..x...xx..x.',1.2],
+  brk:['X.x.......x.....','....X..g.g..X..g','................','x.x.x.x.x.x.x...','..............x.','x.....x...x..x..',2],
+  hip:['X......x..x.....','....X.......X...','....x.......x...','x.x.x.x.x.x.x.xg','................','x......x..x.....',3],
+  trap:['X......x..X.....','................','........X.......','xgxgxgxgxgxgxxxx','................','x......x..x.....',5],
+  dnb:['X.........x.....','....X..g....X..g','................','x.x.x.x.x.x.x.x.','................','x.........x.....',6],
+  disco:['X...x...X...x...','....X.......X...','....x.......x...','x...x...x...x...','..X...X...X...X.','x.x.x.x.x.x.x.x.',1.2]},
+ MODUS:{ionian:[0,2,4,5,7,9,11],aeolian:[0,2,3,5,7,8,10],dorian:[0,2,3,5,7,9,10]}};
+if(gs.motor===undefined){let m='ny';try{m=localStorage.getItem('rytme-lydmotor')||'ny'}catch(e){}gs.motor=m}
+if(gs.pad===undefined)gs.pad=true;if(gs.fill===undefined)gs.fill=true;if(gs.rum===undefined)gs.rum=.25;
+const LM_STD={motor:'ny',pad:true,fill:true,rum:.25};
+function lmModus(){return gs.scale==='major'?'ionian':gs.scale==='dorian'?'dorian':'aeolian'}
+function lmDiaTone(base,i){const M=LM.MODUS[lmModus()],o=Math.floor(i/7);return base+gs.root+M[((i%7)+7)%7]+12*o}
+function lmProg(){const P=LM.PROG[curGen]||LM.PROG.house;return lmModus()==='ionian'?P.dur:P.mol}
+function lmAkkord(takt){const P=lmProg(),d=P[((takt%P.length)+P.length)%P.length],M=LM.MODUS[lmModus()];
+ const t3=(M[(d+2)%7]+(d+2>=7?12:0))-M[d],t5=(M[(d+4)%7]+(d+4>=7?12:0))-M[d];
+ return{deg:d,navn:ROOTS[(gs.root+M[d])%12]+(t5===6?'°':t3===3?'m':'')}}
+function lmVel(r,v){return r>5?1:v===2?1.25:v===3?.4:1}
+function lmS(c){let S=LM.stat.get(c);if(!S){S={n:0,bas:null,aaben:null,rv:null};LM.stat.set(c,S)}return S}
+function lmImpuls(c,sek){const n=Math.floor(c.sampleRate*sek),b=c.createBuffer(2,n,c.sampleRate);for(let k=0;k<2;k++){const d=b.getChannelData(k);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3)}return b}
+/* Mix: voices -> m -> kompressor -> begrænser -> blød klipper (soft clipper, så det aldrig går over 1) -> udgang. Echo (delay) som før; rumklang (reverb) som en send. */
+const lmGammelMaster=mkMaster;
+mkMaster=function(c,bp){if(gs.motor!=='ny')return lmGammelMaster(c,bp);
+ const m=c.createGain(),d=c.createDelay(1),fb=c.createGain(),w=c.createGain(),comp=c.createDynamicsCompressor(),lim=c.createDynamicsCompressor(),ud=c.createGain(),rv=c.createGain(),cv=c.createConvolver();
+ m.gain.value=.8;comp.threshold.value=-16;comp.knee.value=8;comp.ratio.value=3;comp.attack.value=.008;comp.release.value=.16;
+ lim.threshold.value=-3;lim.knee.value=0;lim.ratio.value=20;lim.attack.value=.002;lim.release.value=.08;ud.gain.value=.62;
+ d.delayTime.value=60/bp*.75;fb.gain.value=.32;w.gain.value=gs.echo*.7;rv.gain.value=gs.rum;cv.buffer=lmImpuls(c,2.2);
+ m.connect(comp);m.connect(d);d.connect(fb);fb.connect(d);d.connect(w);w.connect(comp);rv.connect(cv);cv.connect(comp);const kl=c.createWaveShaper(),kk=new Float32Array(1024);for(let i=0;i<1024;i++){const x=(i/511.5-1)*1.5;kk[i]=Math.tanh(x)}kl.curve=kk;comp.connect(lim);lim.connect(ud);ud.connect(kl);kl.connect(udgang(c));
+ lmS(c).rv=rv;return{m,d,w,rv,lm:true}};
+/* Én lyd. sd = længden af ét trin i sekunder. */
+function lmVoice(c,out,tr,t,note,nb,vl,sd){const S=lmS(c),send=(node,a)=>{if(S.rv&&a>0){const s=c.createGain();s.gain.value=a;node.connect(s);s.connect(S.rv)}};
+ const env=(g,a,att,dec,til)=>{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a,t+att);g.gain.exponentialRampToValueAtTime(.0008,t+(til||dec))};
+ const osc=(type,f)=>{const o=c.createOscillator();o.type=type;o.frequency.setValueAtTime(f,t);return o};
+ const stoej=(type,f,q)=>{const s=c.createBufferSource(),fl=c.createBiquadFilter();s.buffer=nb;fl.type=type;fl.frequency.value=f;if(q)fl.Q.value=q;s.connect(fl);return{s,fl}};
+ const g=c.createGain();g.connect(out);
+ if(tr===0){const o=osc('sine',165),ws=c.createWaveShaper(),k=new Float32Array(256);for(let i=0;i<256;i++){const x=i/127.5-1;k[i]=Math.tanh(2.2*x)/Math.tanh(2.2)}ws.curve=k;
+  o.frequency.exponentialRampToValueAtTime(46,t+.09);const og=c.createGain();env(og,1.05*vl,.002,gs.kdec+.08);o.connect(og);og.connect(ws);ws.connect(g);o.start(t);o.stop(t+gs.kdec+.15);
+  const kl=stoej('highpass',2500);const kg=c.createGain();env(kg,.45*vl,.0005,.014);kl.fl.connect(kg);kg.connect(g);kl.s.start(t);kl.s.stop(t+.03)}
+ else if(tr===1){[[185,.5,.11],[330,.28,.07]].forEach(([f,a,dd])=>{const o=osc('triangle',f);o.frequency.exponentialRampToValueAtTime(f*.82,t+dd);const og=c.createGain();env(og,a*vl,.001,dd);o.connect(og);og.connect(g);o.start(t);o.stop(t+dd+.05)});
+  const n=stoej('bandpass',3200,.7),hp=c.createBiquadFilter();hp.type='highpass';hp.frequency.value=1200;const ng=c.createGain();env(ng,.75*vl,.001,.2);n.fl.connect(hp);hp.connect(ng);ng.connect(g);send(ng,.22);n.s.start(t);n.s.stop(t+.25)}
+ else if(tr===2){const n=stoej('bandpass',1250,1.6),ng=c.createGain();ng.gain.setValueAtTime(0,t);[0,.011,.022,.034].forEach((dt,i)=>{ng.gain.setValueAtTime(.9*vl,t+dt);ng.gain.exponentialRampToValueAtTime(i<3?.12*vl:.0008,t+dt+(i<3?.009:.22))});
+  n.fl.connect(ng);ng.connect(g);send(ng,.4);n.s.start(t);n.s.stop(t+.3)}
+ else if(tr===3||tr===4){const aab=tr===4,bp=c.createBiquadFilter(),hp=c.createBiquadFilter(),hg=c.createGain();bp.type='bandpass';bp.frequency.value=9000;bp.Q.value=.6;hp.type='highpass';hp.frequency.value=6500;
+  const dur=aab?.38:.07;env(hg,(aab?.5:.6)*vl,.001,dur);[205.3,304.4,369.6,522.7,540,800].forEach(f=>{const o=osc('square',f);o.connect(bp);o.start(t);o.stop(t+dur+.05)});const mk=c.createGain();mk.gain.value=3.2;bp.connect(mk);mk.connect(hp);const luft=stoej('highpass',8000);const lg=c.createGain();lg.gain.value=.45;luft.fl.connect(lg);lg.connect(hp);luft.s.start(t);luft.s.stop(t+dur+.05);hp.connect(hg);hg.connect(g);send(hg,aab?.15:.05);
+  if(aab)S.aaben=hg;else if(S.aaben){try{S.aaben.gain.cancelScheduledValues(t);S.aaben.gain.setTargetAtTime(0,t,.008)}catch(e){}S.aaben=null}}
+ else if(tr===5){const f0=note>0?mtof(note):200,o=osc('sine',f0*1.6);o.frequency.exponentialRampToValueAtTime(f0*.85,t+.22);const og=c.createGain();env(og,.8*vl,.002,.38);o.connect(og);og.connect(g);send(og,.2);o.start(t);o.stop(t+.45)}
+ else if(tr===6){const f=mtof(note),len=Math.max(.08,sd*(LM.TROM[curGen]||LM.TROM.house)[6]),fl=c.createBiquadFilter(),bg=c.createGain();
+  if(S.bas&&S.bas.slut>t){try{S.bas.g.gain.cancelScheduledValues(t);S.bas.g.gain.setTargetAtTime(0,t,.006)}catch(e){}}
+  fl.type='lowpass';fl.Q.value=5;const base=Math.min(gs.cut*.22,1100)+90;fl.frequency.setValueAtTime(base*4.5,t);fl.frequency.exponentialRampToValueAtTime(base,t+.14);
+  bg.gain.setValueAtTime(0,t);bg.gain.linearRampToValueAtTime(.42*vl,t+.004);bg.gain.setValueAtTime(.42*vl,t+len*.7);bg.gain.exponentialRampToValueAtTime(.0008,t+len);
+  [-7,7].forEach(dc=>{const o=osc(gs.bw,f);o.detune.value=dc;o.connect(fl);o.start(t);o.stop(t+len+.05)});fl.connect(bg);
+  const sub=osc('sine',f/(f>70?2:1)),sg=c.createGain();sg.gain.value=.55;sub.connect(sg);sg.connect(bg);sub.start(t);sub.stop(t+len+.05);bg.connect(g);S.bas={g:bg,slut:t+len}}
+ else{const f=mtof(note),len=Math.max(.12,sd*2.2),fl=c.createBiquadFilter(),lg=c.createGain(),lfo=osc('sine',5.5),lfg=c.createGain();
+  fl.type='lowpass';fl.Q.value=2;fl.frequency.setValueAtTime(Math.min(12000,gs.cut*1.8),t);fl.frequency.exponentialRampToValueAtTime(Math.max(300,gs.cut*.7),t+.25);
+  lg.gain.setValueAtTime(0,t);lg.gain.linearRampToValueAtTime(.2*vl,t+.008);lg.gain.exponentialRampToValueAtTime(.11*vl,t+.15);lg.gain.setValueAtTime(.11*vl,t+len);lg.gain.exponentialRampToValueAtTime(.0008,t+len+.25);
+  lfg.gain.setValueAtTime(0,t);lfg.gain.linearRampToValueAtTime(7,t+.25);lfo.connect(lfg);lfo.start(t);lfo.stop(t+len+.3);
+  [-9,0,9].forEach(dc=>{const o=osc(gs.lw,f);o.detune.value=dc;lfg.connect(o.detune);o.connect(fl);o.start(t);o.stop(t+len+.3)});fl.connect(lg);lg.connect(g);send(lg,.3)}}
+/* Akkord-fladen (pad): akkordens tre toner, blødt, en hel takt. */
+function lmPad(c,out,t,ak,len){const S=lmS(c),fl=c.createBiquadFilter(),pg=c.createGain();fl.type='lowpass';fl.frequency.value=1100;fl.Q.value=.5;
+ pg.gain.setValueAtTime(0,t);pg.gain.linearRampToValueAtTime(.075,t+Math.min(.35,len*.3));pg.gain.setValueAtTime(.075,t+len*.85);pg.gain.linearRampToValueAtTime(0,t+len+.05);
+ [0,2,4].forEach(i=>{const f=mtof(lmDiaTone(48,ak.deg+i));[-6,6].forEach(dc=>{const o=c.createOscillator();o.type='sawtooth';o.frequency.value=f;o.detune.value=dc;o.connect(fl);o.start(t);o.stop(t+len+.1)})});
+ fl.connect(pg);pg.connect(out);if(S.rv){const s=c.createGain();s.gain.value=.5;pg.connect(s);s.connect(S.rv)}}
+/* Tonen for bas og lead: trinnet i skalaen flyttes med akkorden. Optagne tangenter (MIDI-tal fra 24) spilles, som de er. Mol-pentaton og blues: leaden bliver i sin skala. */
+function lmTone(r,v,deg){if(v>=24)return v;if(r===6)return lmDiaTone(36,(v-1)+deg);if(gs.scale==='minpent'||gs.scale==='blues')return noteOf(r,v);return lmDiaTone(60,(v-1)+deg)}
+const lmGammelVoice=voice;
+voice=function(c,out,tr,t,note,nb,vl){if(gs.motor!=='ny')return lmGammelVoice(c,out,tr,t,note,nb,vl);lmVoice(c,out,tr,t,note,nb,vl,60/bpm/4)};
+const lmGammelPlayStep=playStep;
+playStep=function(c,out,nb,t,q,bp){if(gs.motor!=='ny')return lmGammelPlayStep(c,out,nb,t,q,bp);
+ const S=lmS(c);if(c===gctx&&LM.nulstil){S.n=0;LM.nulstil=false;LM.vis.length=0}
+ const sd=60/bp/4,tt=t+(q%2?gs.swing*sd*.5:0),takt=Math.floor(S.n/16),n16=S.n%16,ak=lmAkkord(takt),fill=gs.fill&&takt%4===3&&n16>=12;
+ if(n16===0&&gs.pad)lmPad(c,out,t,ak,sd*16);
+ for(let r=0;r<8;r++){const v=pat[r][q];if(!v||mute[r])continue;if(fill&&r===1)continue;lmVoice(c,out,r,tt,r>5?lmTone(r,v,ak.deg):r===5?lmDiaTone(48,ak.deg+4):0,nb,vol[r]*lmVel(r,v),sd)}
+ if(fill){if(!mute[1])lmVoice(c,out,1,tt,0,nb,vol[1]*(.35+.2*(n16-12)),sd);if(!mute[5]&&n16%2===0)lmVoice(c,out,5,tt,lmDiaTone(48,ak.deg+(n16===12?7:4)),nb,vol[5]*.8,sd)}
+ if(c===gctx){LM.vis.push({t:tt,takt,navn:ak.navn,fill});if(LM.vis.length>256)LM.vis.splice(0,128)}
+ S.n++};
+const lmGammelStart=gStart;gStart=function(){LM.nulstil=true;return lmGammelStart()};
+/* Generér automatisk: genrens trommer med betoninger og spøgelsesslag, en baslinje i genrens stil og et melodimotiv på akkordens toner. */
+const lmGammelAuto=autoGen;
+autoGen=function(){if(gs.motor!=='ny')return lmGammelAuto();
+ const T=LM.TROM[curGen]||LM.TROM.house,d=gs.dens,R=Math.random,val={X:2,x:1,g:3};
+ const tromme=(s,r)=>[...s].map(ch=>{if(ch==='.')return R()<.025*d&&r!==4?3:0;if(ch==='g')return R()<.35+.6*d?3:0;if(ch==='x'&&R()<.06*(1-d))return 0;return val[ch]});
+ const P=[0,1,2,3,4].map(r=>tromme(T[r],r));
+ P[5]=Array.from({length:16},(_,i)=>i>=13&&R()<.25*d?1:0);
+ P[6]=[...T[5]].map((ch,i)=>{if(ch==='x')return curGen==='disco'?(i%4===2?8:1):(i===0||R()<.6?1:[3,5,8][Math.floor(R()*3)]);return R()<.06*d?[1,5][Math.floor(R()*2)]:0});
+ const motiv=Array(8).fill(0),pos=[0,3,6,2,5,7,1,4],antal=Math.max(1,Math.round(1+3*d));pos.slice(0,antal).forEach((p,i)=>{motiv[p]=p%4===0?[1,3,5,8][Math.floor(R()*4)]:1+Math.floor(R()*8)});
+ P[7]=motiv.concat(motiv.map((v,i)=>i===7||(i>=5&&R()<.5)?(v?1+Math.floor(R()*8):0):v));
+ if(gs.steps===32)P.forEach((row,r)=>{for(let i=0;i<16;i++){const v=row[i];row[i+16]=r===7&&R()<.4?(v?1+Math.floor(R()*8):0):(R()<.06&&r<6?(v?0:(r===0?0:3)):v)}});
+ pat=P.map(pad32);bpm=GEN[curGen][4];genUI();drawGrid();lmUI()};
+/* Betoninger og spøgelsesslag kan ses i trinene: .acc lyser stærkere, .gh svagere. */
+const lmGammelDrawGrid=drawGrid;
+drawGrid=function(){lmGammelDrawGrid();document.querySelectorAll('#pads .pad').forEach(p=>{const r=+p.dataset.r,v=pat[r][+p.dataset.s];p.classList.toggle('acc',r<6&&v===2);p.classList.toggle('gh',r<6&&v===3)})};
+/* Skift motor: masteren bygges om, så mixet passer til motoren. */
+function lmSaet(k,v){gs[k]=v;if(k==='motor'){try{localStorage.setItem('rytme-lydmotor',v)}catch(e){}if(gmk&&gctx){try{gmk.m.disconnect();gmk.w.disconnect()}catch(e){}gmk=null;ge()}}
+ if(k==='rum'){const S=gctx&&lmS(gctx);if(S&&S.rv)S.rv.gain.value=v}lmUI();drawGrid()}
+function lmRad(id){const ny=gs.motor==='ny',P=lmProg();
+ return '<div class="lm-rad" data-lm="'+id+'"><span class="lm-l">Lydmotor</span><span class="lm-seg" role="group" aria-label="Lydmotor"><button class="'+(ny?'on':'ghost')+'" data-lms="ny" title="Lydmotor 2 (v9.8): fyldigere lyde, akkorder, betoninger, fill og et mix med rumklang">Ny</button><button class="'+(ny?'ghost':'on')+'" data-lms="klassisk" title="Den gamle lydmotor fra før v9.8, uændret">Klassisk</button></span>'
+  +(ny?'<label class="lm-t"><input type="checkbox" data-lmk="pad"'+(gs.pad?' checked':'')+'> Akkord-flade</label><label class="lm-t"><input type="checkbox" data-lmk="fill"'+(gs.fill?' checked':'')+'> Fill hver 4. takt</label>'
+  +'<label class="lm-t">Rumklang <input type="range" min="0" max="1" step=".05" value="'+gs.rum+'" data-lmk="rum"><b>'+String(gs.rum).replace('.',',')+'</b></label>':'')
+  +'<button class="ghost" data-lmstd title="Lydmotor: Ny, akkord-flade og fill til, rumklang 0,25">Tilbage til standard</button>'
+  +(ny?'<div class="lm-akk" aria-live="off"><span class="lm-l">Akkorder</span>'+P.map((d,i)=>'<span class="lm-a" data-i="'+i+'">'+lmAkkord(i).navn+'</span>').join('<i>→</i>')+'<span class="lm-takt"></span><span class="lm-fill">Fill</span></div>':'')+'</div>'}
+function lmUI(){const ab=document.querySelector('#gen .lm-rad');if(ab)ab.outerHTML=lmRad('w4');else{const p=$('pads');if(p)p.insertAdjacentHTML('beforebegin',lmRad('w4'))}
+ const lk=document.querySelector('#lks .lm-rad');if(lk)lk.outerHTML=lmRad('lks');else{const a=$('lks-adv'),k=a&&a.closest('.lks-kort');if(k)k.insertAdjacentHTML('beforeend',lmRad('lks'))}}
+const lmGammelGenUI=genUI;genUI=function(){lmGammelGenUI();lmUI()};
+const lmGammelLksByg=lksByg;lksByg=function(){lmGammelLksByg();lmUI()};
+document.addEventListener('click',e=>{const b=e.target.closest('.lm-rad button');if(!b)return;if(b.dataset.lms)lmSaet('motor',b.dataset.lms);else if(b.dataset.lmstd!==undefined){Object.assign(gs,LM_STD);lmSaet('motor','ny');const S=gctx&&lmS(gctx);if(S&&S.rv)S.rv.gain.value=gs.rum;msg('Lydmotor: tilbage til standard (Ny, akkord-flade og fill til, rumklang 0,25).')}});
+document.addEventListener('change',e=>{const t=e.target;if(!t.closest||!t.closest('.lm-rad')||!t.dataset.lmk||t.type!=='checkbox')return;lmSaet(t.dataset.lmk,t.checked)});
+document.addEventListener('input',e=>{const t=e.target;if(!t.closest||!t.closest('.lm-rad')||t.dataset.lmk!=='rum')return;gs.rum=+t.value;if(t.nextElementSibling)t.nextElementSibling.textContent=String(gs.rum).replace('.',',');const S=gctx&&lmS(gctx);if(S&&S.rv)S.rv.gain.value=gs.rum});
+/* Vis akkorden, der spilles lige nu (ikke den, der er planlagt), takten og om der er fill. */
+setInterval(()=>{const rk=document.querySelectorAll('.lm-akk');if(!rk.length)return;let nu=null;
+ if(gPlaying&&gctx&&gs.motor==='ny'){const T=gctx.currentTime;for(const v of LM.vis){if(v.t<=T)nu=v;else break}}
+ const P=lmProg();rk.forEach(el=>{el.querySelectorAll('.lm-a').forEach(a=>a.classList.toggle('nu',!!nu&&+a.dataset.i===nu.takt%P.length));
+  const tk=el.querySelector('.lm-takt'),tx=nu?'takt '+(nu.takt%4+1)+' af 4':'stoppet';if(tk&&tk.textContent!==tx)tk.textContent=tx;const fl=el.querySelector('.lm-fill');if(fl)fl.classList.toggle('nu',!!nu&&nu.fill)})},100);
+/* ========== SLUT: LYDMOTOR 2 ========== */
 
 /* ---------- Flyt effekter ---------- */
 let pos={puls:{x:.5,y:.55},ring:{x:.5,y:.86},burst:{x:.5,y:.55},glod:{x:.5,y:.5},sky:{x:.5,y:.62},daempring:{x:.7,y:.5}},moveMode=false,pvDrag=null,gmaster=1,meshSel=-1,meshDrag=null,meshHover=null,meshFokus=null,meshKilder='bånd',lastE={};
