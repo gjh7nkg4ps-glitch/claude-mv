@@ -6,7 +6,13 @@ Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsn
 
 Designet af den nye Router er **ikke færdigt**. Der er ikke bygget noget af Routeren. `docs/HJERTET.md` og billederne i `docs/hjertet/` findes ikke i repoet med vilje.
 
-### Trin 0 · three.js med WebGPU: stoppet ved punkt 2 (v9.18)
+### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
+
+- **Valgt: A.** Mesh 3D og Øjet bliver på three.js **r128**. Den nye three.js (`three.webgpu.js` og `three.core.js`, fast version) lægges ved siden af i sit eget `<script type="module">`, **når Routeren skal bygges**. **Der bygges intet nu.**
+- Med A indlæses three.js to gange (r128 og den nye), og de to kan ikke dele noget. Det er accepteret, indtil Mesh 3D og Øjet flyttes (se *Senere*).
+
+Baggrund (fra v9.18, da trin 0 stoppede ved punkt 2):
+
 
 **1. Sådan er det i dag**
 - MV bruger **three.js r128** (fra 2021). Den ligger **inde i HTML-filen** i det første `<script>` (cirka 612 KB) som en almindelig script-fil (fagudtryk: UMD/global build), der laver `window.THREE`.
@@ -30,8 +36,8 @@ Designet af den nye Router er **ikke færdigt**. Der er ikke bygget noget af Rou
 
 | Valg | Sådan | For | Imod |
 | --- | --- | --- | --- |
-| **A · Behold r128, læg den nye ved siden af** | Mesh 3D og Øjet bliver på r128 uændret. Den nye three.js (kun `three.webgpu.js` + `three.core.js`) lægges i et eget `<script type="module">` til Routeren senere | ingen risiko for Mesh 3D og Øjet; intet byggeværktøj | **three.js indlæses to gange** (r128 og r186); filen bliver cirka 3,7 MB større; ting fra den ene (fx en geometri) kan ikke bruges i den anden |
-| **B · Skift alt til den nye, samlet til én fil** (anbefalet på sigt) | Et byggeværktøj (fagudtryk: bundler, fx esbuild) samler `three.module.js`, `three.webgpu.js` og efterbehandlingen til **ét** modul, der lægges ind i HTML-filen og laver `window.THREE`. Ingen importmap | **én** three.js; WebGLRenderer og WebGPURenderer deler kernen; MV's opstart behøver ikke ændres, fordi `THREE` først bruges, når Mesh 3D og Øjet åbnes | et byggetrin i arbejdsgangen; filen bliver cirka 3 MB større; Mesh 3D og Øjet skal rettes (se listen nedenfor) og testes for farver og lysstyrke |
+| **A · Behold r128, læg den nye ved siden af** (**valgt**) | Mesh 3D og Øjet bliver på r128 uændret. Den nye three.js (kun `three.webgpu.js` + `three.core.js`) lægges i et eget `<script type="module">` til Routeren senere | ingen risiko for Mesh 3D og Øjet; intet byggeværktøj | **three.js indlæses to gange** (r128 og r186); filen bliver cirka 3,7 MB større; ting fra den ene (fx en geometri) kan ikke bruges i den anden |
+| **B · Skift alt til den nye, samlet til én fil** (senere, se *Senere*) | Et byggeværktøj (fagudtryk: bundler, fx esbuild) samler `three.module.js`, `three.webgpu.js` og efterbehandlingen til **ét** modul, der lægges ind i HTML-filen og laver `window.THREE`. Ingen importmap | **én** three.js; WebGLRenderer og WebGPURenderer deler kernen; MV's opstart behøver ikke ændres, fordi `THREE` først bruges, når Mesh 3D og Øjet åbnes | et byggetrin i arbejdsgangen; filen bliver cirka 3 MB større; Mesh 3D og Øjet skal rettes (se listen nedenfor) og testes for farver og lysstyrke |
 | **C · Importmap med data-adresser** | hver three.js-fil lægges ind som `data:`-adresse i en importmap (fagudtryk) | intet byggeværktøj | filerne skal skrives om (deres `import './three.core.js'`); 33 % større (base64); mest skrøbeligt |
 
 **Det skal rettes ved B** (fundet i koden, ikke prøvet):
@@ -48,10 +54,10 @@ Designet af den nye Router er **ikke færdigt**. Der er ikke bygget noget af Rou
 
 **Kan ikke testes her:** WebGPU kræver et rigtigt grafikkort. Testbrowseren har intet (SwiftShader), så WebGPURenderer ville skifte til WebGL2.
 
-### Trin 1 · Funktionslisten: lavet (v9.18), venter på godkendelse
+### Trin 1 · Funktionslisten: lavet (v9.18), gennemgås i hovedchatten
 
 - `docs/hjertet/FUNKTIONER.md`: én tabel pr. del (Dublet, Router 2.0, Routing-overblik, Mapping, Lydkilde) og en liste over funktioner, der findes flere steder, og ord, der betyder flere ting.
-- **Næste:** du godkender eller retter listen, før der arbejdes videre.
+- **Næste:** listen gennemgås i hovedchatten. Der arbejdes ikke videre, før du vender tilbage.
 
 ## 4 spor (stems)
 
@@ -67,6 +73,11 @@ Designet af den nye Router er **ikke færdigt**. Der er ikke bygget noget af Rou
 - **Opdeling inde i MV bygges ikke nu.**
 
 ## Senere
+
+### three.js: skift til B (én three.js)
+
+- **Når Mesh 3D og Øjet flyttes til den nye renderer**, skiftes der fra A til **B**: et byggeværktøj (fagudtryk: bundler, **esbuild**) samler `three.module.js`, `three.webgpu.js` og efterbehandlingen til **ét** modul i HTML-filen. Så indlæses three.js kun **én gang**, og WebGLRenderer og WebGPURenderer deler kernen.
+- Det, der skal rettes ved skiftet, står under Trin 0 ovenfor (`WebGLMultisampleRenderTarget`, farvestyring). Mesh 3D's og Øjets GLSL-shaders og bloom skal skrives om til TSL (fagudtryk), hvis de også skal køre i WebGPURenderer.
 
 ### .stem.mp4 (Native Instruments' stems-format)
 

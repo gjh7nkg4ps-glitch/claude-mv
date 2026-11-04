@@ -156,7 +156,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Taktslag Auto** og **4 spor Auto** gælder motoren (Rytme.koer). Klodser, der forudsiges fra filen, bruger kilden, som den står i forbindelsen (den samlede lyd).
 - **4 spor:** sporene gemmes ikke i cachen og ikke i pladserne; de skal vælges igen efter genstart. Lydfil-kortet i Lydkilde viser ikke de 4 spor (kortet *4 spor* gør). Hvert spor får kun de 14 lydtræk, ikke Analysen (de 31 bånd, toner osv.); den har kun den samlede lyd.
 - **Opstartsfejl (rettet i v9.15):** Lyd i 3D som gemt Scene-fane stoppede scriptet. Testpakken starter nu programmet med hver Scene-fane gemt og (fra v9.18) med gemte indstillinger fra seks ældre versioner; den test fanger fejlen i v9.14.
-- **three.js er r128** (2021), lagt ind som almindeligt script. En ny three.js med WebGPURenderer kræver ES-moduler; valget mellem A, B og C står i `STATUS.md` (Hjertet, trin 0). WebGPU kan ikke testes i testbrowseren (intet grafikkort).
+- **three.js er r128** (2021), lagt ind som almindeligt script. En ny three.js med WebGPURenderer kræver ES-moduler. **Valgt (trin 0): A** — Mesh 3D og Øjet bliver på r128; den nye three.js lægges ved siden af, når Routeren bygges (three.js indlæses så to gange). Skift til **B** (esbuild, én three.js), når Mesh 3D og Øjet flyttes til den nye renderer. Se `STATUS.md`. WebGPU kan ikke testes i testbrowseren (intet grafikkort).
 - **Tidslinje og Analyse** i Arbejdsfeltet ruller ikke, men deres indhold er ikke højere end fanen (tjekket i v9.18). Værksted og Opsætninger er ikke tjekket.
 - **Tags fra Claude Code:** sessionens forbindelse til GitHub må sende gem og grene op, men ikke lave eller slette tags (og ikke slette grene). Tagget `milepael-med-lydkort` blev derfor lavet på GitHub under *Releases*; det peger på `87fcc93` (v9.11). Grenen `v9_11-med-lydkort` peger på det samme gem og kan slettes, når du vil.
 - **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
@@ -173,8 +173,8 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Hjertet (Routeren), trin 1:** godkend `docs/hjertet/FUNKTIONER.md` | listen over alt, Dublet, Router 2.0, Routing-overblik, Mapping og Lydkilde kan i dag, er grundlaget for den nye Router; designet er ikke færdigt, og intet af Routeren bygges endnu |
-| **Hjertet, trin 0:** vælg A, B eller C for three.js med WebGPU | den nye three.js kræver ES-moduler; for og imod i `STATUS.md` |
+| **Hjertet (Routeren), trin 1:** `docs/hjertet/FUNKTIONER.md` gennemgås i hovedchatten; vent, til brugeren vender tilbage | listen over alt, Dublet, Router 2.0, Routing-overblik, Mapping og Lydkilde kan i dag, er grundlaget for den nye Router; designet er ikke færdigt, og intet af Routeren bygges endnu |
+| **Hjertet, trin 0:** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Routeren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
 
