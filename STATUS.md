@@ -1,26 +1,70 @@
 # STATUS · Claude MV
 
-Kort status over 4 spor (stems, fagudtryk). Planen i det hele står i `CLAUDE.md`, afsnit 6.
+Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsnit 6.
 
-## Lavet (v9.15)
+## Hjertet (Routeren)
 
-- **Trin 1 af stems:** kortet *4 spor (stems)* i fanen Lydkilde. Man giver programmet 4 filer, der er delt op på forhånd: **Trommer, Bas, Vokal og Resten**.
-- Sporene lægges sammen til én lyd, der spilles og analyseres som en almindelig fil. Hvert spor måles for sig (14 lydtræk pr. spor, fx *Trommer · Kick*).
-- **Auto:** kick, snare og hihat læses fra Trommer, bas fra Bas og vokal fra Vokal, når der er 4 spor. Grunden står ved forbindelsen, og man kan vælge Manuel.
+Designet af den nye Router er **ikke færdigt**. Der er ikke bygget noget af Routeren. `docs/HJERTET.md` og billederne i `docs/hjertet/` findes ikke i repoet med vilje.
 
-## Næste
+### Trin 0 · three.js med WebGPU: stoppet ved punkt 2 (v9.18)
 
-### Vælg et værktøj til at dele en almindelig mp3 i 4 spor (B)
+**1. Sådan er det i dag**
+- MV bruger **three.js r128** (fra 2021). Den ligger **inde i HTML-filen** i det første `<script>` (cirka 612 KB) som en almindelig script-fil (fagudtryk: UMD/global build), der laver `window.THREE`.
+- I samme script ligger efterbehandlingen (fagudtryk: postprocessing) fra three.js' gamle `examples/js`: EffectComposer, RenderPass, ShaderPass, UnrealBloomPass (glød, fagudtryk: bloom), CopyShader og LuminosityHighPassShader.
+- Kun **Mesh 3D** og **Øjet** bruger three.js (WebGLRenderer, egne GLSL-shaders og bloom). MV's kode bruger `THREE.` 189 steder, men **først når Mesh 3D eller Øjet åbnes**. Testet: uden three.js starter MV uden fejl, og Mesh 3D og Øjet skriver bare, at 3D-biblioteket mangler.
 
-Programmet kan **ikke** selv dele en mp3 op. Det er ikke bygget. **Du vælger værktøjet**, før der bygges noget.
+**2. Den nye three.js kræver ES-moduler: derfor er trin 0 stoppet**
+- Den nyeste er **0.187.0** (r187, 30. oktober 2026). Jeg har tjekket pakken **0.186.1** fra npm. Siden r160 er der **ingen almindelig script-udgave** mere; kun ES-moduler (fagudtryk: filer med `import`/`export`):
 
-| Værktøj | Hvad | For | Imod |
+| Fil | WebGPURenderer | WebGLRenderer | Slags |
 | --- | --- | --- | --- |
-| **Demucs** (fagudtryk: source separation-model fra Meta, åben kildekode) | kører på din egen computer med Python | gratis; god kvalitet; musikken forlader ikke computeren; giver præcis 4 spor (drums, bass, vocals, other) | skal installeres (Python); langsomt uden grafikkort (flere minutter pr. sang); kan ikke køre inde i HTML-filen |
-| **AudioPod** (online tjeneste) | du sender filen op og får sporene tilbage | intet at installere; hurtigt; er allerede koblet til Claude i dine sessioner (værktøjet *separate stems*) | koster kreditter; musikken sendes til en fremmed server; kræver internet |
-| *Ultimate Vocal Remover* (program med vinduer, bruger Demucs og andre modeller) | på din egen computer | gratis; ingen kommandolinje | skal installeres; mange valg |
+| `three.webgpu.js` (2,3 MB) | ja, med automatisk skift til WebGL2 | nej | ES-modul, henter `./three.core.js` |
+| `three.module.js` (0,7 MB) | nej | ja | ES-modul, henter `./three.core.js` |
+| `three.core.js` (1,5 MB) | – | – | den fælles kerne |
+| `three.cjs` | – | – | 631 byte, kun en henvisning |
 
-Alle tre giver 4 filer, som kortet *4 spor (stems)* allerede kan læse.
+- Efterbehandlingen (EffectComposer, UnrealBloomPass …) findes også kun som ES-moduler.
+- **Intet er ændret.** Punkt 3 til 9 (før- og efterbilleder, opdatering, beviset med WebGPURenderer) er ikke lavet.
+
+**Hvor meget der skal ændres (du vælger)**
+
+| Valg | Sådan | For | Imod |
+| --- | --- | --- | --- |
+| **A · Behold r128, læg den nye ved siden af** | Mesh 3D og Øjet bliver på r128 uændret. Den nye three.js (kun `three.webgpu.js` + `three.core.js`) lægges i et eget `<script type="module">` til Routeren senere | ingen risiko for Mesh 3D og Øjet; intet byggeværktøj | **three.js indlæses to gange** (r128 og r186); filen bliver cirka 3,7 MB større; ting fra den ene (fx en geometri) kan ikke bruges i den anden |
+| **B · Skift alt til den nye, samlet til én fil** (anbefalet på sigt) | Et byggeværktøj (fagudtryk: bundler, fx esbuild) samler `three.module.js`, `three.webgpu.js` og efterbehandlingen til **ét** modul, der lægges ind i HTML-filen og laver `window.THREE`. Ingen importmap | **én** three.js; WebGLRenderer og WebGPURenderer deler kernen; MV's opstart behøver ikke ændres, fordi `THREE` først bruges, når Mesh 3D og Øjet åbnes | et byggetrin i arbejdsgangen; filen bliver cirka 3 MB større; Mesh 3D og Øjet skal rettes (se listen nedenfor) og testes for farver og lysstyrke |
+| **C · Importmap med data-adresser** | hver three.js-fil lægges ind som `data:`-adresse i en importmap (fagudtryk) | intet byggeværktøj | filerne skal skrives om (deres `import './three.core.js'`); 33 % større (base64); mest skrøbeligt |
+
+**Det skal rettes ved B** (fundet i koden, ikke prøvet):
+- `WebGLMultisampleRenderTarget` (2 steder) findes ikke mere; den hedder `WebGLRenderTarget` med `samples`.
+- **Farver:** fra r152 er farvestyring (fagudtryk: color management) slået til, og billedet laves i sRGB. Mesh 3D og Øjet bliver sandsynligvis lysere eller anderledes i farverne, indtil det er sat op som før (fx `OutputPass` eller den gamle farveindstilling).
+- **Lys:** lysstyrken på lys er ændret i r155, men MV bruger **ingen lys** (ingen PointLight, AmbientLight eller DirectionalLight), så det rammer ikke MV.
+- WebGL1 er fjernet i r163; MV bruger allerede WebGL2 i browseren.
+
+**8. WebGPURenderer og WebGLRenderer side om side**
+- De kan godt bruges samtidig, men hver på **sit eget lærred** (fagudtryk: canvas). WebGPURenderer skal startes med `await renderer.init()`.
+- **Med B:** three.js indlæses **kun én gang**. `three.webgpu.js` og `three.module.js` deler `three.core.js`, så geometrier, farver og vektorer kan bruges i begge.
+- **Med A:** three.js indlæses **to gange** (r128 og r186), og de to kan ikke dele noget.
+- WebGPURenderer kan ikke tegne MV's GLSL-shaders (`ShaderMaterial`) eller den gamle bloom; de skal skrives om til TSL (fagudtryk). Derfor bliver Mesh 3D og Øjet på WebGLRenderer.
+
+**Kan ikke testes her:** WebGPU kræver et rigtigt grafikkort. Testbrowseren har intet (SwiftShader), så WebGPURenderer ville skifte til WebGL2.
+
+### Trin 1 · Funktionslisten: lavet (v9.18), venter på godkendelse
+
+- `docs/hjertet/FUNKTIONER.md`: én tabel pr. del (Dublet, Router 2.0, Routing-overblik, Mapping, Lydkilde) og en liste over funktioner, der findes flere steder, og ord, der betyder flere ting.
+- **Næste:** du godkender eller retter listen, før der arbejdes videre.
+
+## 4 spor (stems)
+
+### Lavet (v9.15)
+
+- **Trin 1:** kortet *4 spor (stems)* i fanen Lydkilde. Man giver programmet 4 filer, der er delt op på forhånd: **Trommer, Bas, Vokal og Resten**.
+- Sporene lægges sammen til én lyd, der spilles og analyseres som en almindelig fil. Hvert spor måles for sig (14 lydtræk pr. spor, fx *Trommer · Kick*).
+- **Auto:** kick, snare og hihat læses fra Trommer, bas fra Bas og vokal fra Vokal, når der er 4 spor.
+
+### Besluttet: værktøj til at dele en mp3 i 4 spor
+
+- **Værktøjet er valgt: Ultimate Vocal Remover, brugt uden for MV.** Man deler sangen i 4 filer der og trækker dem ind i kortet *4 spor (stems)*.
+- **Opdeling inde i MV bygges ikke nu.**
 
 ## Senere
 

@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.0 · 29. oktober 2026 · gælder fra Claude MV v9.15 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.1 · 4. november 2026 · gælder fra Claude MV v9.18 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -37,15 +37,16 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 
 ### Versioner
 - **Nyt versionsnummer ved hver aflevering**, tre steder:
-  1. i **filnavnet**: `claude-mv-v9_16.html`
-  2. i **programmet**: `<title>Claude MV v9.16 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
+  1. i **filnavnet**: `claude-mv-v9_19.html`
+  2. i **programmet**: `<title>Claude MV v9.19 (Rytme-editor)</title>` og det lille versionsmærke (søg efter `hver gang filen samles til udgivelse.">`)
   3. i **svaret** til mig
 - Efter v9.9 kommer **v9.10**, v9.11 og så videre. **v10.0** venter vi med, til jeg siger til.
-- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v916">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen.
+- Skriv også et **afsnit i manualen**: et nyt `<h3 id="man-v919">` lige over det forrige, og opdater linjen **"Nyt i v…"** øverst i manualen (testen `2-indhold.js` tjekker den; i v9.16 og v9.17 blev den glemt).
+- Versioner kan også laves i hovedchatten på claude.ai (fx v9.16 og v9.17). Byg altid videre på den nyeste fil i repoet.
 
 ### GitHub
-- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_16.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
-- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.16: startskærm med demosang`.
+- Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_19.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
+- Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.19: startskærm med demosang`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 6 ændrer sig.
 
 ### Test før aflevering
@@ -55,7 +56,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 - Den faste rækkefølge, vi har brugt:
   1. **Syntaks:** kør `node --check` på hvert `<script>` i filen. Et opstartstjek alene fanger ikke syntaksfejl.
   2. **Opstart:** åbn filen i en testbrowser (Playwright, fagudtryk) og tjek, at der ingen fejl er (`pageerror` og konsolfejl). Giv altid tjekket det rigtige filnavn; vi har en gang testet en gammel fil i flere versioner uden at opdage det.
-  3. **Fast testpakke:** opstart med hver Scene-fane gemt som valgt (v9.15); alle forudindstillinger (`FORINDST`, kør hver med `brugFor(id,true)`) uden fejl; alle 5 layouts (`lay3Anvend`) uden overlap mellem synlige vinduer; Mesh 3D og Øjet starter; gem og hent en plads (`slotSave`/`slotLoad`); tilføj og fjern en forbindelse.
+  3. **Fast testpakke:** opstart med hver Scene-fane gemt som valgt (v9.15); opstart med gemte indstillinger fra seks ældre versioner (`tests/gamle-indstillinger/`, v9.18); alle forudindstillinger (`FORINDST`, kør hver med `brugFor(id,true)`) uden fejl; alle 5 layouts (`lay3Anvend`) uden overlap mellem synlige vinduer; Mesh 3D og Øjet starter; gem og hent en plads (`slotSave`/`slotLoad`); tilføj og fjern en forbindelse.
   4. **Det nye:** en test af netop det, der er ændret, plus et skærmbillede.
 - **Kendte faldgruber i testbrowseren:** uden grafikkort (SwiftShader, fagudtryk) er 3D meget langsomt; analysen af en lydfil tager over et minut (uden SwiftShader cirka 11 sekunder); skærmbilleder af fuld skærm virker ikke. Testpakken laver selv testlydfiler (30 s ved 120 BPM, `tests/testlyd.js`), i mono og i stereo (mono, venstre, højre og bred), så panorering og stereobredde også testes.
 
@@ -109,9 +110,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### 4 spor (stems, v9.15)
 - **Trin 1:** man giver programmet 4 filer, der er delt op på forhånd (Trommer, Bas, Vokal, Resten) i kortet *4 spor (stems)* i Lydkilde. De lægges sammen til én lyd, der spilles og analyseres som en almindelig fil; hvert spor måles for sig (14 lydtræk pr. spor, kilderne `stem:SPOR:LYDTRÆK`, vist som fx *Trommer · Kick* i en gruppe pr. spor; D2: intet lægges sammen).
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
-- **Opdeling af en almindelig mp3 (B) er ikke bygget.** Du vælger værktøjet (fx Demucs eller AudioPod) først; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
+- **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.15
+## 4. Hvad der er sket fra v8.0 til v9.18
 
 | Version | Hvad |
 | --- | --- |
@@ -139,6 +140,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.13 | **Dobbelte målinger foldet sammen**: de 31 smalle bånd under de fire brede bånd (*▸ Vis* / *▾ Skjul*); høje bånd, Rolloff og Zero crossing rate kun på Niveau 4; **Taktslag Auto** (fil → fra filen, Lyd ind/generator → mens det spiller) med grund og Manuel; rettet type for de tre glidende hændelser; **stereo-testfil** |
 | v9.14 | **Stereobredde** regnes som 1 minus korrelationen (højst 1; 0, når den ene kanal er stille), så den ikke længere stiger, når lyden bare ligger til én side (før 0,37, nu 0); manual og ordliste rettet (panorering og stereobredde stod som "findes ikke endnu") |
 | v9.15 | **4 spor (stems), trin 1**: kortet i Lydkilde, 4 filer spilles som én lyd, hvert spor måles for sig, gruppe pr. spor i kildelisten, Auto for kick/snare/hihat, bas og vokal; gul besked ved forskellige længder. **Rettet:** Lyd i 3D som gemt Scene-fane stoppede scriptet ved opstart (ingen grafik; fandtes siden før v9.6). `STATUS.md` med næste skridt |
+| v9.16 | (hovedchatten) **Auto i Lydkilde**: *Auto: Til/Fra* og *Kør auto-opsætning nu* flyttet (ikke kopieret) fra Lydtræk-guide (W18) til fanen Lydkilde (blokken *v9.16: AUTO I LYDKILDE*); Søg (Ctrl+K) finder topbjælkens knapper og Auto |
+| v9.17 | (hovedchatten) Auto sidder i Lydkildes overskrift; **Lydkilde kan rulle** (`#w31 > .wb { overflow-y: auto }`) |
+| v9.18 | **Router kan rulle** (samme fejl som Lydkilde); linjen "Nyt i …" i manualen rettet; testpakken starter med **gemte indstillinger fra seks ældre versioner**; **Hjertet trin 0** stoppet ved punkt 2 (ny three.js kræver ES-moduler; se `STATUS.md`) og **trin 1**: `docs/hjertet/FUNKTIONER.md` |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -151,7 +155,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Dobbelte målinger:** besluttet og lavet i v9.13 (se afsnit 3). Ikke ændret: Spectral centroid og rolloff (følges 0,94; rolloff kun på Niveau 4) og Toneklasse og de 12 toner.
 - **Taktslag Auto** og **4 spor Auto** gælder motoren (Rytme.koer). Klodser, der forudsiges fra filen, bruger kilden, som den står i forbindelsen (den samlede lyd).
 - **4 spor:** sporene gemmes ikke i cachen og ikke i pladserne; de skal vælges igen efter genstart. Lydfil-kortet i Lydkilde viser ikke de 4 spor (kortet *4 spor* gør). Hvert spor får kun de 14 lydtræk, ikke Analysen (de 31 bånd, toner osv.); den har kun den samlede lyd.
-- **Opstartsfejl (rettet i v9.15):** Lyd i 3D som gemt Scene-fane stoppede scriptet. Testpakken starter nu programmet med hver Scene-fane gemt. Andre gemte indstillinger kan stadig skjule lignende fejl; testpakken starter ellers altid fra en tom opsætning.
+- **Opstartsfejl (rettet i v9.15):** Lyd i 3D som gemt Scene-fane stoppede scriptet. Testpakken starter nu programmet med hver Scene-fane gemt og (fra v9.18) med gemte indstillinger fra seks ældre versioner; den test fanger fejlen i v9.14.
+- **three.js er r128** (2021), lagt ind som almindeligt script. En ny three.js med WebGPURenderer kræver ES-moduler; valget mellem A, B og C står i `STATUS.md` (Hjertet, trin 0). WebGPU kan ikke testes i testbrowseren (intet grafikkort).
+- **Tidslinje og Analyse** i Arbejdsfeltet ruller ikke, men deres indhold er ikke højere end fanen (tjekket i v9.18). Værksted og Opsætninger er ikke tjekket.
 - **Tags fra Claude Code:** sessionens forbindelse til GitHub må sende gem og grene op, men ikke lave eller slette tags (og ikke slette grene). Tagget `milepael-med-lydkort` blev derfor lavet på GitHub under *Releases*; det peger på `87fcc93` (v9.11). Grenen `v9_11-med-lydkort` peger på det samme gem og kan slettes, når du vil.
 - **Router 2.0:** Auto og Manuel kan ses i boksen, men skiftes stadig under Opsætninger (Auto-tærskel gælder alle forbindelser).
 - **Hysterese, Hold med tid og Slew** virker ikke på klods-spor, og Mapping har ingen skydere til dem (Mapping viser en linje, når de er sat).
@@ -167,7 +173,8 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **4 spor, trin 2 (B): del en almindelig mp3 i 4 spor** | du vælger værktøjet først (Demucs eller AudioPod; for og imod i `STATUS.md`) |
+| **Hjertet (Routeren), trin 1:** godkend `docs/hjertet/FUNKTIONER.md` | listen over alt, Dublet, Router 2.0, Routing-overblik, Mapping og Lydkilde kan i dag, er grundlaget for den nye Router; designet er ikke færdigt, og intet af Routeren bygges endnu |
+| **Hjertet, trin 0:** vælg A, B eller C for three.js med WebGPU | den nye three.js kræver ES-moduler; for og imod i `STATUS.md` |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
 
