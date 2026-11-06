@@ -2,9 +2,9 @@
 
 Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsnit 6.
 
-## Hjertet (Routeren)
+## Node-editoren (hed før Routeren og Hjertet)
 
-Designet af den nye Router er **ikke færdigt**. Der er ikke bygget noget af Routeren. `docs/HJERTET.md` og billederne i `docs/hjertet/` findes ikke i repoet med vilje.
+Papiret er færdigt: `NODE-EDITOREN.md` (v7.5, 6. november 2026). **Intet er bygget.** Planen står i `docs/PLAN-NODE-EDITOREN.md` og venter på brugerens svar. Billederne og temaet skal ligge i `docs/node-editoren/`; mappen er ikke lagt op endnu.
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 
@@ -56,8 +56,8 @@ Baggrund (fra v9.18, da trin 0 stoppede ved punkt 2):
 
 ### Trin 1 · Funktionslisten: lavet (v9.18), gennemgås i hovedchatten
 
-- `docs/hjertet/FUNKTIONER.md`: én tabel pr. del (Dublet, Router 2.0, Routing-overblik, Mapping, Lydkilde) og en liste over funktioner, der findes flere steder, og ord, der betyder flere ting.
-- **Næste:** listen gennemgås i hovedchatten. Der arbejdes ikke videre, før du vender tilbage.
+- `docs/arkiv/hjertet/FUNKTIONER.md` (flyttet fra `docs/hjertet/` 6. november 2026): én tabel pr. del (Dublet, Router 2.0, Routing-overblik, Mapping, Lydkilde) og en liste over funktioner, der findes flere steder, og ord, der betyder flere ting.
+- Listen er gennemgået i hovedchatten og er grundlaget for papiret `NODE-EDITOREN.md`.
 
 ## 4 spor (stems)
 
