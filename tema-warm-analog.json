@@ -1,0 +1,65 @@
+{
+  "navn": "Warm Analog",
+  "version": "papir v7.4",
+  "dato": "2026-11-06",
+  "grund": {
+    "baggrund": { "fra": "#2a0f0a", "til": "#070303", "type": "radial" },
+    "nodeFlade": { "fra": "#2a1610", "til": "#120a08", "type": "lodret" },
+    "titel": "#ffffff",
+    "tekst": "#ffd9c8",
+    "svagTekst": "#c8a898",
+    "skaermBaggrund": "#0b0606",
+    "kantSvag": "rgba(255,138,0,.3)"
+  },
+  "maalerGradient": ["#ffd60a", "#ff8a00", "#ff3b1f", "#ff2d75"],
+  "taerskelStreg": "#ffd60a",
+  "kolonne": {
+    "ikkeIBrug": "#8a7a72",
+    "lydkilde": "#ffb000",
+    "fft": "#ffd60a",
+    "analyse": "#ff8a00",
+    "lydtraek": "#ff6a1f",
+    "regel": "#ff3b1f",
+    "figur": "#ff2d75",
+    "maal": "#e0409a",
+    "scene": "#c77dff",
+    "midiOgEffekter": "#5ab0ff"
+  },
+  "lydtraekType": {
+    "slag": "#ff6b5a",
+    "baand": "#ffa040",
+    "takt": "#ffd34a",
+    "styrke": "#ffc46a",
+    "tone": "#c99bff",
+    "vokal": "#d79bff",
+    "klang": "#9fe07a",
+    "stereo": "#6fc3ff"
+  },
+  "maerker": {
+    "adaptiv": "#c77dff",
+    "gateAaben": "#7fd47f",
+    "gulBesked": "#ffb000"
+  },
+  "gloed": {
+    "regel": "Kun det, der er valgt eller slår til lige nu",
+    "valgt": { "kant": "#ffffff", "skygge": "0 0 24px rgba(255,255,255,.45)" },
+    "slaarTil": { "skygge": "0 0 18px #ff2d75" }
+  },
+  "skrift": {
+    "overskrift": { "familie": "Orbitron", "vaegt": [800, 900], "storeBogstaver": true },
+    "tal": { "familie": "Exo 2", "vaegt": 900, "kursiv": true },
+    "tekst": { "familie": "IBM Plex Sans", "vaegt": [400, 500, 600] }
+  },
+  "maal": {
+    "bredde": { "smal": 200, "normal": 320, "bred": 440 },
+    "overskriftHoejde": 40,
+    "gitter": 8,
+    "kolonneAfstand": 120,
+    "hjoerne": 8,
+    "portStoerrelse": 14
+  },
+  "zoom": {
+    "heltUdeUnder": 0.2,
+    "regel": "Grafikken forenkles kun under 20 % zoom. Så vises noderne som lys uden tekst."
+  }
+}
