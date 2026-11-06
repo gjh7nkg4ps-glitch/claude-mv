@@ -1,0 +1,42 @@
+Besked fra hovedchatten · papir v7.5 · 6. nov. 2026
+
+Papiret til Node-editoren er færdigt. Du skal IKKE bygge noget endnu.
+Først en plan, som brugeren skal sige god for.
+
+Pakken indeholder:
+- NODE-EDITOREN.md (erstatter HJERTET.md)
+- docs/node-editoren/ med 17 billeder og tema-warm-analog.json
+
+1. Læg filerne på plads
+   - NODE-EDITOREN.md i roden af repoet.
+   - Mappen docs/node-editoren/ som den er.
+   - Flyt HJERTET.md og mappen docs/hjertet/ til docs/arkiv/ med git mv.
+     Intet må slettes.
+   - Commit: "Papir v7.5: Node-editoren (erstatter HJERTET.md)"
+
+2. Læs
+   - NODE-EDITOREN.md
+   - FUNKTIONER.md
+   - docs/SVAR-FASE1.md
+
+3. Svar på de åbne punkter i afsnit 11 i NODE-EDITOREN.md ud fra koden:
+   - Hvilke udgange har hver analyse i dag (afsnit 5.4)?
+     Brug de 14 lydtræk, toner, klang og de 31 bånd.
+   - Kan flere løsrevne scener ses på én gang i zone-tilstand?
+     Skriv kun, hvad koden siger. Prøv det ikke i browseren.
+   (Svarene fra SVAR-FASE1.md er allerede skrevet ind i papiret.)
+
+4. Skriv en plan i docs/PLAN-NODE-EDITOREN.md
+   - Små trin. Hvert trin skal kunne testes og vises for brugeren.
+   - Skriv ved hvert trin, hvad brugeren kan se og prøve bagefter.
+   - Husk: gamle gemte indstillinger skal stadig kunne åbnes.
+   - Husk: ingen funktion fra FUNKTIONER.md må forsvinde.
+   - Husk: farver og glød hentes fra tema-warm-analog.json,
+     ikke skrevet direkte ind i koden.
+   - Skriv dine spørgsmål til brugeren øverst i planen.
+
+5. Stop
+   - Ændr ingen kode.
+   - Commit planen med beskeden
+     "Plan for Node-editoren (kun plan, intet bygget)" og stop.
+   - Skriv på enkelt dansk.
