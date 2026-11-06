@@ -1,6 +1,6 @@
-# NODE-EDITOREN · papir v7.5
+# NODE-EDITOREN · papir v7.6
 
-*6. november 2026 · fra hovedchatten · erstatter HJERTET.md · v7.5 har svarene fra SVAR-FASE1.md skrevet ind*
+*6. november 2026 · fra hovedchatten · erstatter HJERTET.md · v7.6 har svarene på Code's plan skrevet ind*
 
 Node-editoren er den nye skærm i Claude MV, hvor man kobler lyd til figurer. Den hed før "Routeren" og "Hjertet". Begge navne udgår.
 
@@ -71,7 +71,7 @@ Billede: `01-det-store-kort.png` (endeligt udseende) og `04-alle-noder-graa.png`
 | # | Kolonne | Bredde (punkter ved 100 %) |
 |---|---|---|
 | – | Ikke i brug | smal 200 |
-| 1 | Lydkilde | bred 440 (lydfil, 4 spor) · normal 320 (Lyd ind, generator, MIDI) |
+| 1 | Lydkilde | bred 440 (lydfil, 4 spor) · normal 320 (Lyd ind, generator, MIDI, Morph Pad, Tastatur) |
 | 2 | FFT | normal 320 |
 | 3 | Analyse | normal 320 |
 | 4 | Lydtræk | normal 320 |
@@ -152,6 +152,7 @@ Billede: `11-tilfoej-listen.png`.
 - Åbnes med "+ Tilføj" i hver kolonne, og når man trækker et link ud og slipper det på et tomt sted (viser så kun det, der passer). **Ingen Tab-tast.**
 - **Ctrl+K** er én søgeliste med to grupper: "Tilføj node" og "Knapper". Noder har typefarve og en lille levende bar. Knapper har et ikon. Til højre står, hvor det hører til.
 - En node fra Ctrl+K lander nederst i sin kolonne. Kortet flytter sig derhen, og noden lyser kort op.
+- Kommandoer i Ctrl+K: Ryd hold, Ryd tomme mål, Tilfældigt (fra Mapping) og Kør Auto-mapping.
 - **Skabelon:** lydtræk og regler, der slippes på en figur, ellers spørger listen "Hvilken figur?". Reglerne kobles til figurens mål. Mangler et mål, laves det.
   - Findes lydtrækket allerede, bruges det igen. Er det parkeret, trækkes det ind og vågner.
   - Kan figuren ikke få målet, springes reglen over med en kort besked.
@@ -168,6 +169,8 @@ Billede: `12-lydkilde.png`.
   - **Lyd ind:** lille node med rullende bølgeform og én måler. Klik på navnet for mikrofon eller fanelyd. "Live · ingen afsnit og ingen stereo". Niveau 20–300 % (ca. −14 til +9,5 dB) i kontrolpanelet.
   - **Generator:** egen node med genre (House 124, Techno 132, Breakbeat 140, Hip-hop 90, Trap 140, Drum and bass 172, Disco 118 BPM), tempo (60–200 BPM) og tæthed (0–1). Mærket "Live". Analyseres, mens den spiller (FFT 2048 og 8192). "Avanceret …" i kontrolpanelet åbner den fulde generator med resten: 16 eller 32 trin, swing, grundtone og skala, bas- og lead-lyd, filter, echo, kick-længde, 8 spor, 5 pladser til mønstre, Send til editor og keyboard med Optag.
   - **MIDI:** egen node. Tæller ikke som lydkilde, så den kan bruges samtidig med en sang. I dag kun tangenter (anslagets styrke bruges ikke): to udgange, "Tangent · blink" (kort blink ved hvert anslag) og "Sidste tone · 0–1" (A0 til C8). Virker kun i Chrome og Edge. En tangent kan også få en figur til at blive født som en levende kopi, hvis figuren er sat til at fødes af MIDI.
+  - **Morph Pad:** blå node som MIDI. Tæller ikke som lydkilde. Udgange: master X og Y, cirkel 1–8, cirkel 1–8 fart og hændelsen "pad-cirkel ramt".
+  - **Tastatur:** lille blå node. Tæller ikke som lydkilde. Udgang: Tast B (hændelse).
 - **Bølgeformen:** klik hopper i sangen, træk spoler. Ved 4 spor hopper hele sangen. Lyd ind kan ikke spoles.
 - **Én lydkilde ad gangen** (MIDI tæller ikke med).
 - **Skift kilde:** den nye overtager linkene, og den gamle parkeres. Fortryd kan bytte tilbage. Spor-links sover, hvis den nye kilde ikke har en passende port.
@@ -182,8 +185,22 @@ Billede: `13-analyse.png`.
   - **FFT · fin (8192):** til tone og akkord.
   - Begge viser et liggende spektrum (dybe toner til venstre). Linkene går ud fra højre side.
 - **Uden om FFT:** styrke, nulgennemgange og stereo får link direkte fra lydkilden. Tonehøjde (McLeod-metoden) får også et link direkte fra lydkilden.
-- **De syv analyse-noder og deres visning:** Slag-detektor (tre lamper), Brede bånd (søjler), Tone og akkord (tonehjul), Klang (kurve), Taktslag (prikker i takt), Stereo (balance), Styrke (viser).
-- **Udgange** som rækker, én port pr. række, fx Slag: Kick, Snare, Hihat. (Listen over udgange er papirets bedste bud. Ret den efter koden.)
+- **De ni analyse-noder, deres visning og udgange** (udgangene er læst i koden, se også `docs/PLAN-NODE-EDITOREN.md` afsnit B1). Én port pr. udgang.
+
+| Analyse-node | Visning | Udgange | Grundlag |
+|---|---|---|---|
+| Slag-detektor | tre lamper | Kick, Snare, Hihat, Spectral flux · hændelserne slag, tone og støj | FFT · hurtig |
+| Brede bånd | søjler | Bas, Mid, Høj-mid, Brilliance, Vokal · Dominerer (eksperimentel) | FFT · hurtig |
+| 31 bånd | 31 smalle søjler | de 31 smalle bånd (20 Hz til 20 kHz) | FFT · fin |
+| Tone og akkord | tonehjul | de 12 toneklasser, Toneklasse, Tonestyrke · Tonehøjde, Tonesikkerhed · hændelserne akkordskift, akkordens grundtone, dur eller mol | FFT · fin, og McLeod-metoden på lydbølgen |
+| Klang | kurve | Centroid, Flatness, Rolloff, Zero crossing rate, Dissonans, Overtonerigdom, Ulige overtoner, Spektral spredning, Energi, Lyshed, Anslagsskarphed, Legato-grad (12) | FFT · hurtig og fin, lydbølgen og andre lydtræk |
+| Taktslag | prikker i takt | Taktslag, Takt (første slag), Taktfase · hændelserne taktslag, hvert 2. slag, hver takt, hver 2. takt | FFT · hurtig |
+| Stereo | balance | Panorering, Stereobredde, Faselighed (kun lydfiler) | venstre og højre lydbølge |
+| Styrke | viser | RMS, Peak (eksperimentel) | lydbølgen |
+| Afsnit | tegnes, når den bygges | drop eller løft, musikken stopper, musikken starter, sektionsskift | RMS og afsnittene fra analysen af filen |
+
+- Toneart er ikke en udgang i dag. Den vises i lydkilde-noden og bundbaren.
+- Hvert af de 14 lydtræk findes også pr. spor, når der er 4 spor (fx "Kick · Trommer"). Analyserne har kun den samlede lyd.
 - **Ingen tænd/sluk-knap.** Vil man slukke en analyse, parkerer man den.
 - **Indstillinger** i kontrolpanelet. De fleste tal ligger fast i dag. Taktslag: ½×, 1×, 2×, Tap og "Første slag nu" (i dag i Show-vinduet; i Node-editoren sidder de i Taktslag-nodens kontrolpanel).
 - **Hvad bygger på hvad (fra koden):** taktslag bygger på FFT 2048-lydtrækkene (flux, kick, snare, hihat). Toneklasser og akkord bygger på FFT 8192. Tonehøjde bruger McLeod-metoden på lydbølgen. Toneart regnes over hele sangen.
@@ -323,17 +340,23 @@ Billede: `02-tema-warm-analog.png`. Faste værdier: `docs/node-editoren/tema-war
 ## 10 · Teknik (besluttet før)
 
 - Den gamle three.js (r128) bliver til Mesh 3D og Øjet. Node-editoren får en ny three.js ved siden af. Én fælles three.js kommer senere.
-- Al ny grafik skrives i TSL fra start, så det kører på både WebGPU og WebGL2. Mesh 3D og Øjet flyttes senere, én ad gangen.
+- Al ny grafik skrives i TSL (Three.js Shading Language), så det kører på både WebGPU og WebGL2. Mesh 3D og Øjet flyttes senere, én ad gangen.
+- **Rækkefølge (besluttet 6. nov.):** noderne er HTML. Linjer og glød tegnes først på et enkelt lærred (Canvas 2D) og skiftes til TSL i trin 14, fordi testbrowseren ikke har et grafikkort.
+- **Placering:** Node-editoren er en ny fane i Arbejdsfeltet, og et nyt layout, "Noder", gør den stor. Scenen kan stadig ses.
+- **Skrifttyperne** (Orbitron, Exo 2, IBM Plex Sans) lægges ind i filen, kun med latinske og danske bogstaver, så programmet virker uden internet.
+- **Navnene** fra afsnit 2 bruges i Node-editoren fra start og i resten af programmet i trin 15. De interne nøgler ændres aldrig.
+- **Versioner:** v9.19, v9.20 … for hvert trin. v10.0 er den version, hvor de gamle vinduer fjernes.
 - Gemte indstillinger fra gamle versioner skal stadig kunne åbnes (der findes tests med 6 gamle versioner).
 
 ---
 
 ## 11 · Åbne punkter
 
-1. **Zone-tilstand:** ikke prøvet, om flere løsrevne scener kan ses på én gang.
-2. **Udgangene på analyse-noderne** (afsnit 5.4) er papirets bedste bud og skal rettes efter koden (de 14 lydtræk, toner, klang og de 31 bånd).
-
-*Afklaret i v7.5:* Detektions-tolerance hører ikke til en analyse. Den ændrer kun målingen af hit-rate i Detektions-tuning, som er parkeret (se afsnit 12). Scene-effekter beholder navnet. Indholdet står i afsnit 5.7.
+Ingen. Alle er afklaret:
+- Detektions-tolerance hører til Detektions-tuning, som er parkeret (afsnit 12).
+- Scene-effekter beholder navnet. Indholdet står i afsnit 5.7.
+- Analyse-nodernes udgange står i afsnit 5.4.
+- Zone-tilstand: to løsrevne scener kan ikke ses ved siden af hinanden i dag. De ligger oven på hinanden (afsnit 12).
 
 ---
 
@@ -348,10 +371,13 @@ Billede: `02-tema-warm-analog.png`. Faste værdier: `docs/node-editoren/tema-war
 - Vinduet Opsætninger har også indstillinger. Skal det hedde noget andet?
 - Vælgeren "Spor" er måske ikke nødvendig, når linkene viser det.
 - Auto-mapping erstatter alle regler og skal kunne fortrydes.
+- Flere scener ved siden af hinanden (i dag ligger løsrevne scener oven på hinanden).
 
 ---
 
 ## 13 · Billeder i docs/node-editoren/
+
+Billederne viser ikke de nye noder fra v7.6 (31 bånd, Afsnit, Morph Pad og Tastatur). For dem gælder teksten.
 
 | Fil | Viser |
 |---|---|

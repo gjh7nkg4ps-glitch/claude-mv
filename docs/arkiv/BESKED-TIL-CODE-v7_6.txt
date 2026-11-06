@@ -1,0 +1,46 @@
+Besked fra hovedchatten · papir v7.6 · svar på planen · 6. nov. 2026
+
+Tak for planen. Brugeren har svaret "alt som anbefalet".
+Du skal stadig IKKE bygge. Se punkt 4.
+
+1. Læg filerne på plads
+   - NODE-EDITOREN.md (papir v7.6) erstatter den gamle i roden.
+   - Mappen docs/node-editoren/ (17 billeder og tema-warm-analog.json)
+     lægges i repoet. Det løser A1.
+   - Flyt BESKED-TIL-CODE.txt og denne fil til docs/arkiv/ med git mv.
+   - Commit: "Papir v7.6 med billeder og tema"
+
+2. Svarene
+   A1  Billedmappen og temafilen kommer med denne pakke.
+   A2  A: ny fane i Arbejdsfeltet og et nyt layout "Noder".
+   A3  A: noderne i HTML, linjer og glød på Canvas 2D, TSL i trin 14.
+   A4  Nye navne i Node-editoren fra start. Resten af programmet i trin 15.
+   A5  Skrifttyperne lægges ind i filen, kun latinske og danske bogstaver.
+   A6  v10.0 er den version, hvor de gamle vinduer fjernes (efter trin 16,
+       og kun når brugeren siger til). Indtil da v9.19, v9.20 osv.
+   A7  - Afsnit: en ny analyse-node, "Afsnit"
+         (hnd:drop, hnd:pause:*, hnd:sektion).
+       - Morph Pad: blå node i Lydkilde-kolonnen. Tæller ikke som lydkilde.
+       - Tast B: sin egen lille blå node, "Tastatur", ved siden af MIDI.
+       - Tilfældigt og Kør Auto-mapping: kommandoer i Ctrl+K.
+       - Radial Mesh, EQ og Form-editoren bliver ved og laver regler,
+         der dukker op i Node-editoren.
+   A8  Ja, flyt beskederne til docs/arkiv/ (se punkt 1).
+   A9  Flere scener ved siden af hinanden: til planen. Byg det ikke nu.
+
+   B1  - De 31 smalle bånd får deres egen analyse-node, "31 bånd",
+         med link fra FFT · fin.
+       - Spectral flux er en udgang på Slag-detektor.
+       - Klang har 12 udgange.
+       - Vokal bliver under Brede bånd.
+       Papiret v7.6 afsnit 5.4 har den nye tabel. Der er nu 9 analyse-noder.
+
+3. En tilføjelse til planen
+   "Normalisering: Adaptiv · Fast" og "Samlet styrke" i værktøjslinjen
+   kommer med i trin 4.
+
+4. Opdatér planen og stop
+   - Skriv svarene ind i docs/PLAN-NODE-EDITOREN.md.
+   - Commit: "Plan for Node-editoren opdateret efter svar (intet bygget)"
+   - Stop. Byg ikke trin 1, før brugeren skriver "kør".
+   - Skriv på enkelt dansk.
