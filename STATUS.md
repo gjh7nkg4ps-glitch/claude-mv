@@ -4,7 +4,7 @@ Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsn
 
 ## Node-editoren (hed før Routeren og Hjertet)
 
-Papiret er færdigt: `NODE-EDITOREN.md` (v7.5, 6. november 2026). **Intet er bygget.** Planen står i `docs/PLAN-NODE-EDITOREN.md` og venter på brugerens svar. Billederne og temaet skal ligge i `docs/node-editoren/`; mappen er ikke lagt op endnu.
+Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og temaet ligger i `docs/node-editoren/`. Planen står i `docs/PLAN-NODE-EDITOREN.md`, og svarene er skrevet ind. Der bygges ét trin ad gangen.
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 

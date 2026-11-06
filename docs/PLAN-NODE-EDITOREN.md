@@ -1,91 +1,36 @@
 # Plan for Node-editoren
 
-*6. november 2026 · skrevet af Claude Code ud fra papir v7.5 (`NODE-EDITOREN.md`) og koden i Claude MV v9.18 · **kun en plan, intet er bygget***
+*6. november 2026 · skrevet af Claude Code ud fra papir v7.5 (`NODE-EDITOREN.md`) og koden i Claude MV v9.18 · opdateret efter svarene i papir v7.6*
 
-Planen bygger Node-editoren (vores navn; fagudtryk: node editor) i små trin. Hvert trin bliver en ny version (v9.19, v9.20 …), kan testes og vises med skærmbilleder. **Der bygges først, når du har sagt god for planen og svaret på spørgsmålene herunder.**
+Planen bygger Node-editoren (vores navn; fagudtryk: node editor) i små trin. Hvert trin bliver en ny version (v9.19, v9.20 …), kan testes og vises med skærmbilleder.
 
 ---
 
-## A · Spørgsmål til dig
+## A · Svarene (6. november 2026: "alt som anbefalet")
 
-Ved hvert spørgsmål står mit anbefalede valg først. Du bestemmer.
+Spørgsmålene er besvaret i papir v7.6 (`docs/arkiv/BESKED-TIL-CODE-v7_6.txt`). Svarene gælder for alle trin.
 
-### A1 · Billedmappen mangler
-`docs/node-editoren/` (17 billeder og `tema-warm-analog.json`) er **ikke** i repoet. Kun `NODE-EDITOREN.md` og `BESKED-TIL-CODE.txt` kom med (gemt som f1d9498).
-
-| Valg | For | Imod |
+| | Spørgsmål | Svar |
 | --- | --- | --- |
-| **Læg mappen op på GitHub** med *Add files via upload* (anbefalet) | billederne og temaet ligger i repoet, som papiret siger; testen kan sammenligne temaet i programmet med filen | du skal lægge den op igen |
-| Send billederne i chatten | jeg kan se dem | de kommer ikke i repoet; temafilen mangler stadig |
+| A1 | Billedmappen manglede | Ligger nu i `docs/node-editoren/` (17 billeder og `tema-warm-analog.json`) |
+| A2 | Hvor skal Node-editoren være? | **En ny fane i Arbejdsfeltet** og **et nyt layout, "Noder"**, der gør den stor. Scenen kan stadig ses |
+| A3 | Hvordan tegnes den? | **Noderne i HTML.** Linjer og glød først på et lærred (Canvas 2D, fagudtryk), skiftes til TSL (fagudtryk: Three.js Shading Language) i trin 14 |
+| A4 | Nye navne | **I Node-editoren fra start.** Resten af programmet i trin 15. De interne nøgler ændres aldrig |
+| A5 | Skrifttyperne | **Lægges ind i filen** (Orbitron, Exo 2, IBM Plex Sans), kun latinske og danske bogstaver |
+| A6 | Versionsnumre | v9.19, v9.20 … for hvert trin. **v10.0 er den version, hvor de gamle vinduer fjernes** (efter trin 16, og kun når du siger til) |
+| A7 | Ting uden plads i papiret | **Afsnit:** ny analyse-node (`hnd:drop`, `hnd:pause:*`, `hnd:sektion`). **Morph Pad:** blå node i Lydkilde-kolonnen, tæller ikke som lydkilde. **Tastatur:** lille blå node med Tast B ved siden af MIDI. **Tilfældigt** og **Kør Auto-mapping:** kommandoer i Ctrl+K. **Radial Mesh, EQ og Form-editoren** bliver ved, og deres regler dukker op i Node-editoren |
+| A8 | Beskederne fra hovedchatten | Flyttet til `docs/arkiv/` |
+| A9 | Flere scener ved siden af hinanden | **Til planen** (papirets afsnit 12). Bygges ikke nu |
+| B1 | Analysernes udgange | **9 analyse-noder.** De 31 smalle bånd får deres egen node, **31 bånd**, med link fra FFT · fin. Spectral flux er en udgang på Slag-detektor. Klang har 12 udgange. Vokal bliver under Brede bånd. Tabellen står i papirets afsnit 5.4 |
+| Ny | Tilføjelse til trin 4 | **Normalisering: Adaptiv · Fast** og **Samlet styrke** i værktøjslinjen |
 
-Indtil filen kommer, bruger planen værdierne fra papirets afsnit 7. **Trin 1 bygges ikke, før `tema-warm-analog.json` ligger i repoet.**
-
-### A2 · Hvor skal Node-editoren være?
-Papiret viser én stor skærm med kontrolpanelet i hele bredden nederst.
-
-| Valg | Sådan | For | Imod |
-| --- | --- | --- | --- |
-| **A · Ny fane i Arbejdsfeltet og et nyt layout "Noder"** (anbefalet) | fanen *Node-editor* ved siden af Router; layoutet *Noder* i topbjælken gør Arbejdsfeltet højt og Scenen lille | passer til vinduessystem A (faste zoner); Scenen kan stadig ses; intet ligger frit | Arbejdsfeltet er bredt, men ikke hele skærmen, medmindre layoutet bruges |
-| B · Panel ovenpå i fuld skærm | åbnes som de andre paneler (✕ eller Esc) | hele skærmen | Scenen er dækket, mens man arbejder; man kan ikke se figurerne reagere |
-| C · Erstatter Scenen-zonen | Node-editoren bor, hvor Scenen bor | stor flade | Scenen skal flyttes et andet sted hen |
-
-### A3 · Hvordan skal Node-editoren tegnes?
-Papiret afsnit 10 siger: ny three.js ved siden af r128, og al ny grafik i TSL (fagudtryk: three.js' shader-sprog, kører på WebGPU og WebGL2). Det er besluttet. Spørgsmålet er kun **rækkefølgen**.
-
-| Valg | Sådan | For | Imod |
-| --- | --- | --- | --- |
-| **A · Noderne i HTML, linjer og glød først på et lærred (Canvas 2D, fagudtryk), så TSL i trin 14** (anbefalet) | tekst, knapper og tastatur er almindelig HTML; linjer og glød ligger i ét lag, som skiftes til three.js og TSL i trin 14 | trin 1 til 13 kan testes hurtigt i testbrowseren; filen vokser først med 3,7 MB i trin 14 | linje-laget laves to gange (først enkelt, så i TSL) |
-| B · TSL fra trin 1 | linjer og glød i ny three.js fra start | som papiret skriver; kun ét linje-lag | filen vokser med 3,7 MB i første trin; WebGPU kan ikke testes her (intet grafikkort), kun reserven WebGL2; langsomt i testbrowseren |
-| C · Alt i three.js, også tekst og knapper | – | – | tekst og tastatur bliver svære; frarådes |
-
-I alle tre valg er noderne selv HTML, så de kan læses med skærmlæser og styres med tastaturet.
-
-### A4 · Nye navne (papirets afsnit 2): hvornår?
-Fx *Auto-tærskel* → *Adaptiv tærskel* (vores navn), *A–T* → *Opsætning 1–20*, *forbindelse* → *regel*.
-
-| Valg | For | Imod |
-| --- | --- | --- |
-| **Kun i Node-editoren fra start; resten af programmet i trin 15** (anbefalet) | de gamle vinduer, manualen og testene ændres på én gang og kan tjekkes samlet | en tid står der to navne for det samme (Node-editoren og de gamle vinduer) |
-| Hele programmet i trin 1 | ét navn med det samme | meget tekst ændres i første trin; større risiko for fejl |
-
-De **interne nøgler** ændres aldrig (fx `maps`, `thr`, pladserne `A` til `T`), så gamle gemte indstillinger kan åbnes.
-
-### A5 · Skrifttyperne
-Papiret vil have **Orbitron**, **Exo 2** (kursiv) og **IBM Plex Sans**. Programmet bruger ingen af dem i dag og skal køre uden internet.
-
-| Valg | For | Imod |
-| --- | --- | --- |
-| **Læg dem ind i filen**, kun latinske og danske bogstaver (anbefalet) | virker uden internet; alle tre er gratis (licens: SIL Open Font License) | filen bliver cirka 150 til 250 KB større |
-| Hent fra Google Fonts | filen bliver ikke større | kræver internet; uden internet ser det anderledes ud |
-| Brug computerens egne skrifttyper | intet at hente | ligner ikke papiret |
-
-### A6 · Versionsnumre
-Hvert trin bliver en ny version (v9.19, v9.20 …), som CLAUDE.md siger. Med 16 trin ender vi omkring v9.34. **Skal v10.0 være det trin, hvor Node-editoren kan erstatte de gamle vinduer?** Det er dit valg; jeg venter, til du siger til.
-
-### A7 · Ting, der ikke har en plads i papiret
-Disse kilder findes i dag, men papiret nævner ikke, hvilken node de hører til. **Ingen funktion må forsvinde**, så de skal have en plads:
-
-| Kilde i dag | Mit forslag |
-| --- | --- |
-| **Hændelser fra afsnit og dynamik:** drop eller løft, musikken stopper, musikken starter, sektionsskift (`hnd:drop`, `hnd:pause:*`, `hnd:sektion`) | en **8. analyse-node, *Afsnit*** (Struktur), eller som ekstra udgange på *Styrke* og *Taktslag* |
-| **Master Morph Pad** (18 kilder: master X og Y, cirkel 1–8, cirkel 1–8 fart) og *pad-cirkel ramt* | en kilde-node *Morph Pad* i Lydkilde-kolonnen, blå som MIDI (den tæller ikke som lydkilde) |
-| **Tast B** (`hnd:tast`) | en udgang på MIDI-noden, eller en lille node *Tastatur* |
-| **Mapping · Tilfældigt** (tre kategorier, Antal, Frø) og **Kør auto-opsætning nu** | kommandoer i Ctrl+K og i værktøjslinjen; Auto-mapping kan fortrydes i ét trin (papirets regel 6) |
-| **Radial Mesh, EQ og Form-editoren** laver også forbindelser i dag | de bliver ved; de ændrer den samme liste, så reglerne dukker op i Node-editoren |
-
-Er forslagene i orden?
-
-### A8 · BESKED-TIL-CODE.txt
-Filen ligger i roden af repoet. **Anbefalet:** flyt den til `docs/arkiv/` med git mv. Den er ikke flyttet endnu, fordi du ikke har bedt om det.
-
-### A9 · Flere scener på én gang i zone-tilstand
-Svaret fra koden (se B2) er **nej**. Skal der laves en måde at se to scener samtidig? **Anbefalet:** sæt det i *Til planen* (papirets afsnit 12) og byg det ikke nu.
+**Der bygges et trin ad gangen, og først når du skriver "kør".**
 
 ---
 
 ## B · Svar på de åbne punkter (papirets afsnit 11)
 
-Svarene er læst i koden for v9.18. Papiret er ikke ændret; svarene står kun her.
+Svarene er læst i koden for v9.18. Hovedchatten har skrevet dem ind i papir v7.6 (afsnit 5.4 og 11).
 
 ### B1 · Udgangene på analyse-noderne (afsnit 5.4)
 
@@ -112,9 +57,9 @@ Papirets syv analyse-noder med de udgange, koden har i dag. **Grundlag** fortæl
 | **Stereo** | Panorering · `ana:pan` · Stereobredde · `ana:bredde` · Faselighed · `ana:fase` | venstre og højre lydbølge, uden FFT; **kun lydfiler** |
 | **Styrke** | RMS · `rms` | lydbølgen, uden FFT |
 | | Peak, topamplitude (eksperimentel) · `ana:peak` | lydbølgen, uden FFT |
-| *ingen plads i papiret* | drop eller løft, musikken stopper, musikken starter, sektionsskift | RMS og afsnittene fra analysen af filen (se spørgsmål A7) |
+| **Afsnit** (ny i papir v7.6) | drop eller løft, musikken stopper, musikken starter, sektionsskift | RMS og afsnittene fra analysen af filen |
 
-**Det, der skal rettes i papiret** (forslag; hovedchatten bestemmer):
+**Forslagene herunder blev til papir v7.6:** 9 analyse-noder, *31 bånd* er sin egen node, *Afsnit* er ny.
 1. De **31 smalle bånd** kommer fra FFT · fin (8192), ikke FFT · hurtig. Enten får de en egen node (*31 bånd*) med link fra FFT · fin, eller *Brede bånd* får links fra begge FFT-noder.
 2. **Spectral flux** er en udgang på *Slag-detektor*. Papiret nævner den ikke.
 3. **Klang** har 12 udgange (flere end tegningen sikkert viser). Energi, Lyshed, Anslagsskarphed og Legato-grad regnes ud fra andre lydtræk.
@@ -133,7 +78,7 @@ Papirets syv analyse-noder med de udgange, koden har i dag. **Grundlag** fortæl
 6. Rundt om panelet ligger en mørk skygge over resten af skærmen, så Scenen bagved er dæmpet.
 7. Den eneste anden vej er **Send til skærm** (Projektor, `window.open`). Den åbner ét ekstra browservindue (altid det samme navn, `rytme-udgang`), så kun én kilde ad gangen.
 
-**For Node-editoren betyder det:** "Én scene-node for hver scene, der vises" (afsnit 5.9) passer til i dag: én scene i Scenen-zonen, ét panel ovenpå og én på Projektor-skærmen. Skal flere ses samtidig, skal det bygges (se spørgsmål A9).
+**For Node-editoren betyder det:** "Én scene-node for hver scene, der vises" (afsnit 5.9) passer til i dag: én scene i Scenen-zonen, ét panel ovenpå og én på Projektor-skærmen. Flere scener ved siden af hinanden står i *Til planen* (svar A9).
 
 ---
 
@@ -176,10 +121,10 @@ Tallene i *Version* forudsætter, at hvert trin bliver én version. Er et trin f
 
 | Trin | Version | Hvad der bygges | Det kan du se og prøve bagefter | Test (trin 4 i testpakken) |
 | --- | --- | --- | --- | --- |
-| **1 · Lærred, kolonner og tema** | v9.19 | Fanen *Node-editor* (placering efter A2). Temaet indlæses fra JSON. Skrifttyperne (efter A5). Et tomt lærred med de 9 kolonner (Ikke i brug, Lydkilde, FFT, Analyse, Lydtræk, Regel, Figur, Mål, Scene) med overskrifter i kolonnefarverne, bredder 200, 320 og 440, afstand 120. Værktøjslinjen med kun zoom og *Tilpas*. Kontrolpanelet nederst med teksten "Klik på en node for at se, hvordan den virker." | Fanen åbner. Du ser de varme kolonnefarver. Du kan zoome med musehjulet og flytte lærredet ved at trække. | fanen åbner uden fejl; temaet i filen = `docs/node-editoren/tema-warm-analog.json`; ingen farvekoder i Node-editorens blokke; v9.18-indstillingen åbner; skærmbillede |
+| **1 · Lærred, kolonner og tema** | v9.19 | Fanen *Node-editor* i Arbejdsfeltet og layoutet *Noder* i topbjælken. Temaet indlæses fra JSON. Skrifttyperne lagt ind i filen. Et tomt lærred med de 9 kolonner (Ikke i brug, Lydkilde, FFT, Analyse, Lydtræk, Regel, Figur, Mål, Scene) med overskrifter i kolonnefarverne, bredder 200, 320 og 440, afstand 120. Værktøjslinjen med kun zoom og *Tilpas*. Kontrolpanelet nederst med teksten "Klik på en node for at se, hvordan den virker." | Fanen åbner. Du ser de varme kolonnefarver. Du kan zoome med musehjulet og flytte lærredet ved at trække. | fanen åbner uden fejl; temaet i filen = `docs/node-editoren/tema-warm-analog.json`; ingen farvekoder i Node-editorens blokke; v9.18-indstillingen åbner; skærmbillede |
 | **2 · Reglerne vises (kun se)** | v9.20 | Noderne for **Lydtræk → Regel → Figur → Mål** og linjerne mellem dem bygges ud fra `maps`. Fælles opbygning (overskrift 40 punkter, mærker, skærm, tal, bundlinje, porte). Levende målere. Situationerne Normal, Valgt, Flyttes, Venter, Slukket. Klik viser **sætningen** i kontrolpanelet (fx "Når kick er over 0,60, hopper Pige 2.") og **signalet over tid**. Noder kan flyttes; pladsen gemmes. **Intet kan ændres endnu.** | Åbn *Pigernes show*: alle regler står som noder med linjer, der lyser i takt. Klik på en regel og læs sætningen. Flyt en node; den bliver, hvor du satte den, efter genstart. | antal regel-noder = antal forbindelser for hver forudindstilling (`FORINDST`); `maps` er uændret bagefter; gammel indstilling uden `ne` placeres automatisk; skærmbilleder |
-| **3 · Lydkilde, FFT og analyser vises** | v9.21 | **Lydkilde** (lydfil med bølgeform, to målere, navn, længde, tempo, toneart; 4 spor med én række pr. spor; Lyd ind; Generator med genre, tempo og tæthed; MIDI). **FFT · hurtig** og **FFT · fin** med liggende spektrum. De **analyse-noder** med udgangene fra B1 (efter dit svar på A7). Situationerne Analyserer (med procent), Sover, Ikke tilgængelig (fx "Vælg 4 lydfiler"). Klik på bølgeformen hopper i sangen. | Træk en mp3 ind: du ser procenten, så bølgeformen og spektrene. Følg vejen fra lydfilen gennem FFT og analysen til en regel. | alle udgange fra B1 findes som porte; mono- og stereo-testfil; 4 spor (testens stems); generator; skærmbilleder |
-| **4 · Ret en regel** | v9.22 | **Handling ▾ / Egenskab ▾.** Tærsklen trækkes på måleren (gul streg, hysterese lige under). Styrken trækkes i tallet. Kontrolpanelet: hele kæden (vend om, tærskel og hysterese, kurve, gain, attack og release, spærretid, hold, slew), **Standard**, **Gate** og Gate-tærskel (i dag *Port* og *Portgrænse* i Mapping), Auto-valg for Taktslag og Spor, **Styrke brugt** med hele regnestykket. Mærkerne "Vendt", "Gate · åben/lukket". Fortryd med Ctrl+Z og ↶ ↷, kort besked efter hver ændring (fagudtryk: toast). | Ret tærsklen på en regel, og se den samme ændring i Mapping og Router 2.0. Fortryd den. | hver indstilling ændrer det samme felt i `maps` som Mapping og Router; regningen i motoren er uændret for de samme tal; Fortryd; skærmbilleder |
+| **3 · Lydkilde, FFT og analyser vises** | v9.21 | **Lydkilde** (lydfil med bølgeform, to målere, navn, længde, tempo, toneart; 4 spor med én række pr. spor; Lyd ind; Generator med genre, tempo og tæthed; MIDI). **FFT · hurtig** og **FFT · fin** med liggende spektrum. De **9 analyse-noder** (Slag-detektor, Brede bånd, 31 bånd, Tone og akkord, Klang, Taktslag, Stereo, Styrke, Afsnit) med udgangene fra papirets afsnit 5.4. De blå noder **Morph Pad** og **Tastatur** ved siden af MIDI. Situationerne Analyserer (med procent), Sover, Ikke tilgængelig (fx "Vælg 4 lydfiler"). Klik på bølgeformen hopper i sangen. | Træk en mp3 ind: du ser procenten, så bølgeformen og spektrene. Følg vejen fra lydfilen gennem FFT og analysen til en regel. | alle udgange fra B1 findes som porte; mono- og stereo-testfil; 4 spor (testens stems); generator; skærmbilleder |
+| **4 · Ret en regel** | v9.22 | **Handling ▾ / Egenskab ▾.** Tærsklen trækkes på måleren (gul streg, hysterese lige under). Styrken trækkes i tallet. Kontrolpanelet: hele kæden (vend om, tærskel og hysterese, kurve, gain, attack og release, spærretid, hold, slew), **Standard**, **Gate** og Gate-tærskel (i dag *Port* og *Portgrænse* i Mapping), Auto-valg for Taktslag og Spor, **Styrke brugt** med hele regnestykket. I værktøjslinjen: **Normalisering: Adaptiv · Fast** og **Samlet styrke**. Mærkerne "Vendt", "Gate · åben/lukket". Fortryd med Ctrl+Z og ↶ ↷, kort besked efter hver ændring (fagudtryk: toast). | Ret tærsklen på en regel, og se den samme ændring i Mapping og Router 2.0. Fortryd den. | hver indstilling ændrer det samme felt i `maps` som Mapping og Router; regningen i motoren er uændret for de samme tal; Fortryd; skærmbilleder |
 | **5 · Lav og slet regler** | v9.23 | Træk en linje ud fra et lydtræk og slip på et tomt sted → en lille liste med kun det, der passer → reglen lægges, hvor du slap → træk videre til en figur → menu med figurens mål (mangler målet, laves det). Ny regel starter med Standard. **Slå fra / Slå til** (fagudtryk: bypass) og **Slet**. | Lav en ny regel fra Kick til en figur med musen alene. Slå den fra, og se den slukket. Slet den, og fortryd. | de 7 forløb fra papirets afsnit 6, nr. 1, 2 og 6; reglen findes i `maps` og i Mapping; skærmbilleder |
 | **6 · + Tilføj og Ctrl+K** | v9.24 | **+ Tilføj** under hver kolonne. **Ctrl+K** (findes allerede som Søg fra v9.16) får to grupper: *Tilføj node* (typefarve og lille levende bar) og *Knapper*. En node fra Ctrl+K lander nederst i sin kolonne, og kortet flytter sig derhen. Kommandoerne *Ryd hold*, *Ryd tomme mål*, *Tilfældigt* og *Kør Auto-mapping*. | Tryk Ctrl+K, skriv "hihat", og læg et lydtræk ind. Kortet flytter sig derhen, og noden lyser kort. | Ctrl+K finder både noder og de gamle knapper; Auto-mapping fortrydes i ét trin; skærmbilleder |
 | **7 · Ikke i brug (parkér)** | v9.25 | Kolonnen *Ikke i brug*: træk en kilde, en analyse eller et lydtræk derhen. Reglerne **sover**, hvor de står (tonet ned og stiplet), med stiplede linjer fra en lille grå udgang. Træk tilbage, og de sovende regler vågner. Beskeden "Alt vil sove. Parkér alligevel?" ved den eneste kilde. Nyt felt for at sove; mangler det, er reglen vågen. | Parkér Kick, og se figuren holde op med at hoppe. Træk Kick tilbage, og den hopper igen. | forløb 7; en regel, du selv har slået fra, bliver slukket; gamle indstillinger åbner med alle regler vågne; skærmbilleder |
@@ -198,7 +143,8 @@ Tallene i *Version* forudsætter, at hvert trin bliver én version. Er et trin f
 ## E · Det, der ikke er med i planen
 
 - Alt i papirets afsnit 12 (*Til planen*): rigtig EQ som node, Lær ved at trykke i takt, flere lydkilder på samme tid, MIDI-knapper og drejeknapper, opdeling i spor inde i MV osv.
-- At **fjerne** de gamle vinduer. Det besluttes efter trin 16.
+- At **fjerne** de gamle vinduer. Det besluttes efter trin 16 og bliver v10.0 (svar A6).
+- Flere scener ved siden af hinanden (svar A9).
 - At flytte **Mesh 3D og Øjet** til den nye three.js (valg B i `STATUS.md`).
 
 ## F · Risici, jeg kender
@@ -206,7 +152,7 @@ Tallene i *Version* forudsætter, at hvert trin bliver én version. Er et trin f
 | Risiko | Hvad jeg gør |
 | --- | --- |
 | Mange levende målere gør programmet langsomt | én opdatering for alle noder (højst 30 gange i sekundet), kun for de noder, der kan ses |
-| Testbrowseren har intet grafikkort (SwiftShader) | trin 1 til 13 er HTML og et enkelt lærred; TSL kommer først i trin 14 (efter A3) |
+| Testbrowseren har intet grafikkort (SwiftShader) | trin 1 til 13 er HTML og et enkelt lærred; TSL kommer først i trin 14 (svar A3) |
 | Reglerne har ikke et fast id i dag (de findes ud fra deres plads i listen) | trin 2 giver hver regel et id; testen tjekker, at gamle indstillinger åbner med de samme regler |
 | Fortryd i Form-editoren gemmer et skridt efter 0,8 sekunder uden ændringer | Node-editoren bruger den samme historik; store ændringer (skabelon, Auto-mapping) gemmes straks som ét skridt |
 | Programfilen vokser (skrifttyper cirka 0,2 MB, three.js cirka 3,7 MB) | skrifttyperne kun med de bogstaver, vi bruger; three.js først i trin 14 |
