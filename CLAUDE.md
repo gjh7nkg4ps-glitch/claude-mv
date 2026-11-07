@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.6 · 7. november 2026 · gælder fra Claude MV v9.23 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.7 · 7. november 2026 · gælder fra Claude MV v9.24 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -112,7 +112,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.23
+## 4. Hvad der er sket fra v8.0 til v9.24
 
 | Version | Hvad |
 | --- | --- |
@@ -148,6 +148,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.21 | **Node-editoren, trin 3 af 16:** **Lydkilde** (Lydfil med bølgeform, hop i sangen, målere V/H i dB, længde, tempo, toneart; 4 spor med én række og port pr. spor og Mix; Lyd ind; Generator; uden lyd "Vælg en lydfil"), de blå **MIDI**, **Morph Pad** og **Tastatur**, når en regel bruger dem; **FFT · hurtig** og **FFT · fin** med levende spektrum; de **9 analyser** med én port pr. udgang (alle 94 fra papirets tabel 5.4; store grupper foldet sammen, ▸ folder ud); links lydkilde → FFT → analyse → lydtræk, stiplet uden om FFT; *Sover*, *Venter* (med procent) og *Ikke tilgængelig*. `maps` ændres ikke |
 | v9.22 | **Node-editoren, trin 4 af 16: ret en regel.** På noden: træk tærsklen på måleren, træk i styrke-tallet, **Handling ▾ / Egenskab ▾** (gemt i `m.slags` kun når den afviger fra målet; ændrer kun visningen) med klemmerne *mindst* og *mest*. I kontrolpanelet: skydere (tærskel, styrke, attack, release, hold), drejeknapper (hysterese, kurve, spærretid, slew), Vend om, Gate og Gate-tærskel, Taktslag og Spor (Auto/Manuel), Standard og Styrke brugt. Samme felter som Mapping og Router (testet: samme tal giver samme forbindelse). **Fortryd** (Form-editorens historik; ↶ ↷, Ctrl+Z, Ctrl+Shift+Z) og en kort besked med Fortryd. Værktøjslinjen: **Normalisering: Adaptiv · Fast** og **Samlet styrke** |
 | v9.23 | **Node-editoren, trin 5 af 16: lav og slet regler.** Træk fra udgangen ● på et lydtræk (eller en analyses række) og slip på et tomt sted → **Tilføj-listen** (Regel · Handling / Egenskab) → en ny regel, der sover, til den har et mål (kun i Node-editoren, ikke i `maps`) → træk fra dens udgang til en figur → **menuen med figurens mål** (med søgefelt) → reglen kommer i `maps` med Router's standard. Genveje: lydtræk på figur eller mål, lydtræk på regel (ny kilde) eller dens gate-port (Gate), regel-udgang på et andet mål (skift mål). **Slå fra / Slå til**, **Slet regel** og Delete; Fortryd; Esc afbryder. Rettet: beskeden (toast) var 100 % bred (klassenavnet ne-vis delt med analysernes tegninger) |
+| v9.24 | **Node-editoren, trin 6 af 16: + Tilføj og Ctrl+K.** *+ Tilføj* i hver kolonnes overskrift (Tilføj-listen med kun det, der passer); **Ctrl+K** med grupperne *Tilføj node* (typefarve og levende bar) og *Knapper* (de gamle punkter plus Ryd hold, Ryd tomme mål, Tilfældigt, Kør Auto-mapping, Placér, Tilpas). En tilføjet node er en **løs node** (vores navn; `set.ne.loese`), lander nederst i sin kolonne, kortet flytter sig derhen, og den lyser kort op. Tomt mål: "Ingen regler". Ny regel uden kilde får en, når et lydtræk slippes på den. Tilfældigt og Auto-mapping fortrydes i ét trin. Rettet: lærredet kunne rulle af sig selv, når noget i det fik fokus |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -172,6 +173,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **Node-editoren (v9.24):** "+ Tilføj" sidder i kolonnernes overskrift (papiret har den under kolonnen), så den altid kan ses. Figurer laves stadig i Form-editoren; Tilføj-listen viser kun de figurer, der findes. Scene-noder kommer i trin 12.
 - **Node-editoren (v9.23):** en ny regel uden mål (kladde) findes kun i Node-editoren og forsvinder ved genstart. Et fast id pr. regel blev ikke nødvendigt: når en regel skifter kilde eller mål, flyttes dens gemte plads med. "Lær lyser som forslag" på en ny regel kommer med Lær i trin 10.
 - **Node-editoren (v9.22):** Handling/Egenskab er kun visning; motoren regner ens. Fortryd dækker forbindelser og figurer, ikke Normalisering og Samlet styrke.
 - **Node-editoren (v9.21):** spektret og målerne V/H læses fra en ekstra lytter (AnalyserNode) på lyden før EQ; generator og Lyd ind bruger programmets egne lyttere og er mono her. Analyse-nodernes indstillinger (fx Taktslag ½×, 2×, Tap) findes stadig kun i Show-vinduet. Lyd ind er ikke testet med en rigtig mikrofon.
@@ -183,7 +185,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–5 er lavet (v9.19–v9.23). Næste: trin 6 (v9.24), + Tilføj og Ctrl+K** (Tilføj node og Knapper i én søgeliste, + Tilføj under hver kolonne, kommandoerne Ryd hold, Ryd tomme mål, Tilfældigt og Kør Auto-mapping), når brugeren skriver "kør" | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–6 er lavet (v9.19–v9.24). Næste: trin 7 (v9.25), Ikke i brug (parkér)**: træk en kilde, analyse eller et lydtræk til kolonnen Ikke i brug; reglerne sover og vågner igen, når brugeren skriver "kør" | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.

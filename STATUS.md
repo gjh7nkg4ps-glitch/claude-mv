@@ -11,7 +11,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 3 lavet (v9.21):** Lydkilde (Lydfil, 4 spor, Lyd ind, Generator; MIDI, Morph Pad og Tastatur), FFT · hurtig og fin, de 9 analyser med alle udgange. Test: `tests/16-node-editor-analyser.js`.
 - **Trin 4 lavet (v9.22):** en regel kan rettes på noden og i kontrolpanelet; Fortryd; Normalisering og Samlet styrke i værktøjslinjen. Test: `tests/17-node-editor-ret.js`.
 - **Trin 5 lavet (v9.23):** lav regler ved at trække links (Tilføj-listen, menuen med figurens mål), genveje, Slå fra/til, Slet. Test: `tests/18-node-editor-lav.js`.
-- **Næste: trin 6 (v9.24):** + Tilføj og Ctrl+K.
+- **Trin 6 lavet (v9.24):** + Tilføj i kolonnerne, Ctrl+K med Tilføj node og Knapper, løse noder, Ryd tomme mål. Test: `tests/19-node-editor-tilfoej.js`.
+- **Næste: trin 7 (v9.25):** Ikke i brug (parkér).
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 

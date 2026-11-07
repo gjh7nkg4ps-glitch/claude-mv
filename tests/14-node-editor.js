@@ -63,7 +63,7 @@ async function kør(arg) {
       lay3Anvend('noder'); await vent(900);
       const fl = document.getElementById('ne-flade'), b = fl.getBoundingClientRect();
       ud.flade = [Math.round(b.width), Math.round(b.height)];
-      ud.hoveder = [...document.querySelectorAll('#ne-hoveder .ne-hoved')].map(h => ({ k: h.dataset.kol, navn: h.querySelector('.ne-hnavn').textContent, farve: getComputedStyle(h).color, linje: getComputedStyle(h.querySelector('.ne-hnavn')).borderBottomColor, font: getComputedStyle(h.querySelector('.ne-hnavn')).fontFamily }));
+      ud.hoveder = [...document.querySelectorAll('#ne-hoveder .ne-hoved')].map(h => ({ k: h.dataset.kol, navn: h.querySelector('.ne-hnavn').firstChild.textContent, /* fra v9.24 står knappen + Tilføj også i overskriften */ farve: getComputedStyle(h).color, linje: getComputedStyle(h.querySelector('.ne-hnavn')).borderBottomColor, font: getComputedStyle(h.querySelector('.ne-hnavn')).fontFamily }));
       ud.kol = NE.kol.map(c => [c.k, c.w, c.x]);
       ud.kp = document.querySelector('#ne-kp .ne-kp-tekst').textContent;
       const B = (typeof neGraenser === 'function' && neGraenser()) || { x0: 0, x1: NE.bredde }; ud.tilpas = { z: NE.z, x: NE.x, x0: B.x0, x1: B.x1, W: fl.clientWidth, tilpas: NE.tilpas };
