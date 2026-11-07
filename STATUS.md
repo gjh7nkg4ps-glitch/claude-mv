@@ -13,7 +13,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 5 lavet (v9.23):** lav regler ved at trække links (Tilføj-listen, menuen med figurens mål), genveje, Slå fra/til, Slet. Test: `tests/18-node-editor-lav.js`.
 - **Trin 6 lavet (v9.24):** + Tilføj i kolonnerne, Ctrl+K med Tilføj node og Knapper, løse noder, Ryd tomme mål. Test: `tests/19-node-editor-tilfoej.js`.
 - **Trin 7 lavet (v9.25):** Ikke i brug: parkér kilder, analyser og lydtræk; det, der hænger under, sover. Test: `tests/20-node-editor-parker.js`.
-- **Næste: trin 8 (v9.26), flere regler på ét mål (Største, Læg sammen, Gang)**
+- **Trin 8 lavet (v9.26):** flere regler på ét mål: Største, Læg sammen, Gang (m.komb). Test: `tests/21-node-editor-komb.js`.
+- **Næste: trin 9 (v9.27), trim på lydtræk og figur-styrke**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 
