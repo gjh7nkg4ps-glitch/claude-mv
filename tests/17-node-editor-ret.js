@@ -73,7 +73,7 @@ async function kør(arg) {
     await side.mouse.move(box.sx, box.sy); await side.mouse.down(); await side.mouse.move(box.sx, box.sy - 60, { steps: 5 }); await side.mouse.up(); await vent(300);
     const gain = await side.evaluate(() => maps[3].gain);
     T.tjek(Math.abs(gain - (box.g0 + .5)) < .06, `træk op i styrke-tallet: ×${box.g0} → ×${gain}`);
-    const toast = await side.evaluate(() => { const e = document.getElementById('ne-toast'); return { vis: e && e.classList.contains('ne-vis'), tekst: e ? e.textContent : '' }; });
+    const toast = await side.evaluate(() => { const e = document.getElementById('ne-toast'); return { vis: e && e.classList.contains('ne-toast-vis'), tekst: e ? e.textContent : '' }; });
     T.tjek(toast.vis && /Styrke/.test(toast.tekst) && /Fortryd/.test(toast.tekst), `beskeden efter ændringen: "${toast.tekst}"`);
     /* Fortryd og Gentag */
     await vent(1500);
