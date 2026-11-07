@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.1 · 4. november 2026 · gælder fra Claude MV v9.18 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.2 · 6. november 2026 · gælder fra Claude MV v9.19 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -11,7 +11,7 @@ Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hv
 Claude MV er et personligt værksted, der gør musik til levende billeder. En lydfil (oftest mp3) analyseres, og målingerne (fx bas, kick, hihat, taktslag, afsnit og drop) styrer figurer, lys og 3D-grafik gennem **forbindelser** (fagudtryk: mapping). Det er bygget sammen med Claude over mange versioner.
 
 - Hele programmet er **én HTML-fil** (cirka 1,8 MB), der kører i browseren uden server og uden internet. Three.js r128 og dets glød-værktøjer (MIT) ligger inde i filen.
-- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Mapping, Tidslinje, Analyse, Lydkilde og Router.
+- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Mapping, Tidslinje, Analyse, Lydkilde, Router og Node-editor (fra v9.19).
 - Det er et **privat program**. Det skal være let at gå til, men kunne blive rigtig dybt.
 
 ## 2. Sådan vil jeg arbejde sammen med dig
@@ -56,7 +56,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 - Den faste rækkefølge, vi har brugt:
   1. **Syntaks:** kør `node --check` på hvert `<script>` i filen. Et opstartstjek alene fanger ikke syntaksfejl.
   2. **Opstart:** åbn filen i en testbrowser (Playwright, fagudtryk) og tjek, at der ingen fejl er (`pageerror` og konsolfejl). Giv altid tjekket det rigtige filnavn; vi har en gang testet en gammel fil i flere versioner uden at opdage det.
-  3. **Fast testpakke:** opstart med hver Scene-fane gemt som valgt (v9.15); opstart med gemte indstillinger fra seks ældre versioner (`tests/gamle-indstillinger/`, v9.18); alle forudindstillinger (`FORINDST`, kør hver med `brugFor(id,true)`) uden fejl; alle 5 layouts (`lay3Anvend`) uden overlap mellem synlige vinduer; Mesh 3D og Øjet starter; gem og hent en plads (`slotSave`/`slotLoad`); tilføj og fjern en forbindelse.
+  3. **Fast testpakke:** opstart med hver Scene-fane gemt som valgt (v9.15); opstart med gemte indstillinger fra syv ældre versioner (`tests/gamle-indstillinger/`, v9.18; v9.18 selv kom med i v9.19); alle forudindstillinger (`FORINDST`, kør hver med `brugFor(id,true)`) uden fejl; alle 6 layouts (`lay3Anvend`; Noder kom med i v9.19) uden overlap mellem synlige vinduer; Mesh 3D og Øjet starter; gem og hent en plads (`slotSave`/`slotLoad`); tilføj og fjern en forbindelse.
   4. **Det nye:** en test af netop det, der er ændret, plus et skærmbillede.
 - **Kendte faldgruber i testbrowseren:** uden grafikkort (SwiftShader, fagudtryk) er 3D meget langsomt; analysen af en lydfil tager over et minut (uden SwiftShader cirka 11 sekunder); skærmbilleder af fuld skærm virker ikke. Testpakken laver selv testlydfiler (30 s ved 120 BPM, `tests/testlyd.js`), i mono og i stereo (mono, venstre, højre og bred), så panorering og stereobredde også testes.
 
@@ -112,7 +112,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.18
+## 4. Hvad der er sket fra v8.0 til v9.19
 
 | Version | Hvad |
 | --- | --- |
@@ -143,6 +143,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.16 | (hovedchatten) **Auto i Lydkilde**: *Auto: Til/Fra* og *Kør auto-opsætning nu* flyttet (ikke kopieret) fra Lydtræk-guide (W18) til fanen Lydkilde (blokken *v9.16: AUTO I LYDKILDE*); Søg (Ctrl+K) finder topbjælkens knapper og Auto |
 | v9.17 | (hovedchatten) Auto sidder i Lydkildes overskrift; **Lydkilde kan rulle** (`#w31 > .wb { overflow-y: auto }`) |
 | v9.18 | **Router kan rulle** (samme fejl som Lydkilde); linjen "Nyt i …" i manualen rettet; testpakken starter med **gemte indstillinger fra seks ældre versioner**; **Hjertet trin 0** stoppet ved punkt 2 (ny three.js kræver ES-moduler; se `STATUS.md`) og **trin 1**: `docs/hjertet/FUNKTIONER.md` |
+| v9.19 | **Node-editoren, trin 1 af 16** (papir v7.6, `docs/PLAN-NODE-EDITOREN.md`): fanen **Node-editor** (W33) i Arbejdsfeltet med de 9 kolonner, zoom 10–200 %, træk, piletaster og **Tilpas**, kontrolpanelet nederst; layoutet **Noder**; temaet **Warm Analog** som JSON nederst i filen (kopi af `docs/node-editoren/tema-warm-analog.json`), alle farver som `--ne-…`-variabler; skrifttyperne Orbitron, Exo 2 og IBM Plex Sans i filen. Ingen noder endnu; `maps` ændres ikke |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -167,13 +168,14 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **Node-editoren (v9.19):** Orbitron har ikke Ø, ø og ·; de tegn vises med IBM Plex Sans. I standard-layoutet (Overblik) er Node-editoren lav; layoutet *Noder* gør den stor. Programmets fælles ✓ efter et klik vises også på Node-editorens knapper.
 
 ## 6. Planen: det næste
 
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene; **ét trin ad gangen, når brugeren skriver "kør"** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1 er lavet (v9.19). Næste: trin 2 (v9.20), reglerne vises (kun se)**, når brugeren skriver "kør" | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.

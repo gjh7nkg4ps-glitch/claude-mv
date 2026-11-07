@@ -1,6 +1,6 @@
 /* Trin 3 og 4 · Opstart og den faste testpakke i en testbrowser (Playwright).
    Opstart: ingen pageerror og ingen konsolfejl.
-   Fast testpakke: alle forudindstillinger (FORINDST, brugFor) · alle 5 layouts (lay3Anvend) uden overlap
+   Fast testpakke: alle forudindstillinger (FORINDST, brugFor) · alle 6 layouts (lay3Anvend) uden overlap
    mellem synlige vinduer · Mesh 3D og Øjet starter · gem og hent en plads (slotSave/slotLoad) ·
    tilføj og fjern en forbindelse · Arbejdsfeltets faner (ingen gammel Generator-fane).
    Med --uden-lyd springes analysen af testlydfilen over; så testes de forudindstillinger, der kræver en analyseret sang, ikke.
@@ -79,9 +79,9 @@ async function kør(arg, { udenLyd = false } = {}) {
     const antal = ids.filter(([, a]) => !(a && udenLyd)).length;
     T.tjek(!dårlige.length, `alle ${antal} forudindstillinger uden fejl` + (udenLyd ? ` (${ids.length - antal} kræver lyd, sprunget over)` : ''), dårlige.slice(0, 3).join(' | '));
 
-    /* Alle 5 layouts uden overlap */
+    /* Alle 6 layouts uden overlap (Noder kom med i v9.19) */
     const lay = await side.evaluate(() => LAY3.map(x => x[0]));
-    T.tjek(lay.length === 5, `der er 5 layouts (${lay.join(', ')})`);
+    T.tjek(lay.join(',') === 'overblik,show,byg,lyd,figurer,noder', `der er 6 layouts (${lay.join(', ')})`);
     for (const k of lay) {
       await side.evaluate(k => lay3Anvend(k), k); await side.waitForTimeout(500);
       const r = await side.evaluate(() => {

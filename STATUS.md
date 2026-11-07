@@ -6,6 +6,9 @@ Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsn
 
 Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og temaet ligger i `docs/node-editoren/`. Planen står i `docs/PLAN-NODE-EDITOREN.md`, og svarene er skrevet ind. Der bygges ét trin ad gangen.
 
+- **Trin 1 lavet (v9.19):** fanen Node-editor i Arbejdsfeltet med de 9 kolonner, zoom, træk og Tilpas, kontrolpanelet, layoutet Noder, temaet og skrifttyperne i filen. Test: `tests/14-node-editor.js`.
+- **Næste: trin 2 (v9.20):** reglerne vises som noder (Lydtræk → Regel → Figur → Mål), kun se.
+
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 
 - **Valgt: A.** Mesh 3D og Øjet bliver på three.js **r128**. Den nye three.js (`three.webgpu.js` og `three.core.js`, fast version) lægges ved siden af i sit eget `<script type="module">`, **når Routeren skal bygges**. **Der bygges intet nu.**
