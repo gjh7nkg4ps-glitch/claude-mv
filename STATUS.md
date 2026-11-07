@@ -15,7 +15,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 7 lavet (v9.25):** Ikke i brug: parkér kilder, analyser og lydtræk; det, der hænger under, sover. Test: `tests/20-node-editor-parker.js`.
 - **Trin 8 lavet (v9.26):** flere regler på ét mål: Største, Læg sammen, Gang (m.komb). Test: `tests/21-node-editor-komb.js`.
 - **Trin 9 lavet (v9.27):** trim på lydtræk og figur-styrke i motoren; Styrke brugt med figuren. Test: `tests/22-node-editor-trim.js`.
-- **Næste: trin 10 (v9.28), Lær og Adaptiv tærskel**
+- **Trin 10 lavet (v9.28):** Lær i reglens kontrolpanel og Adaptiv tærskels indstillinger. Test: `tests/23-node-editor-laer.js`.
+- **Næste: trin 11 (v9.29), skabeloner**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 
