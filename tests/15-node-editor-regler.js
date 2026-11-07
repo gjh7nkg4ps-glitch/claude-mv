@@ -41,8 +41,8 @@ async function kør(arg) {
         const kilder = new Set(); maps.forEach(m => { kilder.add(m.band); if (m.port) kilder.add(m.port); });
         const maal = new Set(maps.map(m => m.effect)), fm = N.filter(n => n.kol === 'figur').reduce((s, n) => s + n.maal.length, 0), gates = maps.filter(m => m.port).length;
         let overlap = 0; ['lydtraek', 'regel', 'figur', 'maal'].forEach(k => { const L = N.filter(n => n.kol === k && !n.flyttet).sort((x, y) => x.y - y.y); for (let i = 1; i < L.length; i++) if (L[i].y < L[i - 1].y + L[i - 1].h - 1) overlap++; });
-        const domN = document.querySelectorAll('#ne-verden .ne-node').length;
-        ud.push({ id, maps: maps.length, regel: tæl('regel'), lt: tæl('lydtraek'), maal: tæl('maal'), kilder: kilder.size, maalSet: maal.size, L: NE2.L.length, Lventet: maps.length * 2 + gates + fm, overlap, dom: domN, N: N.length, samme: før === JSON.stringify(maps) });
+        const domN = document.querySelectorAll('#ne-verden .ne-node').length; /* fra v9.21 tæller N også lydkilde, FFT og analyser */
+        ud.push({ id, maps: maps.length, regel: tæl('regel'), lt: tæl('lydtraek'), maal: tæl('maal'), kilder: kilder.size, maalSet: maal.size, L: NE2.L.filter(l => ['l', 'r', 'f'].includes(l.kilde)).length, Lventet: maps.length * 2 + gates + fm, overlap, dom: domN, N: N.length, samme: før === JSON.stringify(maps) });
       }
       return ud;
     }, ids);
@@ -94,7 +94,7 @@ async function kør(arg) {
     const wav = lavTestlyd(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'mv-lyd-')), 'testlyd-120bpm.wav'));
     await side.evaluate(async () => { brugFor('fuld1', true); await new Promise(r => setTimeout(r, 700)); });
     await side.setInputFiles('#file', wav);
-    const venter = await side.evaluate(async () => { for (let k = 0; k < 60; k++) { await new Promise(r => setTimeout(r, 100)); const n = document.querySelectorAll('#ne-verden .ne-node.ne-venter').length; if (NE2.analyserer && n) return { a: true, n, alle: document.querySelectorAll('#ne-verden .ne-n-regel,#ne-verden .ne-n-lydtraek').length }; } return { a: NE2.analyserer, n: 0, alle: 0 }; });
+    const venter = await side.evaluate(async () => { for (let k = 0; k < 60; k++) { await new Promise(r => setTimeout(r, 100)); const n = document.querySelectorAll('#ne-verden .ne-n-regel.ne-venter,#ne-verden .ne-n-lydtraek.ne-venter').length; if (NE2.analyserer && n) return { a: true, n, alle: document.querySelectorAll('#ne-verden .ne-n-regel,#ne-verden .ne-n-lydtraek').length }; } return { a: NE2.analyserer, n: 0, alle: 0 }; });
     T.tjek(venter.a && venter.n === venter.alle && venter.n > 0, `Venter: ${venter.n} lydtræk og regler er tonet ned, mens sangen analyseres`);
     await side.waitForFunction(() => F && Math.abs(dur - 30) < 1 && !document.getElementById('play').disabled, null, { timeout: 240000 });
     await side.evaluate(() => { document.getElementById('play').click(); });

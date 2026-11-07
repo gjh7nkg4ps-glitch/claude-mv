@@ -94,7 +94,8 @@ async function kør(arg) {
     const z1 = await side.evaluate(() => ({ z: NE.z, tekst: document.getElementById('ne-zoom').textContent, tilpas: NE.tilpas }));
     T.tjek(z1.z > t.z && z1.tekst === Math.round(z1.z * 100) + ' %' && !z1.tilpas, `musehjulet zoomer ind (${Math.round(t.z * 100)} % → ${z1.tekst}), og Tilpas slås fra`);
     const x0 = await side.evaluate(() => NE.x);
-    await side.mouse.move(fb.x + 300, fb.y + 200); await side.mouse.down(); await side.mouse.move(fb.x + 150, fb.y + 220, { steps: 5 }); await side.mouse.up();
+    /* fra v9.21 ligger der noder i alle kolonner; trækket starter derfor i båndet med overskrifterne, hvor der ingen noder er */
+    await side.mouse.move(fb.x + 300, fb.y + 40); await side.mouse.down(); await side.mouse.move(fb.x + 150, fb.y + 60, { steps: 5 }); await side.mouse.up();
     const x1 = await side.evaluate(() => NE.x);
     T.tjek(Math.abs(x1 - x0 + 150) < 2, `træk flytter lærredet (${Math.round(x0)} → ${Math.round(x1)})`);
     await side.keyboard.press('ArrowRight');
