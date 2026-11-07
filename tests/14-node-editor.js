@@ -66,7 +66,7 @@ async function kør(arg) {
       ud.hoveder = [...document.querySelectorAll('#ne-hoveder .ne-hoved')].map(h => ({ k: h.dataset.kol, navn: h.querySelector('.ne-hnavn').textContent, farve: getComputedStyle(h).color, linje: getComputedStyle(h.querySelector('.ne-hnavn')).borderBottomColor, font: getComputedStyle(h.querySelector('.ne-hnavn')).fontFamily }));
       ud.kol = NE.kol.map(c => [c.k, c.w, c.x]);
       ud.kp = document.querySelector('#ne-kp .ne-kp-tekst').textContent;
-      ud.tilpas = { z: NE.z, x: NE.x, bredde: NE.bredde, W: fl.clientWidth, tilpas: NE.tilpas };
+      const B = (typeof neGraenser === 'function' && neGraenser()) || { x0: 0, x1: NE.bredde }; ud.tilpas = { z: NE.z, x: NE.x, x0: B.x0, x1: B.x1, W: fl.clientWidth, tilpas: NE.tilpas };
       ud.fonte = [document.fonts.check('800 12px Orbitron'), document.fonts.check("italic 900 12px 'Exo 2'"), document.fonts.check("400 12px 'IBM Plex Sans'")];
       ud.baggrund = getComputedStyle(document.getElementById('ne')).backgroundImage;
       return ud;
@@ -85,7 +85,7 @@ async function kør(arg) {
     T.tjek(breddeOk, 'bredder og afstande fra temaet (smal 200, normal 320, bred 440, afstand 120)', JSON.stringify(r.kol));
     T.tjek(r.kp === 'Klik på en node for at se, hvordan den virker.', 'kontrolpanelet viser hjælpeteksten');
     T.tjek(/radial-gradient/.test(r.baggrund), 'baggrunden er temaets radiale gradient');
-    const t = r.tilpas; T.tjek(t.tilpas && t.x >= 0 && t.x + t.bredde * t.z <= t.W + 1 && t.z > .2, `Tilpas ved start: alle kolonner kan ses (zoom ${Math.round(t.z * 100)} %)`);
+    const t = r.tilpas; T.tjek(t.tilpas && t.x + t.x0 * t.z >= -1 && t.x + t.x1 * t.z <= t.W + 1 && t.z > .2, `Tilpas ved start: alt kan ses i bredden (fra v9.20 alle noder, uden noder alle kolonner; zoom ${Math.round(t.z * 100)} %)`);
 
     /* zoom, træk, taster */
     const fb = await side.locator('#ne-flade').boundingBox();

@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.2 · 6. november 2026 · gælder fra Claude MV v9.19 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.3 · 7. november 2026 · gælder fra Claude MV v9.20 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -112,7 +112,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.19
+## 4. Hvad der er sket fra v8.0 til v9.20
 
 | Version | Hvad |
 | --- | --- |
@@ -144,6 +144,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.17 | (hovedchatten) Auto sidder i Lydkildes overskrift; **Lydkilde kan rulle** (`#w31 > .wb { overflow-y: auto }`) |
 | v9.18 | **Router kan rulle** (samme fejl som Lydkilde); linjen "Nyt i …" i manualen rettet; testpakken starter med **gemte indstillinger fra seks ældre versioner**; **Hjertet trin 0** stoppet ved punkt 2 (ny three.js kræver ES-moduler; se `STATUS.md`) og **trin 1**: `docs/hjertet/FUNKTIONER.md` |
 | v9.19 | **Node-editoren, trin 1 af 16** (papir v7.6, `docs/PLAN-NODE-EDITOREN.md`): fanen **Node-editor** (W33) i Arbejdsfeltet med de 9 kolonner, zoom 10–200 %, træk, piletaster og **Tilpas**, kontrolpanelet nederst; layoutet **Noder**; temaet **Warm Analog** som JSON nederst i filen (kopi af `docs/node-editoren/tema-warm-analog.json`), alle farver som `--ne-…`-variabler; skrifttyperne Orbitron, Exo 2 og IBM Plex Sans i filen. Ingen noder endnu; `maps` ændres ikke |
+| v9.20 | **Node-editoren, trin 2 af 16:** reglerne vises som noder (**Lydtræk → Regel → Figur → Mål**, effekt-grupperne blå) med links i temaets farver, kun til at se på; tallene, målerne, lamperne og linjerne lever; klik vælger (hvid kant, kæden hvid) og viser sætningen, signalet over tid og indstillingerne i kontrolpanelet; træk flytter en node (huskes i `set.ne.pos`), **Placér** stiller alt igen, Shift + musehjul flytter op og ned; **Tilpas** viser nu alle noder; *Venter* under analysen og *Slukket*. `maps` ændres ikke |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -168,6 +169,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **Node-editoren (v9.20):** en regels plads huskes ud fra *kilde|mål|nummer*, fordi forbindelserne ikke har et fast id endnu (kommer, når reglerne kan ændres). Ændrer man kilde eller mål i Mapping, glemmes den regels plads. Pladserne gælder for alle opsætninger, ikke pr. plads (A–T). Handling/Egenskab læses ud fra målet (figurens egenskab = Egenskab). Figur-styrke og trim vises ikke (trin 9).
 - **Node-editoren (v9.19):** Orbitron har ikke Ø, ø og ·; de tegn vises med IBM Plex Sans. I standard-layoutet (Overblik) er Node-editoren lav; layoutet *Noder* gør den stor. Programmets fælles ✓ efter et klik vises også på Node-editorens knapper.
 
 ## 6. Planen: det næste
@@ -175,7 +177,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1 er lavet (v9.19). Næste: trin 2 (v9.20), reglerne vises (kun se)**, når brugeren skriver "kør" | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1 og 2 er lavet (v9.19, v9.20). Næste: trin 3 (v9.21), Lydkilde, FFT og analyser vises**, når brugeren skriver "kør" | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
