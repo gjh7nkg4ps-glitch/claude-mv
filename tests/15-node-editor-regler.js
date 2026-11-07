@@ -56,7 +56,7 @@ async function kør(arg) {
     const rk = await side.evaluate(() => { const n = [...NE2.N.values()].filter(n => n.kol === 'regel').sort((a, b) => a.y - b.y)[1]; NE.y = Math.round(160 - n.y * NE.z); NE.tilpas = false; neVis(); return { key: n.key, i: n.i, kilde: neLtNavn(n.m.band), thr: neTal(n.m.thr) }; });
     const box = await side.evaluate(k => { const r = NE2.N.get(k).el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + 12 }; }, rk.key);
     await side.mouse.click(box.x, box.y); await side.waitForTimeout(300);
-    const v = await side.evaluate(k => ({ valgt: NE2.valgt, kl: NE2.N.get(k).el.classList.contains('ne-valgt'), tekst: document.querySelector('#ne-kp .ne-kp-tekst').textContent, indst: !!document.querySelector('#ne-kp .ne-kp-indst'), sig: !!document.getElementById('ne-kp-sig'), kæde: NE2.kaede ? NE2.kaede.size : 0 }), rk.key);
+    const v = await side.evaluate(k => ({ valgt: NE2.valgt, kl: NE2.N.get(k).el.classList.contains('ne-valgt'), tekst: document.querySelector('#ne-kp .ne-kp-tekst').textContent, indst: !!document.querySelector('#ne-kp .ne-kp-indst, #ne-kp .ne-kp-ret') /* fra v9.22 kan indstillingerne rettes (.ne-kp-ret) */, sig: !!document.getElementById('ne-kp-sig'), kæde: NE2.kaede ? NE2.kaede.size : 0 }), rk.key);
     T.tjek(v.valgt === rk.key && v.kl && v.kæde >= 4, `klik vælger reglen (hvid kant; kæden har ${v.kæde} noder)`);
     T.tjek(/^(Slukket\. )?Når /.test(v.tekst) && v.tekst.includes(rk.kilde) && (v.tekst.includes(rk.thr) || /Adaptiv/.test(v.tekst) || true) && v.indst && v.sig, `kontrolpanelet viser sætningen ("${v.tekst.slice(0, 70)}…"), signalet og indstillingerne`);
     await side.screenshot({ path: path.join(UD, 'node-editor-valgt.png') });
