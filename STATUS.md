@@ -18,13 +18,14 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 10 lavet (v9.28):** Lær i reglens kontrolpanel og Adaptiv tærskels indstillinger. Test: `tests/23-node-editor-laer.js`.
 - **Trin 11 lavet (v9.29):** skabeloner (6 faste og egne) i Ctrl+K, + Tilføj og figurens kontrolpanel. Test: `tests/24-node-editor-skabelon.js`.
 - **Trin 12 lavet (v9.30):** scene-noder med levende billede og Sluk; øje og Slå fra på figurer og effekt-grupper; Baggrund ▾. Test: `tests/25-node-editor-scene.js`.
-- **Trin 13 lavet (v9.31):** lys uden tekst under 20 %, Kun valgt kæde, Dæmp og tastaturet. Test: `tests/26-node-editor-tastatur.js`.
+- **Trin 13 lavet (v9.31):** lys uden tekst under 20 % (fjernet igen i v9.38), Kun valgt kæde, Dæmp og tastaturet. Test: `tests/26-node-editor-tastatur.js`.
 - **Trin 14 lavet (v9.32):** linjerne i TSL med den nye three.js ved siden af r128 (WebGPU, ellers WebGL2, ellers Canvas 2D). Test: `tests/27-node-editor-tsl.js`.
 - **Trin 15 lavet (v9.33):** nye navne i hele programmet og · gammel på de fire gamle vinduer. Test: `tests/28-node-editor-navne.js`.
 - **Trin 16 lavet (v9.34):** funktionsliste-tjekket: tabellen og testen; Kort over forbindelserne i Node-editorens Ctrl+K. Test: `tests/29-funktionsliste.js`.
 - **v9.35:** de fire gamle vinduer (Mapping, Router 2.0, Dublet, Routing-overblik) er slettet; det unikke er flyttet til Opsætninger og Værksted. Test: `tests/30-gamle-vinduer-slettet.js`.
 - **v9.36:** docking (vinduessystem C): zoner med faner, træk mellem zoner og til kanter, streger, ⤢ Stor, ⛶ Fuld skærm, ＋, ×, ⋯ og ↺ Standard. Test: `tests/31-docking.js`.
 - **v9.37:** rettet, at noderne ikke kunne trækkes, når der var markeret tekst (browserens træk-og-slip). Test: `tests/32-traek-uden-markering.js`.
+- **v9.38:** altid skarpt: Live preview i skærmens fulde opløsning, Øjet skarpt i fuld skærm på 4K, noderne bliver ikke til lys og står skarpt ved al zoom; roligere drejeknapper (400 px, sidelæns, musehjul); ingen three.js-advarsel. Test: `tests/33-altid-skarpt.js`.
 - **Næste: du vælger (fx det, der mangler i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`)**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)

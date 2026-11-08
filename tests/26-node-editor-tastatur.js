@@ -1,7 +1,7 @@
 /* Trin 4 · Det nye i v9.31: Node-editoren, trin 13 (zoom ud, Kun valgt kæde, Dæmp og tastatur). Se papirets forløb 3 og 4 og afsnit 10.
-   Under 20 % er noderne lys uden tekst, og det, der slår til, gløder; ved 50 % vises alt. Kun valgt kæde dæmper alt uden for kæden; Esc slår det fra.
+   Under 20 % var noderne lys uden tekst (v9.31); fra v9.38 står de som kasser med tekst ved al zoom (brugerens ønske). Kun valgt kæde dæmper alt uden for kæden; Esc slår det fra.
    Dæmp gør det, der ikke slår til, svagt. Tastaturet: uden valg flytter → lærredet; Home vælger den første node; → skifter kolonne; ] går til næste regel;
-   Enter på Kick og Enter på et mål laver en regel uden mus; Delete sletter den. Skærmbilleder: tests/ud/node-editor-lys.png og node-editor-kaede.png. */
+   Enter på Kick og Enter på et mål laver en regel uden mus; Delete sletter den. Skærmbilleder: tests/ud/node-editor-lys.png (15 %, nu uden lys) og node-editor-kaede.png. */
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const { findFil, tæller } = require('./faelles');
@@ -21,7 +21,7 @@ async function kør(arg) {
     const lod = await side.evaluate(async () => { NE.tilpas = false; NE.z = .15; NE.x = 20; NE.y = 100; neVis(); let lys = 0; for (let k = 0; k < 30; k++) { await new Promise(r => setTimeout(r, 100)); lys = Math.max(lys, document.querySelectorAll('#ne-verden .ne-node.ne-lys').length) } const n = document.querySelector('#ne-verden .ne-node'); return { lod: document.getElementById('ne').classList.contains('ne-lod'), skjult: getComputedStyle(n.querySelector('.ne-nh')).visibility, lys, alle: document.querySelectorAll('#ne-verden .ne-node').length }; });
     await side.screenshot({ path: path.join(UD, 'node-editor-lys.png') });
     const z50 = await side.evaluate(async () => { NE.z = .5; neVis(); await new Promise(r => setTimeout(r, 200)); const n = document.querySelector('#ne-verden .ne-node'); return { lod: document.getElementById('ne').classList.contains('ne-lod'), vis: getComputedStyle(n.querySelector('.ne-nh')).visibility }; });
-    T.tjek(lod.lod && lod.skjult === 'hidden' && lod.lys > 0 && !z50.lod && z50.vis === 'visible', `15 %: ${lod.alle} noder er lys uden tekst, op til ${lod.lys} gløder; 50 %: alt vises`);
+    T.tjek(!lod.lod && lod.skjult === 'visible' && lod.lys === 0 && !z50.lod && z50.vis === 'visible', `15 %: ${lod.alle} noder står som kasser med tekst, ingen bliver til lys (v9.38); 50 %: alt vises`);
     /* 2 · Kun valgt kæde og Esc */
     const iso = await side.evaluate(async () => { const r = [...NE2.N.values()].find(x => x.kol === 'regel' && x.i >= 0); neVaelg(r.key); NE.z = .45; neVis(); await new Promise(r => setTimeout(r, 100)); document.querySelector('[data-ne13="iso"]').click(); await new Promise(r => setTimeout(r, 300)); const ude = document.querySelectorAll('#ne-verden .ne-node.ne-uden-for').length, inde = [...NE2.kaede].filter(k => NE2.N.get(k) && NE2.N.get(k).el.classList.contains('ne-uden-for')).length; return { ude, inde, kaede: NE2.kaede.size, alfa: ne13Alfa({}, 1), knap: document.querySelector('[data-ne13="iso"]').classList.contains('ne-paa') }; });
     await side.screenshot({ path: path.join(UD, 'node-editor-kaede.png') });
