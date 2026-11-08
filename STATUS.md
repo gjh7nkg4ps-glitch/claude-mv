@@ -20,7 +20,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 12 lavet (v9.30):** scene-noder med levende billede og Sluk; øje og Slå fra på figurer og effekt-grupper; Baggrund ▾. Test: `tests/25-node-editor-scene.js`.
 - **Trin 13 lavet (v9.31):** lys uden tekst under 20 %, Kun valgt kæde, Dæmp og tastaturet. Test: `tests/26-node-editor-tastatur.js`.
 - **Trin 14 lavet (v9.32):** linjerne i TSL med den nye three.js ved siden af r128 (WebGPU, ellers WebGL2, ellers Canvas 2D). Test: `tests/27-node-editor-tsl.js`.
-- **Næste: trin 15 (v9.33), nye navne og · gammel**
+- **Trin 15 lavet (v9.33):** nye navne i hele programmet og · gammel på de fire gamle vinduer. Test: `tests/28-node-editor-navne.js`.
+- **Næste: trin 16 (v9.34), funktionsliste-tjek**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 

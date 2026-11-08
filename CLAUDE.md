@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.15 · 7. november 2026 · gælder fra Claude MV v9.32 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.16 · 7. november 2026 · gælder fra Claude MV v9.33 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -81,7 +81,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Navne (alle vores navne)
 | Før | Nu |
 | --- | --- |
-| Tilpas til sangen | **Auto-tærskel** |
+| Tilpas til sangen, Auto-tærskel | **Adaptiv tærskel** (v9.33); mærket *Adaptiv* |
 | Master gain | **Samlet styrke (master)** |
 | Pause ved en forbindelse | **Spærretid** (fagudtryk: refractory period) |
 | Show-vægte | **Afsnits-dynamik** (kun brugt i forklaringen af gain-stakken indtil videre) |
@@ -90,6 +90,14 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | Ny lydmotor (v9.8) | **Lydmotor 2**; den gamle hedder **Klassisk** |
 | Graf-editor (v9.9) | **Router 2.0**, fanen **Router** (W32); én boks pr. forbindelse hedder **Router-boks** |
 | Stems (v9.15) | **4 spor**: Trommer, Bas, Vokal og Resten; kilderne hedder fx **Trommer · Kick** |
+| Port · Portgrænse (Mapping) | **Gate · Gate-tærskel** (v9.33) |
+| Auto: Til/Fra · Kør auto-opsætning nu | **Auto-mapping: Til/Fra · Kør Auto-mapping nu** (v9.33) |
+| Normalisering: Auto · Fast reference | **Normalisering: Adaptiv · Fast** (v9.33) |
+| Auto (Taktslag og Spor) | **Auto-valg** (v9.33) |
+| Pladserne A–T · Gem som A/B · Skift A/B | **Opsætning 1–20 · Gem som 1/2 · Sammenlign 1 ↔ 2** (v9.33; nøglerne `rytme-A` … `rytme-T` er de samme) |
+| forudindstilling | **opsætning** (v9.33) |
+| Scene (Dublets effekt-gruppe) | **Scene-effekter** |
+| Mapping, Router 2.0, Dublet, Routing-overblik | samme navne med **· gammel** bag (v9.33); fjernes først, når du siger til |
 
 ### Analyse og mapping
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
@@ -112,7 +120,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.32
+## 4. Hvad der er sket fra v8.0 til v9.33
 
 | Version | Hvad |
 | --- | --- |
@@ -157,6 +165,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.30 | **Node-editoren, trin 12 af 16: scener og effekt-grupper.** **Scene-noder** for de scener, der vises (fanen i Scene, et løsrevet vindue eller udgangsvinduet; kun Live preview, Radial Mesh, Mesh 3D, Øjet og Lyd i 3D) med et lille levende billede (4 i sekundet); vælgeren skifter fanen, klik på billedet åbner Show; kontrolpanelet: Riv løs / Til Scene, Send til skærm, **Sluk** (scenen tegner ikke; `set.ne.sluk`) og Åbn stort. Links fra hver figur og effekt-gruppe til Live preview. **Øje og Slå fra** på figurer og effekt-grupper (øjet på en figur = Tag af scenen; Slå fra: reglerne giver 0 i motoren via `neFraF`; `o.neFra`, `scene.ne.grp[navn].fra/skjult`). **Baggrund ▾**: Fra, Dublet-scenen, Mesh 3D, Øjet (`set.ne.bg`) |
 | v9.31 | **Node-editoren, trin 13 af 16: zoom ud, Kun valgt kæde, Dæmp og tastatur.** Under 20 % er noderne **lys uden tekst** i kolonnens farve, og det, der slår til, gløder (fagudtryk: level of detail). **Kun valgt kæde** (fagudtryk: isolate) dæmper alt uden for kæden; Esc slår det fra. **Dæmp** (vores navn) gør det, der ikke slår til lige nu, svagt (`set.ne.daemp`). **Tastatur**: Home/End, ↑ ↓, ← → (kolonne), [ ] / PgUp/PgDn (regel), Enter på et lydtræk + Enter på et mål laver en regel, Delete, Esc; uden valg flytter piletasterne lærredet som før. Værktøjslinjens knapper har 11 px skrift og brydes ikke |
 | v9.32 | **Node-editoren, trin 14 af 16: linjer og glød i TSL.** Den nye three.js (0.186.1, MIT) ligger i filen som tekst ved siden af r128 og indlæses af et lille modul-script via blob-adresser (intet internet; `window.THREE` er stadig r128). Linjerne tegnes med **WebGPURenderer** og et **TSL**-materiale (blød kant, glød kun på det valgte og det, der slår til); **WebGPU** hvis browseren har det, ellers **WebGL2**, ellers Canvas 2D som før. Kontrolpanelet viser "Linjer: TSL · WebGL2" og har *Auto · Canvas 2D* (`set.ne.linjer`). Filen er cirka 3,7 MB større (6 MB) |
+| v9.33 | **Node-editoren, trin 15 af 16: nye navne og · gammel.** Papirets navne i hele programmet og manualen: **Adaptiv tærskel** (før Auto-tærskel; mærket *Adaptiv* også i Router-boksen), **Gate · Gate-tærskel** (før Port · Portgrænse), **Auto-mapping** (før Auto: Til/Fra og Kør auto-opsætning nu), **Normalisering: Adaptiv · Fast**, **Auto-valg** (Taktslag og Spor), **Opsætning 1–20**, **Gem som 1/2**, **Sammenlign 1 ↔ 2**, **opsætning** (før forudindstilling), **Scene-effekter**, fanen **Routing-overblik**. De interne nøgler er de samme (`rytme-A` vises som Opsætning 1 via `slotNr`). **· gammel** (CSS ::after) på Mapping, Router 2.0, Dublet og Routing-overblik. De gamle "Nyt i"-afsnit i manualen står, som de blev skrevet |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -181,6 +190,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **Node-editoren (v9.33):** de gamle "Nyt i"-afsnit i manualen bruger stadig de gamle navne (de beskriver, hvad der skete dengang). Ordet "Auto" står stadig alene nogle steder uden for papirets liste (fx Auto-zoom og Program auto). "· gammel" sættes med CSS, så det ikke står i knappernes tekst (Ctrl+K og skærmlæsere ser det ikke).
 - **Node-editoren (v9.32):** WebGPU kan ikke testes i testbrowseren (intet grafikkort); der kører linjerne med WebGL2. three.js advarer i konsollen om "Multiple instances of Three.js" (det er planens valg A: to udgaver ved siden af hinanden). I testbrowseren (SwiftShader) koster TSL-linjerne cirka 1 billede i sekundet (11,7 mod 12,7).
 - **Node-editoren (v9.31):** "Dæmp" er ikke forklaret i papiret; den er bygget som: det, der ikke slår til lige nu, bliver svagt. Værktøjslinjen passer ved 1.600 px; ved 1.280 px kan den rulles sidelæns (110 px for bred), og under 1.700 px skjules ordene Normalisering, Samlet styrke og Baggrund (de står i værktøjstippet). Tastaturet er kun testet i testbrowseren.
 - **Node-editoren (v9.30):** Dublet-scenen i Baggrund ▾ er Live previews billede (det samme, Dublet viser). Mesh 3D og Øjet som baggrund tegnes 5 gange i sekundet i lille størrelse. Øjet på effekt-gruppen Bane skjuler ikke klodser, der allerede kører. Kun Live preview tegner figurerne, så kun den får links. Effekt-gruppernes øje og Slå fra kan ikke fortrydes med Ctrl+Z (figurernes kan). Slukket gælder alle opsætninger.
@@ -201,7 +211,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–14 er lavet (v9.19–v9.32). Næste: trin 15 (v9.33), nye navne og · gammel** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–15 er lavet (v9.19–v9.33). Næste: trin 16 (v9.34), funktionsliste-tjek** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.

@@ -66,10 +66,10 @@ async function kør(arg) {
     const brugt = () => side.evaluate(() => { const b = []; Rytme.koer(maps, { v: (m) => { b.push(m.band); return 0; }, off: () => false, master: 1, dt: 1 / 60, env: [], pe: [], E: {}, kant: () => {}, holdRyd: false }); return b; });
     let b = await brugt(); let tx = await side.evaluate(() => [...document.querySelectorAll('#maps .st-rad .tk-grund')].map(e => e.textContent));
     T.tjek(b.join(',') === 'stem:trommer:kick,stem:bas:bas,stem:vokal:vokal,stem:trommer:hihat,rms', 'Auto: motoren læser ' + b.join(', '));
-    T.tjek(tx.length === 4 && /Auto: fra sporet Trommer, fordi der er 4 spor/.test(tx[0]) && /fra sporet Bas/.test(tx[1]) && /fra sporet Vokal/.test(tx[2]), 'ved forbindelsen: "' + tx[0] + '" (kun ved de 4, der har et spor; ikke ved RMS)');
+    T.tjek(tx.length === 4 && /Auto-valg: fra sporet Trommer, fordi der er 4 spor/.test(tx[0]) && /fra sporet Bas/.test(tx[1]) && /fra sporet Vokal/.test(tx[2]), 'ved forbindelsen: "' + tx[0] + '" (kun ved de 4, der har et spor; ikke ved RMS)');
     await side.evaluate(() => document.querySelector('#maps .st-rad[data-sti="0"] [data-st="mix"]').click()); await side.waitForTimeout(300);
     b = await brugt(); tx = await side.evaluate(() => (document.querySelector('#maps .st-rad[data-sti="0"] .tk-grund') || {}).textContent);
-    T.tjek(b[0] === 'kick' && /Manuel: fra den samlede lyd \(du har valgt det\)\. Auto ville bruge fra sporet Trommer/.test(tx), 'Manuel: "' + tx + '"; motoren læser ' + b[0]);
+    T.tjek(b[0] === 'kick' && /Manuel: fra den samlede lyd \(du har valgt det\)\. Auto-valg ville bruge fra sporet Trommer/.test(tx), 'Manuel: "' + tx + '"; motoren læser ' + b[0]);
     await side.evaluate(() => document.querySelector('#maps .st-rad[data-sti="0"] [data-st="auto"]').click());
     await side.evaluate(() => document.getElementById('play').click()); await side.waitForTimeout(2500);
     const lev = await side.evaluate(() => ({ ud: Math.max(R2M.ud[0] || 0, R2M.ud[3] || 0), v: R2M.v[0] }));

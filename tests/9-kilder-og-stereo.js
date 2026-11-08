@@ -79,15 +79,15 @@ async function kør(arg) {
     await side.waitForTimeout(600);
     const g = sel => side.evaluate(s => [...document.querySelectorAll(s)].map(e => e.textContent.trim()), sel);
     let tx = await g('#maps .tk-rad .tk-grund');
-    T.tjek(tx.length === 2 && /Auto: fra filen, fordi der ikke spiller noget endnu/.test(tx[0]), 'uden lyd: "' + tx[0] + '" (kun ved de 2 taktslag-forbindelser, ikke ved Bas)');
+    T.tjek(tx.length === 2 && /Auto-valg: fra filen, fordi der ikke spiller noget endnu/.test(tx[0]), 'uden lyd: "' + tx[0] + '" (kun ved de 2 taktslag-forbindelser, ikke ved Bas)');
     await side.evaluate(() => { bpm = 120; gStart(); });
     await side.waitForTimeout(1200);
     tx = await g('#maps .tk-rad .tk-grund'); let b = await brugt();
-    T.tjek(/Auto: mens det spiller, fordi generatoren spiller/.test(tx[0]) && b[0] === 'hnd:takt' && b[1] === 'hnd:takt4' && b[2] === 'bas', 'generatoren: "' + tx[0] + '"; motoren læser ' + b.join(', '));
+    T.tjek(/Auto-valg: mens det spiller, fordi generatoren spiller/.test(tx[0]) && b[0] === 'hnd:takt' && b[1] === 'hnd:takt4' && b[2] === 'bas', 'generatoren: "' + tx[0] + '"; motoren læser ' + b.join(', '));
     await side.evaluate(() => document.querySelector('#maps .tk-rad[data-tki="0"] [data-tk="fil"]').click());
     await side.waitForTimeout(600);
     tx = await g('#maps .tk-rad .tk-grund'); b = await brugt(); const m0 = await side.evaluate(() => maps[0].takt);
-    T.tjek(m0 === 'fil' && /Manuel: fra filen \(du har valgt det\)\. Auto ville bruge mens det spiller, fordi generatoren spiller/.test(tx[0]) && b[0] === 'ana:taktslag', 'Manuel: "' + tx[0] + '"; motoren læser ' + b[0]);
+    T.tjek(m0 === 'fil' && /Manuel: fra filen \(du har valgt det\)\. Auto-valg ville bruge mens det spiller, fordi generatoren spiller/.test(tx[0]) && b[0] === 'ana:taktslag', 'Manuel: "' + tx[0] + '"; motoren læser ' + b[0]);
     await side.locator('#w25').screenshot({ path: path.join(UD, 'taktslag-auto.png') });
     await side.evaluate(() => { document.querySelector('#maps .tk-rad[data-tki="0"] [data-tk="auto"]').click(); gStop(); });
     await side.waitForTimeout(400);
@@ -99,7 +99,7 @@ async function kør(arg) {
     await side.evaluate(() => document.getElementById('play').click());
     await side.waitForTimeout(1200);
     tx = await g('#maps .tk-rad .tk-grund'); b = await brugt();
-    T.tjek(/Auto: fra filen, fordi du spiller en fil/.test(tx[0]) && b[0] === 'ana:taktslag' && b[1] === 'ana:takt', 'en fil spiller: "' + tx[0] + '"; motoren læser ' + b.slice(0, 2).join(', '));
+    T.tjek(/Auto-valg: fra filen, fordi du spiller en fil/.test(tx[0]) && b[0] === 'ana:taktslag' && b[1] === 'ana:takt', 'en fil spiller: "' + tx[0] + '"; motoren læser ' + b.slice(0, 2).join(', '));
     await side.evaluate(() => { set.r2vis = 'kompakt'; R2.byg = false; const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(x => x.textContent.trim() === 'Router'); t.click(); });
     await side.waitForFunction(() => document.querySelector('#r2 .r2-boks .tk-rad'), null, { timeout: 15000 });
     const r2t = await side.evaluate(() => document.querySelectorAll('#r2 .r2-boks .tk-rad').length);
