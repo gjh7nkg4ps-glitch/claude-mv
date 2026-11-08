@@ -26,7 +26,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **v9.36:** docking (vinduessystem C): zoner med faner, træk mellem zoner og til kanter, streger, ⤢ Stor, ⛶ Fuld skærm, ＋, ×, ⋯ og ↺ Standard. Test: `tests/31-docking.js`.
 - **v9.37:** rettet, at noderne ikke kunne trækkes, når der var markeret tekst (browserens træk-og-slip). Test: `tests/32-traek-uden-markering.js`.
 - **v9.38:** altid skarpt: Live preview i skærmens fulde opløsning, Øjet skarpt i fuld skærm på 4K, noderne bliver ikke til lys og står skarpt ved al zoom; roligere drejeknapper (400 px, sidelæns, musehjul); ingen three.js-advarsel. Test: `tests/33-altid-skarpt.js`.
-- **Næste: du vælger (fx det, der mangler i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`)**
+- **v9.39:** knapperne fra Lydkilde, Opsætninger og Værksted i Node-editorens kontrolpanel og Ctrl+K; funktionslisten 98 af 114; rettet WebGPU-fejl ved skjult fane. Test: `tests/34-knapper-i-node-editoren.js`.
+- **Næste: du vælger.** Tilbage i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`: de 10 visninger fra Routing-overblik, D2-sortering på lærredet og håndtagene i billedet. Desuden oprydning af døde rester (frie vinduer, Router 2.0-boksen) og små huller (Fortryd for trim og effekt-grupper, slet/omdøb skabeloner).
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 

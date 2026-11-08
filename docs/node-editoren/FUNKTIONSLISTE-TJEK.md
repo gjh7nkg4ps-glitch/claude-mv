@@ -1,4 +1,4 @@
-# Funktionsliste-tjek · Node-editoren (trin 16, v9.34)
+# Funktionsliste-tjek · Node-editoren (trin 16, v9.34; opdateret i v9.39)
 
 Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens plads i Node-editoren. Testen `tests/29-funktionsliste.js` går alle linjer igennem: hver funktion står her præcis én gang, status er en af de fire, og navnet i *Kontrol* findes i programmet.
 
@@ -8,9 +8,9 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 
 | | Antal |
 | --- | --- |
-| ✅ lavet | 85 |
-| ◐ delvis | 12 |
-| ✗ mangler | 9 |
+| ✅ lavet | 98 |
+| ◐ delvis | 4 |
+| ✗ mangler | 4 |
 | – ikke nødvendig | 8 |
 | I alt (fra FUNKTIONER.md) | 114 |
 
@@ -22,6 +22,8 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Router 2.0 | 1 | slettet i v9.35 |
 | Routing-overblik | 4 | slettet i v9.35 |
 | Mapping | 3 | slettet i v9.35 |
+
+**v9.39:** de 13 linjer, hvor knappen kun fandtes i Lydkilde, Opsætninger eller Værksted, er nu ✅ lavet: knapperne findes i Node-editorens kontrolpanel (Lydkilde-noden, MIDI-noden, figurerne og uden valg) og i Ctrl+K.
 
 **Flyttet i v9.35:** Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 til Opsætninger (og stadig Radial Mesh); Kort over forbindelserne, Ryd hold, Tilføj morgenstjerne, Tilslut MIDI og Tilfældigt til Værksted · Lydtræk-guide (og Ctrl+K).
 
@@ -107,13 +109,13 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Funktion | Status | I Node-editoren | Trin | Kontrol |
 | --- | --- | --- | --- | --- |
 | Sådan virker det | ✅ lavet | Kontrolpanelets sætning forklarer den valgte node | 2 | `ne2Saetning` |
-| Gem som A / B · Hent A / B · Skift A/B | ✗ mangler | Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 findes kun i Mapping og Opsætninger |  |  |
+| Gem som A / B · Hent A / B · Skift A/B | ✅ lavet | Kontrolpanelet, når intet er valgt: Gem som 1/2, Hent 1/2, Sammenlign 1 ↔ 2 (og Ctrl+K) | v9.39 | `ne39Handling` |
 | Kort over forbindelserne | ✅ lavet | Ctrl+K i Node-editoren: Kort over forbindelserne (Mermaid, PNG, SVG) | 16 | `mvkAaben` |
 | Tilføj forbindelse | ✅ lavet | Træk et link, + Tilføj eller Ctrl+K | 5, 6 | `ne5Ny` |
 | Minimér alle | – ikke nødvendig | Zoom, Tilpas og lys uden tekst under 20 % | 13 |  |
 | Ryd hold | ✅ lavet | Ctrl+K: Ryd hold | 6 | `neKpPunkter` |
-| Tilføj morgenstjerne | ◐ delvis | Skabelonen Morgenstjerne lægger de 6 regler på en figur; selve figuren laves stadig i Form-editoren | 11 | `neBrugSkabelon` |
-| Tilslut MIDI | ✗ mangler | MIDI-noden vises, når en regel bruger MIDI; Tilslut MIDI findes kun i Mapping | 3 |  |
+| Tilføj morgenstjerne | ✅ lavet | Kontrolpanelet (intet valgt eller en figur) og Ctrl+K: Tilføj morgenstjerne (figur) med 6 regler; skabelonen Morgenstjerne lægger reglerne på en figur, der findes | 11, v9.39 | `ne39Handling, neBrugSkabelon` |
+| Tilslut MIDI | ✅ lavet | MIDI-nodens kontrolpanel, kontrolpanelet uden valg og Ctrl+K | 3, v9.39 | `ne39Handling` |
 | Tilfældigt | ✅ lavet | Ctrl+K: Tilfældigt (slag, flydende, figur-egenskaber), fortrydes i ét trin | 6 | `neKpPunkter` |
 | Lydtræk og Effekt | ✅ lavet | Træk links: ny kilde eller nyt mål | 5 | `ne5Flyt` |
 | Minimér række | – ikke nødvendig | Zoom og lys uden tekst | 13 |  |
@@ -132,18 +134,18 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 
 | Funktion | Status | I Node-editoren | Trin | Kontrol |
 | --- | --- | --- | --- | --- |
-| Auto: Til/Fra | ◐ delvis | Ctrl+K: Kør Auto-mapping; Auto-mapping: Til/Fra findes kun i Lydkilde | 6 |  |
+| Auto: Til/Fra | ✅ lavet | Lydkildens kontrolpanel: Auto-mapping: Til/Fra og Kør Auto-mapping nu (og Ctrl+K) | 6, v9.39 | `ne39Handling` |
 | Kør auto-opsætning nu | ✅ lavet | Ctrl+K: Kør Auto-mapping (fortrydes i ét trin) | 6 | `neKpPunkter` |
 | Rul | – ikke nødvendig | Lærredet flyttes med træk og Shift + musehjul | 2 |  |
 | Lydfil | ✅ lavet | Lydfil-noden med bølgeform; + Tilføj i Lydkilde: Vælg lydfil … | 3, 6 | `ne3NodeHtml` |
-| 4 spor (stems) | ◐ delvis | Lydfil-noden viser de 4 spor med én række og port pr. spor; filerne vælges stadig i Lydkilde | 3 | `ne3NodeHtml` |
+| 4 spor (stems) | ✅ lavet | Lydfil-noden viser de 4 spor; Lydkildens kontrolpanel: Vælg 4 filer og Fjern sporene | 3, v9.39 | `ne3NodeHtml, ne39KildeHtml` |
 | Spor-målinger | ✅ lavet | Lydtræk fra sporene i + Tilføj (fx Trommer · Kick) | 6 | `ne6Valg` |
 | Spor Auto | ✅ lavet | Spor Auto-valg/Manuel i reglens kontrolpanel | 4 | `ne2Kp` |
-| Generator · genre, tempo, tæthed | ◐ delvis | Generator-noden viser genre, tempo og tæthed; de ændres stadig i Lydkilde | 3 | `ne3NodeHtml` |
-| ▶ Afspil generator · ✦ Nyt mønster · Muter lidt | ◐ delvis | + Tilføj i Lydkilde: Start generatoren; Nyt mønster og Mut findes kun i Lydkilde | 6 | `ne6Valg` |
-| Lydmotor | ✗ mangler | Lydmotor 2 / Klassisk findes kun i Lydkilde |  |  |
-| Avanceret … | ✗ mangler | Den fulde generator (W4) findes kun i Lydkilde |  |  |
-| Lyd ind | ◐ delvis | Lyd ind-noden vises (målere); den slås til i Lydkilde | 3 | `ne3NodeHtml` |
+| Generator · genre, tempo, tæthed | ✅ lavet | Lydkildens kontrolpanel: Genre, Tempo og Tæthed (styrer generatoren) | 3, v9.39 | `ne39KildeHtml` |
+| ▶ Afspil generator · ✦ Nyt mønster · Muter lidt | ✅ lavet | Lydkildens kontrolpanel og Ctrl+K: Afspil/Stop, Nyt mønster, Muter lidt | 6, v9.39 | `ne39Handling` |
+| Lydmotor | ✅ lavet | Lydkildens kontrolpanel og Ctrl+K: Lydmotor: Ny · Klassisk | v9.39 | `ne39Motor` |
+| Avanceret … | ✅ lavet | Lydkildens kontrolpanel og Ctrl+K: Avanceret … åbner den fulde generator (W4) | v9.39 | `ne39Handling` |
+| Lyd ind | ✅ lavet | Lyd ind-noden vises (målere); Lydkildens kontrolpanel og Ctrl+K: Lyd ind til eller fra | 3, v9.39 | `ne3NodeHtml, ne39Handling` |
 
 ## Funktioner, der findes flere steder
 
@@ -163,9 +165,9 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Tilfældige forbindelser | ✅ lavet | Ctrl+K: Tilfældigt | 6 | `neKpPunkter` |
 | Auto-opsætning | ✅ lavet | Ctrl+K: Kør Auto-mapping | 6 | `neKpPunkter` |
 | Vælg lydfil | ✅ lavet | + Tilføj i Lydkilde: Vælg lydfil … | 6 | `ne6Valg` |
-| Lyd ind | ◐ delvis | Lyd ind-noden vises; den slås til i Lydkilde eller bundbaren | 3 |  |
-| Generatoren | ◐ delvis | + Tilføj i Lydkilde: Start generatoren; Generator-noden viser indstillingerne | 3, 6 | `ne6Valg` |
-| Gem og hent pladserne A og B | ✗ mangler | Opsætning 1 og 2 gemmes og hentes kun i Mapping, Radial Mesh og Opsætninger |  |  |
+| Lyd ind | ✅ lavet | Lyd ind-noden vises (målere); Lydkildens kontrolpanel og Ctrl+K: Lyd ind til eller fra | 3, v9.39 | `ne3NodeHtml, ne39Handling` |
+| Generatoren | ✅ lavet | Lydkildens kontrolpanel: genre, tempo, tæthed, Afspil/Stop, Nyt mønster, Muter lidt, Lydmotor og Avanceret | 3, 6, v9.39 | `ne39KildeHtml` |
+| Gem og hent pladserne A og B | ✅ lavet | Kontrolpanelet, når intet er valgt: Gem som 1/2 og Hent 1/2 (og Ctrl+K) | v9.39 | `ne39Handling` |
 | A/B-sløjfe | – ikke nødvendig | Sløjfen A · B · ⟲ sidder i bundbaren, som altid kan ses |  |  |
 | Åbn Dublet og Routing-overblik | ✅ lavet | Fanen Node-editor og layoutet Noder | 1 | `neVis` |
 
