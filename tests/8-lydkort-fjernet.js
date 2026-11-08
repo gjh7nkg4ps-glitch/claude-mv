@@ -57,7 +57,7 @@ async function kør(arg) {
     await side.evaluate(async () => { lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1200)); });
     const ne = await side.evaluate(() => { const R = [...document.querySelectorAll('#ne-verden .ne-node.ne-n-regel')]; return { n: R.filter(x => /Kilden er fjernet \(Lydkort\)/.test(x.textContent)).length, slukket: R.filter(x => /Kilden er fjernet/.test(x.textContent) && x.classList.contains('ne-slukket')).length }; });
     T.tjek(ne.n === 2 && ne.slukket === 2, `Node-editoren: ${ne.n} regler viser "Kilden er fjernet (Lydkort)" og står som slukket`);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'lydkort-fjernet-noder.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'lydkort-fjernet-noder.png') });
     let f = nyeFejl(); T.tjek(!f.length, 'gammel plads uden fejl', f.slice(0, 3).join(' | '));
 
     /* Afspilning med fjernede kilder */

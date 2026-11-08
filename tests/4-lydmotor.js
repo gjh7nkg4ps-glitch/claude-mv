@@ -69,9 +69,9 @@ async function kør(arg) {
     /* Vent til fill i takt 4 (en takt ved 124 BPM er 1,94 s) */
     const fill = await side.evaluate(async () => { for (let i = 0; i < 120; i++) { await new Promise(r => setTimeout(r, 50)); const f = document.querySelector('#gen .lm-fill'); if (f && f.classList.contains('nu')) return document.querySelector('#gen .lm-takt').textContent; } return null; });
     T.tjek(fill === 'takt 4 af 4', 'Fill lyser i takt 4', String(fill));
-    await side.keyboard.press('Escape'); await side.evaluate(() => { document.querySelectorAll('.zon-pop .zon-luk').forEach(b => b.click()); const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === 'Lydkilde'); if (t) t.click(); });
+    await side.keyboard.press('Escape'); await side.evaluate(() => { document.querySelectorAll('.zon-pop .zon-luk').forEach(b => b.click()); const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === 'Lydkilde'); if (t) t.click(); });
     await side.waitForTimeout(500);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'lydmotor-lydkilde.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'lydmotor-lydkilde.png') });
     f = nyeFejl(); T.tjek(!f.length, 'live afspilning uden fejl', f.slice(0, 3).join(' | '));
 
     /* Skift motor og Tilbage til standard */

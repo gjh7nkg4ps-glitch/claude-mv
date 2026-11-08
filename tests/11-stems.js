@@ -26,7 +26,7 @@ async function kør(arg) {
   side.on('pageerror', e => fejl.push('pageerror: ' + e.message));
   side.on('console', m => { if (m.type() === 'error') fejl.push('konsol: ' + m.text()); });
   const nyeFejl = () => { const f = fejl; fejl = []; return f; };
-  const fane = n => side.evaluate(n => { const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === n); if (t) t.click(); }, n);
+  const fane = n => side.evaluate(n => { const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === n); if (t) t.click(); }, n);
   const sætSpor = async mappe => { for (const s of ['trommer', 'bas', 'vokal', 'resten']) await side.setInputFiles(`[data-stem-input="${s}"]`, path.join(mappe, s + '.wav')); await side.waitForFunction(() => STEM_SPOR.every(([s]) => STEM.buf[s]), null, { timeout: 20000 }); };
   try {
     await side.goto('file://' + fil); await side.waitForTimeout(4000);
@@ -35,7 +35,7 @@ async function kør(arg) {
     await sætSpor(tmp);
     const k1 = await side.evaluate(() => ({ slots: [...document.querySelectorAll('[data-stem-fil]')].map(e => e.textContent), brug: !document.getElementById('stem-brug').disabled, gul: !!document.querySelector('#stem-besked .stem-gul') }));
     T.tjek(k1.brug && !k1.gul && k1.slots.every(s => /0:30,0/.test(s)), '4 spor valgt, alle 0:30,0, ingen gul besked, og ▶ Brug de 4 spor kan trykkes: ' + k1.slots.join(' · '));
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'stems-lydkilde.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'stems-lydkilde.png') });
     const t0 = Date.now();
     await side.click('#stem-brug');
     await side.waitForFunction(() => STEM.klar && F && A && !document.getElementById('play').disabled, null, { timeout: 300000 });
@@ -73,7 +73,7 @@ async function kør(arg) {
     await side.evaluate(() => { delete maps[0].spor; save(); renderMaps(); });
     await side.evaluate(() => document.getElementById('play').click()); await side.waitForTimeout(2500);
     const lev = await side.evaluate(() => ({ ud: Math.max(R2M.ud[0] || 0, R2M.ud[3] || 0), v: R2M.v[0] }));
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'stems-noder.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'stems-noder.png') });
     await side.evaluate(() => document.getElementById('pause').click());
     T.tjek(lev.ud > 0, `afspilning: forbindelserne fra sporet Trommer giver udslag (${lev.ud.toFixed(2)})`);
     const r2 = await side.evaluate(() => ({ navn: bandNavn('stem:trommer:kick'), hvor: r2Hvor('stem:trommer:kick'), type: sigInfo('stem:trommer:kick').type }));

@@ -55,8 +55,8 @@ async function kør(arg) {
     /* 7 · klik på billedet åbner scenen stort */
     const st = await side.evaluate(async () => { const c = NE2.N.get('s:w2').el.querySelector('.ne-sc-billede'), r = c.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
     await side.mouse.click(st.x, st.y); await vent(800);
-    const sh = await side.evaluate(() => { const r = { lay: (document.querySelector('.lay3-on, [data-lay3].on') || {}).textContent || '', sc: document.getElementById('w23').getBoundingClientRect().height, ne: document.getElementById('w25') ? document.getElementById('w25').getBoundingClientRect().height : 0 }; lay3Anvend('noder'); return r; });
-    T.tjek(sh.sc > 600, `klik på billedet åbner Live preview stort (layoutet Show: Scene ${Math.round(sh.sc)} px høj)`);
+    const sh = await side.evaluate(() => { const z = document.querySelector('.dk-zone:has(#w2)'), r = { stor: DK.stor, sc: z.getBoundingClientRect().height }; DK.stor = null; dkAnvend(); return r; });
+    T.tjek(sh.stor && sh.sc > 600, `klik på billedet lader Live previews zone fylde arbejdsfladen (⤢ Stor: ${Math.round(sh.sc)} px høj)`);
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
     await ctx.close();
   } catch (e) { T.fejl('testen stoppede: ' + e.message.split('\n')[0]); } finally { await browser.close(); }

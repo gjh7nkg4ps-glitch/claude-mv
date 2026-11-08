@@ -23,7 +23,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 15 lavet (v9.33):** nye navne i hele programmet og · gammel på de fire gamle vinduer. Test: `tests/28-node-editor-navne.js`.
 - **Trin 16 lavet (v9.34):** funktionsliste-tjekket: tabellen og testen; Kort over forbindelserne i Node-editorens Ctrl+K. Test: `tests/29-funktionsliste.js`.
 - **v9.35:** de fire gamle vinduer (Mapping, Router 2.0, Dublet, Routing-overblik) er slettet; det unikke er flyttet til Opsætninger og Værksted. Test: `tests/30-gamle-vinduer-slettet.js`.
-- **Næste: v9.36, docking (vinduessystem C): træk faner mellem zoner, del zoner, fuld skærm**
+- **v9.36:** docking (vinduessystem C): zoner med faner, træk mellem zoner og til kanter, streger, ⤢ Stor, ⛶ Fuld skærm, ＋, ×, ⋯ og ↺ Standard. Test: `tests/31-docking.js`.
+- **Næste: du vælger (fx det, der mangler i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`)**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 

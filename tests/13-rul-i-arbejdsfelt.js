@@ -18,7 +18,7 @@ async function kør(arg) {
       await side.evaluate(n => { try { nivSaet(n); } catch (e) { set.niv = n; } brugFor('fuld1', true); }, niv); await side.waitForTimeout(800);
       const faner = await side.evaluate(() => FG.lyd.faner);
       for (const [id, navn] of faner) {
-        const synlig = await side.evaluate(n => { const k = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === n); if (k) k.click(); return !!k; }, navn);
+        const synlig = await side.evaluate(n => { const k = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === n); if (k) k.click(); return !!k; }, navn);
         if (!synlig) continue;
         await side.waitForTimeout(900);
         const r = await side.evaluate(id => { const w = document.getElementById(id), wb = w.querySelector(':scope > .wb') || w.querySelector('.wb'); let rul = null;

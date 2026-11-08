@@ -100,7 +100,7 @@ async function kør(arg) {
       const s = document.getElementById('ne-master'); s.value = 1.4; s.dispatchEvent(new Event('input', { bubbles: true })); r.g = gmaster; r.mm = document.getElementById('mmaster') && +document.getElementById('mmaster').value; s.value = 1; s.dispatchEvent(new Event('input', { bubbles: true })); return r; });
     T.tjek(vl.m0 === 'auto' && vl.m1 === 'fast' && /Fast/.test(vl.knap) && vl.m2 === 'auto' && vl.g === 1.4 && vl.mm === 1.4, `Normalisering: Adaptiv → Fast → Adaptiv (knappen siger "${vl.knap}"), Samlet styrke ×1,4 også i Radial Mesh`);
     await vælg(1); await vent(600);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'node-editor-ret.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'node-editor-ret.png') });
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
     await ctx.close();
   } catch (e) {

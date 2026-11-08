@@ -117,7 +117,7 @@ async function kør(arg) {
     await side.waitForTimeout(700);
     const gemt = await side.evaluate(() => ({ ne: JSON.parse(localStorage.getItem('rytme-set')).ne, z: NE.z, x: NE.x, y: NE.y }));
     T.tjek(gemt.ne && Math.abs(gemt.ne.z - gemt.z) < .002 && gemt.ne.tilpas === false, `visningen gemmes i set.ne (zoom ${Math.round(gemt.z * 100)} %)`);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'node-editor-zoom.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'node-editor-zoom.png') });
 
     /* efter genstart */
     await side.reload(); await side.waitForTimeout(3500);
@@ -127,21 +127,17 @@ async function kør(arg) {
     const tp = await side.evaluate(() => ({ tilpas: NE.tilpas, on: document.querySelector('.ne-k[data-ne=tilpas]').classList.contains('ne-paa') }));
     T.tjek(tp.tilpas && tp.on, 'Tilpas-knappen tilpasser og lyser, så længe Tilpas gælder');
 
-    /* layoutet Noder */
-    for (const zoner of [true, false]) {
-      const l = await side.evaluate(async zoner => {
-        const vent = ms => new Promise(r => setTimeout(r, ms));
-        if (!!set.zoner !== zoner) { zonerSaet(zoner); await vent(500); }
-        lay3Anvend('noder'); await vent(800);
-        const q = id => { const e = document.getElementById(id); if (!e || e.hidden || e.classList.contains('zon-skjult')) return null; const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0 ? b : null; };
-        const sc = q('w23'), af = q('w25'), fl = document.getElementById('ne-flade').getBoundingClientRect();
-        return { knap: !!document.querySelector('#lay3 [data-lay3="noder"]'), lay: set.lay3, aktiv: set.fg.lyd.aktiv, sc: sc && [sc.top, sc.height, sc.width], af: af && [af.top, af.height, af.width], fl: [fl.width, fl.height], niv: set.niv };
-      }, zoner);
-      T.tjek(l.knap && l.lay === 'noder' && l.aktiv === 'w33', `${zoner ? 'zone-tilstand' : 'frie vinduer'}: layoutet Noder vælger fanen Node-editor`);
-      T.tjek(l.sc && l.af && l.af[1] > l.sc[1] * 1.5 && l.af[2] > 1200 && l.fl[1] > 250, `${zoner ? 'zone-tilstand' : 'frie vinduer'}: Arbejdsfeltet er stort (${l.af && Math.round(l.af[2])} × ${l.af && Math.round(l.af[1])} px), Scenen kan ses ovenover (${l.sc && Math.round(l.sc[1])} px høj)`);
-      if (zoner) await side.screenshot({ path: path.join(UD, 'node-editor-noder.png') });
-    }
-    await side.evaluate(() => { zonerSaet(true); });
+    /* layoutet Noder (v9.36: docking; de frie vinduer findes ikke mere) */
+    const l = await side.evaluate(async () => {
+      const vent = ms => new Promise(r => setTimeout(r, ms));
+      lay3Anvend('noder'); await vent(800);
+      const q = s => { const e = document.querySelector(s); if (!e || e.hidden) return null; const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0 ? b : null; };
+      const sc = q('.dk-zone:has(#w2)'), af = q('.dk-zone:has(#w33)'), fl = document.getElementById('ne-flade').getBoundingClientRect();
+      return { knap: !!document.querySelector('#lay3 [data-lay3="noder"]'), lay: set.lay3, aktiv: (dkZoneAf('w33') || {}).a, sc: sc && [sc.top, sc.height, sc.width], af: af && [af.top, af.height, af.width], fl: [fl.width, fl.height], niv: set.niv };
+    });
+    T.tjek(l.knap && l.lay === 'noder' && l.aktiv === 'w33', 'layoutet Noder vælger fanen Node-editor');
+    T.tjek(l.sc && l.af && l.af[1] > l.sc[1] * 1.5 && l.af[2] > 1200 && l.fl[1] > 250, `Node-editorens zone er stor (${l.af && Math.round(l.af[2])} × ${l.af && Math.round(l.af[1])} px), Scenen kan ses ovenover (${l.sc && Math.round(l.sc[1])} px høj)`);
+    await side.screenshot({ path: path.join(UD, 'node-editor-noder.png') });
     const nu = await side.evaluate(() => JSON.stringify(maps));
     T.tjek(før === nu, 'forbindelserne (maps) er de samme før og efter, at Node-editoren er brugt');
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));

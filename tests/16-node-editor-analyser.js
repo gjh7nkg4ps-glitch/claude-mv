@@ -94,7 +94,7 @@ async function kør(arg) {
     T.tjek(lev.L > 30 && lev.søjle > 20 && lev.lamper > 0 && lev.spek > 50 && lev.streg > 3, `under afspilning lever det: måler V op til ${lev.L.toFixed(0)} %, brede bånd op til ${lev.søjle.toFixed(0)} %, slag-lamper tænder, FFT · fin tegner (${lev.spek} punkter), afspilningsstregen flytter sig (${lev.streg} pladser, ${lev.lamper} lamper)`);
     await side.evaluate(() => { neVaelg('a:slag'); NE.tilpas = false; NE.z = .7; NE.x = Math.round(20 - NE.kol.find(c => c.k === 'lydkilde').x * NE.z); NE.y = 96; neVis(); });
     await side.waitForTimeout(900);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'node-editor-analyser.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'node-editor-analyser.png') });
     await side.evaluate(() => { document.getElementById('pause') && document.getElementById('pause').click(); neVaelg(null); });
 
     /* 6 · Stereo-testfil */
@@ -110,7 +110,7 @@ async function kør(arg) {
     let sporOk = true;
     try { execFileSync('python3', ['-I', path.join(__dirname, 'lav-stems.py'), tmp]); } catch (e) { sporOk = false; T.fejl('test-sporene kunne ikke laves (python3 med numpy): ' + String(e.message).split('\n')[0]); }
     if (sporOk) {
-      await side.evaluate(() => { const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === 'Lydkilde'); if (t) t.click(); });
+      await side.evaluate(() => { const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === 'Lydkilde'); if (t) t.click(); });
       await side.waitForSelector('#stem-brug', { timeout: 10000 });
       for (const s of ['trommer', 'bas', 'vokal', 'resten']) await side.setInputFiles(`[data-stem-input="${s}"]`, path.join(tmp, s + '.wav'));
       await side.waitForFunction(() => STEM_SPOR.every(([s]) => STEM.buf[s]), null, { timeout: 20000 });
@@ -124,7 +124,7 @@ async function kør(arg) {
       await side.waitForTimeout(1500);
       const sl = await side.evaluate(async () => { let tr = 0, mix = 0, rms = 0; for (let k = 0; k < 12; k++) { await new Promise(r => setTimeout(r, 80)); const el = NE2.N.get('k:main').el; tr = Math.max(tr, parseFloat(el.querySelector('.ne-r[data-k="stem:trommer:rms"] .ne-rb u').style.width) || 0); mix = Math.max(mix, parseFloat(el.querySelector('.ne-r-mix .ne-rb u').style.width) || 0); rms = Math.max(rms, +bandV('rms') || 0); } return { tr, mix, rms, playing, t: now() }; });
       T.tjek(sl.playing && sl.tr > 20 && sl.mix > 20, `4 spor lever under afspilning: Trommer op til ${sl.tr.toFixed(0)} %, Mix op til ${sl.mix.toFixed(0)} % (RMS ${sl.rms.toFixed(2)}, ${sl.t.toFixed(1)} s)`);
-      await side.locator('#w25').screenshot({ path: path.join(UD, 'node-editor-4spor.png') });
+      await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'node-editor-4spor.png') });
       await side.evaluate(() => { document.getElementById('pause').click(); maps.splice(maps.length - 2, 2); });
     }
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));

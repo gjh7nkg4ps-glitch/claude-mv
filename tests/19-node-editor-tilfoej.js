@@ -45,7 +45,8 @@ async function kør(arg) {
     await side.keyboard.press('Escape');
     T.tjek(/Knapper/.test(kn) && /Layout: Noder/.test(kn), `Ctrl+K finder også de gamle knapper i gruppen Knapper (${kn})`);
 
-    /* 2 · + Tilføj: Mål og Ryd tomme mål */
+    /* 2 · + Tilføj: Mål og Ryd tomme mål (Søg-paletten skal være lukket, også når testbrowseren er langsom) */
+    await side.evaluate(() => { const k = document.getElementById('kp'); if (k) k.hidden = true; neTilpas(); }); await vent(400); /* Tilpas: kolonnernes overskrifter kan ses (Enter flyttede kortet hen til den nye node) */
     await side.click('#ne-hoveder .ne-hoved[data-kol="maal"] .ne-tilfoej'); await vent(300);
     const ml = await side.evaluate(() => { const m = document.getElementById('ne-menu'); return { titel: m.querySelector('.ne-menu-t').textContent, g: m.querySelectorAll('.ne-menu-g').length, n: m.querySelectorAll('.ne-menu-i').length, søg: !!m.querySelector('.ne-menu-s') }; });
     await side.screenshot({ path: path.join(UD, 'node-editor-plus-tilfoej.png') });

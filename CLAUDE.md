@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.18 · 8. november 2026 · gælder fra Claude MV v9.35 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.19 · 8. november 2026 · gælder fra Claude MV v9.36 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -73,7 +73,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal kunne **ses** (fx *Auto* eller *Manuel*, de tal den har valgt) og have **Tilbage til standard**. Det, *at* noget påvirker, skal altid kunne ses; kun detaljerne må foldes sammen (fagudtryk: progressive disclosure).
 
 ### Udseende og vinduer
-- **Vinduessystem A: faste zoner** (som Ableton): Scene, Editor og Arbejdsfelt fylder skærmen uden at overlappe. Intet må ligge frit oven på zonerne. Andre vinduer åbnes som panel ovenpå (lukkes med ✕ eller Esc).
+- **Vinduessystem C: docking** (v9.36, dit valg; fagudtryk: docking, som i VS Code og Blender): zoner med faner, der fylder arbejdsfladen uden at overlappe. Faner trækkes mellem zoner og til kanterne (deler zonen); stregerne trækkes; ⤢ Stor og ⛶ Fuld skærm (rigtig fuld skærm) på hver zone. Intet ligger frit ovenpå. Layoutene husker dine ændringer; ↺ Standard sætter dem tilbage. Du har en 43" skærm.
 - **Stil:** en 50/50-blanding af vores glas-look (glas, glød, shaders) og iZotope Ozone (kun inspiration): roligt, mørkt blågråt, og **lys kun på det, der måler noget**. Ikke flade, kedelige farver.
 - **Skydere til det meste.** Runde drejeknapper kun som et signal om, at en funktion er avanceret.
 - Jeg bruger **mest mp3-filer**. *Lyd ind* (mikrofon) og *Projektor* bruges sjældent og skal være små og ligge lidt i baggrunden.
@@ -120,7 +120,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.35
+## 4. Hvad der er sket fra v8.0 til v9.36
 
 | Version | Hvad |
 | --- | --- |
@@ -168,6 +168,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.33 | **Node-editoren, trin 15 af 16: nye navne og · gammel.** Papirets navne i hele programmet og manualen: **Adaptiv tærskel** (før Auto-tærskel; mærket *Adaptiv* også i Router-boksen), **Gate · Gate-tærskel** (før Port · Portgrænse), **Auto-mapping** (før Auto: Til/Fra og Kør auto-opsætning nu), **Normalisering: Adaptiv · Fast**, **Auto-valg** (Taktslag og Spor), **Opsætning 1–20**, **Gem som 1/2**, **Sammenlign 1 ↔ 2**, **opsætning** (før forudindstilling), **Scene-effekter**, fanen **Routing-overblik**. De interne nøgler er de samme (`rytme-A` vises som Opsætning 1 via `slotNr`). **· gammel** (CSS ::after) på Mapping, Router 2.0, Dublet og Routing-overblik. De gamle "Nyt i"-afsnit i manualen står, som de blev skrevet |
 | v9.34 | **Node-editoren, trin 16 af 16: funktionsliste-tjek.** Tabellen `docs/node-editoren/FUNKTIONSLISTE-TJEK.md` har hver af de 114 linjer fra FUNKTIONER.md med plads i Node-editoren og status: **85 lavet**, 12 delvis, 9 mangler, 8 ikke nødvendige; Kort over forbindelserne (Mermaid, PNG, SVG) og de 11 visninger fra Routing-overblik står med (1 lavet, 10 mangler). Testen går alle linjer igennem og tjekker, at hvert kontrol-navn findes. **Kort over forbindelserne** åbnes nu også fra Node-editorens Ctrl+K. Kontrolpanelet viser tallene (`NE16`) og en opdateret hjælpetekst. Intet gammelt vindue er fjernet |
 | v9.35 | **De fire gamle vinduer er slettet** (din beslutning 8. november): Mapping, Router 2.0, Dublet og Routing-overblik (HTML, faner, knapper og blokkene Dublet og Routing-overblik). Regler laves og rettes i **Node-editoren**. **Flyttet:** Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 til Opsætninger (W13); Kort over forbindelserne, Ryd hold, Tilføj morgenstjerne, Tilslut MIDI og Tilfældigt til Værksted · Lydtræk-guide (W18); Morph Pads knap åbner Node-editoren. Sidebjælkens Forbindelser åbner Arbejdsfeltet. Motoren og `maps` er de samme; `renderMaps` udfylder stadig standardværdier og markerer fjernede kilder. Test 7 (Router-visningen) er slettet; test 5, 6, 8, 9 og 11 tester nu motoren uden vinduerne |
+| v9.36 | **Docking (vinduessystem C, dit valg til din 43" skærm):** arbejdsfladen er delt i **zoner** med hver sin fanebjælke; hver fane er et vindue. **Træk en fane** til en anden zone (flyt) eller til en kant (zonen deles; et blåt felt viser hvor). **Stregerne** trækkes (dobbeltklik = lige store); 🔒 Lås vinduer låser streger og faner. I zonens bjælke: **＋** (åbn som fane), **⤢ Stor** (fylder arbejdsfladen; Esc), **⛶ Fuld skærm** (rigtig fuld skærm; Esc) og **⋯** (del, send til skærm, luk zonen); **×** lukker en fane. Layoutene **husker dine ændringer** (`set.dockLay`); **↺ Standard** sætter dem tilbage. Fjernet: frie vinduer, ▦-menuen, Maksimér, −, Riv løs, Bredt skrivebord og panelerne ovenpå. De gamle funktioner (`scVaelg`, `fgVaelg`, `sbAabn`, `zonPop`, `lay3Anvend`) går gennem docking (`set.dock`). Testet ved 2560 × 1440 |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -192,6 +193,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **v9.36 (docking):** testet i testbrowseren ved 1600 × 1000 og 2560 × 1440; ikke på din rigtige 43" skærm. Træk af faner er kun testet med mus (ikke berøringsskærm). Vinduernes egen overskrift (fx Live previews knapper) står stadig under fanen. Mine layouts gemt før v9.36 (zone-størrelser) åbner som Overblik. Koden til de frie vinduer (snap, Maksimér, mini-vinduer) ligger stadig i filen, men bruges ikke.
 - **v9.35 (gamle vinduer slettet):** Routing-overblikkets 10 andre visninger, Dublets håndtag i billedet og Mappings og Routers egne visninger (Kompakt/Fuld, D2-sortering, ▸ Vis i kildelisten) er gået tabt med vinduerne (se `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`). Koden til Router 2.0-boksen (blok ROUTER 2.0) ligger stadig i filen, fordi Node-editoren bruger dens hjælpefunktioner (fx `r2Hvor`); Mappings tegning (`renderMaps`) tegner ikke mere, men gør stadig sit andet arbejde. Den tekniske manual nævner stadig Dublets tastatur.
 - **Node-editoren (v9.34):** de 9, der mangler, og de 12 delvise står i tabellen (fx Gem/Hent Opsætning 1 og 2, Tilslut MIDI, Dublets håndtag i billedet, Lydmotor-valget og 10 af Routing-overblikkets 11 visninger). Derfor kan ingen af de fire gamle vinduer fjernes endnu. Tallene i NE16 skal rettes i hånden, når tabellen ændres (testen fanger det).
 - **Node-editoren (v9.33):** de gamle "Nyt i"-afsnit i manualen bruger stadig de gamle navne (de beskriver, hvad der skete dengang). Ordet "Auto" står stadig alene nogle steder uden for papirets liste (fx Auto-zoom og Program auto). "· gammel" sættes med CSS, så det ikke står i knappernes tekst (Ctrl+K og skærmlæsere ser det ikke).
@@ -215,7 +217,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–16 er lavet (v9.19–v9.34); de gamle vinduer er slettet i v9.35. Næste: v9.36, docking (vinduessystem C, dit valg)** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–16 er lavet (v9.19–v9.34); de gamle vinduer er slettet i v9.35. Docking (vinduessystem C) er lavet i v9.36. Næste: du vælger (fx det, der mangler i funktionslisten)** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.

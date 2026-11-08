@@ -85,9 +85,9 @@ async function kør(arg, { udenLyd = false } = {}) {
     for (const k of lay) {
       await side.evaluate(k => lay3Anvend(k), k); await side.waitForTimeout(500);
       const r = await side.evaluate(() => {
-        /* Synlige vinduer: øverste niveau i arbejdsfladen (#ws), vist og med en størrelse. Paneler ovenpå (zon-pop) tæller ikke. */
-        const v = [...document.querySelectorAll('#ws > .win')].filter(w => { const cs = getComputedStyle(w), q = w.getBoundingClientRect(); return !w.hidden && cs.display !== 'none' && cs.visibility !== 'hidden' && q.width > 4 && q.height > 4 && !w.classList.contains('zon-pop'); })
-          .map(w => { const q = w.getBoundingClientRect(); return { id: w.id, x: q.left, y: q.top, r: q.right, b: q.bottom }; });
+        /* Synlige vinduer og zoner (v9.36: docking): øverste niveau i arbejdsfladen (#ws), vist og med en størrelse. */
+        const v = [...document.querySelectorAll('#ws > .win, #ws > .dk-zone')].filter(w => { const cs = getComputedStyle(w), q = w.getBoundingClientRect(); return !w.hidden && cs.display !== 'none' && cs.visibility !== 'hidden' && q.width > 4 && q.height > 4 && !w.classList.contains('zon-pop'); })
+          .map(w => { const q = w.getBoundingClientRect(); return { id: w.id || w.className, x: q.left, y: q.top, r: q.right, b: q.bottom }; });
         const ov = [];
         for (let i = 0; i < v.length; i++) for (let j = i + 1; j < v.length; j++) { const a = v[i], b = v[j]; const dx = Math.min(a.r, b.r) - Math.max(a.x, b.x), dy = Math.min(a.b, b.b) - Math.max(a.y, b.y); if (dx > 1 && dy > 1) ov.push(`${a.id}/${b.id} (${Math.round(dx)}×${Math.round(dy)} px)`); }
         return { vin: v.map(x => x.id), ov };

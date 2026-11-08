@@ -105,7 +105,7 @@ async function kør(arg) {
     T.tjek(lev.lt > .1 && lev.tal > 5 && lev.regel > .1 && lev.link > .1 && lev.lampe > 0 && lev.venter === 0, `med lyd lever det: lydtræk op til ${lev.lt.toFixed(2)} (${lev.tal} forskellige tal), regler op til ${lev.regel.toFixed(2)}, ${lev.slaar} regler slår til, ${lev.lampe} lamper tænder, linjer op til ${lev.link.toFixed(2)}`);
     await side.evaluate(() => { const n = [...NE2.N.values()].find(n => n.kol === 'regel' && n.m.band === 'kick') || [...NE2.N.values()].find(n => n.kol === 'regel'); neVaelg(n.key); });
     await side.waitForTimeout(1200);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'node-editor-regler.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'node-editor-regler.png') });
     await side.evaluate(() => document.getElementById('pause') && document.getElementById('pause').click());
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
     await ctx.close();

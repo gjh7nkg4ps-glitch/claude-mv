@@ -67,7 +67,7 @@ async function kør(arg) {
     T.tjek(m0 === 'fil' && /Manuel: fra filen \(du har valgt det\)\. Auto-valg ville bruge mens det spiller, fordi generatoren spiller/.test(tx[0]) && b[0] === 'ana:taktslag', 'Manuel: "' + tx[0] + '"; motoren læser ' + b[0]);
     await side.evaluate(async () => { lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1200)); const r = [...NE2.N.values()].find(x => x.kol === 'regel' && x.i === 0); if (r) neVaelg(r.key); });
     await side.waitForTimeout(500);
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'taktslag-auto.png') });
+    await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'taktslag-auto.png') });
     await side.evaluate(() => { delete maps[0].takt; save(); renderMaps(); gStop(); });
     await side.waitForTimeout(400);
     T.tjek(await side.evaluate(() => maps[0].takt === undefined), 'Auto er Tilbage til standard (valget er slettet)');
