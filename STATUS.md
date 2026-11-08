@@ -21,7 +21,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 13 lavet (v9.31):** lys uden tekst under 20 %, Kun valgt kæde, Dæmp og tastaturet. Test: `tests/26-node-editor-tastatur.js`.
 - **Trin 14 lavet (v9.32):** linjerne i TSL med den nye three.js ved siden af r128 (WebGPU, ellers WebGL2, ellers Canvas 2D). Test: `tests/27-node-editor-tsl.js`.
 - **Trin 15 lavet (v9.33):** nye navne i hele programmet og · gammel på de fire gamle vinduer. Test: `tests/28-node-editor-navne.js`.
-- **Næste: trin 16 (v9.34), funktionsliste-tjek**
+- **Trin 16 lavet (v9.34):** funktionsliste-tjekket: tabellen og testen; Kort over forbindelserne i Node-editorens Ctrl+K. Test: `tests/29-funktionsliste.js`.
+- **Næste: intet fra planen: alle 16 trin er lavet. Du vælger næste skridt, fx det, der mangler i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`, eller v10.0, hvor de gamle vinduer fjernes**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 
