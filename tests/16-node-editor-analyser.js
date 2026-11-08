@@ -87,11 +87,11 @@ async function kør(arg) {
     T.tjek(Math.abs(t1 - 15) < 1, `klik midt i bølgeformen hopper til ${t1.toFixed(1)} s (af 30 s)`);
     await side.evaluate(() => { document.getElementById('play').click(); });
     await side.waitForTimeout(1500);
-    const lev = await side.evaluate(async () => { const m = { L: 0, kick: 0, søjle: 0, lamper: 0, spek: 0, streg: [] }; for (let k = 0; k < 20; k++) { await new Promise(r => setTimeout(r, 80));
+    const lev = await side.evaluate(async () => { const m = { L: 0, kick: 0, søjle: 0, lamper: 0, spek: 0, streg: [] }; for (let k = 0; k < 30; k++) /* 2,4 s: slag-lamperne tænder kun ved et slag */ { await new Promise(r => setTimeout(r, 80));
       const n = NE2.N.get('k:main').el; m.L = Math.max(m.L, parseFloat(n.querySelector('[data-x="L"]').style.width) || 0); m.streg.push(n.querySelector('.ne-hoved-streg').style.left);
       m.søjle = Math.max(m.søjle, ...[...document.querySelectorAll('#ne-verden .ne-node[data-n="a:bred"] .ne-soejler u')].map(u => parseFloat(u.style.height) || 0)); m.lamper = Math.max(m.lamper, document.querySelectorAll('#ne-verden .ne-node[data-n="a:slag"] .ne-lampe.ne-taendt').length); }
       const c = NE2.N.get('f:fin').el.querySelector('.ne-spek'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data; for (let i = 3; i < d.length; i += 4) if (d[i] > 0) m.spek++; m.streg = new Set(m.streg).size; return m; });
-    T.tjek(lev.L > 30 && lev.søjle > 20 && lev.lamper > 0 && lev.spek > 50 && lev.streg > 3, `under afspilning lever det: måler V op til ${lev.L.toFixed(0)} %, brede bånd op til ${lev.søjle.toFixed(0)} %, slag-lamper tænder, FFT · fin tegner (${lev.spek} punkter), afspilningsstregen flytter sig`);
+    T.tjek(lev.L > 30 && lev.søjle > 20 && lev.lamper > 0 && lev.spek > 50 && lev.streg > 3, `under afspilning lever det: måler V op til ${lev.L.toFixed(0)} %, brede bånd op til ${lev.søjle.toFixed(0)} %, slag-lamper tænder, FFT · fin tegner (${lev.spek} punkter), afspilningsstregen flytter sig (${lev.streg} pladser, ${lev.lamper} lamper)`);
     await side.evaluate(() => { neVaelg('a:slag'); NE.tilpas = false; NE.z = .7; NE.x = Math.round(20 - NE.kol.find(c => c.k === 'lydkilde').x * NE.z); NE.y = 96; neVis(); });
     await side.waitForTimeout(900);
     await side.locator('#w25').screenshot({ path: path.join(UD, 'node-editor-analyser.png') });
