@@ -1,5 +1,5 @@
 /* Trin 4 · Det nye i v9.22: Node-editoren, trin 4 (ret en regel). Se docs/PLAN-NODE-EDITOREN.md og papirets afsnit 5.6.
-   - Samme felter som Router: de samme tal sat i Node-editoren og i Router giver præcis den samme forbindelse (maps), og motoren regner det samme.
+   - Samme felter som Router (slettet i v9.35): de samme tal sat i Node-editoren og sådan, som Router satte dem, giver præcis den samme forbindelse (maps), og motoren regner det samme.
    - Hver indstilling i kontrolpanelet (skydere, drejeknapper med piletaster, Vend om, Gate og Gate-tærskel, Taktslag, Standard) ændrer det rigtige felt.
    - På noden: træk tærsklen, træk styrken, Handling/Egenskab (m.slags kun når den er anderledes), klemmen "mest" ændrer styrken.
    - Fortryd og Gentag (knapper og Ctrl+Z / Ctrl+Shift+Z), beskeden med Fortryd. Normalisering og Samlet styrke i værktøjslinjen.
@@ -31,16 +31,15 @@ async function kør(arg) {
     const vælg = i => side.evaluate(async i => { const n = [...NE2.N.values()].find(n => n.kol === 'regel' && n.i === i); neVaelg(n.key); NE.tilpas = false; NE.z = .8; NE.x = Math.round(30 - NE.kol.find(c => c.k === 'lydtraek').x * NE.z); NE.y = Math.round(96 - n.y * NE.z); neVis(); await new Promise(r => setTimeout(r, 300)); return n.key; }, i);
     const sætSkyder = (f, v) => side.evaluate(([f, v]) => { const e = document.querySelector('#ne-kp .ne-kp-ret input[data-nf="' + f + '"]'); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); e.dispatchEvent(new Event('change', { bubbles: true })); }, [f, v]);
 
-    /* 1 · De samme tal i Node-editoren og i Router giver den samme forbindelse */
+    /* 1 · De samme tal i Node-editoren og sådan, som Router 2.0 (slettet i v9.35) satte dem, giver den samme forbindelse */
     const kopi = await side.evaluate(() => { const m = JSON.parse(JSON.stringify(maps[2])); maps.push(JSON.parse(JSON.stringify(m)), JSON.parse(JSON.stringify(m))); renderMaps(); return maps.length; });
     const iA = kopi - 2, iB = kopi - 1;
     await vent(900); await vælg(iA);
     for (const [f, v] of [['thr', .62], ['gain', 1.35], ['att', 40], ['rel', 330], ['hold', 9]]) await sætSkyder(f, v);
-    await side.evaluate(async iB => { set.r2vis = 'fuld'; fgVaelg('lyd', 'w32', true); await new Promise(r => setTimeout(r, 900)); /* Router bygger boksen om efter hver ændring, så den findes igen for hver værdi */
-      for (const [f, v] of [['gain', 1.35], ['att', 40], ['rel', 330], ['hold', 9]]) { const bx = document.querySelector('#r2 .r2-boks[data-i="' + iB + '"]'), e = bx.querySelector('[data-rf="' + f + '"]'); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); e.dispatchEvent(new Event('change', { bubbles: true })); }
-      maps[iB].thr = .62; save(); fgVaelg('lyd', 'w33', true); await new Promise(r => setTimeout(r, 700)); }, iB);
-    const sam = await side.evaluate(([iA, iB]) => { const so = o => JSON.stringify(Object.keys(o).sort().reduce((x, k) => (x[k] = o[k], x), {})), A = so(maps[iA]), B = so(maps[iB]); const ud = v => Rytme.trinMaal(maps[iA], v, 1) === Rytme.trinMaal(maps[iB], v, 1); return { ens: A === B, A: A + ' | Router: ' + B, regn: [.1, .5, .7, .9, 1].every(ud) }; }, [iA, iB]);
-    T.tjek(sam.ens && sam.regn, 'de samme tal sat i Node-editoren og i Router giver præcis den samme forbindelse, og motoren regner det samme', sam.A);
+    /* Router 2.0 er slettet i v9.35; dens skydere satte felterne sådan her (gain, att og rel direkte, Hold via R2_HOLD), så det gør testen selv */
+    await side.evaluate(async iB => { const m = maps[iB]; m.gain = 1.35; m.att = 40; m.rel = 330; const ms = R2_HOLD[9]; m.hold = ms === Infinity; m.holdMs = ms === Infinity || !ms ? 0 : ms; m.thr = .62; save(); await new Promise(r => setTimeout(r, 300)); }, iB);
+    const sam = await side.evaluate(([iA, iB]) => { const so = o => JSON.stringify(Object.keys(o).sort().reduce((x, k) => (x[k] = o[k], x), {})), A = so(maps[iA]), B = so(maps[iB]); const ud = v => Rytme.trinMaal(maps[iA], v, 1) === Rytme.trinMaal(maps[iB], v, 1); return { ens: A === B, A: A + ' | som Router satte dem: ' + B, regn: [.1, .5, .7, .9, 1].every(ud) }; }, [iA, iB]);
+    T.tjek(sam.ens && sam.regn, 'de samme tal sat i Node-editoren og sådan, som Router satte dem, giver præcis den samme forbindelse, og motoren regner det samme', sam.A);
     await side.evaluate(([iA]) => { maps.splice(iA, 2); renderMaps(); }, [iA]); await vent(900);
 
     /* 2 · Hver indstilling ændrer det rigtige felt */

@@ -2,7 +2,7 @@
 
 Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens plads i Node-editoren. Testen `tests/29-funktionsliste.js` går alle linjer igennem: hver funktion står her præcis én gang, status er en af de fire, og navnet i *Kontrol* findes i programmet.
 
-**Status:** ✅ lavet · ◐ delvis · ✗ mangler · – ikke nødvendig (fx en fane, der ikke skal lukkes). **Intet gammelt vindue fjernes uden din besked** (papirets afsnit 8).
+**Status:** ✅ lavet · ◐ delvis · ✗ mangler · – ikke nødvendig (fx en fane, der ikke skal lukkes). De fire gamle vinduer er slettet i v9.35 efter din besked (papirets afsnit 8).
 
 ## Sammendrag
 
@@ -14,14 +14,18 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | – ikke nødvendig | 8 |
 | I alt (fra FUNKTIONER.md) | 114 |
 
-| Gammelt vindue | Mangler eller delvis | Kan fjernes? |
-| --- | --- | --- |
-| Dublet · gammel | 2 | nej |
-| Router 2.0 · gammel | 1 | nej |
-| Routing-overblik · gammel | 4 | nej |
-| Mapping · gammel | 3 | nej |
+**v9.35: de fire gamle vinduer er slettet** (din beslutning, 8. november 2026). Det, der stod som mangler eller delvis i dem, er gået tabt, undtagen det, der blev flyttet:
 
-Routing-overblikkets 11 visninger: 1 lavet (Kolonner), 10 mangler. Kort over forbindelserne (Mermaid, PNG, SVG): lavet (Ctrl+K i Node-editoren).
+| Gammelt vindue | Mangler eller delvis i Node-editoren | Status |
+| --- | --- | --- |
+| Dublet | 2 | slettet i v9.35 |
+| Router 2.0 | 1 | slettet i v9.35 |
+| Routing-overblik | 4 | slettet i v9.35 |
+| Mapping | 3 | slettet i v9.35 |
+
+**Flyttet i v9.35:** Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 til Opsætninger (og stadig Radial Mesh); Kort over forbindelserne, Ryd hold, Tilføj morgenstjerne, Tilslut MIDI og Tilfældigt til Værksted · Lydtræk-guide (og Ctrl+K).
+
+**Gået tabt i v9.35:** Routing-overblikkets 10 visninger (1 lavet: Kolonner er Node-editoren), Dublets håndtag i billedet (Flyt effekter i Live preview findes stadig), Mappings og Routers egne visninger (Kompakt/Fuld, D2-sortering, ▸ Vis i kildelisten).
 
 
 ## Dublet

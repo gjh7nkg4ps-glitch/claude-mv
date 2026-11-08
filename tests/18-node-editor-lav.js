@@ -57,8 +57,8 @@ async function kør(arg) {
     T.tjek(menu && menu.n > 3 && menu.søg, `slip på en figur: menuen med figurens mål ("${menu && menu.titel}", ${menu && menu.n} mål og et søgefelt)`);
     await side.screenshot({ path: path.join(UD, 'node-editor-maal-menu.png') });
     await side.click('#ne-menu .ne-menu-i[data-v="' + menu.første + '"]'); await vent(500);
-    const ny = await side.evaluate(([v]) => { const m = maps[maps.length - 1]; const rows = document.querySelectorAll('#maps .row').length; const k = 'r:' + m.band + '|' + m.effect + '|' + maps.filter(x => x.band === m.band && x.effect === m.effect).length; return { n: maps.length, m: JSON.stringify(m), effect: m.effect, rows, kladder: NE5.kladder.length, node: !!NE2.N.get(k), valgt: NE2.valgt === k, std: m.thr === .3 && m.gain === 1 && m.att === 20 && m.rel === 200 && m.curve === 1 && m.gap === 120 && m.min === true }; }, [menu.første]);
-    T.tjek(ny.n === før0 + 1 && ny.effect === menu.første && ny.std && ny.rows === ny.n && ny.kladder === 0 && ny.node && ny.valgt, `reglen står nu i maps og i Mapping (${ny.rows} rækker) med samme standard som Router's "+ Ny forbindelse": ${ny.m}`);
+    const ny = await side.evaluate(([v]) => { const m = maps[maps.length - 1]; const rows = maps.length; const k = 'r:' + m.band + '|' + m.effect + '|' + maps.filter(x => x.band === m.band && x.effect === m.effect).length; return { n: maps.length, m: JSON.stringify(m), effect: m.effect, rows, kladder: NE5.kladder.length, node: !!NE2.N.get(k), valgt: NE2.valgt === k, std: m.thr === .3 && m.gain === 1 && m.att === 20 && m.rel === 200 && m.curve === 1 && m.gap === 120 && m.min === true }; }, [menu.første]);
+    T.tjek(ny.n === før0 + 1 && ny.effect === menu.første && ny.std && ny.rows === ny.n && ny.kladder === 0 && ny.node && ny.valgt, `reglen står nu i maps (${ny.rows} regler) med samme standard som Router's "+ Ny forbindelse": ${ny.m}`);
 
     /* 2 · Fra en analyses række (en kilde, ingen regel bruger endnu) */
     await læg('a:stereo', 'analyse', -480); await vent(300);
@@ -112,11 +112,11 @@ async function kør(arg) {
     await vent(1200);
     const nFør = await side.evaluate(() => maps.length), jsonFør = await side.evaluate(() => JSON.stringify(maps));
     await side.click('#ne-kp [data-ne5="slet"]'); await vent(500);
-    const sl = await side.evaluate(() => ({ n: maps.length, rows: document.querySelectorAll('#maps .row').length }));
+    const sl = await side.evaluate(() => ({ n: maps.length, rows: maps.length }));
     await vent(1200);
     await side.click('.ne-vk[data-ne4="fortryd"]'); await vent(600);
     const fy = await side.evaluate(j => ({ n: maps.length, ens: JSON.stringify(maps) === j }), jsonFør);
-    T.tjek(sl.n === nFør - 1 && sl.rows === sl.n && fy.n === nFør && fy.ens, `Slet regel: ${nFør} → ${sl.n} regler (også i Mapping); Fortryd bringer den præcis tilbage`);
+    T.tjek(sl.n === nFør - 1 && sl.rows === sl.n && fy.n === nFør && fy.ens, `Slet regel: ${nFør} → ${sl.n} regler; Fortryd bringer den præcis tilbage`);
     await side.evaluate(i => neVaelg([...NE2.N.values()].find(n => n.kol === 'regel' && n.i === i).key), iSidst); await vent(200);
     await side.evaluate(i => [...NE2.N.values()].find(n => n.kol === 'regel' && n.i === i).el.focus(), iSidst);
     await side.keyboard.press('Delete'); await vent(400);

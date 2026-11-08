@@ -28,7 +28,7 @@ async function kør(arg) {
           const vent = ms => new Promise(r => setTimeout(r, ms));
           ud.maps = maps.length; ud.fjernet = maps.filter(m => m.fjernet).length;
           for (const p of ['A', 'B']) { try { slotLoad(p); await vent(300); ud['plads' + p] = maps.length; } catch (e) { ud['plads' + p] = 'fejl: ' + e.message; } }
-          for (const n of ['Router', 'Mapping', 'Lydkilde']) { const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === n); if (t) { t.click(); await vent(700); } }
+          for (const n of ['Node-editor', 'Lydkilde']) { const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === n); if (t) { t.click(); await vent(700); } }
           for (const n of ['Mesh 3D', 'Øjet']) { const t = [...document.querySelectorAll('#w23 .sc-faner button')].find(b => b.textContent.trim() === n); if (t) { t.click(); await vent(1500); } }
           ud.m3 = !!(M3 && M3.r); ud.oj = !!(OJ && OJ.r); return ud;
         });

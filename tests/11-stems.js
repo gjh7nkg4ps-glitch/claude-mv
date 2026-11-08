@@ -7,7 +7,7 @@
    - Kildelisten har en gruppe pr. spor (D2: intet lægges sammen).
    - Auto: kick, hihat fra Trommer, bas fra Bas, vokal fra Vokal; grunden står ved forbindelsen; Manuel.
    - Gul besked, når længderne ikke passer; besked ved .stem.mp4; en almindelig fil fjerner sporene.
-   Skærmbillede: tests/ud/stems-lydkilde.png og tests/ud/stems-mapping.png. */
+   Skærmbillede: tests/ud/stems-lydkilde.png og tests/ud/stems-noder.png. */
 const fs = require('fs'), os = require('os'), path = require('path'), { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
 const { findFil, tæller } = require('./faelles');
@@ -62,22 +62,22 @@ async function kør(arg) {
 
     /* Auto */
     await side.evaluate(() => { const M = (band, effect) => ({ band, effect, thr: .3, gain: 1, att: 5, rel: 120, curve: 1, gap: 120, min: false }); maps = [M('kick', 'puls'), M('bas', 'ring'), M('vokal', 'glod'), M('hihat', 'sky'), M('rms', 'burst')]; renderMaps(); });
-    await fane('Mapping'); await side.waitForTimeout(500);
+    await fane('Node-editor'); await side.waitForTimeout(500);
     const brugt = () => side.evaluate(() => { const b = []; Rytme.koer(maps, { v: (m) => { b.push(m.band); return 0; }, off: () => false, master: 1, dt: 1 / 60, env: [], pe: [], E: {}, kant: () => {}, holdRyd: false }); return b; });
-    let b = await brugt(); let tx = await side.evaluate(() => [...document.querySelectorAll('#maps .st-rad .tk-grund')].map(e => e.textContent));
+    let b = await brugt(); let tx = await side.evaluate(() => maps.map(m => stemGrund(m)).filter(Boolean).map(h => h.replace(/<[^>]+>/g, '')));
     T.tjek(b.join(',') === 'stem:trommer:kick,stem:bas:bas,stem:vokal:vokal,stem:trommer:hihat,rms', 'Auto: motoren læser ' + b.join(', '));
     T.tjek(tx.length === 4 && /Auto-valg: fra sporet Trommer, fordi der er 4 spor/.test(tx[0]) && /fra sporet Bas/.test(tx[1]) && /fra sporet Vokal/.test(tx[2]), 'ved forbindelsen: "' + tx[0] + '" (kun ved de 4, der har et spor; ikke ved RMS)');
-    await side.evaluate(() => document.querySelector('#maps .st-rad[data-sti="0"] [data-st="mix"]').click()); await side.waitForTimeout(300);
-    b = await brugt(); tx = await side.evaluate(() => (document.querySelector('#maps .st-rad[data-sti="0"] .tk-grund') || {}).textContent);
+    await side.evaluate(() => { maps[0].spor = 'mix'; save(); renderMaps(); }); await side.waitForTimeout(300);
+    b = await brugt(); tx = await side.evaluate(() => stemGrund(maps[0]).replace(/<[^>]+>/g, ''));
     T.tjek(b[0] === 'kick' && /Manuel: fra den samlede lyd \(du har valgt det\)\. Auto-valg ville bruge fra sporet Trommer/.test(tx), 'Manuel: "' + tx + '"; motoren læser ' + b[0]);
-    await side.evaluate(() => document.querySelector('#maps .st-rad[data-sti="0"] [data-st="auto"]').click());
+    await side.evaluate(() => { delete maps[0].spor; save(); renderMaps(); });
     await side.evaluate(() => document.getElementById('play').click()); await side.waitForTimeout(2500);
     const lev = await side.evaluate(() => ({ ud: Math.max(R2M.ud[0] || 0, R2M.ud[3] || 0), v: R2M.v[0] }));
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'stems-mapping.png') });
+    await side.locator('#w25').screenshot({ path: path.join(UD, 'stems-noder.png') });
     await side.evaluate(() => document.getElementById('pause').click());
     T.tjek(lev.ud > 0, `afspilning: forbindelserne fra sporet Trommer giver udslag (${lev.ud.toFixed(2)})`);
     const r2 = await side.evaluate(() => ({ navn: bandNavn('stem:trommer:kick'), hvor: r2Hvor('stem:trommer:kick'), type: sigInfo('stem:trommer:kick').type }));
-    T.tjek(r2.navn === 'Trommer · Kick' && /sporet Trommer/.test(r2.hvor) && r2.type === 'slag', `Router: "${r2.navn}", "${r2.hvor}", type ${r2.type}`);
+    T.tjek(r2.navn === 'Trommer · Kick' && /sporet Trommer/.test(r2.hvor) && r2.type === 'slag', `navn og sted (som i Node-editorens lydtræk): "${r2.navn}", "${r2.hvor}", type ${r2.type}`);
     let f = nyeFejl(); T.tjek(!f.length, '4 spor uden fejl', f.slice(0, 3).join(' | '));
 
     /* Gul besked, .stem.mp4 og en almindelig fil */
@@ -99,7 +99,7 @@ async function kør(arg) {
   } catch (e) {
     T.fejl('testen stoppede: ' + e.message.split('\n')[0]);
   } finally { await browser.close(); fs.rmSync(tmp, { recursive: true, force: true }); fs.rmSync(kort, { recursive: true, force: true }); }
-  console.log('  skærmbilleder: tests/ud/stems-lydkilde.png, tests/ud/stems-mapping.png');
+  console.log('  skærmbilleder: tests/ud/stems-lydkilde.png, tests/ud/stems-noder.png');
   return T.slut();
 }
 if (require.main === module) kør(process.argv[2]).then(ok => process.exit(ok ? 0 : 1));

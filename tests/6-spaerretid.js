@@ -3,7 +3,7 @@
    - Klods-spor: præcis som før (de har deres egen spærretid).
    - To kick-anslag 50 ms fra hinanden: med spærretid 120 ms bliver det andet ikke til et nyt anslag; et anslag 250 ms senere kommer igennem.
    - Signaltyperne: kick er slag i mappen Rytme, bas er glidende i Frekvens, taktfase er rampe, toneklasse er valg.
-   - Router: Spærretid er grå for en glidende kilde og ikke for kick; kæden viser spærretid.
+   - Spærretid virker kun for slag-kilder (r2SpaerVirker; Router 2.0 er slettet i v9.35).
    - W4: M-knappen er smal, og trinene står lige efter lydstyrken. Skærmbillede: tests/ud/w4-m-knap.png. */
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
@@ -45,16 +45,10 @@ async function kør(arg) {
     T.tjek(mot.medTredje > .5, `et anslag 250 ms senere kommer igennem (top ${mot.medTredje.toFixed(2)})`);
     T.tjek(mot.typer.join(' ') === 'kick=Rytme/slag bas=Frekvens/glidende ana:taktfase=Rytme/rampe ana:toneklasse=Tone og harmoni/valg hnd:takt=Rytme/slag ana:c3=Tone og harmoni/glidende', 'signaltyperne: ' + mot.typer.join(', '));
 
-    /* Router: grå, hvor den ikke virker */
-    await side.evaluate(() => { maps = [{ band: 'kick', effect: 'puls', thr: .3, gain: 1, att: 20, rel: 200, curve: 1, gap: 120, min: true }, { band: 'bas', effect: 'ring', thr: .3, gain: 1, att: 20, rel: 200, curve: 1, gap: 120, min: true }]; renderMaps();
-      const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === 'Router'); t.click(); });
-    await side.waitForTimeout(800);
-    const r = await side.evaluate(() => { const k = i => document.querySelector('#r2 .r2-boks[data-i="' + i + '"] .r2-knap[data-k="gap"]'), ka = i => [...document.querySelectorAll('#r2 .r2-boks[data-i="' + i + '"] .r2-kaede span.on')].map(s => s.textContent);
-      return { kickGraa: k(0).classList.contains('graa'), basGraa: k(1).classList.contains('graa'), basTip: k(1).title, kickKaede: ka(0), basKaede: ka(1) }; });
-    T.tjek(!r.kickGraa && r.basGraa, 'Router: Spærretid er grå for bas (glidende) og ikke for kick (slag)');
-    T.tjek(/glidende/.test(r.basTip), 'forklaringen siger hvorfor: "kilden er glidende, ikke slag"');
-    T.tjek(r.kickKaede.includes('spærretid') && !r.basKaede.includes('spærretid'), 'kæden viser spærretid for kick og ikke for bas');
-    let f = nyeFejl(); T.tjek(!f.length, 'motor og Router uden fejl', f.slice(0, 3).join(' | '));
+    /* Spærretid virker kun for slag-kilder (Router 2.0 er slettet i v9.35; Node-editorens drejeknap bruger samme regel, r2SpaerVirker) */
+    const r = await side.evaluate(() => ({ kick: r2SpaerVirker({ band: 'kick', effect: 'puls' }), bas: r2SpaerVirker({ band: 'bas', effect: 'ring' }) }));
+    T.tjek(r.kick && !r.bas, 'spærretid virker for kick (slag) og ikke for bas (glidende); Node-editoren gør knappen grå for bas');
+    let f = nyeFejl(); T.tjek(!f.length, 'motoren uden fejl', f.slice(0, 3).join(' | '));
 
     /* W4: M-knappen */
     await side.evaluate(() => { sbAabn('w4'); });

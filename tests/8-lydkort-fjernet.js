@@ -1,9 +1,9 @@
 /* Trin 4 · Det nye i v9.12: Lydkort (kildegruppen lk: fra Lydkosmos) er fjernet.
-   - Lydkort findes ingen steder: ingen lk:-kilder i kildelisterne, Router, Radial Mesh, Mesh 3D og Dublet; intet kort i Lydkilde; ingen knap i sidebjælken; ingen funktioner tilbage; intet afsnit i manualen.
-   - En gemt plads fra før (lavet med v9.11) med lk:-kilder går ikke i stykker: forbindelserne bliver stående, slås fra og giver 0, og der kommer en tydelig besked (statuslinje, øverst i Mapping og Router og ved forbindelsen). Andre forbindelser er urørte.
+   - Lydkort findes ingen steder: ingen lk:-kilder i kildelisterne, Radial Mesh og Mesh 3D; intet kort i Lydkilde; ingen knap i sidebjælken; ingen funktioner tilbage; intet afsnit i manualen.
+   - En gemt plads fra før (lavet med v9.11) med lk:-kilder går ikke i stykker: forbindelserne bliver stående, slås fra og giver 0, og der kommer en tydelig besked (statuslinje, i Node-editoren ved forbindelsen). Andre forbindelser er urørte.
    - Det samme, når programmet starter med en gemt opsætning med en lk:-kilde.
    - Afspilning med en fjernet kilde giver ingen fejl.
-   Skærmbilleder: tests/ud/lydkort-fjernet-mapping.png og tests/ud/lydkort-fjernet-router.png. */
+   Skærmbillede: tests/ud/lydkort-fjernet-noder.png (Mapping og Router er slettet i v9.35). */
 const fs = require('fs'), os = require('os'), path = require('path');
 const { chromium } = require('playwright');
 const { findFil, tæller } = require('./faelles');
@@ -33,8 +33,8 @@ async function kør(arg) {
         lydkilde: !!document.getElementById('lks-lk') || [...document.querySelectorAll('#lks h4')].some(h => /Lydkort/.test(h.textContent)), knap: !!document.querySelector('[data-sbg="lk"]') || !!document.getElementById('lk-fil'),
         lydkildeKort: [...document.querySelectorAll('#lks h4')].map(h => h.textContent) };
     });
-    T.tjek(væk.optioner === 0 && væk.router === 0, 'ingen lk:-kilder i kildelisterne og i Router');
-    T.tjek(væk.grupper === 0, 'ingen kildegruppe Lydkort i Radial Mesh, Mesh 3D og Dublet');
+    T.tjek(væk.optioner === 0 && væk.router === 0, 'ingen lk:-kilder i kildelisterne og i Node-editorens lydtræk');
+    T.tjek(væk.grupper === 0, 'ingen kildegruppe Lydkort i Radial Mesh og Mesh 3D');
     T.tjek(!væk.lydkilde && !væk.knap, 'intet Lydkort-kort i Lydkilde (' + væk.lydkildeKort.join(', ') + ') og ingen knap til lydkort-filer');
     T.tjek(!væk.funktioner.length, 'ingen Lydkort-funktioner tilbage i koden', væk.funktioner.join(', '));
     const m0 = html.indexOf('<h3 id="man-v912">'), manual = html.slice(m0, html.indexOf('<script', m0)); /* kun manualen, ikke koden */
@@ -47,23 +47,17 @@ async function kør(arg) {
       localStorage.setItem('rytme-A', JSON.stringify(d)); slotLoad('A'); await new Promise(r => setTimeout(r, 400));
       const st = document.getElementById('status').textContent;
       return { n: maps.length, off: maps.map(m => !!m.off), fjernet: maps.map(m => m.fjernet || ''), band0: maps[0].band, port1: maps[1].port, status: st,
-        banner: (document.querySelector('#maps .fj-banner') || {}).textContent || '', noter: document.querySelectorAll('#maps .fj-note').length, navn: bandNavn('lk:kick') };
+        navn: bandNavn('lk:kick') };
     });
     T.tjek(plads.n === 3 && plads.band0 === 'lk:kick' && plads.port1 === 'lk:beat', 'pladsen hentes med alle 3 forbindelser; de fjernede kilder står der stadig');
     T.tjek(plads.off.join() === 'true,true,false' && plads.fjernet.join() === 'lk,lk,', 'forbindelsen med kilden lk:kick og den med porten lk:beat er slået fra; bas er urørt');
     T.tjek(/fjernet i v9\.12/.test(plads.status) && /1, 2/.test(plads.status), 'beskeden i statuslinjen: "' + plads.status.slice(0, 120) + '"');
-    T.tjek(/2 forbindelser/.test(plads.banner) && plads.noter === 2, 'Mapping: gul besked øverst og en note ved begge forbindelser');
     T.tjek(plads.navn === 'Fjernet kilde: Lydkort kick', 'navnet på den fjernede kilde: "' + plads.navn + '"');
-    const valgt = await side.evaluate(() => { const s = document.querySelector('#maps .row[data-i="0"] select[data-f="band"]'); fyldMapListe(s); return { v: s.value, t: s.options[s.selectedIndex].textContent }; });
-    T.tjek(valgt.v === 'lk:kick', 'kildelisten ved forbindelsen viser stadig den fjernede kilde: "' + valgt.t + '"');
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'lydkort-fjernet-mapping.png') });
-
-    await side.evaluate(() => { set.r2vis = 'kompakt'; const t = [...document.querySelectorAll('#w25 .fg-faner button')].find(b => b.textContent.trim() === 'Router'); t.click(); });
-    await side.waitForFunction(() => document.querySelector('#r2 .r2-boks'), null, { timeout: 10000 });
-    await side.waitForTimeout(800);
-    const r2 = await side.evaluate(() => ({ banner: !!document.querySelector('#r2 .fj-banner'), noter: document.querySelectorAll('#r2 .fj-note').length, slukket: document.querySelectorAll('#r2 .r2-boks.slukket').length }));
-    T.tjek(r2.banner && r2.noter === 2 && r2.slukket === 2, 'Router: gul besked, en note ved begge forbindelser, og de står som slået fra');
-    await side.locator('#w25').screenshot({ path: path.join(UD, 'lydkort-fjernet-router.png') });
+    /* Mapping og Router er slettet i v9.35; Node-editoren viser de fjernede kilder ved reglerne */
+    await side.evaluate(async () => { lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1200)); });
+    const ne = await side.evaluate(() => { const R = [...document.querySelectorAll('#ne-verden .ne-node.ne-n-regel')]; return { n: R.filter(x => /Kilden er fjernet \(Lydkort\)/.test(x.textContent)).length, slukket: R.filter(x => /Kilden er fjernet/.test(x.textContent) && x.classList.contains('ne-slukket')).length }; });
+    T.tjek(ne.n === 2 && ne.slukket === 2, `Node-editoren: ${ne.n} regler viser "Kilden er fjernet (Lydkort)" og står som slukket`);
+    await side.locator('#w25').screenshot({ path: path.join(UD, 'lydkort-fjernet-noder.png') });
     let f = nyeFejl(); T.tjek(!f.length, 'gammel plads uden fejl', f.slice(0, 3).join(' | '));
 
     /* Afspilning med fjernede kilder */
@@ -80,13 +74,13 @@ async function kør(arg) {
     /* Programmet starter med en gemt opsætning med en lk:-kilde */
     await side.evaluate(() => { localStorage.setItem('rytme-mapping2', JSON.stringify([{ band: 'lk:rms', effect: 'puls', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'kick', effect: 'ring', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }])); });
     await side.reload(); await side.waitForTimeout(4500);
-    const start = await side.evaluate(() => ({ n: maps.length, off: maps.map(m => !!m.off), banner: !!document.querySelector('#maps .fj-banner') }));
-    T.tjek(start.n === 2 && start.off.join() === 'true,false' && start.banner, 'ved opstart med en gemt lk:-forbindelse: den er slået fra, og beskeden står i Mapping');
+    const start = await side.evaluate(() => ({ n: maps.length, off: maps.map(m => !!m.off), fjernet: maps.map(m => m.fjernet || '').join() }));
+    T.tjek(start.n === 2 && start.off.join() === 'true,false' && start.fjernet === 'lk,', 'ved opstart med en gemt lk:-forbindelse: den er slået fra og markeret som fjernet (Node-editoren viser det ved reglen)');
     f = nyeFejl(); T.tjek(!f.length, 'opstart uden fejl', f.slice(0, 3).join(' | '));
   } catch (e) {
     T.fejl('testen stoppede: ' + e.message.split('\n')[0]);
   } finally { await browser.close(); }
-  console.log('  skærmbilleder: tests/ud/lydkort-fjernet-mapping.png, tests/ud/lydkort-fjernet-router.png');
+  console.log('  skærmbillede: tests/ud/lydkort-fjernet-noder.png');
   return T.slut();
 }
 if (require.main === module) kør(process.argv[2]).then(ok => process.exit(ok ? 0 : 1));

@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.17 · 7. november 2026 · gælder fra Claude MV v9.34 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.18 · 8. november 2026 · gælder fra Claude MV v9.35 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -11,7 +11,7 @@ Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hv
 Claude MV er et personligt værksted, der gør musik til levende billeder. En lydfil (oftest mp3) analyseres, og målingerne (fx bas, kick, hihat, taktslag, afsnit og drop) styrer figurer, lys og 3D-grafik gennem **forbindelser** (fagudtryk: mapping). Det er bygget sammen med Claude over mange versioner.
 
 - Hele programmet er **én HTML-fil** (cirka 1,8 MB), der kører i browseren uden server og uden internet. Three.js r128 og dets glød-værktøjer (MIT) ligger inde i filen.
-- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Mapping, Tidslinje, Analyse, Lydkilde, Router og Node-editor (fra v9.19).
+- Vigtigste dele: **Scenen** med Live preview (dansende figurer), Radial Mesh, Mesh 3D, Øjet (vores navn: lys fra fremtiden), EQ og EQ+; **Editoren** (figurer og deres egenskaber); **Arbejdsfeltet** (vores navn) med fanerne Node-editor, Tidslinje, Analyse og Lydkilde (Mapping og Router er slettet i v9.35).
 - Det er et **privat program**. Det skal være let at gå til, men kunne blive rigtig dybt.
 
 ## 2. Sådan vil jeg arbejde sammen med dig
@@ -97,7 +97,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | Pladserne A–T · Gem som A/B · Skift A/B | **Opsætning 1–20 · Gem som 1/2 · Sammenlign 1 ↔ 2** (v9.33; nøglerne `rytme-A` … `rytme-T` er de samme) |
 | forudindstilling | **opsætning** (v9.33) |
 | Scene (Dublets effekt-gruppe) | **Scene-effekter** |
-| Mapping, Router 2.0, Dublet, Routing-overblik | samme navne med **· gammel** bag (v9.33); fjernes først, når du siger til |
+| Mapping, Router 2.0, Dublet, Routing-overblik | **slettet i v9.35** (din beslutning); reglerne er i Node-editoren |
 
 ### Analyse og mapping
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
@@ -120,7 +120,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.34
+## 4. Hvad der er sket fra v8.0 til v9.35
 
 | Version | Hvad |
 | --- | --- |
@@ -167,6 +167,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.32 | **Node-editoren, trin 14 af 16: linjer og glød i TSL.** Den nye three.js (0.186.1, MIT) ligger i filen som tekst ved siden af r128 og indlæses af et lille modul-script via blob-adresser (intet internet; `window.THREE` er stadig r128). Linjerne tegnes med **WebGPURenderer** og et **TSL**-materiale (blød kant, glød kun på det valgte og det, der slår til); **WebGPU** hvis browseren har det, ellers **WebGL2**, ellers Canvas 2D som før. Kontrolpanelet viser "Linjer: TSL · WebGL2" og har *Auto · Canvas 2D* (`set.ne.linjer`). Filen er cirka 3,7 MB større (6 MB) |
 | v9.33 | **Node-editoren, trin 15 af 16: nye navne og · gammel.** Papirets navne i hele programmet og manualen: **Adaptiv tærskel** (før Auto-tærskel; mærket *Adaptiv* også i Router-boksen), **Gate · Gate-tærskel** (før Port · Portgrænse), **Auto-mapping** (før Auto: Til/Fra og Kør auto-opsætning nu), **Normalisering: Adaptiv · Fast**, **Auto-valg** (Taktslag og Spor), **Opsætning 1–20**, **Gem som 1/2**, **Sammenlign 1 ↔ 2**, **opsætning** (før forudindstilling), **Scene-effekter**, fanen **Routing-overblik**. De interne nøgler er de samme (`rytme-A` vises som Opsætning 1 via `slotNr`). **· gammel** (CSS ::after) på Mapping, Router 2.0, Dublet og Routing-overblik. De gamle "Nyt i"-afsnit i manualen står, som de blev skrevet |
 | v9.34 | **Node-editoren, trin 16 af 16: funktionsliste-tjek.** Tabellen `docs/node-editoren/FUNKTIONSLISTE-TJEK.md` har hver af de 114 linjer fra FUNKTIONER.md med plads i Node-editoren og status: **85 lavet**, 12 delvis, 9 mangler, 8 ikke nødvendige; Kort over forbindelserne (Mermaid, PNG, SVG) og de 11 visninger fra Routing-overblik står med (1 lavet, 10 mangler). Testen går alle linjer igennem og tjekker, at hvert kontrol-navn findes. **Kort over forbindelserne** åbnes nu også fra Node-editorens Ctrl+K. Kontrolpanelet viser tallene (`NE16`) og en opdateret hjælpetekst. Intet gammelt vindue er fjernet |
+| v9.35 | **De fire gamle vinduer er slettet** (din beslutning 8. november): Mapping, Router 2.0, Dublet og Routing-overblik (HTML, faner, knapper og blokkene Dublet og Routing-overblik). Regler laves og rettes i **Node-editoren**. **Flyttet:** Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 til Opsætninger (W13); Kort over forbindelserne, Ryd hold, Tilføj morgenstjerne, Tilslut MIDI og Tilfældigt til Værksted · Lydtræk-guide (W18); Morph Pads knap åbner Node-editoren. Sidebjælkens Forbindelser åbner Arbejdsfeltet. Motoren og `maps` er de samme; `renderMaps` udfylder stadig standardværdier og markerer fjernede kilder. Test 7 (Router-visningen) er slettet; test 5, 6, 8, 9 og 11 tester nu motoren uden vinduerne |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -191,6 +192,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **v9.35 (gamle vinduer slettet):** Routing-overblikkets 10 andre visninger, Dublets håndtag i billedet og Mappings og Routers egne visninger (Kompakt/Fuld, D2-sortering, ▸ Vis i kildelisten) er gået tabt med vinduerne (se `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`). Koden til Router 2.0-boksen (blok ROUTER 2.0) ligger stadig i filen, fordi Node-editoren bruger dens hjælpefunktioner (fx `r2Hvor`); Mappings tegning (`renderMaps`) tegner ikke mere, men gør stadig sit andet arbejde. Den tekniske manual nævner stadig Dublets tastatur.
 - **Node-editoren (v9.34):** de 9, der mangler, og de 12 delvise står i tabellen (fx Gem/Hent Opsætning 1 og 2, Tilslut MIDI, Dublets håndtag i billedet, Lydmotor-valget og 10 af Routing-overblikkets 11 visninger). Derfor kan ingen af de fire gamle vinduer fjernes endnu. Tallene i NE16 skal rettes i hånden, når tabellen ændres (testen fanger det).
 - **Node-editoren (v9.33):** de gamle "Nyt i"-afsnit i manualen bruger stadig de gamle navne (de beskriver, hvad der skete dengang). Ordet "Auto" står stadig alene nogle steder uden for papirets liste (fx Auto-zoom og Program auto). "· gammel" sættes med CSS, så det ikke står i knappernes tekst (Ctrl+K og skærmlæsere ser det ikke).
 - **Node-editoren (v9.32):** WebGPU kan ikke testes i testbrowseren (intet grafikkort); der kører linjerne med WebGL2. three.js advarer i konsollen om "Multiple instances of Three.js" (det er planens valg A: to udgaver ved siden af hinanden). I testbrowseren (SwiftShader) koster TSL-linjerne cirka 1 billede i sekundet (11,7 mod 12,7).
@@ -213,7 +215,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–16 er lavet (v9.19–v9.34). Næste: intet fra planen: alle 16 trin er lavet. Du vælger næste skridt, fx det, der mangler i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`, eller v10.0, hvor de gamle vinduer fjernes** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–16 er lavet (v9.19–v9.34); de gamle vinduer er slettet i v9.35. Næste: v9.36, docking (vinduessystem C, dit valg)** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.

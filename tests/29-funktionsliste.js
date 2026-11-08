@@ -2,7 +2,7 @@
    Uden browser: hver linje i docs/arkiv/hjertet/FUNKTIONER.md står præcis én gang i docs/node-editoren/FUNKTIONSLISTE-TJEK.md under samme del,
    status er lavet, delvis, mangler eller ikke nødvendig, sammendraget passer, og Kort over forbindelserne (Mermaid, PNG, SVG) og de 11 visninger
    fra Routing-overblik står med. Tallene i programmet (NE16) passer med tabellen.
-   I browseren: hvert navn i kolonnen Kontrol findes i programmet; Ctrl+K i Node-editoren åbner Kort over forbindelserne; de fire gamle vinduer findes stadig.
+   I browseren: hvert navn i kolonnen Kontrol findes i programmet; Ctrl+K i Node-editoren åbner Kort over forbindelserne; de fire gamle vinduer er slettet (v9.35).
    Skærmbillede: tests/ud/funktionsliste.png. */
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
@@ -35,10 +35,10 @@ async function kør(arg) {
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
     await side.goto('file://' + fil); await side.waitForTimeout(3500);
     const navne = [...new Set(J.flatMap(j => j.kontrol))];
-    const k = await side.evaluate(async N => { brugFor('fuld1', true); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1200)); neVaelg(null); return { mangler: N.filter(x => typeof window[x] !== 'function'), tekst: (document.querySelector('#ne-kp .ne16-liste') || {}).textContent || '', gamle: ['w8', 'w10', 'w12', 'w32'].filter(id => !document.getElementById(id)) }; }, navne);
+    const k = await side.evaluate(async N => { brugFor('fuld1', true); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1200)); neVaelg(null); return { mangler: N.filter(x => typeof window[x] !== 'function'), tekst: (document.querySelector('#ne-kp .ne16-liste') || {}).textContent || '', gamle: ['w8', 'w10', 'w12', 'w32'].filter(id => document.getElementById(id)) }; }, navne);
     T.tjek(!k.mangler.length, `alle ${navne.length} navne i kolonnen Kontrol findes i programmet`, k.mangler.join(', '));
     await side.screenshot({ path: path.join(UD, 'funktionsliste.png') });
-    T.tjek(/85 af 114/.test(k.tekst) && !k.gamle.length, `kontrolpanelet: "${k.tekst.slice(0, 70)}…"; de fire gamle vinduer findes stadig`);
+    T.tjek(/85 af 114/.test(k.tekst) && !k.gamle.length, `kontrolpanelet: "${k.tekst.slice(0, 70)}…"; de fire gamle vinduer er slettet (v9.35)`);
     const m = await side.evaluate(async () => { const L = []; neKpPunkter(L); const p = L.find(x => /Kort over forbindelserne/.test(x.n) && /Node-editor/.test(x.kat)); if (p) p.fn(); await new Promise(r => setTimeout(r, 600)); const r = { punkt: !!p, aaben: !document.getElementById('mvk').hidden }; document.getElementById('mvk').hidden = true; return r; });
     T.tjek(m.punkt && m.aaben, 'Ctrl+K i Node-editoren: "Kort over forbindelserne (Mermaid, PNG, SVG)" åbner kortet');
     T.tjek(!fejl.filter(f => !/mermaid|jsdelivr|net::/i.test(f)).length, 'ingen fejl i browseren (uden internet kan Mermaid ikke hentes; det er kendt)', fejl.slice(0, 3).join(' | '));

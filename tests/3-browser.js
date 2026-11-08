@@ -121,10 +121,11 @@ async function kør(arg, { udenLyd = false } = {}) {
 
     /* Tilføj og fjern en forbindelse */
     const forb = await side.evaluate(async () => {
-      const n0 = maps.length; document.getElementById('add').click(); await new Promise(r => setTimeout(r, 200));
-      const n1 = maps.length; const rk = document.querySelectorAll('#maps .row'); const del = rk[rk.length - 1] && rk[rk.length - 1].querySelector('[data-del]');
-      if (del) del.click(); await new Promise(r => setTimeout(r, 200));
-      return { n0, n1, n2: maps.length, del: !!del };
+      /* i Node-editoren (Mapping er slettet i v9.35): ne5Ny laver reglen, ne5Slet sletter den */
+      const n0 = maps.length; ne5Ny('kick', 'puls', null, null); await new Promise(r => setTimeout(r, 200));
+      const n1 = maps.length, del = maps[n1 - 1] && maps[n1 - 1].band === 'kick' && maps[n1 - 1].effect === 'puls';
+      if (del) ne5Slet(n1 - 1); await new Promise(r => setTimeout(r, 200));
+      return { n0, n1, n2: maps.length, del };
     });
     ff = nyeFejl();
     T.tjek(forb.n1 === forb.n0 + 1 && forb.del && forb.n2 === forb.n0 && !ff.length, `tilføj og fjern en forbindelse (${forb.n0} → ${forb.n1} → ${forb.n2})`, ff.join(' | '));
