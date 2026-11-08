@@ -17,7 +17,8 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **Trin 9 lavet (v9.27):** trim på lydtræk og figur-styrke i motoren; Styrke brugt med figuren. Test: `tests/22-node-editor-trim.js`.
 - **Trin 10 lavet (v9.28):** Lær i reglens kontrolpanel og Adaptiv tærskels indstillinger. Test: `tests/23-node-editor-laer.js`.
 - **Trin 11 lavet (v9.29):** skabeloner (6 faste og egne) i Ctrl+K, + Tilføj og figurens kontrolpanel. Test: `tests/24-node-editor-skabelon.js`.
-- **Næste: trin 12 (v9.30), scene-noder og effekt-grupper**
+- **Trin 12 lavet (v9.30):** scene-noder med levende billede og Sluk; øje og Slå fra på figurer og effekt-grupper; Baggrund ▾. Test: `tests/25-node-editor-scene.js`.
+- **Næste: trin 13 (v9.31), zoom ud, Kun valgt kæde, Dæmp og tastatur**
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)
 

@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.12 · 7. november 2026 · gælder fra Claude MV v9.29 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.13 · 7. november 2026 · gælder fra Claude MV v9.30 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -112,7 +112,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.29
+## 4. Hvad der er sket fra v8.0 til v9.30
 
 | Version | Hvad |
 | --- | --- |
@@ -154,6 +154,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.27 | **Node-editoren, trin 9 af 16: trim og figur-styrke.** **Trim** på lydtræk (−12 til +12 dB; mærket øverst til højre, træk eller skyder) ganges på tallet, før reglerne bruger det (gemt i `scene.ne.trim`; `sceneKopi` beholder nu `ne`, så det følger med i pladserne). **Figur-styrke** (`o.neStyrke`, kan fortrydes) og effekt-gruppernes styrke (`scene.ne.grp`) ganges på alle deres regler. **Styrke brugt** = regel × figur × samlet × følsomhed × afsnits-dynamik i Mapping, Router og Node-editoren. Uden trim og med styrke 1 præcis som før |
 | v9.28 | **Node-editoren, trin 10 af 16: Lær og Adaptiv tærskel.** **Lær** i reglens kontrolpanel: med en analyseret sang regnes over hele sangen (Handling: tærsklen lige under de tydelige slag; Egenskab: mindst = 10. og mest = 95. percentil, styrken sat, så udgangen når 1); med Lyd ind eller generatoren lytter Lær i 8 sekunder. Kort besked med Fortryd. En ny regel har Lær lysende som forslag. **Adaptiv tærskel** (i dag Auto-tærskel): Til/Fra, hvor hurtigt (1–8 s) og bundgrænse (0–0,3), de samme indstillinger som i EQ-vinduet |
 | v9.29 | **Node-editoren, trin 11 af 16: skabeloner.** En **skabelon** (vores navn; fagudtryk: template) lægger lydtræk og regler på én figur på én gang. Seks følger med: *Dans på trommer*, *Dans på bas og vokal*, *Diskokugle på bas*, *Morgenstjerne* (de 6 regler), *Puls på kick* og *Klodsbane på slag* (Bane). Vælges i Ctrl+K, i + Tilføj (Figur) eller i figurens kontrolpanel; uden valgt figur spørger listen "Hvilken figur?". Mål, figuren ikke har, springes over med en besked; ét Fortryd fjerner det hele. **Gem som skabelon** gemmer en figurs regler (`set.ne.skabeloner`) |
+| v9.30 | **Node-editoren, trin 12 af 16: scener og effekt-grupper.** **Scene-noder** for de scener, der vises (fanen i Scene, et løsrevet vindue eller udgangsvinduet; kun Live preview, Radial Mesh, Mesh 3D, Øjet og Lyd i 3D) med et lille levende billede (4 i sekundet); vælgeren skifter fanen, klik på billedet åbner Show; kontrolpanelet: Riv løs / Til Scene, Send til skærm, **Sluk** (scenen tegner ikke; `set.ne.sluk`) og Åbn stort. Links fra hver figur og effekt-gruppe til Live preview. **Øje og Slå fra** på figurer og effekt-grupper (øjet på en figur = Tag af scenen; Slå fra: reglerne giver 0 i motoren via `neFraF`; `o.neFra`, `scene.ne.grp[navn].fra/skjult`). **Baggrund ▾**: Fra, Dublet-scenen, Mesh 3D, Øjet (`set.ne.bg`) |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -178,6 +179,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Kort over forbindelserne** kræver internet første gang (henter Mermaid 11.17.2 fra jsDelivr); uden internet vises koden.
 - **Editoren:** fanen *Lag* har stadig mange kontroller, når *Detaljer* står højt. Det er egenskaberne selv; ikke en fejl.
 - **Unity-udgaven af Mesh 3D (v2.1, et separat projekt)** er aldrig testet i Unity.
+- **Node-editoren (v9.30):** Dublet-scenen i Baggrund ▾ er Live previews billede (det samme, Dublet viser). Mesh 3D og Øjet som baggrund tegnes 5 gange i sekundet i lille størrelse. Øjet på effekt-gruppen Bane skjuler ikke klodser, der allerede kører. Kun Live preview tegner figurerne, så kun den får links. Effekt-gruppernes øje og Slå fra kan ikke fortrydes med Ctrl+Z (figurernes kan). Slukket gælder alle opsætninger.
 - **Node-editoren (v9.29):** de seks skabeloner er sat sammen ud fra danserens standard-forbindelser og Tilføj morgenstjerne; de er ikke prøvet på musik af et menneske. Egne skabeloner gemmes i `set.ne` (gælder alle opsætninger) og kan endnu ikke omdøbes eller slettes.
 - **Node-editoren (v9.28):** Lær bruger den samlede måling over hele sangen (med trim og Vend om), ikke det, Adaptiv tærskel gør med tærsklen undervejs. Lær med Lyd ind er kun testet med generatoren. Adaptiv tærskel gælder alle regler (ikke pr. regel).
 - **Node-editoren (v9.27):** klodser, der forudsiges fra filen, bruger ikke trimmet. Trim og effekt-gruppernes styrke kan ikke fortrydes med Ctrl+Z (Fortryd dækker forbindelser og figurer); figur-styrken kan.
@@ -195,7 +197,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Næste opgaver
 | Opgave | Hvorfor |
 | --- | --- |
-| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–11 er lavet (v9.19–v9.29). Næste: trin 12 (v9.30), scene-noder og effekt-grupper** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
+| **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–12 er lavet (v9.19–v9.30). Næste: trin 13 (v9.31), zoom ud, Kun valgt kæde, Dæmp og tastatur** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |
 | **three.js (trin 0):** valgt **A**; intet bygges nu | den nye three.js lægges ved siden af r128, når Node-editoren skal bygges; senere B (se `STATUS.md`) |
 
 **Router-boksen** (bygget i v9.9) for én forbindelse: kilden med angivelse af, hvor den er målt, *Manuel* eller *Auto*; en **VU-måler** (fagudtryk) med tærsklen som en gul streg, man trækker i, **hysterese** (fagudtryk: to tærskler, så det ikke flimrer) som et svagt bånd under stregen og et topmærke (peak hold); signalet over tid før og efter kæden; skyderne **Attack**, **Release** og **Hold** (én skyder: Fra · 50 ms til 2 s · ∞, hvor ∞ står fast til næste lyd); "Styrke brugt" med gain-stakken; og de avancerede ting (kurve, slew, spærretid) som små drejeknapper. Kæden i fast rækkefølge: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
