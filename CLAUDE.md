@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.19 · 8. november 2026 · gælder fra Claude MV v9.36 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.20 · 8. november 2026 · gælder fra Claude MV v9.37 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -120,7 +120,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.36
+## 4. Hvad der er sket fra v8.0 til v9.37
 
 | Version | Hvad |
 | --- | --- |
@@ -169,6 +169,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.34 | **Node-editoren, trin 16 af 16: funktionsliste-tjek.** Tabellen `docs/node-editoren/FUNKTIONSLISTE-TJEK.md` har hver af de 114 linjer fra FUNKTIONER.md med plads i Node-editoren og status: **85 lavet**, 12 delvis, 9 mangler, 8 ikke nødvendige; Kort over forbindelserne (Mermaid, PNG, SVG) og de 11 visninger fra Routing-overblik står med (1 lavet, 10 mangler). Testen går alle linjer igennem og tjekker, at hvert kontrol-navn findes. **Kort over forbindelserne** åbnes nu også fra Node-editorens Ctrl+K. Kontrolpanelet viser tallene (`NE16`) og en opdateret hjælpetekst. Intet gammelt vindue er fjernet |
 | v9.35 | **De fire gamle vinduer er slettet** (din beslutning 8. november): Mapping, Router 2.0, Dublet og Routing-overblik (HTML, faner, knapper og blokkene Dublet og Routing-overblik). Regler laves og rettes i **Node-editoren**. **Flyttet:** Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 til Opsætninger (W13); Kort over forbindelserne, Ryd hold, Tilføj morgenstjerne, Tilslut MIDI og Tilfældigt til Værksted · Lydtræk-guide (W18); Morph Pads knap åbner Node-editoren. Sidebjælkens Forbindelser åbner Arbejdsfeltet. Motoren og `maps` er de samme; `renderMaps` udfylder stadig standardværdier og markerer fjernede kilder. Test 7 (Router-visningen) er slettet; test 5, 6, 8, 9 og 11 tester nu motoren uden vinduerne |
 | v9.36 | **Docking (vinduessystem C, dit valg til din 43" skærm):** arbejdsfladen er delt i **zoner** med hver sin fanebjælke; hver fane er et vindue. **Træk en fane** til en anden zone (flyt) eller til en kant (zonen deles; et blåt felt viser hvor). **Stregerne** trækkes (dobbeltklik = lige store); 🔒 Lås vinduer låser streger og faner. I zonens bjælke: **＋** (åbn som fane), **⤢ Stor** (fylder arbejdsfladen; Esc), **⛶ Fuld skærm** (rigtig fuld skærm; Esc) og **⋯** (del, send til skærm, luk zonen); **×** lukker en fane. Layoutene **husker dine ændringer** (`set.dockLay`); **↺ Standard** sætter dem tilbage. Fjernet: frie vinduer, ▦-menuen, Maksimér, −, Riv løs, Bredt skrivebord og panelerne ovenpå. De gamle funktioner (`scVaelg`, `fgVaelg`, `sbAabn`, `zonPop`, `lay3Anvend`) går gennem docking (`set.dock`). Testet ved 2560 × 1440 |
+| v9.37 | **Rettet: noderne kan trækkes igen** (din video 8. november). Et træk på kontrolpanelets tekst, kolonnernes overskrifter eller værktøjslinjen markerede tekst hen over noderne; det næste træk i en node startede browserens træk-og-slip af markeringen (fagudtryk: native drag and drop), som afbrød nodens træk. Nu er browserens træk-og-slip slået fra i Node-editoren og zonernes fanebjælker, en gammel markering ryddes ved tryk dér, og teksten dér kan ikke markeres (felter kan stadig). Test 32 fanger fejlen i v9.36 |
 
 ## 5. Halvfærdigt og kendte fejl
 
