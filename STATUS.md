@@ -28,6 +28,7 @@ Papiret er færdigt: `NODE-EDITOREN.md` (v7.6, 6. november 2026). Billederne og 
 - **v9.38:** altid skarpt: Live preview i skærmens fulde opløsning, Øjet skarpt i fuld skærm på 4K, noderne bliver ikke til lys og står skarpt ved al zoom; roligere drejeknapper (400 px, sidelæns, musehjul); ingen three.js-advarsel. Test: `tests/33-altid-skarpt.js`.
 - **v9.39:** knapperne fra Lydkilde, Opsætninger og Værksted i Node-editorens kontrolpanel og Ctrl+K; funktionslisten 98 af 114; rettet WebGPU-fejl ved skjult fane. Test: `tests/34-knapper-i-node-editoren.js`.
 - **v9.40:** oprydning: Router-boksens kode og tegneløkke, de frie vinduers rester (v7.0, v7.1, v9.0) og Dublets tastatur i manualen. Test: `tests/35-oprydning.js`.
+- **v9.41:** de 10 visninger fra Routing-overblik i Node-editoren (Visning ▾). Test: `tests/36-visninger.js`.
 - **Næste: du vælger.** Tilbage i `docs/node-editoren/FUNKTIONSLISTE-TJEK.md`: de 10 visninger fra Routing-overblik, D2-sortering på lærredet og håndtagene i billedet. Desuden oprydning af døde rester (frie vinduer, Router 2.0-boksen) og små huller (Fortryd for trim og effekt-grupper, slet/omdøb skabeloner).
 
 ### Trin 0 · three.js med WebGPU: valgt A (4. november 2026)

@@ -1,4 +1,4 @@
-# Funktionsliste-tjek · Node-editoren (trin 16, v9.34; opdateret i v9.39)
+# Funktionsliste-tjek · Node-editoren (trin 16, v9.34; opdateret i v9.39 og v9.41)
 
 Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens plads i Node-editoren. Testen `tests/29-funktionsliste.js` går alle linjer igennem: hver funktion står her præcis én gang, status er en af de fire, og navnet i *Kontrol* findes i programmet.
 
@@ -8,9 +8,9 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 
 | | Antal |
 | --- | --- |
-| ✅ lavet | 98 |
-| ◐ delvis | 4 |
-| ✗ mangler | 4 |
+| ✅ lavet | 103 |
+| ◐ delvis | 2 |
+| ✗ mangler | 1 |
 | – ikke nødvendig | 8 |
 | I alt (fra FUNKTIONER.md) | 114 |
 
@@ -22,6 +22,8 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Router 2.0 | 1 | slettet i v9.35 |
 | Routing-overblik | 4 | slettet i v9.35 |
 | Mapping | 3 | slettet i v9.35 |
+
+**v9.41:** de 10 visninger fra Routing-overblik er tilbage i Node-editoren (Visning ▾), med Kræfter, Træ og 3D-netværk; Layout og Overblik er nu ✅ lavet.
 
 **v9.39:** de 13 linjer, hvor knappen kun fandtes i Lydkilde, Opsætninger eller Værksted, er nu ✅ lavet: knapperne findes i Node-editorens kontrolpanel (Lydkilde-noden, MIDI-noden, figurerne og uden valg) og i Ctrl+K.
 
@@ -87,7 +89,7 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | --- | --- | --- | --- | --- |
 | Åbn | ✅ lavet | Fanen Node-editor og layoutet Noder | 1 | `neVis` |
 | Luk | – ikke nødvendig | En fane; den lukkes ikke | 1 |  |
-| Layout | ◐ delvis | Kun Kolonner (det er Node-editoren); de 10 andre visninger mangler (se nederst) |  |  |
+| Layout | ✅ lavet | Visning ▾ i værktøjslinjen: Noder (kolonner) og de 10 visninger fra Routing-overblik; valget huskes | v9.41 | `ne41Vis` |
 | Find | ✅ lavet | Ctrl+K finder noder ("findes") og flytter kortet derhen | 6 | `neVisNode` |
 | Levende linjer | ✅ lavet | Linjerne lever altid (TSL fra v9.32) | 2, 14 | `neLinjerTegn` |
 | Vis slået fra | ✅ lavet | Slukkede regler står med "Slukket" og stiplet kant | 2 | `ne2Byg` |
@@ -95,11 +97,11 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Vælg forbindelse | ✅ lavet | Klik på en regel | 2 | `ne2Kaede` |
 | Ret tærskel og gain | ✅ lavet | Måleren og skyderne | 4 | `ne4Vaerdi` |
 | Slå fra / Slå til · Slet | ✅ lavet | Slå fra / Slå til og Slet regel | 5 | `ne5Slet` |
-| Kræfter (kun Frit netværk og 3D-netværk) | ✗ mangler | Node-editoren har ingen kræfter (noderne står i kolonner) |  |  |
+| Kræfter (kun Frit netværk og 3D-netværk) | ✅ lavet | Visning Frit netværk eller 3D-netværk: bjælken Kræfter (Frastødning, Fjederlængde, Tyngdekraft, Retning, Vis kræfter, Ryst, Løsn fastgjorte, Standard) | v9.41 | `rtLayoutFri, rtLayVis` |
 | Fastgør knude (Frit netværk) | ✅ lavet | Træk en node: pladsen huskes (set.ne.pos); Placér løsner alle | 2 | `ne2Placer` |
 | Tidslinje-layout | ✅ lavet | Klik i bølgeformen på Lydfil-noden hopper i sangen | 3 | `ne3Tik` |
-| Træ-layout | ✗ mangler | Træ-layoutet findes ikke i Node-editoren |  |  |
-| 3D-netværk | ✗ mangler | 3D-netværket findes ikke i Node-editoren |  |  |
+| Træ-layout | ✅ lavet | Visning Træ: fanerne øverst vælger roden | v9.41 | `rtTegnAndre` |
+| 3D-netværk | ✅ lavet | Visning 3D-netværk: træk på en tom plads drejer | v9.41 | `rt3D` |
 | Rul | ✅ lavet | Træk lærredet, Shift + musehjul, piletasterne | 1, 2 | `neZoomMidt` |
 | Tastatur | ✅ lavet | Home/End, ↑ ↓, ← →, [ ], Enter, Delete og Esc | 13 | `ne13Taster` |
 | Lav ny forbindelse | ✅ lavet | Node-editoren kan lave regler (træk et link) | 5 | `ne5Ny` |
@@ -161,7 +163,7 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Styrke brugt | ✅ lavet | Styrke brugt med alle led | 4, 9 | `stakFor` |
 | Taktslag Auto og Spor Auto | ✅ lavet | Taktslag og Spor: Auto-valg/Manuel | 4 | `ne2Kp` |
 | Vælg kilde og mål for en forbindelse | ✅ lavet | Træk links til en ny kilde eller et nyt mål | 5 | `ne5Flyt` |
-| Overblik over alle forbindelser | ◐ delvis | Node-editoren er Kolonner; de 10 andre visninger fra Routing-overblik mangler | 2 |  |
+| Overblik over alle forbindelser | ✅ lavet | Node-editoren (Noder) og de 10 visninger i Visning ▾ | 2, v9.41 | `ne41Vis` |
 | Tilfældige forbindelser | ✅ lavet | Ctrl+K: Tilfældigt | 6 | `neKpPunkter` |
 | Auto-opsætning | ✅ lavet | Ctrl+K: Kør Auto-mapping | 6 | `neKpPunkter` |
 | Vælg lydfil | ✅ lavet | + Tilføj i Lydkilde: Vælg lydfil … | 6 | `ne6Valg` |
@@ -192,13 +194,13 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Funktion | Status | I Node-editoren | Trin | Kontrol |
 | --- | --- | --- | --- | --- |
 | Kolonner | ✅ lavet | Node-editoren er kolonner | 1, 2 | `ne2Placer` |
-| Frit netværk (kræfter) | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Matrix | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Strømme | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Tidslinje | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Træ | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Treemap | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Bue-diagram | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Hive plot | ✗ mangler | findes kun i Routing-overblik |  |  |
-| Ring (chord) | ✗ mangler | findes kun i Routing-overblik |  |  |
-| 3D-netværk | ✗ mangler | findes kun i Routing-overblik |  |  |
+| Frit netværk (kræfter) | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtLayoutFri` |
+| Matrix | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Strømme | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Tidslinje | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Træ | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Treemap | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Bue-diagram | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Hive plot | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| Ring (chord) | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rtTegnAndre` |
+| 3D-netværk | ✅ lavet | Visning ▾ i Node-editorens værktøjslinje (samme tegning som i Routing-overblik) | v9.41 | `rt3D` |
