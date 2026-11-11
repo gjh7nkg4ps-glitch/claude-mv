@@ -1,4 +1,4 @@
-# Funktionsliste-tjek · Node-editoren (trin 16, v9.34; opdateret i v9.39 og v9.41)
+# Funktionsliste-tjek · Node-editoren (trin 16, v9.34; opdateret i v9.39, v9.41 og v9.42)
 
 Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens plads i Node-editoren. Testen `tests/29-funktionsliste.js` går alle linjer igennem: hver funktion står her præcis én gang, status er en af de fire, og navnet i *Kontrol* findes i programmet.
 
@@ -8,9 +8,9 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 
 | | Antal |
 | --- | --- |
-| ✅ lavet | 103 |
-| ◐ delvis | 2 |
-| ✗ mangler | 1 |
+| ✅ lavet | 106 |
+| ◐ delvis | 0 |
+| ✗ mangler | 0 |
 | – ikke nødvendig | 8 |
 | I alt (fra FUNKTIONER.md) | 114 |
 
@@ -22,6 +22,8 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Router 2.0 | 1 | slettet i v9.35 |
 | Routing-overblik | 4 | slettet i v9.35 |
 | Mapping | 3 | slettet i v9.35 |
+
+**v9.42:** Sortering (D2 på lærredet), Spejlbilledet og Flyt effekt eller figur (Håndtag i billedet) er ✅ lavet. **Alle 106 funktioner, der skal være i Node-editoren, er lavet.**
 
 **v9.41:** de 10 visninger fra Routing-overblik er tilbage i Node-editoren (Visning ▾), med Kræfter, Træ og 3D-netværk; Layout og Overblik er nu ✅ lavet.
 
@@ -38,7 +40,7 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | --- | --- | --- | --- | --- |
 | Åbn Dublet | ✅ lavet | Fanen Node-editor i Arbejdsfeltet og layoutet Noder i topbjælken | 1 | `neVis` |
 | Luk | – ikke nødvendig | En fane; den lukkes ikke | 1 |  |
-| Spejlbilledet | ◐ delvis | Scene-noden har et lille levende billede, og Baggrund ▾ kan vise Dublet-scenen bag noderne; håndtagene i billedet findes ikke | 12 | `ne12Vis, neSaetBg` |
+| Spejlbilledet | ✅ lavet | Scene-noden har et lille levende billede, Baggrund ▾ kan vise Live preview bag noderne, og Håndtag i billedet viser en prik for hver effekt og figur | 12, v9.42 | `ne12Vis, neSaetBg, ne42Prikker` |
 | Opløsning | – ikke nødvendig | Scene-nodens billede er lille og tegnes 4 gange i sekundet | 12 |  |
 | Lydtræk til venstre | ✅ lavet | Kolonnen Lydtræk med levende måler og tal; linjen lyser, når reglen slår til | 2 | `ne2Byg` |
 | Vælg kildegruppe | ✅ lavet | + Tilføj i Lydtræk (grupperet efter mappe, også 4 spor og de 31 bånd) og analyse-noderne med alle udgange | 3, 6 | `ne6Valg` |
@@ -46,7 +48,7 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Find mål | ✅ lavet | Søgefeltet i menuen med figurens mål og Ctrl+K | 5, 6 | `neKpPunkter` |
 | Kun koblede | ✅ lavet | Node-editoren viser kun det, der er koblet (+ Tilføj viser resten) | 2 |  |
 | Lav forbindelse | ✅ lavet | Træk fra udgangen ● på et lydtræk til en figur eller et mål | 5 | `ne5Ny` |
-| Flyt effekt eller figur | ✗ mangler | Effekter og figurer flyttes stadig i Live preview (Flyt effekter) og Form-editoren |  |  |
+| Flyt effekt eller figur | ✅ lavet | Håndtag i billedet (Live previews scene-node): træk i prikken | v9.42 | `ne42SaetHaand` |
 | Vælg forbindelse | ✅ lavet | Klik på en node: kanten og kæden lyser hvidt | 2 | `ne2Kaede` |
 | Ret tærskel og gain | ✅ lavet | Træk tærsklen på reglens måler og styrke-tallet; skydere i kontrolpanelet | 4 | `ne4Vaerdi` |
 | Slå fra / Slå til | ✅ lavet | Slå fra / Slå til i reglens kontrolpanel | 5 | `ne2Kp` |
@@ -62,7 +64,7 @@ Hver linje fra `docs/arkiv/hjertet/FUNKTIONER.md` (skrevet ud fra v9.18) og dens
 | Ny forbindelse | ✅ lavet | Træk et link til et tomt sted (Tilføj-listen) og + Tilføj i Regel | 5, 6 | `ne5Kladde` |
 | Visning | ✅ lavet | Zoom 10–200 %; under 20 % er noderne lys uden tekst | 1, 13 | `ne13Lod` |
 | Detaljer | ✅ lavet | Klik på en regel: kontrolpanelet viser alt | 2, 4 | `ne2Kp` |
-| Sortering | ◐ delvis | Placér stiller reglerne efter figur → mål; D2-mapperne bruges i + Tilføj, ikke på lærredet | 2, 6 | `neAutoPlacer` |
+| Sortering | ✅ lavet | Sortér: Figur → mål · D2 (efter musik) i kontrolpanelet og Ctrl+K; D2 med mappe-overskrifter på lærredet | 2, 6, v9.42 | `ne42PlacerD2` |
 | Farve efter type | ✅ lavet | Lydtrækkene har typens farve (temaets lydtraekType) | 2 |  |
 | Kilde-chip | ✅ lavet | Lydtræk-noden viser tallet lige nu og "N regler" | 2 | `ne3Tik` |
 | Vis kilder, der ikke bruges | ✅ lavet | + Tilføj i Lydtræk viser alle kilder; et nyt lydtræk er en løs node | 6 | `neTilfoej` |

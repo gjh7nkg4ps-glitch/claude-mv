@@ -24,7 +24,7 @@ async function kør(arg) {
   const md = fs.readFileSync(path.join(ROD, 'docs/node-editoren/FUNKTIONSLISTE-TJEK.md'), 'utf8'), sum = k => +((md.match(new RegExp('\\| ' + k + ' \\| (\\d+) \\|')) || [0, -1])[1]);
   T.tjek(ST.every(k => (tal[k] || 0) === sum(k)), `sammendraget passer: ${ST.map(k => k + ' ' + (tal[k] || 0)).join(', ')}`);
   const html = fs.readFileSync(fil, 'utf8'), ne16 = (html.match(/const NE16=\{lavet:(\d+),delvis:(\d+),mangler:(\d+),ikke:(\d+),ialt:(\d+)/) || []).slice(1).map(Number);
-  T.tjek(ne16.join() === [tal[ST[0]], tal[ST[1]], tal[ST[2]], tal[ST[3]], F.length].join(), `tallene i programmet (NE16: ${ne16.join(', ')}) passer med tabellen`);
+  T.tjek(ne16.join() === [tal[ST[0]] || 0, tal[ST[1]] || 0, tal[ST[2]] || 0, tal[ST[3]] || 0, F.length].join() /* v9.42: 0 står ikke i optællingen */, `tallene i programmet (NE16: ${ne16.join(', ')}) passer med tabellen`);
   const kort = J.filter(j => j.sek === 'Kort over forbindelserne').map(j => j.fn), vis = J.filter(j => j.sek === 'Routing-overblik: de 11 visninger');
   const elleve = ((fs.readFileSync(path.join(ROD, 'docs/arkiv/hjertet/FUNKTIONER.md'), 'utf8').match(/11 måder at se de samme forbindelser: ([^.]*)\./) || [0, ''])[1]).split(' · ').map(x => x.trim());
   T.tjek(kort.length === 3 && /Mermaid/.test(kort[0]) && kort.includes('⬇ PNG') && kort.includes('⬇ SVG') && vis.length === 11 && elleve.length === 11 && elleve.every(v => vis.some(j => j.fn === v)), `Kort over forbindelserne (${kort.join(', ')}) og de 11 visninger fra Routing-overblik står med (${vis.filter(j => j.st === ST[0]).length} lavet, ${vis.filter(j => j.st === ST[2]).length} mangler)`);
