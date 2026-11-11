@@ -1,6 +1,8 @@
-# NODE-EDITOREN · papir v7.6
+# NODE-EDITOREN · P7.6
 
-*6. november 2026 · fra hovedchatten · erstatter HJERTET.md · v7.6 har svarene på Code's plan skrevet ind*
+*6. november 2026 · fra hovedchatten · erstatter HJERTET.md · P7.6 har svarene på Code's plan skrevet ind*
+
+*Papirets versioner hedder P (fx P7.6). Programmets versioner hedder v (fx v9.18, v9.19). De to tællere har intet med hinanden at gøre.*
 
 Node-editoren er den nye skærm i Claude MV, hvor man kobler lyd til figurer. Den hed før "Routeren" og "Hjertet". Begge navne udgår.
 
@@ -377,7 +379,7 @@ Ingen. Alle er afklaret:
 
 ## 13 · Billeder i docs/node-editoren/
 
-Billederne viser ikke de nye noder fra v7.6 (31 bånd, Afsnit, Morph Pad og Tastatur). For dem gælder teksten.
+Billederne viser ikke de nye noder fra P7.6 (31 bånd, Afsnit, Morph Pad og Tastatur). For dem gælder teksten.
 
 | Fil | Viser |
 |---|---|
