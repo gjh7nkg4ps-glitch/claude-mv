@@ -1,0 +1,61 @@
+Besked til Claude Code · P8.1 · 13. nov. 2026
+
+Brugeren har fået lavet en gennemgang af v9.42 og en ny plan
+for hele brugerfladen. Brugeren har godkendt planen den 13. nov.,
+bortset fra valg V3 (de gamle visninger).
+Du skal IKKE bygge noget endnu.
+
+Brug modellen Fable 5.2 til denne opgave (/model).
+
+1. Læg planen på plads
+   - Brugeren har lagt PLAN-NY-BRUGERFLADE-P8_1.md i roden af repoet.
+   - Omdøb den med git mv til PLAN-NY-BRUGERFLADE.md
+     (versionen P8.1 står øverst i filen).
+   - Flyt denne besked til docs/arkiv/ med git mv.
+   - Commit: "Plan P8.1: ny brugerflade (kun plan, intet bygget)"
+
+2. Læs
+   - PLAN-NY-BRUGERFLADE.md (hele filen)
+   - CLAUDE.md, STATUS.md og NODE-EDITOREN.md
+
+3. Lav fase 0 fra planen: kortlægning. Ændr ingen kode.
+   Skriv docs/KORTLAEGNING.md med fem dele:
+   a) Regler: hvert sted, der ændrer maps, med blok og linje.
+   b) Auto: hver ting, der hedder Auto eller Automatisk,
+      og hvad den ændrer.
+   c) Fjerne-listen: hvert vindue, hver visning og hver gruppe
+      af knapper. Giv hver et nummer og én linje om, hvad den gør.
+      Brugeren svarer med numre: behold, fjern eller ved ikke.
+   d) Rester: død kode og indstillinger fra ældre vinduessystemer.
+   e) Udgangspunkt: antal knapper, skydere, dropdowns og vinduer,
+      og filens størrelse.
+
+4. Tjek planens tal
+   - Afsnit 2 i planen har tal mærket "målt" og "læst".
+   - Skriv i KORTLAEGNING.md, hvor de ikke passer med koden.
+
+5. Kør hele testpakken på v9.42
+   - Skriv resultatet i KORTLAEGNING.md.
+   - I gennemgangen stoppede testen af Lydmotor 2 på et
+     skærmbillede. Skriv, om den består hos dig.
+
+6. P7.7 punkt 3 (Fortryd for resten og et fast id på hver regel)
+   - Det er første del af fase 1 i den nye plan.
+   - Har du allerede bygget det, så skriv det i STATUS.md.
+   - Har du ikke, så vent, til brugeren skriver "kør".
+
+7. Stop
+   - Skriv dine spørgsmål øverst i dit svar.
+   - Byg ikke fase 1, før brugeren skriver "kør".
+   - Commit: "Kortlægning til P8.1 (intet bygget)"
+
+Regler, der gælder fra nu af (planens afsnit 1 og 1.1):
+   1. Ét trin pr. "kør". Stop efter hvert trin.
+   2. Brugeren prøver hver version med musik før næste trin.
+   3. Hvert trin fjerner noget. Vis tallene før og efter.
+   4. Funktioner må forsvinde. Funktionslisten gælder ikke mere.
+   5. Ingen udvikler-tekst på skærmen.
+   6. Programmet tilpasser sig skærmen. Prøv hver version i
+      1920 × 1080, 2560 × 1440 og 3840 × 2160.
+
+Skriv på enkelt dansk.
