@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.23 · 11. november 2026 · gælder fra Claude MV v9.42 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.24 · 13. november 2026 · gælder fra Claude MV v9.42 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -226,6 +226,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ## 6. Planen: det næste
 
 ### Næste opgaver
+
+**Fra 13. november 2026 gælder `PLAN-NY-BRUGERFLADE.md` (P8.1)** foran resten af dette afsnit. Fase 0 (kortlægning) er lavet: `docs/KORTLAEGNING.md`. Næste er fase 1 (én fælles indgang til reglerne, et id på hver regel og ét Fortryd for alt), når brugeren skriver "kør". Planens regler: ét trin pr. "kør" og stop; brugeren prøver hver version med musik før næste trin; hvert trin fjerner noget (vis tallene før og efter); **funktioner må forsvinde** (reglen om funktionslisten, 106 af 106, gælder ikke mere); ingen udvikler-tekst på skærmen; prøv hver version i 1920 × 1080, 2560 × 1440 og 3840 × 2160. Fase 0 og opbygningen i fase 1 og 5 laves med modellen Fable 5.2; alt byggeri med Opus 5.5.
+
 | Opgave | Hvorfor |
 | --- | --- |
 | **Node-editoren** (vores navn; hed før Routeren og Hjertet): papiret er `NODE-EDITOREN.md` (v7.6, billeder og tema i `docs/node-editoren/`); planen er `docs/PLAN-NODE-EDITOREN.md` med svarene. **Trin 1–16 er lavet (v9.19–v9.34); de gamle vinduer er slettet i v9.35. Docking (vinduessystem C) er lavet i v9.36. Knapperne fra de andre vinduer er i Node-editoren i v9.39; oprydning i v9.40; de 10 visninger i v9.41; D2 og håndtag i v9.42: **alle 106 funktioner fra funktionslisten er lavet**. Næste: du vælger (fx Fortryd for trim og effekt-grupper, slet/omdøb skabeloner, eller noget fra Idé-kassen)** | papiret er færdigt; intet er bygget. Funktionslisten ligger nu i `docs/arkiv/hjertet/FUNKTIONER.md`, og ingen funktion fra den må forsvinde |

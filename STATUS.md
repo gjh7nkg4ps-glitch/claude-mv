@@ -1,5 +1,14 @@
 # STATUS · Claude MV
 
+## Ny brugerflade (P8.1, 13. november 2026)
+
+Planen er `PLAN-NY-BRUGERFLADE.md` (P8.1), godkendt af brugeren 13. november undtagen valg V3. Den gælder foran `docs/PLAN-NODE-EDITOREN.md`, hvor de to er uenige.
+
+- **Fase 0 (kortlægning) er lavet:** `docs/KORTLAEGNING.md`. Ingen kode er ændret; programmet er stadig **v9.42**. Hele testpakken bestod på v9.42 (411 tjek, 0 fejl; Lydmotor 2 bestod).
+- **Venter på brugeren:** svar på fjerne-listen (afsnit c i kortlægningen) og "kør" til fase 1.
+- **P7.7 punkt 3 er ikke bygget:** hverken Fortryd for resten (trim, effekt-gruppernes styrke, øje, Slå fra, Normalisering, Samlet styrke) eller et fast id på hver regel. Det er første del af fase 1.
+- **Regler fra nu af:** ét trin pr. "kør"; brugeren prøver hver version med musik; hvert trin fjerner noget (tal før og efter); funktioner må forsvinde (funktionslisten gælder ikke mere); ingen udvikler-tekst på skærmen; hver version prøves i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
+
 Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsnit 6.
 
 ## Node-editoren (hed før Routeren og Hjertet)
