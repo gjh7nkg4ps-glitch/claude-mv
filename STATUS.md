@@ -1,11 +1,12 @@
 # STATUS · Claude MV
 
-## Ny brugerflade (P8.1, 13. november 2026)
+## Ny brugerflade (P8.2, 13. november 2026)
 
-Planen er `PLAN-NY-BRUGERFLADE.md` (P8.1), godkendt af brugeren 13. november undtagen valg V3. Den gælder foran `docs/PLAN-NODE-EDITOREN.md`, hvor de to er uenige.
+Planen er `PLAN-NY-BRUGERFLADE.md` (P8.2), godkendt af brugeren 13. november; alle valg er afgjort. Den gælder foran `docs/PLAN-NODE-EDITOREN.md`, hvor de to er uenige.
 
 - **Fase 0 (kortlægning) er lavet:** `docs/KORTLAEGNING.md`. Ingen kode er ændret; programmet er stadig **v9.42**. Hele testpakken bestod på v9.42 (411 tjek, 0 fejl; Lydmotor 2 bestod).
-- **Venter på brugeren:** svar på fjerne-listen (afsnit c i kortlægningen) og "kør" til fase 1.
+- **Brugeren har svaret på fase 0 (13. november):** svarene på fjerne-listen står i planens afsnit 3.1. Morph Pad fjernes helt, også i koden; Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag, Detektion og flere fjernes; ingen af de gamle visninger fjernes, før matrixen er prøvet med musik (valg V3). Planen er rettet til P8.2.
+- **Venter på brugeren:** "kør" til fase 1. Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
 - **P7.7 punkt 3 er ikke bygget:** hverken Fortryd for resten (trim, effekt-gruppernes styrke, øje, Slå fra, Normalisering, Samlet styrke) eller et fast id på hver regel. Det er første del af fase 1.
 - **Regler fra nu af:** ét trin pr. "kør"; brugeren prøver hver version med musik; hvert trin fjerner noget (tal før og efter); funktioner må forsvinde (funktionslisten gælder ikke mere); ingen udvikler-tekst på skærmen; hver version prøves i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
 

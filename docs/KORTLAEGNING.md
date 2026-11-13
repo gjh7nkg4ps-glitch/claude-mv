@@ -233,6 +233,8 @@ Planens liste i fase 4 mangler **B10, B14, B15, B17, B18 og B19**.
 
 ## c · Fjerne-listen
 
+**Brugeren har svaret den 13. november.** Afgørelsen for hvert nummer står i `PLAN-NY-BRUGERFLADE.md` (P8.2), afsnit 3.1. Kolonnen *Mit forslag* nedenfor er, som den var, før svaret.
+
 **Sådan svarer du:** skriv numrene, fx `behold 1-9, 13 · fjern 16, 23, 24 · ved ikke 7, 8`.
 
 Tallene i kolonnen *Kontroller* er **knapper · skydere · dropdowns**, målt i programmet. Kolonnen *Mit forslag* er kun et forslag; du bestemmer. Det, planens afsnit 5 siger ikke må ændres, står som **bliver**.
