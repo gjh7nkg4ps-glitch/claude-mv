@@ -49,7 +49,7 @@ async function kør(arg) {
     const knap = async () => side.evaluate(() => { const k = document.querySelector('#ne-kp .ne-knap[data-nf="hyst"]'); k.scrollIntoView({ block: 'center' }); const r = k.querySelector('svg').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
     const hyst = () => side.evaluate(() => ne4Vaerdi(maps[NE2.N.get(NE2.valgt).i], 'hyst'));
     let q = await knap(); await side.mouse.move(q.x, q.y); await side.mouse.down(); await side.mouse.move(q.x, q.y - 60, { steps: 8 }); await side.mouse.up(); await side.waitForTimeout(300); const op = await hyst();
-    await side.evaluate(() => { maps[NE2.N.get(NE2.valgt).i].hyst = 0; neVaelg(NE2.valgt); }); await side.waitForTimeout(400);
+    await side.evaluate(() => { maps[NE2.N.get(NE2.valgt).i].hyst = 0; neVaelg(NE2.valgt); }); await side.waitForTimeout(1500); /* v9.45: vent, til Node-editoren har bygget sig om efter nulstillingen */
     q = await knap(); await side.mouse.move(q.x, q.y); await side.mouse.down(); await side.mouse.move(q.x + 60, q.y, { steps: 8 }); await side.mouse.up(); await side.waitForTimeout(300); const hoejre = await hyst();
     q = await knap(); await side.mouse.move(q.x, q.y); await side.mouse.wheel(0, -100); await side.waitForTimeout(300); const hjul = await hyst();
     T.tjek(Math.abs(op - .05) < .015 && Math.abs(hoejre - .05) < .015 && Math.abs(hjul - hoejre - .01) < .001, `drejeknappen Hysterese (0 til 0,3): 60 px op giver ${op}, 60 px til højre ${hoejre}, ét hak på musehjulet +0,01 (${hjul}); før gav 60 px 0,12`);

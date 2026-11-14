@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.27 · 14. november 2026 · gælder fra Claude MV v9.44 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.28 · 14. november 2026 · gælder fra Claude MV v9.45 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -120,7 +120,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.44
+## 4. Hvad der er sket fra v8.0 til v9.45
 
 | Version | Hvad |
 | --- | --- |
@@ -177,6 +177,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.42 | **D2 på lærredet og håndtag i billedet** (de sidste linjer fra funktionslisten). **Sortér: Figur → mål · D2 (efter musik)** i kontrolpanelet (intet valgt) og Ctrl+K: med D2 stables reglerne efter deres lydtræk i mapper efter musik med en overskrift pr. mappe (`set.ne.sort`). **Håndtag i billedet** på Live previews scene-node: en prik pr. effekt (grøn) og figur (gul) i det lille billede; træk flytter den på scenen (samme `pos` og `o.pos` som Flyt effekter og Form-editoren; `set.ne.haand`). Funktionslisten: **alle 106** lavet (8 ikke nødvendige) |
 | v9.43 | **Fase 1, trin 1 (P8.2): Morph Pad er fjernet, og reglerne har fået en fælles indgang.** **Morph Pad** (din beslutning 13. november) er væk: vinduet W11, knappen under Mere, fanen i Scene, de 19 kilder (`pad:x`, `pad:y`, 8 cirkler, 8 farter, `hnd:pad`), fødselsmåden under Levende, opsætningen *Morph Pad som instrument* (nu 33 færdige opsætninger) og blokken MASTER MORPH PAD (cirka 30 KB). En gammel regel med en pad-kilde bliver stående, slås fra og giver 0 med en besked (blokken *FJERNEDE KILDER*, `m.fjernet='pad'`). **`Regler`** (blokken *FÆLLES INDGANG TIL REGLERNE*): `alle()`, `find(id)`, `tilfoej(regel)`, `ret(id, felter)`, `slet(id)`, `erstat(liste)`, `samlet(fn)` og `lyt(fn)`. **Hver regel har et fast id** (`m.id`); regler uden id får et, når listen gemmes (`save` kalder `Regler.tjek()`, og et sikkerhedsnet tjekker hvert halve sekund), og en kopi får et nyt. De 65 gamle steder skriver stadig direkte til `maps`; de flyttes i de næste trin. Intet er ændret på skærmen ud over, at Morph Pad er væk. Test 38 |
 | v9.44 | **Fase 1, trin 2: ét Fortryd for alt** (det samme som P7.7 punkt 3a). Ctrl+Z og Gentag dækker nu også trim, effekt-gruppernes styrke, øje og Slå fra (`scene.ne`), Samlet styrke (`gmaster`) og Normalisering (`mode`): `feSnap` gemmer dem i samme skridt som regler og figurer (`feNe` renser tomme felter, så et åbnet panel ikke bliver et skridt), og `feGendan` sætter dem tilbage og opdaterer skyderne. Beskeden efter trim og effekt-grupper har nu knappen Fortryd. Test 39 |
+| v9.45 | **Fase 1, trin 3, første bid: 9 steder flyttet til `Regler`.** EQ (ny regel), Radial Mesh (ny regel, slet-knap, Delete), Editorens Koblinger (slet), Node-editoren (`ne5Ny`, `ne5Slet`), visningerne (`rtSlet`) og lydlag (`bindLyd`). `Regler.sletNr(i)` og `Regler.retNr(i, felter)` er til de steder, der kender reglens nummer. **Fjernet:** to rester fra Mapping (knappen Ny forbindelse og slet-knappen i en række). Steder uden for indgangen, der stadig skriver direkte i `maps`: **56** (69 i v9.42). Intet er ændret på skærmen. Test 40 tæller stederne og prøver hver flyttet handling |
 
 ## 5. Halvfærdigt og kendte fejl
 
@@ -230,7 +231,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 
 ### Næste opgaver
 
-**Fra 13. november 2026 gælder `PLAN-NY-BRUGERFLADE.md` (P8.2)** foran resten af dette afsnit. Fase 0 (kortlægning) er lavet: `docs/KORTLAEGNING.md`. Brugerens svar på fjerne-listen står i planens afsnit 3.1 (fx: Morph Pad fjernes helt; de gamle visninger fjernes ikke, før matrixen er prøvet med musik; Radial Mesh' rejsende lys må ikke ændres). **Fase 1 er i gang:** trin 1 (v9.43) har fjernet Morph Pad og bygget den fælles indgang `Regler` og id'erne; trin 2 (v9.44) har lavet ét Fortryd for alt. Næste trin, ét pr. "kør": (3) de 65 gamle steder flyttes til `Regler` i bidder på cirka 10; (4) Node-editoren lytter på `Regler`, og tegningen af det slettede Mapping-vindue i `renderMaps` fjernes. Planens regler: ét trin pr. "kør" og stop; brugeren prøver hver version med musik før næste trin; hvert trin fjerner noget (vis tallene før og efter); **funktioner må forsvinde** (reglen om funktionslisten, 106 af 106, gælder ikke mere); ingen udvikler-tekst på skærmen; prøv hver version i 1920 × 1080, 2560 × 1440 og 3840 × 2160. Fase 0 og opbygningen i fase 1 og 5 laves med modellen Fable 5.2; alt byggeri med Opus 5.5.
+**Fra 13. november 2026 gælder `PLAN-NY-BRUGERFLADE.md` (P8.2)** foran resten af dette afsnit. Fase 0 (kortlægning) er lavet: `docs/KORTLAEGNING.md`. Brugerens svar på fjerne-listen står i planens afsnit 3.1 (fx: Morph Pad fjernes helt; de gamle visninger fjernes ikke, før matrixen er prøvet med musik; Radial Mesh' rejsende lys må ikke ændres). **Fase 1 er i gang:** trin 1 (v9.43) har fjernet Morph Pad og bygget den fælles indgang `Regler` og id'erne; trin 2 (v9.44) har lavet ét Fortryd for alt. Næste trin, ét pr. "kør": (3) de gamle steder flyttes til `Regler` i bidder på cirka 10 (første bid i v9.45; 56 steder tilbage); (4) Node-editoren lytter på `Regler`, og tegningen af det slettede Mapping-vindue i `renderMaps` fjernes. Planens regler: ét trin pr. "kør" og stop; brugeren prøver hver version med musik før næste trin; hvert trin fjerner noget (vis tallene før og efter); **funktioner må forsvinde** (reglen om funktionslisten, 106 af 106, gælder ikke mere); ingen udvikler-tekst på skærmen; prøv hver version i 1920 × 1080, 2560 × 1440 og 3840 × 2160. Fase 0 og opbygningen i fase 1 og 5 laves med modellen Fable 5.2; alt byggeri med Opus 5.5.
 
 | Opgave | Hvorfor |
 | --- | --- |
