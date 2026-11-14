@@ -3,7 +3,7 @@
    (de 14 lydtræk, alle ana:-kilder, analysernes hændelser); hvert lydtræk, en regel bruger, får et link fra den rigtige analyse; fold ▸ ændrer ikke maps.
    Generator: noden Generator, Stereo og Afsnit er ikke tilgængelige, spektret lever. Mono-testfil: navn, tempo cirka 120 BPM, Venter under analysen,
    bølgeformen, hop i sangen, målerne V og H. Stereo-testfil: venstre og højre forskellige. 4 spor (test-spor): én række pr. spor og Mix, spor-lydtræk
-   får link fra deres spor. MIDI, Morph Pad og Tastatur vises, når en regel bruger dem. Gamle indstillinger fra v9.18.
+   får link fra deres spor. MIDI og Tastatur vises, når en regel bruger dem (Morph Pad er fjernet i v9.43). Gamle indstillinger fra v9.18.
    Skærmbilleder: tests/ud/node-editor-analyser.png, node-editor-4spor.png (deviceScaleFactor 2). */
 const fs = require('fs'), os = require('os'), path = require('path'), { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
@@ -56,14 +56,14 @@ async function kør(arg) {
 
     /* 3 · Lydtræk får link fra den rigtige analyse */
     const lk = await side.evaluate(async () => { const før = JSON.stringify(maps);
-      maps.push({ band: 'ana:c4', effect: 'puls', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'ana:ls3', effect: 'glod', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'ana:pan', effect: 'ring', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'hnd:takt4', effect: 'burst', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'pad:x', effect: 'zoom', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'hnd:midi', effect: 'strobe', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'hnd:tast', effect: 'ryst', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 });
+      maps.push({ band: 'ana:c4', effect: 'puls', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'ana:ls3', effect: 'glod', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'ana:pan', effect: 'ring', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'hnd:takt4', effect: 'burst', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'hnd:midi', effect: 'strobe', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 }, { band: 'hnd:tast', effect: 'ryst', thr: .3, gain: 1, att: 8, rel: 120, curve: 1, gap: 120 });
       await new Promise(r => setTimeout(r, 900));
       const fra = k => { const l = NE2.L.find(l => l.til === 'l:' + k && NE2.N.get(l.fra) && NE2.N.get(l.fra).kol !== 'lydtraek'); return l ? l.fra + ' ' + l.fp : '–'; };
-      const r = { c4: fra('ana:c4'), ls3: fra('ana:ls3'), pan: fra('ana:pan'), takt: fra('hnd:takt4'), kick: fra('kick'), rms: fra('rms'), pad: fra('pad:x'), midi: fra('hnd:midi'), tast: fra('hnd:tast'), blaa: [...NE2.N.values()].filter(n => n.blaa).map(n => n.navn).join(', ') };
+      const r = { c4: fra('ana:c4'), ls3: fra('ana:ls3'), pan: fra('ana:pan'), takt: fra('hnd:takt4'), kick: fra('kick'), rms: fra('rms'), midi: fra('hnd:midi'), tast: fra('hnd:tast'), blaa: [...NE2.N.values()].filter(n => n.blaa).map(n => n.navn).join(', ') };
       const ok = [...NE2.N.values()].filter(n => n.kol === 'lydtraek').every(n => NE2.L.some(l => l.til === n.key && l.tp === 'ind'));
       maps.splice(0, maps.length, ...JSON.parse(før)); await new Promise(r => setTimeout(r, 900)); r.alle = ok; r.efter = [...NE2.N.values()].filter(n => n.blaa).length; return r; });
     T.tjek(lk.c4 === 'a:tone g::c' && lk.ls3 === 'a:b31 g::ls-bas' && lk.pan === 'a:stereo o:ana:pan' && lk.takt === 'a:takt o:hnd:takt4' && lk.rms === 'a:styrke o:rms', `lydtræk får link fra den rigtige analyse og række: Tone C♯… fra ${lk.c4}, 63 Hz fra ${lk.ls3}, Panorering fra ${lk.pan}, hver takt fra ${lk.takt}, RMS fra ${lk.rms}`);
-    T.tjek(lk.pad === 'k:pad o:pad:x' && lk.midi === 'k:midi o:hnd:midi' && lk.tast === 'k:tast o:hnd:tast' && lk.blaa === 'MIDI, Morph Pad, Tastatur' && lk.efter === 0, `de blå noder vises, når en regel bruger dem (${lk.blaa}), og forsvinder igen`);
+    T.tjek(lk.midi === 'k:midi o:hnd:midi' && lk.tast === 'k:tast o:hnd:tast' && lk.blaa === 'MIDI, Tastatur' /* v9.43: Morph Pad er fjernet */ && lk.efter === 0, `de blå noder vises, når en regel bruger dem (${lk.blaa}), og forsvinder igen`);
     T.tjek(lk.alle, 'hvert lydtræk, en regel bruger, har et link ind');
 
     /* 4 · Generator */

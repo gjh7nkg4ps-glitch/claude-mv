@@ -6,8 +6,9 @@ Planen er `PLAN-NY-BRUGERFLADE.md` (P8.2), godkendt af brugeren 13. november; al
 
 - **Fase 0 (kortlægning) er lavet:** `docs/KORTLAEGNING.md`. Ingen kode er ændret; programmet er stadig **v9.42**. Hele testpakken bestod på v9.42 (411 tjek, 0 fejl; Lydmotor 2 bestod).
 - **Brugeren har svaret på fase 0 (13. november):** svarene på fjerne-listen står i planens afsnit 3.1. Morph Pad fjernes helt, også i koden; Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag, Detektion og flere fjernes; ingen af de gamle visninger fjernes, før matrixen er prøvet med musik (valg V3). Planen er rettet til P8.2.
-- **Venter på brugeren:** "kør" til fase 1. Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
-- **P7.7 punkt 3 er ikke bygget:** hverken Fortryd for resten (trim, effekt-gruppernes styrke, øje, Slå fra, Normalisering, Samlet styrke) eller et fast id på hver regel. Det er første del af fase 1.
+- **Fase 1, trin 1 er lavet (v9.43):** Morph Pad er fjernet helt; den fælles indgang `Regler` og et fast id på hver regel er bygget. Test: `tests/38-faelles-indgang.js`. P7.7 punkt 3b (id) er dermed lavet; punkt 3a (Fortryd for resten) er næste trin.
+- **Venter på brugeren:** prøv v9.43 med musik, og skriv "kør" til næste trin (ét Fortryd for alt). Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
+- **P7.7 punkt 3:** et fast id på hver regel er bygget i v9.43. Fortryd for resten (trim, effekt-gruppernes styrke, øje, Slå fra, Normalisering, Samlet styrke) er ikke bygget endnu.
 - **Regler fra nu af:** ét trin pr. "kør"; brugeren prøver hver version med musik; hvert trin fjerner noget (tal før og efter); funktioner må forsvinde (funktionslisten gælder ikke mere); ingen udvikler-tekst på skærmen; hver version prøves i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
 
 Kort status over det, der er i gang. Planen i det hele står i `CLAUDE.md`, afsnit 6.

@@ -1,7 +1,7 @@
 /* Trin 4 · Det nye i v9.35: de fire gamle vinduer er slettet (Mapping, Router 2.0, Dublet og Routing-overblik), efter brugerens beslutning.
    - Vinduerne, deres faner og knapperne (Dublet, Routing-overblik) findes ikke; billed-løkken kalder ikke deres tegning.
    - Det flyttede virker: Gem som 1/2, Hent 1/2 og Sammenlign 1 ↔ 2 i Opsætninger; Kort over forbindelserne, Ryd hold, Tilføj morgenstjerne,
-     Tilslut MIDI og Tilfældigt i Værksted · Lydtræk-guide; Morph Pads knap åbner Node-editoren.
+     Tilslut MIDI og Tilfældigt i Værksted · Lydtræk-guide; (Morph Pad er fjernet i v9.43.)
    - Sidebjælkens Forbindelser åbner Arbejdsfeltet; reglerne laves i Node-editoren; motoren og de gemte regler er de samme.
    Skærmbillede: tests/ud/flyttet-vaerksted.png. */
 const fs = require('fs'), path = require('path');
@@ -27,11 +27,10 @@ async function kør(arg) {
       document.getElementById('mvk-aaben').click(); await new Promise(r => setTimeout(r, 300)); const kort = !document.getElementById('mvk').hidden; document.getElementById('mvk').hidden = true;
       const f0 = fase2.objekter.length; document.getElementById('addms').click(); await new Promise(r => setTimeout(r, 300)); const ms = fase2.objekter.length === f0 + 1;
       document.getElementById('hold-ryd').click(); const hold = /Hold ryddet/.test(document.getElementById('status').textContent + (document.querySelector('.msg,#msg') || {}).textContent);
-      return { gemt, n0, n1, tilbage, kort, ms, hold, morph: document.getElementById('mmpforb').textContent }; });
+      return { gemt, n0, n1, tilbage, kort, ms, hold}; });
     T.tjek(b.gemt, 'Gem som 1 i Opsætninger gemmer (rytme-A)');
     T.tjek(b.n1 > b.n0 && b.tilbage, `Tilfældige slag laver regler (${b.n0} → ${b.n1}), og Fortryd tilfældigt bringer dem præcis tilbage`);
     T.tjek(b.kort && b.ms, 'Kort over forbindelserne åbner, og Tilføj morgenstjerne laver en figur');
-    T.tjek(b.morph === 'Forbind i Node-editoren', `Morph Pad: "${b.morph}"`);
     await side.evaluate(async () => { try { fgVaelg('vaerk', 'w18', true); fgVisHost('vaerk') } catch (e) { sbAabn && sbAabn('w26') } await new Promise(r => setTimeout(r, 600)); });
     await side.screenshot({ path: path.join(UD, 'flyttet-vaerksted.png') }); await side.keyboard.press('Escape');
     const c = await side.evaluate(async () => { const b = [...document.querySelectorAll('#sb button, .sb button, [data-sb]')].find(x => /Forbindelser/.test(x.textContent)); if (b) b.click(); await new Promise(r => setTimeout(r, 600)); const w = document.getElementById('w33'); return { knap: !!b, synlig: !!(w && !w.hidden && w.getBoundingClientRect().width > 0) }; });

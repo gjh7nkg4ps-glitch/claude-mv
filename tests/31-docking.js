@@ -72,7 +72,7 @@ async function kør(arg) {
     /* 7 · layoutet husker, ↺ Standard og genstart */
     const før = await Z(); await side.evaluate(() => lay3Anvend('noder')); await vent(300); await side.evaluate(() => lay3Anvend('overblik')); await vent(300);
     const husk = await Z(); await side.click('#dk-std'); await vent(300); const std = await Z();
-    T.tjek(husk === før && std === 'sc:w2,w5,w28,w29,w3,w24,w11,w9*w2 | af:w33,w1,w7,w31*w33 | ed:w6,w13,w22*w6', `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
+    T.tjek(husk === før && std === 'sc:w2,w5,w28,w29,w3,w24,w9*w2 | af:w33,w1,w7,w31*w33 | ed:w6,w13,w22*w6', `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
     await side.evaluate(() => { dkZone('af').a = 'w31'; dkGem(); dkAnvend(); }); await side.reload(); await vent(4000);
     T.tjek(await side.evaluate(() => dkZone('af').a === 'w31' && !document.getElementById('w31').hidden), 'efter genstart: opdelingen og den valgte fane (Lydkilde) huskes');
     /* 8 · Lås */

@@ -38,7 +38,7 @@ async function kør(arg) {
     for (const [f, v] of [['thr', .62], ['gain', 1.35], ['att', 40], ['rel', 330], ['hold', 9]]) await sætSkyder(f, v);
     /* Router 2.0 er slettet i v9.35; dens skydere satte felterne sådan her (gain, att og rel direkte, Hold via R2_HOLD), så det gør testen selv */
     await side.evaluate(async iB => { const m = maps[iB]; m.gain = 1.35; m.att = 40; m.rel = 330; const ms = R2_HOLD[9]; m.hold = ms === Infinity; m.holdMs = ms === Infinity || !ms ? 0 : ms; m.thr = .62; save(); await new Promise(r => setTimeout(r, 300)); }, iB);
-    const sam = await side.evaluate(([iA, iB]) => { const so = o => JSON.stringify(Object.keys(o).sort().reduce((x, k) => (x[k] = o[k], x), {})), A = so(maps[iA]), B = so(maps[iB]); const ud = v => Rytme.trinMaal(maps[iA], v, 1) === Rytme.trinMaal(maps[iB], v, 1); return { ens: A === B, A: A + ' | som Router satte dem: ' + B, regn: [.1, .5, .7, .9, 1].every(ud) }; }, [iA, iB]);
+    const sam = await side.evaluate(([iA, iB]) => { const so = o => JSON.stringify(Object.keys(o).filter(k => k !== 'id' /* v9.43: hver regel har sit eget id */).sort().reduce((x, k) => (x[k] = o[k], x), {})), A = so(maps[iA]), B = so(maps[iB]); const ud = v => Rytme.trinMaal(maps[iA], v, 1) === Rytme.trinMaal(maps[iB], v, 1); return { ens: A === B, A: A + ' | som Router satte dem: ' + B, regn: [.1, .5, .7, .9, 1].every(ud) }; }, [iA, iB]);
     T.tjek(sam.ens && sam.regn, 'de samme tal sat i Node-editoren og sådan, som Router satte dem, giver præcis den samme forbindelse, og motoren regner det samme', sam.A);
     await side.evaluate(([iA]) => { maps.splice(iA, 2); renderMaps(); }, [iA]); await vent(900);
 
