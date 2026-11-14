@@ -15,7 +15,8 @@ Planen er `PLAN-NY-BRUGERFLADE.md` (P8.2), godkendt af brugeren 13. november; al
 - **Fase 1, trin 3 er færdigt (v9.49):** de sidste 9 steder bruger `Regler`; de 11, der er tilbage, skal ikke flyttes. Test: `tests/44-flytning-5.js`.
 - **Fase 1 er færdig (v9.50):** Node-editoren lytter på `Regler`; Mappings døde tegning er fjernet. Test: `tests/45-node-editor-lytter.js`. Næste: fase 2 (matrixen).
 - **Fase 2, trin 2a er lavet (v9.51):** matrixen kan vise og vælge (Noder · Matrix i Node-editorens værktøjslinje). Test: `tests/46-matrix-se.js`.
-- **Venter på brugeren:** prøv v9.51 med musik, og skriv "kør" til næste bid. Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
+- **Fase 2, trin 2b er lavet (v9.52):** klik i en tom celle laver en regel; træk ændrer styrken; Delete, M, piletaster, Enter. Test: `tests/47-matrix-lav-og-ret.js`. Næste: 2c (+ lydtræk, + mål, fold sammen, Brugte/Alle).
+- **Venter på brugeren:** prøv v9.49 til v9.52 med musik (fire trin blev bygget i træk efter brugerens ønske), og skriv "kør" til næste bid. Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
 - **P7.7 punkt 3:** et fast id på hver regel er bygget i v9.43. Fortryd for resten (trim, effekt-gruppernes styrke, øje, Slå fra, Normalisering, Samlet styrke) er ikke bygget endnu.
 - **Regler fra nu af:** ét trin pr. "kør"; brugeren prøver hver version med musik; hvert trin fjerner noget (tal før og efter); funktioner må forsvinde (funktionslisten gælder ikke mere); ingen udvikler-tekst på skærmen; hver version prøves i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
 
