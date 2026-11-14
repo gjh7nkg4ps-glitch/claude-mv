@@ -10,8 +10,9 @@ Planen er `PLAN-NY-BRUGERFLADE.md` (P8.2), godkendt af brugeren 13. november; al
 - **Fase 1, trin 2 er lavet (v9.44):** ét Fortryd for alt (trim, effekt-grupper, Samlet styrke, Normalisering). Test: `tests/39-fortryd-for-alt.js`. P7.7 punkt 3 er dermed helt lavet.
 - **Fase 1, trin 3, første bid er lavet (v9.45):** 9 steder bruger nu `Regler`. Test: `tests/40-flytning-1.js`.
 - **Fase 1, trin 3, anden bid er lavet (v9.46):** Editorens 11 handlinger bruger nu `Regler` (ny: `Regler.sletHvor`). Test: `tests/41-flytning-2.js`.
-- **Fase 1, trin 3, tredje bid er lavet (v9.47):** de 9 steder, der skifter hele listen, bruger `Regler.erstat(liste, true)`; 35 steder skriver stadig direkte i `maps`. Test: `tests/42-flytning-3.js`. Auto-mapping er ikke prøvet for sig i test 42 (kræver en analyseret sang).
-- **Venter på brugeren:** prøv v9.47 med musik, og skriv "kør" til næste bid. Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
+- **Fase 1, trin 3, tredje bid er lavet (v9.47):** de 9 steder, der skifter hele listen, bruger `Regler.erstat(liste, true)`. Test: `tests/42-flytning-3.js`. Auto-mapping er ikke prøvet for sig i test 42 (kræver en analyseret sang).
+- **Fase 1, trin 3, fjerde bid er lavet (v9.48):** 15 hjælpere bruger `Regler` med senere=true; 20 steder skriver stadig direkte i `maps` (9 mangler at blive flyttet, 11 skal ikke flyttes). Rettet: Slet og Vis i Editorens Koblinger (docking opfangede klikket siden v9.36). Test: `tests/43-flytning-4.js`.
+- **Venter på brugeren:** prøv v9.48 med musik, og skriv "kør" til næste bid. Stadig "ved ikke": Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Ikke afgjort: i hvilken fase Morph Pad fjernes (Code foreslår fase 1).
 - **P7.7 punkt 3:** et fast id på hver regel er bygget i v9.43. Fortryd for resten (trim, effekt-gruppernes styrke, øje, Slå fra, Normalisering, Samlet styrke) er ikke bygget endnu.
 - **Regler fra nu af:** ét trin pr. "kør"; brugeren prøver hver version med musik; hvert trin fjerner noget (tal før og efter); funktioner må forsvinde (funktionslisten gælder ikke mere); ingen udvikler-tekst på skærmen; hver version prøves i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
 
