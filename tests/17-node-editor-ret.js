@@ -93,7 +93,7 @@ async function kør(arg) {
     await side.screenshot({ path: path.join(UD, 'node-editor-egenskab.png') });
     await side.mouse.move(eg.mx, eg.y); await side.mouse.down(); await side.mouse.move(eg.x0 + eg.w * .95, eg.y, { steps: 5 }); await side.mouse.up(); await vent(300);
     const eg2 = await side.evaluate(async () => { const r = { g: maps[3].gain, mest: neMest(maps[3]) }; const n = [...NE2.N.values()].find(n => n.kol === 'regel' && n.i === 3), s = n.el.querySelector('select[data-nf="slags"]'); s.value = 'handling'; s.dispatchEvent(new Event('change', { bubbles: true })); await new Promise(r => setTimeout(r, 300)); r.slet = !('slags' in maps[3]); return r; });
-    T.tjek(eg.slags === 'egenskab' && eg.klemmer === 2 && /Egenskab/.test(eg.titel) && eg2.g < eg.g && Math.abs(eg2.mest - .95) < .03 && eg2.slet, `Egenskab: gemt i m.slags, to klemmer; "mest" trukket til ${eg2.mest.toFixed(2)} gør styrken ×${eg.g} → ×${eg2.g}; tilbage til Handling sletter m.slags (det læses ud fra målet)`);
+    T.tjek(eg.slags === 'egenskab' && eg.klemmer === 2 && /→/.test(eg.titel) && eg2.g < eg.g && Math.abs(eg2.mest - .95) < .03 && eg2.slet, `Egenskab: gemt i m.slags, to klemmer; "mest" trukket til ${eg2.mest.toFixed(2)} gør styrken ×${eg.g} → ×${eg2.g}; tilbage til Handling sletter m.slags (det læses ud fra målet)`);
 
     /* 4 · Værktøjslinjen */
     const vl = await side.evaluate(async () => { const r = { m0: mode }; document.querySelector('[data-ne4="norm"][data-v="fast"]').click(); await new Promise(r => setTimeout(r, 300)); r.m1 = mode; r.knap = document.getElementById('norm').textContent; document.querySelector('[data-ne4="norm"][data-v="auto"]').click(); await new Promise(r => setTimeout(r, 300)); r.m2 = mode;

@@ -61,8 +61,8 @@ async function kør(arg) {
         await side.click('#ne .mx-skift button[data-mx="1"]'); await side.waitForTimeout(500); await side.reload(); await side.waitForTimeout(5000);
         const g = await side.evaluate(() => ({ mx: !document.getElementById('ne-mx').hidden, tryk: document.querySelector('#ne .mx-skift button[data-mx="1"]').getAttribute('aria-pressed') }));
         T.tjek(g.mx && g.tryk === 'true', 'valget huskes: efter genstart står matrixen der stadig');
-        const o = await side.evaluate(async () => { const s = document.getElementById('ne41-vis'), gl = [...s.options].find(x => x.value === 'matrix').textContent; ne41Vis('strom'); await new Promise(r => setTimeout(r, 500)); const ude = document.getElementById('ne-mx').hidden && !document.getElementById('ne-vis').hidden; ne41Vis('kol', true); return { gl, ude } });
-        T.tjek(o.gl === 'Matrix (gammel)' && o.ude, 'den gamle visning hedder Matrix (gammel), og vælger man en visning i Visning ▾, går man ud af matrixen', JSON.stringify(o));
+        const o = await side.evaluate(async () => { const s = document.getElementById('ne41-vis'), gl = [...s.options].some(x => x.value === 'matrix'); ne41Vis('strom'); await new Promise(r => setTimeout(r, 500)); const ude = document.getElementById('ne-mx').hidden && !document.getElementById('ne-vis').hidden; ne41Vis('kol', true); return { gl, ude } });
+        T.tjek(o.gl === false && o.ude, 'den gamle Matrix-visning er væk fra Visning ▾ (v9.55), og vælger man en visning i Visning ▾, går man ud af matrixen', JSON.stringify(o));
       }
       T.tjek(!fejl.length, `${w} × ${h}: ingen fejl i browseren`, fejl.slice(0, 3).join(' | '));
       await ctx.close();

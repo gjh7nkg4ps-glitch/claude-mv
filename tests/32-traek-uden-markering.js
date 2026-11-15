@@ -18,7 +18,7 @@ async function kør(arg) {
     const træk = async (q, dx, dy) => { await side.mouse.move(q.x, q.y); await side.mouse.down(); await side.mouse.move(q.x + dx / 4, q.y + dy / 4, { steps: 4 }); await side.mouse.move(q.x + dx, q.y + dy, { steps: 10 }); await side.mouse.up(); await side.waitForTimeout(250); };
     /* 1 · trækkene, der før markerede tekst */
     const mark = [];
-    for (const [navn, s] of [['kontrolpanelet', '#ne-kp .ne-kp-tekst'], ['kolonnernes overskrifter', '#ne-hoveder .ne-hoved[data-kol="fft"] .ne-hvad'], ['værktøjslinjen', '#ne .ne-vlinje .ne-trin']]) {
+    for (const [navn, s] of [['kontrolpanelet', '#ne-kp .ne-kp-tekst'], ['kolonnernes overskrifter', '#ne-hoveder .ne-hoved[data-kol="fft"] .ne-hvad'], ['værktøjslinjen', '#ne .ne-vlinje .ne-titel']]) {
       const q = await side.evaluate(s => { getSelection().removeAllRanges(); const r = document.querySelector(s).getBoundingClientRect(); return { x: r.left + 12, y: r.top + Math.min(r.height / 2, 14) }; }, s);
       await træk(q, 500, 250); mark.push(navn + ' ' + await side.evaluate(() => { const s = getSelection(); return s.rangeCount && s.getRangeAt(0).intersectsNode(document.getElementById('ne-verden')) ? 'markerer noderne' : 'ingen markering over noderne'; }));
     }
