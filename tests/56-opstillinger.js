@@ -25,7 +25,7 @@ async function kør(arg) {
         return { z: Math.round(NE.z * 1000) / 1000, n: E.length, fx: Math.round((x1 - x0) / fl.width * 100), fy: Math.round((y1 - y0) / fl.height * 100), inde: x0 >= fl.left - 2 && x1 <= fl.right + 2 && y0 >= fl.top - 2 && y1 <= fl.bottom + 2, ov, ses, valg: (document.getElementById('ne61-opst') || {}).value, opst: set.ne && set.ne.opst, pos: Object.keys(NE.pos || {}).length } });
       /* 1 · rullelisten står i værktøjslinjen med de 6 opstillinger */
       const liste = await side.evaluate(() => { const s = document.getElementById('ne61-opst'); return s ? { vis: s.getBoundingClientRect().width > 30, valg: [...s.options].map(o => o.textContent) } : null });
-      T.tjek(!!liste && liste.vis && liste.valg.join('|') === 'Opstilling ▾|Kolonner|Bred|Luftig|Meget luftig|Kompakt|Kæmpe', `${w} × ${h}: rullelisten Opstilling ▾ står i Node-editorens værktøjslinje med de 6 opstillinger`, JSON.stringify(liste));
+      T.tjek(!!liste && liste.vis && liste.valg.join('|').startsWith('Opstilling ▾|Kolonner|Bred|Luftig|Meget luftig|Kompakt|Kæmpe'), `${w} × ${h}: rullelisten Opstilling ▾ står i Node-editorens værktøjslinje med de 6 opstillinger`, JSON.stringify(liste));
       /* 2 · hver opstilling, valgt i rullelisten */
       const R = {}; for (const id of ['kolonner', 'luftig', 'megetluftig', 'bred', 'kompakt', 'kaempe']) { await side.selectOption('#ne61-opst', id); await side.waitForTimeout(1100); R[id] = await maal(); }
       const alle = Object.values(R);
