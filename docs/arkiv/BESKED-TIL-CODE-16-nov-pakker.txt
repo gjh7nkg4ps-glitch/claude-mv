@@ -1,0 +1,90 @@
+Besked til Code · 16. nov. 2026 · gælder fra v9.56
+
+Her er resten af trinene i planen P8.2, samlet i pakker.
+Stregerne i Node-editoren er IKKE med her. Dem tager vi for sig.
+
+Ny arbejdsrytme (afløser reglen "ét trin pr. kør"):
+- Du bygger en hel pakke pr. "kør".
+- Hvert trin får stadig sit eget versionsnummer, sin egen test og
+  sit eget gem.
+- Jeg prøver den sidste version i pakken med musik.
+- Stop midt i en pakke, hvis en test fejler, og du ikke kan rette
+  det sikkert, eller hvis et trin kræver et valg fra mig.
+- Ved afleveringen: en kort liste over, hvad jeg skal prøve for
+  hvert trin, og tallene før og efter (knapper, vinduer, filstørrelse).
+
+PAKKE 1 · resten af fase 3 (Hurtigt arbejde)
+ 3b  Træk med Ctrl for at kopiere en celle. Indsæt kun indstillingerne.
+ 3c  Kopiér en hel figurs regler til en anden figur med én knap.
+     Spejl venstre og højre.
+ 3d  Styrke-kæden i kanten af matrixen: trim på rækken, figurens
+     styrke på gruppen, Største · Læg sammen · Gang på kolonnen og
+     Samlet styrke i hjørnet. Fjern dubletterne i Node-editorens
+     kontrolpanel.
+ Jeg prøver: giv Pige på stangen de samme regler som Lyshåret pige.
+
+PAKKE 2 · fase 4 (Forslag i stedet for Auto)
+ 4a  Auto-mapping bliver til "Foreslå regler": stiplede celler i
+     matrixen, ja eller nej, én ad gangen eller alle. Den kender
+     figurerne og sletter intet. Brug Audits beregning, hvis den
+     hjælper. "Auto-mapping: Til/Fra" fjernes.
+ 4b  De andre, der skriver regler, bliver også til forslag: Auto-kobl,
+     Dansemapping, diskokuglens kobling, Lav show, Tilfældigt,
+     skabeloner, Tilføj morgenstjerne og udfyldning af klods-spor.
+     "Random alt: skift automatisk" og de fire ekstra Fortryd-knapper
+     fjernes.
+ 4c  Panelet Automatik: Taktslag Auto, Spor Auto, Auto-valg,
+     Normalisering, Adaptiv tærskel og Sektionernes vægte kan ses og
+     slås fra, og én knap giver standard tilbage. Gem et sæt regler
+     under et navn. Det, der kun handler om visning, flyttes til
+     Indstillinger og hedder ikke længere Auto.
+ Jeg prøver: indlæs Pigernes show, bed om forslag, og tjek, at ingen
+ af pigernes regler er væk.
+
+PAKKE 3 · fase 5, første del (brug Fable 5.2 til opdelingen)
+ 5a  Én linje øverst og de fire arbejdsområder Sang, Scene, Regler og
+     Show (tasterne 1 til 4). Det gamle må gerne ligge der endnu.
+ STOP her. Jeg skal se den nye opdeling, før mere bygges.
+
+PAKKE 4 · fase 5, resten
+ 5b  Fjern sidebjælken, bundbjælken, de 6 layout-knapper, Mine
+     layouts, Niveau, vinduesnumre, Enkel tilstand og resterne af
+     Zoner og Bredt skrivebord. Ryd Mere-menuen. Docking er låst som
+     standard.
+ 5c  Ét tema i hele programmet (Warm Analog først). Indstillingen
+     Størrelse. Indstillinger samlet ét sted.
+ Jeg prøver: fra programmet åbner, til pigerne danser til min egen
+ sang. Tæl klik.
+
+PAKKE 5 · fase 6 (Scene)
+ 6a  Figurliste til venstre, stor scene i midten, Egenskaber til
+     højre. Træk i figurerne direkte i scenen.
+ 6b  Fanen Koblinger bliver til knappen "Vis i matrix". Detaljer-
+     niveauerne, Adfærd (nr. 74) og kilde-dropdown ved hver egenskab
+     (nr. 77) fjernes.
+ 6c  Ny Figur-generator. VENT: byg den ikke, før jeg har sendt en
+     skitse.
+ Levende figurer og Morgenstjernen må ikke ændre opførsel.
+
+PAKKE 6 · fase 7 (Oprydning)
+ 7a  Fjern det, der står som "fjern" i planens afsnit 3.1 og endnu
+     ligger der (fx Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag,
+     Detektion, Audit-vinduet, scene-nodens knapper og Fest).
+     Behold Audits beregning.
+ 7b  Klodsbanen bliver noget, man slår til i en scene (valg V2).
+ 7c  Død kode fjernes, og blokkene får navn efter, hvad de gør.
+     Den nye three.js vurderes. Vis filens størrelse før og efter.
+ De gamle visninger: spørg mig om én ad gangen. Fjern ingen uden
+ mit ja.
+
+Stadig "ved ikke" hos mig: Ikke i brug (parkér), Kort over
+forbindelserne og Lydmotor Klassisk. Spørg, når vi når fase 7.
+
+Ret planen og CLAUDE.md, så de passer med dette. Du må dele et trin
+i to, hvis det bliver for stort, men sig det først.
+
+Kør pakke 1.
+
+---
+Sammen med beskeden sendte brugeren denne linje fra browserens konsol (hører til streg-opgaven, som tages for sig):
+THREE.BufferGeometry.computeBoundingSphere(): Computed radius is NaN. The "position" attribute is likely to have NaN values.

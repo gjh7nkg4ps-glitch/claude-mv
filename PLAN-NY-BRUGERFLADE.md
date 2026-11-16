@@ -1,10 +1,12 @@
-# PLAN · NY BRUGERFLADE · P8.2
+# PLAN · NY BRUGERFLADE · P8.3
 
 *13. november 2026 · skrevet efter en gennemgang af `claude-mv-v9_42.html` · til brugeren og Claude Code · P8.2 afløser P8.1*
 
 *Papirets versioner hedder P (fx P8.1). Programmets versioner hedder v (fx v9.42, v9.43). De to tællere har intet med hinanden at gøre.*
 
 **Status: godkendt af brugeren den 13. november 2026.** Alle valg er afgjort, også V3. Fase 0 (kortlægning) er lavet: `docs/KORTLAEGNING.md`. Intet er bygget.
+
+**Nyt i P8.3** (rettet af Claude Code efter brugerens besked 16. november, `docs/arkiv/BESKED-TIL-CODE-16-nov-pakker.txt`): resten af trinene er samlet i seks pakker (afsnit 1.2), og reglen "ét trin pr. kør" er afløst af "én pakke pr. kør". Fase 1 og 2 er færdige (v9.43–v9.55), og fase 3 trin 3a er lavet (v9.56). Stregerne i Node-editoren (brugerens billede 15. november og konsol-linjen om NaN i stregernes geometri) tages for sig og er ikke med i pakkerne.
 
 **Nyt i P8.2** (rettet af Claude Code efter brugerens svar på fase 0, 13. november): tallene i afsnit 2 er rettet efter kortlægningen (afsnit f); valg V3 er afgjort; brugerens svar på fjerne-listen står i afsnit 3.1; Morph Pad fjernes helt; de seks ting, der manglede i fase 4, står i tabellen dér; Radial Mesh' rejsende lys står i afsnit 5. Intet andet er ændret.
 
@@ -39,8 +41,8 @@ flowchart LR
 
 ## 1 · Regler for arbejdet (gælder foran alt andet i planen)
 
-1. **Ét trin pr. "kør".** Code bygger ét trin, afleverer en version og stopper.
-2. **Brugeren prøver med musik før næste trin.** Hvert trin har en lille opgave (brugertest). Code skriver, hvor mange klik opgaven tager. Brugeren svarer "ok" eller "ikke ok".
+1. **Én pakke pr. "kør"** (P8.3; før: ét trin pr. "kør"). Code bygger alle trin i pakken. Hvert trin får stadig sit eget versionsnummer, sin egen test og sit eget gem. Code stopper midt i en pakke, hvis en test fejler og ikke kan rettes sikkert, eller hvis et trin kræver et valg fra brugeren. Pakkerne står i afsnit 1.2.
+2. **Brugeren prøver den sidste version i pakken med musik** (P8.3; før: hver version). Afleveringen har en kort liste over, hvad der skal prøves for hvert trin. Brugeren svarer "ok" eller "ikke ok".
 3. **Hvert trin fjerner noget.** Afleveringen viser tallene før og efter: knapper, vinduer og filens størrelse.
 4. **Funktioner må forsvinde.** Reglen "ingen funktion må forsvinde" (funktionslisten, 106 af 106) gælder ikke længere. Det, der fjernes, er det, brugeren krydser af i fase 0. Koden ligger stadig i git-historikken.
 5. **Ingen udvikler-tekst på skærmen.** Ingen trin-numre, versionsnumre på biblioteker, vinduesnumre eller "106 af 114". Den slags hører hjemme i Hjælp.
@@ -48,6 +50,19 @@ flowchart LR
 De faste regler i `CLAUDE.md` gælder stadig: test før aflevering, versionsnummer i filnavn, program og svar, manualen opdateres, og gamle gemte indstillinger skal kunne åbnes.
 
 *Hvorfor regel 2 og 4:* fra 7. til 11. november blev der bygget 24 versioner (v9.19 til v9.42). Hver version bestod sine kodetest, men ingen blev prøvet med musik undervejs. Og fordi intet måtte forsvinde, kom indholdet af de fire slettede vinduer ind i Node-editoren igen (v9.39 og v9.41).
+
+### 1.2 · Pakkerne (P8.3, brugerens besked 16. november)
+
+| Pakke | Trin | Brugeren prøver | Status |
+| --- | --- | --- | --- |
+| **1 · resten af fase 3** | **3b** træk med Ctrl for at kopiere en celle; indsæt kun indstillingerne. **3c** kopiér en hel figurs regler til en anden figur med én knap; spejl venstre og højre. **3d** styrke-kæden i kanten af matrixen (trim på rækken, figurens styrke på gruppen, Største · Læg sammen · Gang på kolonnen, Samlet styrke i hjørnet); dubletterne i Node-editorens kontrolpanel fjernes | Giv Pige på stangen de samme regler som Lyshåret pige | i gang |
+| **2 · fase 4** | **4a** Auto-mapping bliver til "Foreslå regler" (stiplede celler, ja eller nej, én ad gangen eller alle; kender figurerne; sletter intet; brug Audits beregning, hvis den hjælper); "Auto-mapping: Til/Fra" fjernes. **4b** de andre, der skriver regler, bliver til forslag (Auto-kobl, Dansemapping, diskokuglens kobling, Lav show, Tilfældigt, skabeloner, Tilføj morgenstjerne, udfyldning af klods-spor); "Random alt: skift automatisk" og de fire ekstra Fortryd-knapper fjernes. **4c** panelet Automatik (Taktslag Auto, Spor Auto, Auto-valg, Normalisering, Adaptiv tærskel, Sektionernes vægte: kan ses og slås fra, én knap giver standard); gem et sæt regler under et navn; det, der kun handler om visning, flyttes til Indstillinger og hedder ikke Auto | Indlæs Pigernes show, bed om forslag, og tjek, at ingen af pigernes regler er væk | venter |
+| **3 · fase 5, første del** (Fable 5.2 til opdelingen) | **5a** én linje øverst og de fire arbejdsområder Sang, Scene, Regler og Show (tasterne 1 til 4); det gamle må gerne ligge der endnu. **STOP:** brugeren skal se opdelingen, før mere bygges | Se den nye opdeling | venter |
+| **4 · fase 5, resten** | **5b** fjern sidebjælken, bundbjælken, de 6 layout-knapper, Mine layouts, Niveau, vinduesnumre, Enkel tilstand og resterne af Zoner og Bredt skrivebord; ryd Mere-menuen; docking låst som standard. **5c** ét tema i hele programmet (Warm Analog først); indstillingen Størrelse; Indstillinger samlet ét sted | Fra programmet åbner, til pigerne danser til brugerens egen sang; tæl klik | venter |
+| **5 · fase 6** | **6a** figurliste til venstre, stor scene i midten, Egenskaber til højre; træk i figurerne direkte i scenen. **6b** fanen Koblinger bliver til knappen "Vis i matrix"; Detaljer-niveauerne, Adfærd (nr. 74) og kilde-dropdown ved hver egenskab (nr. 77) fjernes. **6c** ny Figur-generator: **VENT**, til brugeren har sendt en skitse. Levende figurer og Morgenstjernen må ikke ændre opførsel |  | venter |
+| **6 · fase 7** | **7a** fjern det, der står som "fjern" i afsnit 3.1 og endnu ligger der (fx Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag, Detektion, Audit-vinduet, scene-nodens knapper og Fest); behold Audits beregning. **7b** klodsbanen bliver noget, man slår til i en scene (valg V2). **7c** død kode fjernes, blokkene får navn efter, hvad de gør; den nye three.js vurderes; vis filens størrelse før og efter. De gamle visninger: spørg om én ad gangen, fjern ingen uden brugerens ja |  | venter |
+
+Stadig "ved ikke" hos brugeren: Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Code spørger, når fase 7 nås. Code må dele et trin i to, hvis det bliver for stort, men siger det først.
 
 ### 1.1 · Skærmstørrelse
 
