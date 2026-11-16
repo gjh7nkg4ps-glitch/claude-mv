@@ -14,7 +14,7 @@ async function kør(arg) {
     const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 2 });
     const side = await ctx.newPage(); const fejl = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
-    await side.goto('file://' + fil); await side.waitForTimeout(3500);
+    await side.goto('file://' + fil); await side.waitForTimeout(3500); await side.evaluate(() => { FSF.direkte = true }); /* v9.64: knapperne giver nu forslag; denne test prøver de gamle hjælpefunktioner, der stadig skriver direkte, når en færdig opsætning eller figur indlæses */
     const vent = ms => side.waitForTimeout(ms);
     const d = await side.evaluate(async () => { const f = FORINDST.find(f => { try { brugFor(f.id, true); } catch (e) { return false; } return fase2.objekter.some(o => o.lag && o.lag[0] && o.lag[0].form === 'danser'); }); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1000)); const o = fase2.objekter.find(o => o.lag && o.lag[0] && o.lag[0].form === 'danser'); return o ? { fk: 'f:' + o.id, navn: o.navn, f: f.id } : null; });
     T.tjek(!!d, d ? `en forudindstilling med en danser (${d.f}: ${d.navn})` : 'ingen forudindstilling med en danser');

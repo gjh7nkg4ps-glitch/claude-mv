@@ -18,7 +18,7 @@ async function kør(arg) {
     const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 2 });
     const side = await ctx.newPage(); const fejl = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
-    await side.goto('file://' + fil); await side.waitForTimeout(3500);
+    await side.goto('file://' + fil); await side.waitForTimeout(3500); await side.evaluate(() => { FSF.direkte = true }); /* v9.64: knapperne giver nu forslag; denne test prøver de gamle hjælpefunktioner, der stadig skriver direkte, når en færdig opsætning eller figur indlæses */
     const a = await side.evaluate(() => ({ faner: FG.lyd.faner.map(f => f[1]).concat(SC_FANER.map(f => f[1])).filter(n => /Mapping|Router|Dublet|Routing/.test(n)), vin: ['w8', 'w10', 'w12', 'w32'].filter(id => document.getElementById(id)), hvor: ['swap', 'abmsg', 'mvk-aaben', 'hold-ryd', 'addms', 'map-midi', 'rnd-slag', 'rnd-antal'].map(i => i + ':' + ((document.getElementById(i) || {}).closest ? (document.getElementById(i).closest('.win') || {}).id : '–')).join(' '), lyd: FG.lyd.faner.map(f => f[1]).join(', ') }));
     T.tjek(!a.faner.length && !a.vin.length, `ingen faner eller vinduer tilbage; Arbejdsfeltet har nu ${a.lyd}`);
     T.tjek(a.hvor === 'swap:w13 abmsg:w13 mvk-aaben:w18 hold-ryd:w18 addms:w18 map-midi:w18 rnd-slag:w18 rnd-antal:w18', 'flyttet: Gem/Hent 1/2 og Sammenlign til Opsætninger (W13), værktøjerne til Værksted · Lydtræk-guide (W18)', a.hvor);

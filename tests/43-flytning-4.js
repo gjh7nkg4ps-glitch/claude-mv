@@ -19,7 +19,7 @@ async function kør(arg) {
     for (const [w, h] of [[1920, 1080], [2560, 1440]]) {
       const side = await browser.newPage({ viewport: { width: w, height: h } }); const fejl = [];
       side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
-      await side.goto('file://' + fil); await side.waitForTimeout(3500);
+      await side.goto('file://' + fil); await side.waitForTimeout(3500); await side.evaluate(() => { FSF.direkte = true }); /* v9.64: knapperne giver nu forslag; denne test prøver de gamle hjælpefunktioner, der stadig skriver direkte, når en færdig opsætning eller figur indlæses */
       await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); brugFor('fuld2', true); await vent(1000); lay3Anvend('figurer'); await vent(1500); });
       for (const k of await side.$$('#w6 button')) { if ((await k.textContent()).trim().startsWith('Koblinger')) { await k.click({ timeout: 3000 }); break; } }
       await side.waitForTimeout(600);
@@ -42,7 +42,7 @@ async function kør(arg) {
     }
     const side = await browser.newPage({ viewport: { width: 1600, height: 1000 } }); const fejl = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
-    await side.goto('file://' + fil); await side.waitForTimeout(3500);
+    await side.goto('file://' + fil); await side.waitForTimeout(3500); await side.evaluate(() => { FSF.direkte = true }); /* v9.64: knapperne giver nu forslag; denne test prøver de gamle hjælpefunktioner, der stadig skriver direkte, når en færdig opsætning eller figur indlæses */
     const r = await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); brugFor('fuld2', true); await vent(2000); const H = []; Regler.lyt(b => H.push(b.hvad)); const ud = {};
       /* ventet: de beskeder, der må komme (mindst én af dem skal komme); tjek: indholdet bagefter */
       const prøv = async (navn, fn, ventet, tjek) => { await vent(700); H.length = 0; try { await fn() } catch (e) { ud[navn] = 'fejl: ' + e.message; return } await vent(900); const ens = new Set(maps.map(m => m.id)).size === maps.length && maps.every(m => m.id); let t = true; try { if (tjek) t = tjek() } catch (e) { t = 'fejl i tjek: ' + e.message }

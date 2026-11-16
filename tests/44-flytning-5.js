@@ -18,7 +18,7 @@ async function kør(arg) {
   try {
     const side = await browser.newPage({ viewport: { width: 1920, height: 1080 } }); const fejl = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
-    await side.goto('file://' + fil); await side.waitForTimeout(3500);
+    await side.goto('file://' + fil); await side.waitForTimeout(3500); await side.evaluate(() => { FSF.direkte = true }); /* v9.64: knapperne giver nu forslag; denne test prøver de gamle hjælpefunktioner, der stadig skriver direkte, når en færdig opsætning eller figur indlæses */
     const r = await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); brugFor('std', true); await vent(1500); lay3Anvend('noder'); await vent(1500); const H = []; Regler.lyt(b => H.push(b.hvad)); const ud = {};
       const prøv = async (navn, fn, tjek) => { await vent(700); H.length = 0; const n0 = maps.length; try { await fn() } catch (e) { ud[navn] = 'fejl: ' + e.message; return } await vent(900); const ens = new Set(maps.map(m => m.id)).size === maps.length && maps.every(m => m.id); let t = true; try { if (tjek) t = tjek(n0) } catch (e) { t = 'fejl i tjek: ' + e.message }
         ud[navn] = (H.length > 0 && !H.includes('andet') && ens && t === true) ? 'ok' : 'beskeder: ' + H.join() + ' · id: ' + ens + ' · indhold: ' + t };
