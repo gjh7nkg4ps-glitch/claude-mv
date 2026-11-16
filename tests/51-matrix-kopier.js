@@ -65,7 +65,7 @@ async function kør(arg) {
       await side.waitForTimeout(1800); await side.evaluate(() => (document.querySelector('#ne-mx td.mx-mark') || document.querySelector('#ne-mx td.mx-c')).focus()); await side.keyboard.press(MOD + '+z'); await side.waitForTimeout(900); const n9 = (await tilstand()).n;
       T.tjek(n8 === n7 - 2 && n9 === n7, `${w} × ${h}: Delete sletter begge markerede regler (${n7} → ${n8}), og én Ctrl+Z giver dem tilbage (${n9})`, JSON.stringify({ n7, n8, n9 }));
       await side.keyboard.press('Escape'); await side.waitForTimeout(300); const t9 = await tilstand();
-      T.tjek(t9.mark === 0 && t9.bj === null, `${w} × ${h}: Esc fjerner markeringen, og linjen under matrixen forsvinder`, JSON.stringify(t9));
+      T.tjek(t9.mark === 0 && /Ingen celler markeret/.test(t9.bj || ''), `${w} × ${h}: Esc fjerner markeringen, og linjen under matrixen viser "Ingen celler markeret" (fra v9.60 står linjen der altid)`, JSON.stringify(t9));
       T.tjek(!fejl.length, `${w} × ${h}: ingen fejl i browseren`, fejl.slice(0, 3).join(' | '));
       await ctx.close();
     }
