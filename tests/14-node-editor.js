@@ -111,7 +111,7 @@ async function kør(arg) {
     const zMax = await side.evaluate(() => NE.z);
     for (let i = 0; i < 40; i++) await side.mouse.wheel(0, 400);
     const zMin = await side.evaluate(() => NE.z);
-    T.tjek(Math.abs(zMax - 2) < 1e-6 && Math.abs(zMin - .1) < 1e-6, `zoom går fra 10 til 200 % (${Math.round(zMin * 100)} % og ${Math.round(zMax * 100)} %)`);
+    T.tjek(Math.abs(zMax - 2) < 1e-6 && Math.abs(zMin - .02) < 1e-6, `zoom går fra 2 til 200 % (v9.68; før 10 %) (${Math.round(zMin * 100)} % og ${Math.round(zMax * 100)} %)`);
     await side.mouse.move(fb.x + fb.width / 2, fb.y + fb.height / 2);
     for (let i = 0; i < 8; i++) await side.mouse.wheel(0, -200);
     await side.waitForTimeout(700);

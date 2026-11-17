@@ -436,6 +436,8 @@ Code tjekker også tallene i afsnit 2 og skriver, hvor de ikke passer.
 
 ### Senere (ikke en del af faserne, tilføjet i P8.2)
 
+- **Sang og analyse (tilføjet 17. november):** brugerens ønske om en opdateret Lydkilde-menu og et avanceret layout til musik-analyse (inspiration: tre billeder af AURA Studio) har sin egen plan: `docs/PLAN-SANG-OG-ANALYSE.md` (udkast 1; trin S0 til S8; kun S0, bjælken og Annullér, er lavet i v9.68). Brugeren vender planen med hovedchatten; intet bygges før et "kør".
+
 - **En ny global styring**, måske af Øjet, bygges på en anden måde end Morph Pad. Morph Pad var et forsøg på hurtig global styring og virkede ikke efter hensigten; den fjernes helt (afsnit 3.1). Den nye styring bygges ikke, før der er en skitse.
 
 ---
