@@ -135,7 +135,7 @@ async function kør(arg) {
       const sc = q('.dk-zone:has(#w2)'), af = q('.dk-zone:has(#w33)'), fl = document.getElementById('ne-flade').getBoundingClientRect();
       return { knap: !!document.querySelector('#lay3 [data-lay3="noder"]'), lay: set.lay3, aktiv: (dkZoneAf('w33') || {}).a, sc: sc && [sc.top, sc.height, sc.width], af: af && [af.top, af.height, af.width], fl: [fl.width, fl.height], niv: set.niv };
     });
-    T.tjek(l.knap && l.lay === 'noder' && l.aktiv === 'w33', 'layoutet Noder vælger fanen Node-editor');
+    T.tjek(l.lay === 'noder' && l.aktiv === 'w33', 'layoutet Noder vælger fanen Node-editor (v9.71: knappen er væk; lay3Anvend kender stadig layoutet)');
     T.tjek(l.sc && l.af && l.af[1] > l.sc[1] * 1.5 && l.af[2] > 1200 && l.fl[1] > 250, `Node-editorens zone er stor (${l.af && Math.round(l.af[2])} × ${l.af && Math.round(l.af[1])} px), Scenen kan ses ovenover (${l.sc && Math.round(l.sc[1])} px høj)`);
     await side.screenshot({ path: path.join(UD, 'node-editor-noder.png') });
     const nu = await side.evaluate(() => JSON.stringify(maps));

@@ -41,7 +41,7 @@ async function kør(arg) {
     /* tilbage til noderne, huskes */
     await side.evaluate(async () => { ne41Vis('ring'); await new Promise(r => setTimeout(r, 300)); });
     await side.reload(); await side.waitForTimeout(5000);
-    const efter = await side.evaluate(async () => { await new Promise(r => setTimeout(r, 1000)); const a = { vis: set.neVis, ov: !$('ne-vis').hidden, sel: $('ne41-vis').value }; ne41Vis('kol'); await new Promise(r => setTimeout(r, 500)); return { a, ov: !$('ne-vis').hidden, fl: getComputedStyle($('ne-flade')).display, noder: document.querySelectorAll('#ne-verden .ne-node').length, h: Math.round($('ne-flade').getBoundingClientRect().height) }; });
+    const efter = await side.evaluate(async () => { await new Promise(r => setTimeout(r, 1000)); lay3Anvend('noder', true); await new Promise(r => setTimeout(r, 1500)); /* v9.71: programmet starter i 1 · Sang */ const a = { vis: set.neVis, ov: !$('ne-vis').hidden, sel: $('ne41-vis').value }; ne41Vis('kol'); await new Promise(r => setTimeout(r, 500)); return { a, ov: !$('ne-vis').hidden, fl: getComputedStyle($('ne-flade')).display, noder: document.querySelectorAll('#ne-verden .ne-node').length, h: Math.round($('ne-flade').getBoundingClientRect().height) }; });
     T.tjek(efter.a.vis === 'ring' && efter.a.ov && efter.a.sel === 'ring', `valget huskes efter genstart (Ring (chord) står der igen)`);
     T.tjek(!efter.ov && efter.fl !== 'none' && efter.noder > 0 && efter.h > 100, `Noder (kolonner) giver noderne tilbage (${efter.noder} noder, lærredet ${efter.h} px)`);
     const ck = await side.evaluate(() => { const L = []; neKpPunkter(L); return L.filter(x => /^Visning: /.test(x.n)).length; });

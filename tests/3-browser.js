@@ -79,9 +79,9 @@ async function kør(arg, { udenLyd = false } = {}) {
     const antal = ids.filter(([, a]) => !(a && udenLyd)).length;
     T.tjek(!dårlige.length, `alle ${antal} forudindstillinger uden fejl` + (udenLyd ? ` (${ids.length - antal} kræver lyd, sprunget over)` : ''), dårlige.slice(0, 3).join(' | '));
 
-    /* Alle 10 layouts uden overlap (Noder kom med i v9.19; de 4 arbejdsområder i v9.67) */
+    /* De 4 arbejdsområder uden overlap (v9.71: de 6 gamle layout-knapper er væk; lay3Anvend kender stadig de gamle nøgler) */
     const lay = await side.evaluate(() => LAY3.map(x => x[0]));
-    T.tjek(lay.join(',') === 'ao-sang,ao-scene,ao-regler,ao-show,overblik,show,byg,lyd,figurer,noder', `der er 10 layouts: de 4 arbejdsområder (v9.67) og de 6 gamle (${lay.join(', ')})`);
+    T.tjek(lay.join(',') === 'ao-sang,ao-scene,ao-regler,ao-show', `der er 4 layouts i linjen øverst: arbejdsområderne (${lay.join(', ')})`);
     for (const k of lay) {
       await side.evaluate(k => lay3Anvend(k), k); await side.waitForTimeout(500);
       const r = await side.evaluate(() => {

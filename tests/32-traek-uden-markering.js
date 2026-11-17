@@ -28,7 +28,8 @@ async function kør(arg) {
     await træk(r0, 160, 120);
     const r1 = await side.evaluate(() => ({ x: NE2.N.get('f:fin').x, ev: window.__ev.slice() }));
     T.tjek(r0.sel && r1.x - r0.x0 > 300 && !r1.ev.length, `med en markering over noderne flytter FFT · fin hele vejen (${r0.x0} → ${r1.x}), uden dragstart og pointercancel`);
-    /* 3 · fanerne kan stadig trækkes, og felterne kan stadig skrives i */
+    /* 3 · fanerne kan stadig trækkes (v9.71: vinduerne er låst som standard; testen låser op), og felterne kan stadig skrives i */
+    await side.evaluate(() => { set.laast = false; try { laasGem(); laasUI() } catch (e) { } });
     const f = await side.evaluate(() => { const a = document.querySelector('.dk-fane[data-w="w28"]').getBoundingClientRect(), z = document.querySelector('.dk-zone:has(#w33)').getBoundingClientRect(); return { x: a.left + a.width / 2, y: a.top + a.height / 2, tx: z.left + z.width - 40, ty: z.top + z.height / 2 }; });
     await træk(f, f.tx - f.x, f.ty - f.y); await side.waitForTimeout(500);
     const ny = await side.evaluate(() => { const z = dkZoneAf('w28'); return z && z.f.length === 1 && z.a === 'w28'; });

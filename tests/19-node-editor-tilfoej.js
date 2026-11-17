@@ -40,10 +40,10 @@ async function kør(arg) {
     await side.keyboard.press('Enter'); await vent(700);
     const t1 = await side.evaluate(() => { const n = NE2.N.get('l:ana:pitch'), fl = document.getElementById('ne-flade').getBoundingClientRect(), r = n && n.el.getBoundingClientRect(); const andre = [...NE2.N.values()].filter(x => x.kol === 'lydtraek' && x !== n); return n ? { los: set.ne.loese.includes('l:ana:pitch'), nederst: andre.every(x => x.y < n.y), synlig: r.top >= fl.top && r.bottom <= fl.bottom + 1 && r.left >= fl.left && r.right <= fl.right + 1, blink: n.el.classList.contains('ne-blink'), link: NE2.L.some(l => l.fra === 'a:tone' && l.til === 'l:ana:pitch'), hjem: n.hjem } : null; });
     T.tjek(t1 && t1.los && t1.nederst && t1.synlig && t1.blink && t1.link, 'Enter: Tonehøjde lander nederst i Lydtræk-kolonnen, kortet flytter sig derhen, noden lyser kort op og har link fra Tone og akkord');
-    await side.keyboard.press('Control+k'); await vent(300); await side.keyboard.type('noder'); await vent(300);
-    const kn = await side.evaluate(() => [...document.querySelectorAll('#kp-liste .kp-g')].map(x => x.textContent).join(',') + ' | ' + [...document.querySelectorAll('#kp-liste .kp-r span')].map(x => x.textContent).filter(t => /Layout: Noder/.test(t)).join(''));
+    await side.keyboard.press('Control+k'); await vent(300); await side.keyboard.type('regler'); await vent(300);
+    const kn = await side.evaluate(() => [...document.querySelectorAll('#kp-liste .kp-g')].map(x => x.textContent).join(',') + ' | ' + [...document.querySelectorAll('#kp-liste .kp-r span')].map(x => x.textContent).filter(t => /Layout: 3 · Regler/.test(t)).join(''));
     await side.keyboard.press('Escape');
-    T.tjek(/Knapper/.test(kn) && /Layout: Noder/.test(kn), `Ctrl+K finder også de gamle knapper i gruppen Knapper (${kn})`);
+    T.tjek(/Knapper/.test(kn) && /Layout: 3 · Regler/.test(kn), `Ctrl+K finder også knapperne i gruppen Knapper (${kn})`);
 
     /* 2 · + Tilføj: Mål og Ryd tomme mål (Søg-paletten skal være lukket, også når testbrowseren er langsom) */
     await side.evaluate(() => { const k = document.getElementById('kp'); if (k) k.hidden = true; neTilpas(); }); await vent(400); /* Tilpas: kolonnernes overskrifter kan ses (Enter flyttede kortet hen til den nye node) */

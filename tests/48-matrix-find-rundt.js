@@ -64,7 +64,7 @@ async function kør(arg) {
         T.tjek(a.r === a.kilder && a.maal >= a.targets && a.foldet === a.udenRegler && a.medFoldet === 0 && a.tryk === 'true' && a.minB >= 44 && a.minH >= 40, `Alle: ${a.r} lydtræk og ${a.maal} mål (${a.celler} celler); de ${a.foldet} figurer uden regler står foldet sammen; cellerne er stadig mindst 44 × 40`, JSON.stringify(a));
         T.tjek(a.ms < 1500, `Alle: tabellen bygges på ${a.ms} ms`);
         /* huskes efter genstart */
-        await side.click(`#ne-mx th.mx-fig[data-f="${fig.key}"]`); await side.waitForTimeout(500); await side.reload(); await side.waitForTimeout(5500);
+        await side.click(`#ne-mx th.mx-fig[data-f="${fig.key}"]`); await side.waitForTimeout(500); await side.reload(); await side.waitForTimeout(5500); await side.evaluate(async () => { lay3Anvend('noder', true); await new Promise(r => setTimeout(r, 1500)) }); /* v9.71: programmet starter i 1 · Sang */
         const g = await side.evaluate(key => { const mx = document.getElementById('ne-mx'), th = mx.querySelector('th.mx-fig[data-f="' + key + '"]'); return { mx: !mx.hidden, alle: mx.querySelector('[data-mxv="1"]').getAttribute('aria-pressed'), foldet: th && th.getAttribute('aria-expanded') } }, fig.key);
         T.tjek(g.mx && g.alle === 'true' && g.foldet === 'false', 'efter genstart står matrixen stadig på Alle, og den figur, der blev foldet sammen, er stadig foldet', JSON.stringify(g));
         await side.click('#ne-mx [data-mxv="0"]'); await side.waitForTimeout(700); await side.click(`#ne-mx th.mx-fig[data-f="${fig.key}"]`); await side.waitForTimeout(500);

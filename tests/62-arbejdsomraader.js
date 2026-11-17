@@ -18,9 +18,9 @@ async function kør(arg) {
       const se = () => side.evaluate(() => { const ws = document.getElementById('ws').getBoundingClientRect(); const V = [...document.querySelectorAll('#ws .win')].filter(x => { const r = x.getBoundingClientRect(), st = getComputedStyle(x); return !x.hidden && st.display !== 'none' && st.visibility !== 'hidden' && r.width > 40 && r.height > 40 && r.bottom > ws.top && r.top < ws.bottom }).map(x => ({ id: x.id, r: x.getBoundingClientRect() }));
         let ov = 0; for (let i = 0; i < V.length; i++) for (let j = i + 1; j < V.length; j++) { const a = V[i].r, b = V[j].r; if (a.left < b.right - 2 && b.left < a.right - 2 && a.top < b.bottom - 2 && b.top < a.bottom - 2) ov++ }
         const faner = [...new Set(dkZoner(set.dock).flatMap(z => z.f))].sort(); return { lay: set.lay3, vinduer: V.map(v => v.id).sort(), faner, ov, paa: (document.querySelector('#lay3 [data-lay3].on') || {}).textContent } });
-      /* 1 · knapperne står først, og de gamle er der stadig */
+      /* 1 · kun de fire knapper (v9.71) */
       const kn = await side.evaluate(() => [...document.querySelectorAll('#lay3 [data-lay3]')].map(b => b.textContent));
-      T.tjek(kn.slice(0, 4).join('|') === '1 · Sang|2 · Scene|3 · Regler|4 · Show' && ['Overblik', 'Show', 'Byg', 'Lyd', 'Figurer', 'Noder'].every(n => kn.includes(n)), `${w} × ${h}: de fire arbejdsområder står først i topbjælken (1 · Sang, 2 · Scene, 3 · Regler, 4 · Show), og de seks gamle layouts ligger der stadig`, JSON.stringify(kn));
+      T.tjek(kn.join('|') === '1 · Sang|2 · Scene|3 · Regler|4 · Show', `${w} × ${h}: de fire arbejdsområder står i linjen øverst (1 · Sang, 2 · Scene, 3 · Regler, 4 · Show); de seks gamle layout-knapper er væk (v9.71)`, JSON.stringify(kn));
       /* 2 · hvert arbejdsområde med et rigtigt klik */
       const vent = { 'ao-sang': ['w1', 'w24', 'w3', 'w31', 'w7'], 'ao-scene': ['w2', 'w22', 'w28', 'w29', 'w5', 'w6'], 'ao-regler': ['w2', 'w33'], 'ao-show': ['w13', 'w17', 'w2', 'w28', 'w29', 'w5'] }; const R = {};
       for (const k of Object.keys(vent)) { await side.click('#lay3 [data-lay3="' + k + '"]'); await side.waitForTimeout(1300); R[k] = await se(); }

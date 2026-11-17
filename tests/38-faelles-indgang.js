@@ -21,8 +21,8 @@ async function kør(arg) {
     /* 1 · tre skærmstørrelser */
     const st = [];
     for (const [W, H] of [[1920, 1080], [2560, 1440], [3840, 2160]]) { const p = await browser.newPage({ viewport: { width: W, height: H } }); const f = []; p.on('pageerror', e => f.push(e.message)); p.on('console', x => { if (x.type() === 'error') f.push(x.text()); });
-      await p.goto('file://' + fil); await p.waitForTimeout(3500); const r = await p.evaluate(() => ({ zoner: document.querySelectorAll('.dk-zone').length, pv: document.getElementById('pv').width > 100, id: maps.every(m => typeof m.id === 'string') })); st.push({ W, H, f, ...r }); await p.close(); }
-    T.tjek(st.every(s => !s.f.length && s.zoner >= 3 && s.pv && s.id), `starter uden fejl i ${st.map(s => s.W + ' × ' + s.H).join(', ')}`, JSON.stringify(st.filter(s => s.f.length).slice(0, 1)));
+      await p.goto('file://' + fil); await p.waitForTimeout(3500); const r = await p.evaluate(() => ({ zoner: document.querySelectorAll('.dk-zone').length, pv: document.getElementById('pv').width > 0 /* v9.71: programmet starter i 1 · Sang, hvor Live preview ikke vises */, id: maps.every(m => typeof m.id === 'string') })); st.push({ W, H, f, ...r }); await p.close(); }
+    T.tjek(st.every(s => !s.f.length && s.zoner >= 2 && s.pv && s.id), `starter uden fejl i ${st.map(s => s.W + ' × ' + s.H).join(', ')}`, JSON.stringify(st.filter(s => s.f.length).slice(0, 1)));
     /* 2 · gamle indstillinger med Morph Pad */
     const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 } }); const side = await ctx.newPage(); const fejl = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });

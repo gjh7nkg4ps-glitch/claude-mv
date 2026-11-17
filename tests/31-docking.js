@@ -24,7 +24,8 @@ async function kør(arg) {
     const Z = () => side.evaluate(() => dkZoner(set.dock).map(z => z.id + ':' + z.f.join(',') + '*' + z.a).join(' | '));
     const midt = s => side.evaluate(s => { const q = document.querySelector(s).getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2, l: q.left, r: q.right, t: q.top, b: q.bottom, w: q.width, h: q.height }; }, s);
     const træk = async (fra, til) => { await side.mouse.move(fra.x, fra.y); await side.mouse.down(); await side.mouse.move(fra.x + 30, fra.y + 30, { steps: 4 }); await side.mouse.move(til.x, til.y, { steps: 10 }); await side.mouse.up(); await vent(600); };
-    /* 1 · start */
+    /* 1 · start (v9.71: programmet starter i et arbejdsområde; testen bruger det gamle layout Overblik, som lay3Anvend stadig kender) */
+    await side.evaluate(async () => { lay3Anvend('overblik', true); set.laast = false; try { laasGem(); laasUI() } catch (e) { } /* v9.71: vinduerne er låst som standard; testen låser op for at trække */ await new Promise(r => setTimeout(r, 1500)) });
     const s = await side.evaluate(() => { const Zs = [...document.querySelectorAll('.dk-zone')].map(z => { const q = z.getBoundingClientRect(); return { id: z.id, x: q.left, y: q.top, r: q.right, b: q.bottom, faner: [...z.querySelectorAll('.dk-fane')].map(f => f.textContent) }; }); let ov = 0; for (let i = 0; i < Zs.length; i++) for (let j = i + 1; j < Zs.length; j++) { const a = Zs[i], b = Zs[j]; if (Math.min(a.r, b.r) - Math.max(a.x, b.x) > 1 && Math.min(a.b, b.b) - Math.max(a.y, b.y) > 1) ov++; }
       return { Zs, ov, vaert: ['w23', 'w25', 'w26', 'w27'].filter(id => { const w = document.getElementById(id); return w && getComputedStyle(w).display !== 'none' && w.getBoundingClientRect().width > 0; }), knapper: ['zon-knap', 'bred-knap'].filter(id => { const b = document.getElementById(id); return b && b.offsetParent; }), std: !!document.getElementById('dk-std') }; });
     await side.screenshot({ path: path.join(UD, 'docking-overblik.png') });
@@ -71,11 +72,12 @@ async function kør(arg) {
     T.tjek(d1.n === 5 && d1.alene === 1 && d2.n === 4 && d2.w2, `⋯ Del: Live preview får sin egen zone (${d1.n} zoner); Luk zonen flytter fanen til nabozonen (${d2.n} zoner)`);
     /* 7 · layoutet husker, ↺ Standard og genstart */
     const før = await Z(); await side.evaluate(() => lay3Anvend('noder')); await vent(300); await side.evaluate(() => lay3Anvend('overblik')); await vent(300);
-    const husk = await Z(); await side.click('#dk-std'); await vent(300); const std = await Z();
+    const husk = await Z(); await side.click('#el9-mere'); await vent(300); await side.click('#dk-std'); await vent(300); /* v9.71: ↺ Standard står under ☰ Mere → Vinduer */ const std = await Z();
     T.tjek(husk === før && std === 'sc:w2,w5,w28,w29,w3,w24,w9*w2 | af:w33,w1,w7,w31*w33 | ed:w6,w13,w22*w6', `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
-    await side.evaluate(() => { dkZone('af').a = 'w31'; dkGem(); dkAnvend(); }); await side.reload(); await vent(4000);
+    await side.evaluate(async () => { lay3Anvend('ao-sang', true); /* v9.71: programmet starter altid i et arbejdsområde */ await new Promise(r => setTimeout(r, 800)); dkZone('af').a = 'w31'; dkGem(); dkAnvend(); }); await side.reload(); await vent(5000);
     T.tjek(await side.evaluate(() => dkZone('af').a === 'w31' && !document.getElementById('w31').hidden), 'efter genstart: opdelingen og den valgte fane (Lydkilde) huskes');
-    /* 8 · Lås */
+    /* 8 · Lås (tilbage i Overblik, hvor Radial Mesh og Editorens zone findes) */
+    await side.evaluate(async () => { lay3Anvend('overblik', true); await new Promise(r => setTimeout(r, 800)) });
     await side.evaluate(() => { [...document.querySelectorAll('button')].find(b => /Lås vinduer/.test(b.textContent)).click(); }); await vent(700);
     const l0 = await side.evaluate(() => JSON.stringify(set.dock)), ls = await midt('.dk-streg');
     await træk(ls, { x: ls.x - 200, y: ls.y - 200 }); await træk(await midt('.dk-fane[data-w="w5"]'), await midt('#dz-ed .dk-faner'));

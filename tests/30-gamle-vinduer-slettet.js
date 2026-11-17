@@ -33,8 +33,8 @@ async function kør(arg) {
     T.tjek(b.kort && b.ms, 'Kort over forbindelserne åbner, og Tilføj morgenstjerne laver en figur');
     await side.evaluate(async () => { try { fgVaelg('vaerk', 'w18', true); fgVisHost('vaerk') } catch (e) { sbAabn && sbAabn('w26') } await new Promise(r => setTimeout(r, 600)); });
     await side.screenshot({ path: path.join(UD, 'flyttet-vaerksted.png') }); await side.keyboard.press('Escape');
-    const c = await side.evaluate(async () => { const b = [...document.querySelectorAll('#sb button, .sb button, [data-sb]')].find(x => /Forbindelser/.test(x.textContent)); if (b) b.click(); await new Promise(r => setTimeout(r, 600)); const w = document.getElementById('w33'); return { knap: !!b, synlig: !!(w && !w.hidden && w.getBoundingClientRect().width > 0) }; });
-    T.tjek(c.knap && c.synlig, 'sidebjælkens Forbindelser viser Node-editoren');
+    const c = await side.evaluate(async () => { const b = document.querySelector('#lay3 [data-lay3="ao-regler"]'); if (b) b.click(); await new Promise(r => setTimeout(r, 1500)); const w = document.getElementById('w33'); return { knap: !!b, synlig: !!(w && !w.hidden && w.getBoundingClientRect().width > 0) }; });
+    T.tjek(c.knap && c.synlig, 'arbejdsområdet 3 · Regler viser Node-editoren (v9.71: sidebjælken er væk)');
     const ægte = fejl.filter(f => !/mermaid|jsdelivr|net::/i.test(f));
     T.tjek(!ægte.length, 'ingen fejl i browseren (uden internet kan Mermaid ikke hentes; det er kendt)', ægte.slice(0, 3).join(' | '));
     await ctx.close();

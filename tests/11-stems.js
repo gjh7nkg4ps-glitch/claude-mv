@@ -27,9 +27,10 @@ async function kør(arg) {
   side.on('console', m => { if (m.type() === 'error') fejl.push('konsol: ' + m.text()); });
   const nyeFejl = () => { const f = fejl; fejl = []; return f; };
   const fane = n => side.evaluate(n => { const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === n); if (t) t.click(); }, n);
+  const noder = () => side.evaluate(async () => { lay3Anvend('noder', true); await new Promise(r => setTimeout(r, 1500)) }); /* v9.71: programmet starter i 1 · Sang; testen bruger layoutet Noder, hvor Lydkilde og Node-editor ligger i samme zone */
   const sætSpor = async mappe => { for (const s of ['trommer', 'bas', 'vokal', 'resten']) await side.setInputFiles(`[data-stem-input="${s}"]`, path.join(mappe, s + '.wav')); await side.waitForFunction(() => STEM_SPOR.every(([s]) => STEM.buf[s]), null, { timeout: 20000 }); };
   try {
-    await side.goto('file://' + fil); await side.waitForTimeout(4000);
+    await side.goto('file://' + fil); await side.waitForTimeout(4000); await noder();
     await fane('Lydkilde'); await side.waitForSelector('#stem-brug', { timeout: 10000 });
     T.ok('kortet "4 spor (stems)" står i Lydkilde');
     await sætSpor(tmp);
