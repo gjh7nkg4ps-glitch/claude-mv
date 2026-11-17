@@ -1,0 +1,19 @@
+# Skærmbilleder
+
+Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
+
+## v9.68 (17. november 2026)
+
+| Billede | Hvad |
+| --- | --- |
+| [1 · Sang](v9_68-1-sang.png) | arbejdsområdet 1 · Sang (Lydkilde, Tidslinje, Analyse · EQ, EQ+) |
+| [2 · Scene](v9_68-2-scene.png) | arbejdsområdet 2 · Scene (Live preview, Mesh 3D, Øjet, Radial Mesh · Editor, Idé-galleri) |
+| [3 · Regler](v9_68-3-regler.png) | arbejdsområdet 3 · Regler (Node-editoren stor · en lille Live preview) |
+| [4 · Show](v9_68-4-show.png) | arbejdsområdet 4 · Show (scenerne store · Opsætninger og Show) |
+| [Analysens bjælke](v9_68-analyse-bjaelke.png) | feltet med trin, bjælke, tid og Annullér, mens sangen analyseres |
+| [Opstilling: Meget luftig](v9_68-opstilling-meget-luftig.png) | dobbelt så meget luft som Luftig |
+| [Opstilling: Kolonner](v9_68-opstilling-kolonner.png) | tæt stablede kolonner fra toppen, tilpasset bredden |
+| [Opstilling: Bred](v9_68-opstilling-bred.png) | fem felter bred (det første felt ses; rul sidelæns) |
+| [Zoom 2 %](v9_68-zoom-2-procent.png) | Node-editoren zoomet helt ud |
+
+Inspirationsbillederne til den nye Sang- og analyse-flade ligger i [`docs/sang-og-analyse/`](../sang-og-analyse/).
