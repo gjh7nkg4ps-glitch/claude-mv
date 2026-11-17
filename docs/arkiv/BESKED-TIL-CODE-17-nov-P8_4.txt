@@ -1,0 +1,43 @@
+BESKED TIL CODE · P8.4 · 17. november 2026
+Svar på de 10 spørgsmål i docs/PLAN-SANG-OG-ANALYSE.md (udkast 1).
+Gem beskeden i docs/arkiv/, og skriv svarene ind i planen.
+
+1. Mixer, Master EQ og kompressor: NEJ. Kun M / S pr. spor og
+   "Lyt til ét bånd" (A + B). Når der kun lyttes til et spor eller
+   et bånd, skal det stå tydeligt på skærmen.
+2. Layout: B, tre faner (Sang · 4 spor · Avanceret).
+3. Fart: a + c (baggrunds-tråde, og brug sangen, mens resten regnes).
+   b kun, hvis a ikke kan lade sig gøre i en fil uden server.
+4. LUFS og dynamisk område: kun visning, ikke lydtræk.
+5. Node-editorens visning Tidslinje må fjernes, når Lyd over tid er
+   bygget.
+6. Indstillingerne for analysen står i Sang (kortet). Automatik viser
+   kun en linje med "ændres i Sang".
+7. HPSS (S7): vent.
+8. Spilleliste (S8): senere.
+9. Rækkefølge: S1 (fart) først. Pakke 4 venter stadig på, at jeg har
+   set de fire arbejdsområder i v9.67/v9.68.
+10. Antal spor: byg kun 4 spor nu, men skriv ikke "4" fast i koden.
+    Fanen "4 spor" skal tegne én række pr. spor, uanset hvor mange
+    der er, fordi planen "Senere" (Lydtidslinjen) kan give flere spor
+    (fx 6 spor og trommerne delt i kick, snare, toms og bækkener).
+    Fanen må gerne hedde "Spor".
+
+Rækkefølge for planen Sang og analyse:
+- S1 bygges for sig, når jeg skriver "kør S1".
+- S2-S6 bygges som en ny pakke EFTER pakke 4 (5b, 5c), som du selv
+  foreslog, fordi S2 bygger på, at bundbjælken er væk.
+
+Navne (begge er vores egne navne):
+- "Lyd over tid" er skærmen, der viser sangen på én tidsakse.
+- "Lydtidslinjen" (planen under "Senere") er en fil med lydenes
+  hændelser. Når den kommer, bliver den til ekstra rækker i Lyd over
+  tid, ikke til en ny visning. Byg Lyd over tid, så der senere kan
+  lægges rækker med hændelser til (streger for kick, noder, ord).
+
+Til planen under "Senere", ved Lydtidslinjen: Lydanalyse-kort v1.0
+fra hovedchatten (https://claude.ai/artifact/DWwBZLPvvZ43gVJbDiYwBA).
+Første trin derfra: kør hele analysen (tonehøjde, toner, klang) på
+hvert spor, især tonehøjden på Vokal-sporet. Det skal først bygges,
+når S1 er lavet, fordi det giver cirka fem gange så meget at regne.
+Byg intet fra dette punkt nu.

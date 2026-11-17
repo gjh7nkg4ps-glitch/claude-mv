@@ -1,6 +1,6 @@
-# PLAN · SANG OG ANALYSE · udkast 1
+# PLAN · SANG OG ANALYSE · P8.4
 
-17. november 2026 · skrevet af Claude Code efter brugerens besked 17. november · **intet i denne plan er bygget** (ud over trin S0) · brugeren vender planen med hovedchatten, før noget bygges.
+17. november 2026 · udkast 1 skrevet af Claude Code efter brugerens besked 17. november; **P8.4: brugerens svar på de 10 spørgsmål er skrevet ind** (beskeden ligger i `docs/arkiv/BESKED-TIL-CODE-17-nov-P8_4.txt`) · **intet i denne plan er bygget** (ud over trin S0) · S1 bygges, når brugeren skriver "kør S1"; S2–S6 som en ny pakke efter pakke 4.
 
 Hører til `PLAN-NY-BRUGERFLADE.md` (P8.3), fase 5, arbejdsområdet **1 · Sang**.
 
@@ -15,6 +15,7 @@ Hører til `PLAN-NY-BRUGERFLADE.md` (P8.3), fase 5, arbejdsområdet **1 · Sang*
 | Hvad foreslår planen? | (1) Analysen regnes i baggrunden og på flere kerner, så den bliver hurtigere og ikke får programmet til at hakke. (2) Arbejdsområdet Sang får **kort** (vores navn; et kort = én måling med sin tegning og sine tal), som i billederne. (3) En ny visning **Lyd over tid** (vores navn): alle målinger på én fælles tidsakse for hele sangen. (4) Fire nye målinger: lydstyrke (LUFS), dynamisk område, goniometer og klip-tæller. |
 | Hvad foreslår planen **ikke**? | Mixer, Master EQ, kompressor og limiter, der ændrer lyden (se afsnit 4). Kort, der kun er pynt (billedernes "DEMO · VISUALISERING"). |
 | Hvad er lavet nu? | Kun trin S0 (v9.68): en tydelig bjælke under analysen og knappen Annullér. |
+| Hvad er besluttet (P8.4)? | Ingen mixer (A + B). Tre faner: **Sang · Spor · Avanceret**. Fart: baggrunds-tråde og brug sangen imens (a + c). LUFS og dynamisk område kun som visning. Indstillingerne for analysen står i Sang. HPSS og spilleliste venter. Antal spor skrives ikke fast i koden. Rækkefølge: S1 først (på "kør S1"), S2–S6 efter pakke 4. |
 
 ---
 
@@ -89,7 +90,7 @@ Billederne har en mixer, en Master EQ, en kompressor og en limiter. Det er værk
 | **B · Kun lytte-hjælp:** M / S pr. spor (4 spor) og *Lyt til ét bånd* (findes i EQ+) | Du kan høre, hvad et spor eller et bånd indeholder, mens du laver regler. Analysen røres ikke | Lyden, du hører, er i den tid ikke den, reglerne ser (det skal stå tydeligt på skærmen: "Du lytter kun til Trommer") |
 | **C · Fuld mixer og master-kæde** som i billederne | Ligner et lydprogram | Mange nye knapper (billedet: cirka 60). Analysen passer ikke længere til det, du hører, medmindre den regnes om ved hver ændring. Et andet program (fx din DAW, fagudtryk for lydprogram) gør det bedre |
 
-**Anbefaling: A + B.** Mixer og master-kæde bygges ikke.
+**Valgt (P8.4): A + B.** Mixer og master-kæde bygges ikke. Når der kun lyttes til et spor eller et bånd, skal det stå tydeligt på skærmen.
 
 ---
 
@@ -100,10 +101,10 @@ Billederne har en mixer, en Master EQ, en kompressor og en limiter. Det er værk
 | Mulighed | Beskrivelse | For | Imod |
 | --- | --- | --- | --- |
 | **A · Én lang side med alle kort** (som billede 1) | Alle kort under hinanden; man ruller | Alt kan ses uden klik | Lang side (billedet er cirka 3 skærme højt); det meste bruges sjældent |
-| **B · Tre faner: Sang · 4 spor · Avanceret** (anbefalet) | *Sang* har de 4 kort, du bruger mest. *Avanceret* har resten og Lyd over tid. *4 spor* har sporene | Let at gå til, dybt når du vil (Grundreglen: detaljer må foldes sammen). Ligner billedernes tre faner | Et klik mere til de avancerede kort |
+| **B · Tre faner: Sang · Spor · Avanceret** (valgt, P8.4) | *Sang* har de 4 kort, du bruger mest. *Avanceret* har resten og Lyd over tid. *Spor* har sporene (én række pr. spor, uanset hvor mange) | Let at gå til, dybt når du vil (Grundreglen: detaljer må foldes sammen). Ligner billedernes tre faner | Et klik mere til de avancerede kort |
 | **C · Behold de fem vinduer, og læg kun de nye kort til** | Mindst arbejde | Dubletterne bliver; fem vinduer plus nye |
 
-### 5.2 Anbefalet opdeling (B)
+### 5.2 Opdelingen (B, valgt i P8.4)
 
 ```mermaid
 flowchart LR
@@ -118,7 +119,7 @@ flowchart LR
     K3["Niveau"]
     K4["Taktslag"]
   end
-  subgraph F2["Fanen 4 spor"]
+  subgraph F2["Fanen Spor (én række pr. spor)"]
     S1["Trommer · bølgeform · niveau · M / S"]
     S2["Bas"]
     S3["Vokal"]
@@ -142,12 +143,12 @@ flowchart LR
 | | Spektrum | EQ |
 | | Niveau (V/H, top, klip, lydstyrke, dynamisk område) | nyt |
 | | Taktslag (tempo, ½×, 2×, Tap, takt) | bundbjælken + Show-vinduet |
-| **4 spor** | én række pr. spor: bølgeform, niveau, M / S | kortet *4 spor* i Lydkilde |
+| **Spor** | én række pr. spor: bølgeform, niveau, M / S. **Antallet skrives ikke fast i koden** (P8.4): fanen tegner én række pr. spor, der findes, så Lydtidslinjen senere kan give fx 6 spor (trommerne delt i kick, snare, toms og bækkener). Når der kun lyttes til ét spor eller ét bånd, står det tydeligt på skærmen (fx "Du lytter kun til Trommer") | kortet *4 spor* i Lydkilde |
 | **Avanceret** | Lyd over tid | nyt |
 | | Toner (toneklasser, tonehøjde, toneart) | Analyse |
 | | Stereo (goniometer, bredde, panorering, faselighed) | nyt + tal, der findes |
 | | Spektrum+ (31 bånd, vandfald, topværdi, Lyt til ét bånd) | EQ+ |
-| | Indstillinger for analysen | Automatik-panelet (Normalisering, Lange sange, Adaptiv tærskel) – **flyttes eller vises kun ét sted** (spørgsmål 6) |
+| | Indstillinger for analysen | Automatik-panelet (Normalisering, Lange sange, Adaptiv tærskel) – **står i Sang; Automatik viser kun en linje med "ændres i Sang"** (P8.4) |
 
 ### 5.3 Indstillinger, der kunne være nyttige (kortet *Indstillinger for analysen*)
 
@@ -161,6 +162,7 @@ flowchart LR
 | **Analysér kun et udsnit** | fx kun sløjfen A til B, når du prøver noget af | nyt |
 | **Tempo-område** (fx 60–180) | hjælper taktslag-analysen, når den vælger halvt eller dobbelt tempo | nyt (i dag ½× og 2× bagefter) |
 | **Ryd gemte analyser** | sletter cachen (i dag kan en gammel analyse kun fjernes ved at analysere igen) | nyt |
+| **Flueben: hvad der analyseres** (brugerens ønske 17. november) | et flueben pr. del af analysen, fx *Lydtræk (bas, slag, styrke)*, *Toner og tonehøjde*, *De 31 bånd*, *Stereo*; det, der er slået fra, regnes ikke, og dets kilder står som *Ikke analyseret* i matrixen og Node-editoren. Det sparer tid på lange sange (trin 2 er cirka 81 % af tiden). Standard: alt slået til. Regler, der bruger en kilde, som er slået fra, giver 0 og siger hvorfor | nyt (hører til S1 eller S2; se afsnit 6) |
 
 ---
 
@@ -175,7 +177,7 @@ flowchart LR
 | **c · Brug sangen, mens resten regnes** | Trin 1 er færdigt efter cirka en femtedel af tiden; afspilning og regler på lydtræk virker da. Toner og bånd kommer til, når trin 2 er færdigt | Du venter cirka 2 minutter i stedet for 10, før du kan gå i gang | Regler på toner og de 31 bånd giver 0, indtil trin 2 er færdigt (skal stå tydeligt) |
 | **d · Gør ingenting** | – | – | 10 minutter |
 
-**Anbefaling: a, og c oveni.** b kun, hvis a ikke kan lade sig gøre i en fil uden server.
+**Valgt (P8.4): a + c.** b kun, hvis a ikke kan lade sig gøre i en fil uden server. **Brugerens tilføjelse (17. november):** analysen deles i dele med et flueben pr. del, så man kan fravælge det, man ikke bruger (tabellen i 5.3). Det kommer med i S1 som en simpel liste i Automatik-panelet (flyttes til kortet i Sang i S2).
 
 **Ærligt:** tallene "4–6 gange" og "2 minutter" er et skøn ud fra antal kerner. De er ikke målt. Testmaskinen har ingen rigtig lang sang og få kerner.
 
@@ -188,33 +190,44 @@ Hvert trin får sit eget versionsnummer, sin egen test og sit eget gem, som i pa
 | Trin | Hvad bygges | Hvad fjernes | Afhænger af |
 | --- | --- | --- | --- |
 | **S0** (lavet, v9.68) | Bjælke med trin, procent, tid gået og tid tilbage; knappen Annullér | – | – |
-| **S1** | Analysen i baggrunds-tråde (6a) og *brug sangen, mens resten regnes* (6c). Test: samme tal som den gamle analyse | pauserne i den gamle analyse | – |
+| **S1** (på "kør S1") | Analysen i baggrunds-tråde (6a) og *brug sangen, mens resten regnes* (6c); flueben pr. del af analysen. Test: samme tal som den gamle analyse | pauserne i den gamle analyse | – |
 | **S2** | Sang som faner og kort (5.2) med **kun det, der findes** i dag, flyttet ind | vinduerne Tidslinje, Analyse, EQ og EQ+ som selvstændige vinduer (5 vinduer bliver til 1); ½×, 2×, Tap i Show | 5b (bundbjælken) eller samtidig |
-| **S3** | Lyd over tid (afsnit 3) | Node-editorens visning Tidslinje (hvis du siger ja) | S2 |
+| **S3** | Lyd over tid (afsnit 3); bygget, så der senere kan lægges rækker med hændelser til (streger for kick, noder, ord) fra Lydtidslinjen | Node-editorens visning Tidslinje (ja, P8.4) | S2 |
 | **S4** | Kortet Niveau: klip-tæller, lydstyrke (LUFS), dynamisk område | V/H-målerne på Lydfil-noden bliver en kopi af kortet (samme tal) | S2 |
 | **S5** | Kortet Stereo: goniometer og kurver | – | S2 |
-| **S6** | Fanen 4 spor: rækker og M / S til at lytte | kortet 4 spor i Lydkilde | S2 |
-| **S7** (dit valg) | Harmonisk og perkussiv deling (HPSS) som to nye kilder | – | S1 (tung beregning) |
-| **S8** (dit valg) | Spilleliste | – | S2 |
+| **S6** | Fanen Spor: én række pr. spor og M / S til at lytte | kortet 4 spor i Lydkilde | S2 |
+| **S7** (vent, P8.4) | Harmonisk og perkussiv deling (HPSS) som to nye kilder | – | S1 (tung beregning) |
+| **S8** (senere, P8.4) | Spilleliste | – | S2 |
 
-**Plads i pakkerne (forslag):** S1 for sig selv som det næste, fordi ventetiden generer nu. S2–S6 som en ny pakke efter pakke 4 (5b, 5c), fordi S2 bygger på, at bundbjælken er væk. S7 og S8 i Idé-kassen, til du siger til.
+**Plads i pakkerne (valgt, P8.4):** S1 for sig selv, når brugeren skriver "kør S1". S2–S6 som en ny pakke efter pakke 4 (5b, 5c), fordi S2 bygger på, at bundbjælken er væk. S7 og S8 i Idé-kassen, til brugeren siger til.
 
 ---
 
-## 8 · Spørgsmål til dig (og hovedchatten)
+## 8 · Spørgsmålene og brugerens svar (P8.4, 17. november)
 
-| Nr. | Spørgsmål | Anbefaling |
-| --- | --- | --- |
-| 1 | Skal MV kunne ændre lyden (mixer, Master EQ, kompressor)? | Nej. Kun M / S pr. spor og Lyt til ét bånd (afsnit 4: A + B) |
-| 2 | Layout: én lang side (A), tre faner (B) eller som nu (C)? | B |
-| 3 | Fart: baggrunds-tråde (a), grovere måling (b), brug sangen imens (c)? | a + c |
-| 4 | Skal lydstyrke (LUFS) og dynamisk område også være **lydtræk**, man kan lave regler på? | Nej, kun visning (de følger RMS tæt) |
-| 5 | Må Node-editorens visning Tidslinje fjernes, når Lyd over tid findes? | Ja |
-| 6 | Indstillingerne for analysen: i Sang (kortet) eller i panelet Automatik? De må kun stå ét sted | I Sang; Automatik viser en linje med "ændres i Sang" |
-| 7 | HPSS (trin S7): ønsket? Du har allerede 4 spor fra Ultimate Vocal Remover, som er bedre end HPSS til trommer og vokal | Vent |
-| 8 | Spilleliste (trin S8): ønsket nu eller senere? | Senere |
-| 9 | Rækkefølge: S1 (fart) nu, eller først pakke 4? | S1 først |
-| 10 | Billedernes 8 spor: MV har 4 (Trommer, Bas, Vokal, Resten). Skal der kunne være flere? | Nej (4 er det, Ultimate Vocal Remover giver) |
+| Nr. | Spørgsmål | Anbefaling | **Svar** |
+| --- | --- | --- | --- |
+| 1 | Skal MV kunne ændre lyden (mixer, Master EQ, kompressor)? | Nej. Kun M / S pr. spor og Lyt til ét bånd (afsnit 4: A + B) | **Nej. A + B.** Når der kun lyttes til et spor eller et bånd, skal det stå tydeligt på skærmen |
+| 2 | Layout: én lang side (A), tre faner (B) eller som nu (C)? | B | **B** (fanerne Sang · Spor · Avanceret) |
+| 3 | Fart: baggrunds-tråde (a), grovere måling (b), brug sangen imens (c)? | a + c | **a + c**; b kun, hvis a ikke kan lade sig gøre i en fil uden server |
+| 4 | Skal lydstyrke (LUFS) og dynamisk område også være **lydtræk**, man kan lave regler på? | Nej, kun visning (de følger RMS tæt) | **Kun visning** |
+| 5 | Må Node-editorens visning Tidslinje fjernes, når Lyd over tid findes? | Ja | **Ja** |
+| 6 | Indstillingerne for analysen: i Sang (kortet) eller i panelet Automatik? De må kun stå ét sted | I Sang; Automatik viser en linje med "ændres i Sang" | **I Sang**; Automatik viser kun linjen "ændres i Sang" |
+| 7 | HPSS (trin S7): ønsket? Du har allerede 4 spor fra Ultimate Vocal Remover, som er bedre end HPSS til trommer og vokal | Vent | **Vent** |
+| 8 | Spilleliste (trin S8): ønsket nu eller senere? | Senere | **Senere** |
+| 9 | Rækkefølge: S1 (fart) nu, eller først pakke 4? | S1 først | **S1 først** (på "kør S1"). Pakke 4 venter på, at brugeren har set arbejdsområderne |
+| 10 | Billedernes 8 spor: MV har 4 (Trommer, Bas, Vokal, Resten). Skal der kunne være flere? | Nej | **Byg kun 4 nu, men skriv ikke "4" fast i koden.** Fanen tegner én række pr. spor, uanset hvor mange, og må hedde **Spor** |
+
+### 8.1 · Navne (begge er vores egne navne, P8.4)
+
+| Navn | Hvad |
+| --- | --- |
+| **Lyd over tid** | skærmen, der viser sangen på én tidsakse (afsnit 3) |
+| **Lydtidslinjen** | en fil med lydenes hændelser (planen under *Senere*). Når den kommer, bliver den til **ekstra rækker i Lyd over tid**, ikke en ny visning. Lyd over tid bygges, så der senere kan lægges rækker med hændelser til (streger for kick, noder, ord) |
+
+## 10 · Senere (ikke en del af trinene; P8.4)
+
+- **Lydtidslinjen** og **Lydanalyse-kort v1.0** fra hovedchatten (https://claude.ai/artifact/DWwBZLPvvZ43gVJbDiYwBA). Første trin derfra: kør hele analysen (tonehøjde, toner, klang) på **hvert spor**, især tonehøjden på Vokal-sporet. Bygges først, når S1 er lavet, fordi det giver cirka fem gange så meget at regne. **Intet fra dette punkt bygges nu.**
 
 ---
 
