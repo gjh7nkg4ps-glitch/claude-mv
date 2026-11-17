@@ -4,7 +4,7 @@
      men et rigtigt skift af vinduets størrelse lægger stadig zonerne om, så de fylder bredden;
    - Sikker visning læser pixels højst 13 gange i sekundet (før: ved hvert billede);
    - værktøjstip gennemgår ikke hele siden ved hver ændring (højst 2 fulde gennemgange på 6 s; før cirka 10 i sekundet);
-   - Skarphed (Live preview) under Mere → Lyd og ydelse og i Kvalitet (v9.70: menuen, fordi Kvalitet er skjult på lavt Niveau): Fuld = 2× på en 2×-skærm, 1× halverer tegnefladen, Opløsning er skjult, og regulatoren på trin 4 sænker til 1× med tekst. */
+   - Skarphed (Live preview) i Indstillinger (v9.72) og i Kvalitet: Fuld = 2× på en 2×-skærm, 1× halverer tegnefladen, Opløsning er skjult, og regulatoren på trin 4 sænker til 1× med tekst. */
 const path = require('path'), fs = require('fs'), os = require('os');
 const { chromium } = require('playwright');
 const { findFil, tæller } = require('./faelles');
@@ -38,11 +38,11 @@ async function kør(arg) {
     await side.setViewportSize({ width: 1920, height: 1080 }); await side.waitForTimeout(1200);
     /* 5 · Skarphed i Kvalitet */
     await side.evaluate(async () => { lay3Anvend('ao-scene'); await new Promise(r => setTimeout(r, 1500)) });
-    /* v9.71: Skarphed står under ☰ Mere → Lyd og ydelse i linjen øverst; Mere åbnes med et rigtigt klik */
-    const mk = await side.evaluate(() => { const b = document.getElementById('el9-mere'); const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 } }); await side.mouse.click(mk.x, mk.y); await side.waitForTimeout(600);
+    /* v9.72: Skarphed står i Indstillinger (☰ Mere → ⚙ Indstillinger); begge åbnes med rigtige klik */
+    for (const id of ['el9-mere', 'sbtn']) { const mk = await side.evaluate(id => { const b = document.getElementById(id); const r = b.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 } }, id); await side.mouse.click(mk.x, mk.y); await side.waitForTimeout(600); }
     const k = await side.evaluate(() => { const s = document.getElementById('tb-skarp'), o = document.getElementById('kv-skala'), s0 = document.getElementById('kv-skarp'); const c = document.getElementById('pv'), b = c.closest('.wb') || c.parentElement; return { findes: !!s, muligheder: s ? [...s.options].map(x => x.value).join(',') : '', vaerdi: s && s.value, oploesningSkjult: !!o && getComputedStyle(o.closest('label')).display === 'none', pvB: c.width, klientB: b.clientWidth, synlig: s && s.getBoundingClientRect().width > 0, iKvalitet: !!s0 && [...s0.options].map(x => x.value).join(',') === 'fuld,2,1' } });
     /* valget sættes med value + change (rullelisten kan stå uden for det synlige i Kvalitet-fanen) */
-    T.tjek(k.findes && k.synlig && k.iKvalitet && k.muligheder === 'fuld,2,1' && k.vaerdi === 'fuld' && k.oploesningSkjult && Math.abs(k.pvB - k.klientB * 2) <= 4, `☰ Mere → Lyd og ydelse (åbnet med et rigtigt klik) viser Skarphed (Live preview), og det samme valg står i Kvalitet: Fuld · Højst 2× · 1× (står på Fuld = 2× på en 2×-skærm: tegnefladen ${k.pvB} for ${k.klientB} px), og Opløsning er skjult`, JSON.stringify(k));
+    T.tjek(k.findes && k.synlig && k.iKvalitet && k.muligheder === 'fuld,2,1' && k.vaerdi === 'fuld' && k.oploesningSkjult && Math.abs(k.pvB - k.klientB * 2) <= 4, `☰ Mere → ⚙ Indstillinger (åbnet med rigtige klik) viser Skarphed (Live preview), og det samme valg står i Kvalitet: Fuld · Højst 2× · 1× (står på Fuld = 2× på en 2×-skærm: tegnefladen ${k.pvB} for ${k.klientB} px), og Opløsning er skjult`, JSON.stringify(k));
     await side.selectOption('#tb-skarp', '1'); await side.waitForTimeout(700);
     const k1 = await side.evaluate(() => { const c = document.getElementById('pv'), b = c.closest('.wb') || c.parentElement; return { pvB: c.width, klientB: b.clientWidth, gemt: JSON.parse(localStorage.getItem('rytme-set') || '{}').skarp, tekst: document.getElementById('kv-skarp-nu').textContent, kv: document.getElementById('kv-skarp').value } });
     T.tjek(Math.abs(k1.pvB - k1.klientB) <= 4 && k1.gemt === '1' && /tegneflade/.test(k1.tekst) && k1.kv === '1', `1× halverer tegnefladen (${k1.pvB} for ${k1.klientB} px), valget huskes, og teksten viser skalering og tegneflade: "${k1.tekst}"`, JSON.stringify(k1));

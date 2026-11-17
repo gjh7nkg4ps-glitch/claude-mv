@@ -2,6 +2,23 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.72 (17. november 2026, trin 5c)
+
+| Billede | Hvad |
+| --- | --- |
+| [Warm Analog i 3 · Regler](v9_72-warm-regler.png) | hele programmet i Node-editorens tema |
+| [Warm Analog i 2 · Scene](v9_72-warm-scene.png) | Live preview, Editor og zonerne i temaet |
+| [Indstillinger](v9_72-indstillinger.png) | Visning og Ydelse samlet ét sted (☰ Mere → ⚙ Indstillinger) |
+| [Størrelse: Stor](v9_72-stoerrelse-stor.png) | hele programmet 115 % |
+
+## v9.71 (17. november 2026, trin 5b)
+
+| Billede | Hvad |
+| --- | --- |
+| [Linjen øverst ved 1920 px](v9_71-linjen-1920.png) | arbejdsområderne, afspilningen, status, Søg, Fortryd, Gentag, Gem og Mere i én linje |
+| [☰ Mere](v9_71-mere.png) | det, der hører til arbejdsområdet, og sektionerne Vis, Vinduer, Lyd og ydelse, Opsætninger og Hjælp |
+| [💾 Gem ▾](v9_71-gem.png) | gem alt i Opsætning 1 til 20 |
+
 ## v9.70 og v9.69 (17. november 2026)
 
 | Billede | Hvad |
