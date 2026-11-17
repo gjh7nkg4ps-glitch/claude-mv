@@ -1,6 +1,6 @@
 /* Trin 4 · Det nye i v9.68: analysens bjælke og Annullér, zoom ud til 2 %, og Tidslinjen uden fejl, når toppene mangler.
    - Mens en rigtig lydfil analyseres, står feltet midt øverst med trinnet (1 af 2, 2 af 2), bjælken og tiden.
-   - Annullér (rigtigt museklik) stopper analysen: ingen analyse, Afspil er grå, og statuslinjen siger det.
+   - Annullér (rigtigt museklik) i trin 2 stopper analysen: lydtrækkene beholdes (v9.70), Afspil er aktiv, og statuslinjen siger det.
    - Vælges filen igen, bliver analysen færdig, og feltet forsvinder.
    - Annulleres Analysér igen, bruges den gamle analyse stadig.
    - Node-editoren kan zoomes ud til 2 %. */
@@ -16,16 +16,16 @@ async function kør(arg) {
     const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 } }); const side = await ctx.newPage(); const fejl = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text().slice(0, 200)); });
     await side.goto('file://' + fil); await side.waitForTimeout(3500);
-    const wav = lavTestlyd(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'mv-lyd-')), 'testlyd-bjaelke.wav'));
+    const wav = lavTestlyd(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'mv-lyd-')), 'testlyd-bjaelke.wav'), 120); /* 120 s: fra v9.70 regnes analysen i tråde, så 30 s er færdig, før Annullér kan nås */
     const felt = () => side.evaluate(() => { const d = document.getElementById('ana-prog'); if (!d || d.hidden) return null; const r = d.getBoundingClientRect(), bj = d.querySelector('.ana-bj'), i = bj.querySelector('i'); return { trin: d.querySelector('.ana-trin').textContent, tal: d.querySelector('.ana-tal').textContent, andel: i.getBoundingClientRect().width / bj.getBoundingClientRect().width, bred: r.width, top: r.top, midt: Math.abs(r.left + r.width / 2 - innerWidth / 2) < 4, knap: !!d.querySelector('#ana-stop') } });
     /* 1 · feltet under analysen: trin 1 og trin 2 */
     await side.setInputFiles('#file', wav); let f1 = null, f2 = null; const t0 = Date.now();
-    while (Date.now() - t0 < 200000) { const f = await felt(); if (f && /Trin 1 af 2/.test(f.trin) && !f1) f1 = f; if (f && /Trin 2 af 2/.test(f.trin)) { f2 = f; if (f.andel > .25) break } await side.waitForTimeout(60); }
+    while (Date.now() - t0 < 200000) { const f = await felt(); if (f && /Trin 1 af 2/.test(f.trin) && !f1) f1 = f; if (f && /Trin 2 af 2/.test(f.trin)) { f2 = f; const pct = +((f.trin.match(/(\d+) %/) || [])[1] || 0); if (pct >= 10) break } await side.waitForTimeout(20); }
     T.tjek(!!f1 && !!f2 && f1.midt && f1.bred > 400 && f1.knap && /lydtræk/.test(f1.trin) && /toner og klang/.test(f2.trin) && f2.andel > f1.andel && f2.andel > .19 && /% af hele analysen · gået \d+:\d\d/.test(f2.tal), `mens lydfilen analyseres, står feltet midt øverst med Trin 1 af 2 (lydtræk) og derefter Trin 2 af 2 (toner og klang), en bjælke (${f2 ? Math.round(f2.andel * 100) : '?'} %) og tiden: "${f2 ? f2.tal : ''}"`, JSON.stringify({ f1, f2 }));
     /* 2 · Annullér med et rigtigt museklik */
     const p = await side.evaluate(() => { const b = document.getElementById('ana-stop').getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 } }); await side.mouse.click(p.x, p.y); await side.waitForTimeout(1500);
     const a = await side.evaluate(() => ({ status: document.getElementById('status').textContent, F: typeof F !== 'undefined' && !!F, play: document.getElementById('play').disabled, felt: !document.getElementById('ana-prog').hidden }));
-    T.tjek(/Analysen blev annulleret/.test(a.status) && !a.F && a.play && !a.felt, `Annullér stopper analysen: "${a.status}"; der er ingen analyse, Afspil er grå, og feltet er væk`, JSON.stringify(a));
+    T.tjek(/Trin 2 blev annulleret/.test(a.status) && a.F && !a.play && !a.felt, `Annullér i trin 2 stopper analysen: "${a.status}"; lydtrækkene beholdes (v9.70), Afspil er aktiv, og feltet er væk`, JSON.stringify(a));
     /* 3 · vælg filen igen: analysen bliver færdig */
     await side.setInputFiles('#file', []); await side.setInputFiles('#file', wav);
     await side.waitForFunction(() => typeof F !== 'undefined' && F && !document.getElementById('play').disabled && /slag fundet i/.test(document.getElementById('status').textContent), null, { timeout: 240000 }); await side.waitForTimeout(400);

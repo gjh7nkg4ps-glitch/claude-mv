@@ -14,7 +14,7 @@ Hører til `PLAN-NY-BRUGERFLADE.md` (P8.3), fase 5, arbejdsområdet **1 · Sang*
 | Hvad er problemet i dag? | Analysen af en sang på 74 minutter tager cirka 10 minutter. Det, der måles, ligger i fem vinduer (Lydkilde, Tidslinje, Analyse, EQ, EQ+) og i Node-editoren, og noget vises flere steder. |
 | Hvad foreslår planen? | (1) Analysen regnes i baggrunden og på flere kerner, så den bliver hurtigere og ikke får programmet til at hakke. (2) Arbejdsområdet Sang får **kort** (vores navn; et kort = én måling med sin tegning og sine tal), som i billederne. (3) En ny visning **Lyd over tid** (vores navn): alle målinger på én fælles tidsakse for hele sangen. (4) Fire nye målinger: lydstyrke (LUFS), dynamisk område, goniometer og klip-tæller. |
 | Hvad foreslår planen **ikke**? | Mixer, Master EQ, kompressor og limiter, der ændrer lyden (se afsnit 4). Kort, der kun er pynt (billedernes "DEMO · VISUALISERING"). |
-| Hvad er lavet nu? | Kun trin S0 (v9.68): en tydelig bjælke under analysen og knappen Annullér. |
+| Hvad er lavet nu? | Trin S0 (v9.68): bjælke og Annullér. **Trin S1 (v9.70): baggrunds-tråde, brug sangen imens, flueben pr. del.** |
 | Hvad er besluttet (P8.4)? | Ingen mixer (A + B). Tre faner: **Sang · Spor · Avanceret**. Fart: baggrunds-tråde og brug sangen imens (a + c). LUFS og dynamisk område kun som visning. Indstillingerne for analysen står i Sang. HPSS og spilleliste venter. Antal spor skrives ikke fast i koden. Rækkefølge: S1 først (på "kør S1"), S2–S6 efter pakke 4. |
 
 ---
@@ -190,7 +190,7 @@ Hvert trin får sit eget versionsnummer, sin egen test og sit eget gem, som i pa
 | Trin | Hvad bygges | Hvad fjernes | Afhænger af |
 | --- | --- | --- | --- |
 | **S0** (lavet, v9.68) | Bjælke med trin, procent, tid gået og tid tilbage; knappen Annullér | – | – |
-| **S1** (på "kør S1") | Analysen i baggrunds-tråde (6a) og *brug sangen, mens resten regnes* (6c); flueben pr. del af analysen. Test: samme tal som den gamle analyse | pauserne i den gamle analyse | – |
+| **S1** (**lavet i v9.70**) | Analysen i baggrunds-tråde (6a) og *brug sangen, mens resten regnes* (6c); flueben pr. del af analysen i Automatik. Test 65: samme tal som den gamle analyse (største forskel 0). Målt i testmaskinen med 3 tråde: 5 minutters lyd 25 s → 10 s; brugerens 74 minutter er ikke målt | pauserne i den gamle analyse (den gamle vej findes stadig som reserve, hvis tråde ikke kan laves) | – |
 | **S2** | Sang som faner og kort (5.2) med **kun det, der findes** i dag, flyttet ind | vinduerne Tidslinje, Analyse, EQ og EQ+ som selvstændige vinduer (5 vinduer bliver til 1); ½×, 2×, Tap i Show | 5b (bundbjælken) eller samtidig |
 | **S3** | Lyd over tid (afsnit 3); bygget, så der senere kan lægges rækker med hændelser til (streger for kick, noder, ord) fra Lydtidslinjen | Node-editorens visning Tidslinje (ja, P8.4) | S2 |
 | **S4** | Kortet Niveau: klip-tæller, lydstyrke (LUFS), dynamisk område | V/H-målerne på Lydfil-noden bliver en kopi af kortet (samme tal) | S2 |

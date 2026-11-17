@@ -2,6 +2,14 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.70 og v9.69 (17. november 2026)
+
+| Billede | Hvad |
+| --- | --- |
+| [Trin 2 regnes, sangen kan spilles](v9_70-trin2-afspil.png) | efter trin 1 står Lydkilde på Klar, og statuslinjen siger "Lydtræk er klar", mens trin 2 regnes i baggrunds-tråde |
+| [Flueben i Automatik](v9_70-automatik.png) | Sangens analyse: Analysér igen og fire flueben for dele af analysen |
+| [Skarphed](v9_70-skarphed.png) | Mere → Lyd og ydelse: Kvalitet og Skarphed (Live preview) |
+
 ## v9.68 (17. november 2026)
 
 | Billede | Hvad |

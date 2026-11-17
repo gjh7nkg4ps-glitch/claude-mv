@@ -77,7 +77,7 @@ async function kør(arg) {
     await side.setInputFiles('#file', wav);
     const ve = await side.evaluate(async () => { for (let k = 0; k < 300; k++) { await new Promise(r => setTimeout(r, 50)); const n = NE2.N.get('k:main'); if (NE2.analyserer && n && n.kildeType === 'fil' && n.el.classList.contains('ne-analyserer') && n.el.querySelector('[data-x="info"]')) return { a: true, venter: document.querySelectorAll('#ne-verden .ne-n-analyse.ne-venter').length, tekst: n.el.querySelector('[data-x="info"]').textContent }; } return { a: false }; });
     T.tjek(ve.a && ve.venter === 9 && /Analyserer/.test(ve.tekst), `under analysen: lydkilden viser "${ve.tekst}", og de 9 analyser venter`);
-    await side.waitForFunction(() => F && Math.abs(dur - 30) < 1 && !document.getElementById('play').disabled, null, { timeout: 240000 });
+    await side.waitForFunction(() => F && Math.abs(dur - 30) < 1 && !document.getElementById('play').disabled && /Analyse færdig|hentet fra cache/.test(document.getElementById('status').textContent), null, { timeout: 240000 }); /* v9.70: tempo og toneart kommer efter trin 2 */
     await neVent(); await side.waitForTimeout(600);
     const f1 = await side.evaluate(() => { const k = NE2.N.get('k:main'); return { kilde: k.kildeType, navn: k.navn, info: k.el.querySelector('[data-x="info"]').textContent, boelge: k.boelgeTegnet, sover: document.querySelectorAll('#ne-verden .ne-sover').length }; });
     T.tjek(f1.kilde === 'fil' && f1.navn === 'testlyd-120bpm.wav' && /0:30/.test(f1.info) && /1[12]\d BPM/.test(f1.info) && f1.boelge && f1.sover === 0, `lydfilen: ${f1.navn} · ${f1.info}, bølgeformen er tegnet, intet sover`);

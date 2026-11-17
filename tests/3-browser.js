@@ -59,7 +59,7 @@ async function kør(arg, { udenLyd = false } = {}) {
       const wav = lavTestlyd(path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'mv-lyd-')), 'testlyd-120bpm.wav'));
       const t0 = Date.now();
       await side.setInputFiles('#file', wav);
-      await side.waitForFunction(() => typeof F !== 'undefined' && F && Math.abs(dur - 30) < 1 && !document.getElementById('play').disabled, null, { timeout: 240000 });
+      await side.waitForFunction(() => typeof F !== 'undefined' && F && Math.abs(dur - 30) < 1 && !document.getElementById('play').disabled && /Analyse færdig|hentet fra cache|Analyseret igen/.test(document.getElementById('status').textContent), null, { timeout: 240000 }); /* v9.70: Afspil er aktiv efter trin 1; tempo og toneart kommer efter trin 2 */
       const P = await side.evaluate(() => ({ bpm: SHOWPROFIL && SHOWPROFIL.bpm, toneart: SHOWPROFIL && SHOWPROFIL.toneart && SHOWPROFIL.toneart.navn }));
       T.ok(`testlydfilen er analyseret (${Math.round((Date.now() - t0) / 1000)} s): ${P.bpm ? Math.round(P.bpm * 10) / 10 + ' BPM' : 'intet tempo'}, toneart ${P.toneart || 'ingen'}`);
       T.tjek(P.bpm && Math.abs(P.bpm - 120) < 2, 'tempoet er fundet til cirka 120 BPM (testfilen er lavet med 120)', String(P.bpm));
