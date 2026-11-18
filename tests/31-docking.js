@@ -38,9 +38,9 @@ async function kør(arg) {
     const e1 = await side.evaluate(async () => { const z = dkZoneAf('w28'), t0 = M3.tTot; await new Promise(r => setTimeout(r, 1500)); return { ny: z && z.f.length === 1 && !['sc', 'af', 'ed'].includes(z.id), aktiv: z && z.a, tegner: M3.tTot > t0, tal: dkZoner(set.dock).length }; });
     T.tjek(felt.sted === 'r' && /ny zone til højre/.test(felt.tekst || '') && e1.ny && e1.aktiv === 'w28' && e1.tal === 4 && e1.tegner, `træk Mesh 3D til højre kant: det blå felt viser "${felt.tekst}", Mesh 3D får en ny zone og tegner dér (${e1.tal} zoner)`);
     /* 3 · træk Tidslinje til Editorens fanebjælke */
-    await træk(await midt('.dk-fane[data-w="w1"]'), await midt('#dz-ed .dk-faner'));
+    await træk(await midt('.dk-fane[data-w="w35"]'), await midt('#dz-ed .dk-faner')); /* v9.76: Tidslinje bor i Sang (w35) */
     const e2 = await side.evaluate(() => ({ ed: (dkZone('ed') || {}).f, af: (dkZone('af') || {}).f }));
-    T.tjek(e2.ed.includes('w1') && !e2.af.includes('w1'), `træk Tidslinje til Editorens fanebjælke: den flyttes (${e2.ed.join(', ')})`);
+    T.tjek(e2.ed.includes('w35') && !e2.af.includes('w35'), `træk Sang til Egenskabers fanebjælke: den flyttes (${e2.ed.join(', ')})`);
     /* 4 · stregerne */
     const st = await midt('.dk-streg.dk-lodret'); const s0 = await side.evaluate(() => JSON.stringify(DK.streger.map(s => s.n.s.map(x => x.toFixed(3)))));
     await træk(st, { x: st.x - 250, y: st.y });
@@ -73,9 +73,9 @@ async function kør(arg) {
     /* 7 · layoutet husker, ↺ Standard og genstart */
     const før = await Z(); await side.evaluate(() => lay3Anvend('noder')); await vent(300); await side.evaluate(() => lay3Anvend('overblik')); await vent(300);
     const husk = await Z(); await side.click('#el9-mere'); await vent(300); await side.click('#dk-std'); await vent(300); /* v9.71: ↺ Standard står under ☰ Mere → Vinduer */ const std = await Z();
-    T.tjek(husk === før && std === 'sc:w2,w5,w28,w29,w3,w24,w9*w2 | af:w33,w1,w7,w31*w33 | ed:w6,w13,w22*w6', `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
-    await side.evaluate(async () => { lay3Anvend('ao-sang', true); /* v9.71: programmet starter altid i et arbejdsområde */ await new Promise(r => setTimeout(r, 800)); dkZone('af').a = 'w31'; dkGem(); dkAnvend(); }); await side.reload(); await vent(5000);
-    T.tjek(await side.evaluate(() => dkZone('af').a === 'w31' && !document.getElementById('w31').hidden), 'efter genstart: opdelingen og den valgte fane (Lydkilde) huskes');
+    T.tjek(husk === før && std === 'sc:w2,w5,w28,w29,w9*w2 | af:w33,w35*w33 | ed:w6,w13,w22*w6' /* v9.76 */, `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
+    await side.evaluate(async () => { lay3Anvend('ao-sang', true); /* v9.71: programmet starter altid i et arbejdsområde */ await new Promise(r => setTimeout(r, 800)); dkZone('af').a = 'w35'; sgFane('avanceret'); dkGem(); dkAnvend(); }); await side.reload(); await vent(5000);
+    T.tjek(await side.evaluate(() => dkZone('af').a === 'w35' && !document.getElementById('w35').hidden && set.sgFane === 'avanceret'), 'efter genstart: opdelingen, den valgte fane (Sang) og Sangs fane (Avanceret) huskes');
     /* 8 · Lås (tilbage i Overblik, hvor Radial Mesh og Editorens zone findes) */
     await side.evaluate(async () => { lay3Anvend('overblik', true); await new Promise(r => setTimeout(r, 800)) });
     await side.evaluate(() => { [...document.querySelectorAll('button')].find(b => /Lås vinduer/.test(b.textContent)).click(); }); await vent(700);
@@ -85,8 +85,8 @@ async function kør(arg) {
     await side.evaluate(() => { [...document.querySelectorAll('button')].find(b => /Lås|Låst/.test(b.textContent) && b.closest('#lay3, header, #tb, .tb, body')).click(); }); await vent(700);
     T.tjek(l1.ens === l0 && l1.laast > 0, `🔒 Lås vinduer: stregerne viser en hængelås (${l1.laast}), og hverken streger eller faner kan trækkes`);
     /* 9 · de gamle funktioner */
-    const g = await side.evaluate(async () => { const r = {}; scVaelg('w29', true); await new Promise(r => setTimeout(r, 1500)); r.oje = dkZoneAf('w29').a === 'w29' && !!OJ.r; fgVaelg('lyd', 'w1', true); r.tid = dkZoneAf('w1').a === 'w1'; sbAabn('w23'); r.sb = !!dkZoneAf('w29'); zonPop('w4'); await new Promise(r => setTimeout(r, 300)); r.gen = !!dkZoneAf('w4') && dkZoneAf('w4').a === 'w4' && !document.getElementById('w4').hidden; return r; });
-    T.tjek(g.oje && g.tid && g.sb && g.gen, 'scVaelg (Øjet starter), fgVaelg (Tidslinje), sbAabn og zonPop (Generator som fane) virker gennem docking');
+    const g = await side.evaluate(async () => { const r = {}; scVaelg('w29', true); await new Promise(r => setTimeout(r, 1500)); r.oje = dkZoneAf('w29').a === 'w29' && !!OJ.r; fgVaelg('lyd', 'w1', true); r.tid = dkZoneAf('w35').a === 'w35' && set.sgFane === 'sang'; /* v9.76: Tidslinje åbner Sang */ sbAabn('w23'); r.sb = !!dkZoneAf('w29'); zonPop('w4'); await new Promise(r => setTimeout(r, 300)); r.gen = !!dkZoneAf('w4') && dkZoneAf('w4').a === 'w4' && !document.getElementById('w4').hidden; return r; });
+    T.tjek(g.oje && g.tid && g.sb && g.gen, 'scVaelg (Øjet starter), fgVaelg (Tidslinje → Sang), sbAabn og zonPop (Generator som fane) virker gennem docking');
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
     await ctx.close();
   } catch (e) { T.fejl('testen stoppede: ' + e.message.split('\n')[0]); } finally { await browser.close(); }

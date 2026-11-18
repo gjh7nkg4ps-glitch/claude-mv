@@ -27,8 +27,8 @@ async function kør(arg) {
     T.tjek(a.igen && a.efter.ok && a.efter.medSlag === 8 && /Analyseret igen og gemt · slag fundet i 8 af 8/.test(a.status), `Analysér igen laver en ny analyse, der passer; statuslinjen: "${a.status}"`, JSON.stringify(a.efter));
     /* 2 · panelet Automatik viser linjen Sangens analyse med knappen Analysér igen */
     await side.evaluate(() => lay3Anvend('noder')); await side.waitForTimeout(2500); await side.click('#ne .ne-vlinje [data-au="aaben"]'); await side.waitForTimeout(900);
-    const p = await side.evaluate(() => { const r = document.querySelector('#ne65-pan tr[data-aur="ana"]'); return r ? { tekst: r.textContent, knap: !!r.querySelector('[data-au="anaigen"]') } : null }); await side.click('#ne65-pan [data-au="luk"]');
-    T.tjek(!!p && p.knap && /slag fundet i 8 af 8 dele/.test(p.tekst), 'panelet Automatik har linjen Sangens analyse ("slag fundet i 8 af 8 dele af sangen") med knappen Analysér igen', JSON.stringify(p));
+    const p = await side.evaluate(() => { const r = document.querySelector('#ne65-pan tr[data-aur="ana"]'); return r ? { tekst: r.textContent, knap: !!r.querySelector('[data-au="sang"]') && !!document.querySelector('#sg [data-sgau="anaigen"]') /* v9.76: Analysér igen står i Sang; Automatik viser Ændres i Sang */ } : null }); await side.click('#ne65-pan [data-au="luk"]');
+    T.tjek(!!p && p.knap && /slag fundet i 8 af 8 dele/.test(p.tekst), 'panelet Automatik har linjen Sangens analyse ("slag fundet i 8 af 8 dele af sangen") med Ændres i Sang, og Analysér igen står i Sang', JSON.stringify(p));
     /* 3 · gem egen opstilling: første gang uden spørgsmål; oven i en gemt spørges der to gange */
     await side.evaluate(() => mxSaet(false, true)); await side.waitForTimeout(800);
     await side.selectOption('#ne61-opst', 'gem1'); await side.waitForTimeout(700); const d0 = dialoger.length, g0 = await side.evaluate(() => JSON.stringify(set.ne.egne[1].pos));

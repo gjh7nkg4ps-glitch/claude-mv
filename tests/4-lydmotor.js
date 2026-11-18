@@ -72,7 +72,7 @@ async function kør(arg) {
     await side.keyboard.press('Escape'); await side.evaluate(() => { document.querySelectorAll('.zon-pop .zon-luk').forEach(b => b.click()); const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === 'Lydkilde'); if (t) t.click(); });
     await side.waitForTimeout(500);
     await side.evaluate(async () => { try { dkVis('w31') } catch (e) { } await new Promise(r => setTimeout(r, 600)) }); /* v9.71: programmet starter i 1 · Sang; Lydkilde (w31) åbnes som fane */
-    await side.locator('.dk-zone:has(#w31)').screenshot({ path: path.join(UD, 'lydmotor-lydkilde.png') });
+    await side.locator('.dk-zone:has(#w35)').screenshot({ path: path.join(UD, 'lydmotor-lydkilde.png') });
     f = nyeFejl(); T.tjek(!f.length, 'live afspilning uden fejl', f.slice(0, 3).join(' | '));
 
     /* Skift motor og Tilbage til standard */

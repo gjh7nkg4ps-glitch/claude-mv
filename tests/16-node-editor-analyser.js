@@ -110,7 +110,7 @@ async function kør(arg) {
     let sporOk = true;
     try { execFileSync('python3', ['-I', path.join(__dirname, 'lav-stems.py'), tmp]); } catch (e) { sporOk = false; T.fejl('test-sporene kunne ikke laves (python3 med numpy): ' + String(e.message).split('\n')[0]); }
     if (sporOk) {
-      await side.evaluate(() => { const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === 'Lydkilde'); if (t) t.click(); });
+      await side.evaluate(() => { try { dkVis('w35'); sgFane('spor') } catch (e) { } }); /* v9.76: 4 spor bor i Sang → Spor */
       await side.waitForSelector('#stem-brug', { timeout: 10000 });
       for (const s of ['trommer', 'bas', 'vokal', 'resten']) await side.setInputFiles(`[data-stem-input="${s}"]`, path.join(tmp, s + '.wav'));
       await side.waitForFunction(() => STEM_SPOR.every(([s]) => STEM.buf[s]), null, { timeout: 20000 });

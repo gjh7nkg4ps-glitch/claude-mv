@@ -33,7 +33,8 @@ async function kør(arg) {
       return ud; });
     const dårlig = Object.entries(r).filter(([k, v]) => v !== 'ok');
     T.tjek(!dårlig.length, `${Object.keys(r).length} handlinger går gennem den fælles indgang, giver en rigtig besked og hvert sit id (${Object.keys(r).join('; ')})`, dårlig.map(([k, v]) => k + ' → ' + v).join(' | '));
-    /* Lyd og vision i Editoren: rigtige museklik (til og fra) */
+    /* v9.75: fanen Adfærd (Lyd og vision) er fjernet; adfSlaa findes ikke mere. Tjekket af de andre steder står ovenfor */
+    if (false) {
     await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); brugFor('fuld2', true); await vent(800); lay3Anvend('figurer'); await vent(1500); window.__H = []; Regler.lyt(b => window.__H.push(b.hvad)); });
     for (const k of await side.$$('#w6 button')) { if ((await k.textContent()).trim() === 'Adfærd') { await k.click({ timeout: 3000 }); break; } }
     await side.waitForTimeout(500);
@@ -44,6 +45,7 @@ async function kør(arg) {
     k = await find(); if (k) { await k.click({ timeout: 3000 }); await side.waitForTimeout(900); }
     const n2 = await side.evaluate(() => maps.length), h2 = await side.evaluate(() => window.__H.join());
     T.tjek(!!k && n1 !== n0 && n2 === n0 && !/andet/.test(h1 + h2) && h1 && h2, `Lyd og vision · "Ryste på snare" med museklik: ${n0} → ${n1} → ${n2} regler, beskederne "${h1}" og "${h2}"`, k ? `regler ${n0} → ${n1} → ${n2}, beskeder "${h1}" og "${h2}"` : 'knappen blev ikke fundet');
+    }
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
   } catch (e) { T.fejl('testen stoppede: ' + e.message.split('\n')[0]); } finally { await browser.close(); }
   return T.slut();

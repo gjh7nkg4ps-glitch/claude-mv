@@ -2,6 +2,34 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.76 (18. november 2026, trin S2)
+
+| Billede | Hvad |
+| --- | --- |
+| [Sang: fanen Sang](v9_76-sang.png) | Lydkilde til venstre; Bølgeform og sløjfe, Spektrum og Taktslag |
+| [Sang: Avanceret](v9_76-sang-avanceret.png) | Toner og klang, Spektrum+ og Indstillinger for analysen |
+| [Sang: Spor](v9_76-sang-spor.png) | kortet 4 spor |
+
+## v9.75 (18. november 2026, trin 6b)
+
+| Billede | Hvad |
+| --- | --- |
+| [Matrixen for kun én figur](v9_75-matrix-kun-en-figur.png) | Vis i matrix: alle Pige på stangens egenskaber som kolonner, de 14 lydtræk som rækker, chippen Kun · × alle |
+| [Egenskaber](v9_75-egenskaber.png) | fanerne Figur og Lag, knappen Vis i matrix; ingen Detaljer, Adfærd eller Koblinger |
+| [Egenskaber: Lag](v9_75-egenskaber-lag.png) | en knap ved hver egenskab med reglens kilde eller + regel |
+
+## v9.74 (17. november 2026, trin 6a)
+
+| Billede | Hvad |
+| --- | --- |
+| [2 · Scene](v9_74-scene-figurer-egenskaber.png) | Figurer til venstre, scenen i midten, Egenskaber til højre; den valgte figur har en ring i Live preview |
+
+## v9.73 (17. november 2026)
+
+| Billede | Hvad |
+| --- | --- |
+| [Efter Nulstil alt](v9_73-efter-nulstil-alt.png) | programmet er startet forfra i 1 · Sang med zonerne og beskeden øverst |
+
 ## v9.72 (17. november 2026, trin 5c)
 
 | Billede | Hvad |

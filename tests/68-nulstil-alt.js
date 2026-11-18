@@ -36,7 +36,7 @@ async function kør(arg) {
         const toast = [...document.querySelectorAll('body *')].filter(x => x.children.length === 0 && /Alt er nulstillet/.test(x.textContent || '') && x.getBoundingClientRect().width > 0).length;
         return { lay: set.lay3, tema: set.theme, warm: document.documentElement.classList.contains('tema-warm'), laast: !!set.laast, zoner, frie, ude, plads: !!localStorage.getItem('rytme-C'), pladsGemt: (() => { try { return JSON.parse(localStorage.getItem('rytme-C')).gemt } catch (e) { return '?' } })(), mapping: !!localStorage.getItem('rytme-mapping2'), regler: maps.length, toast, el9: document.body.classList.contains('el9'), lay3Knapper: [...document.querySelectorAll('#lay3 button')].map(b => b.textContent.trim()) };
       });
-      T.tjek(efter.lay === 'ao-sang' && efter.zoner >= 2 && efter.frie.length === 0 && efter.ude.length === 0 && efter.el9, `${w} × ${h}: efter genstarten: arbejdsområdet 1 · Sang med ${efter.zoner} zoner, ingen frie vinduer og intet vindue uden for skærmen`, JSON.stringify(efter));
+      T.tjek(efter.lay === 'ao-sang' && efter.zoner >= 1 /* v9.76: 1 · Sang er én zone */ && efter.frie.length === 0 && efter.ude.length === 0 && efter.el9, `${w} × ${h}: efter genstarten: arbejdsområdet 1 · Sang med ${efter.zoner} zoner, ingen frie vinduer og intet vindue uden for skærmen`, JSON.stringify(efter));
       T.tjek(efter.tema === 'warm' && efter.warm && efter.laast && efter.plads && efter.toast > 0, `${w} × ${h}: Warm Analog, docking låst, Opsætning 3 bevaret (gemt ${efter.pladsGemt}), og beskeden "Alt er nulstillet" vises`, JSON.stringify(efter));
       /* topbjælken kan trykkes med rigtige klik */
       await klik('#lay3 [data-lay3="ao-scene"]'); const l2 = await side.evaluate(() => set.lay3);

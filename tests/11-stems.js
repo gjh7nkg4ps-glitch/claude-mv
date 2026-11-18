@@ -26,7 +26,7 @@ async function kør(arg) {
   side.on('pageerror', e => fejl.push('pageerror: ' + e.message));
   side.on('console', m => { if (m.type() === 'error') fejl.push('konsol: ' + m.text()); });
   const nyeFejl = () => { const f = fejl; fejl = []; return f; };
-  const fane = n => side.evaluate(n => { const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === n); if (t) t.click(); }, n);
+  const fane = n => side.evaluate(n => { if (n === 'Lydkilde') { try { dkVis('w35'); sgFane('spor') } catch (e) { } return } /* v9.76: 4 spor bor i Sang → Spor */ const t = [...document.querySelectorAll('.dk-zone:has(#w33) .dk-fane')].find(b => b.textContent.trim() === n); if (t) t.click(); }, n);
   const noder = () => side.evaluate(async () => { lay3Anvend('noder', true); await new Promise(r => setTimeout(r, 1500)) }); /* v9.71: programmet starter i 1 · Sang; testen bruger layoutet Noder, hvor Lydkilde og Node-editor ligger i samme zone */
   const sætSpor = async mappe => { for (const s of ['trommer', 'bas', 'vokal', 'resten']) await side.setInputFiles(`[data-stem-input="${s}"]`, path.join(mappe, s + '.wav')); await side.waitForFunction(() => STEM_SPOR.every(([s]) => STEM.buf[s]), null, { timeout: 20000 }); };
   try {

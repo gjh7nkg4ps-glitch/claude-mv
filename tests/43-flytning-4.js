@@ -21,19 +21,12 @@ async function kør(arg) {
       side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); });
       await side.goto('file://' + fil); await side.waitForTimeout(3500); await side.evaluate(() => { FSF.direkte = true }); /* v9.64: knapperne giver nu forslag; denne test prøver de gamle hjælpefunktioner, der stadig skriver direkte, når en færdig opsætning eller figur indlæses */
       await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); brugFor('fuld2', true); await vent(1000); lay3Anvend('figurer'); await vent(1500); });
-      for (const k of await side.$$('#w6 button')) { if ((await k.textContent()).trim().startsWith('Koblinger')) { await k.click({ timeout: 3000 }); break; } }
-      await side.waitForTimeout(600);
-      /* Vis: klikket skal nå helt ud (før blev det stoppet af zonerne) */
-      await side.evaluate(() => { window.__naaet = 0; window.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-fe-vis]')) window.__naaet++ }) });
-      const vis = await side.$('#fctl .fe-kobr [data-fe-vis]'); let visOk = false;
-      if (vis) { await vis.click({ timeout: 3000 }); await side.waitForTimeout(500); visOk = await side.evaluate(() => window.__naaet === 1); }
-      T.tjek(visOk, `${w} × ${h}: et museklik på Vis i Koblinger når frem`, vis ? 'klikket blev stoppet' : 'knappen Vis blev ikke fundet');
-      for (const k of await side.$$('#w6 button')) { if ((await k.textContent()).trim().startsWith('Koblinger')) { await k.click({ timeout: 3000 }); break; } }
-      await side.waitForTimeout(500);
-      const før = await side.evaluate(() => ({ n: maps.length, k: document.querySelectorAll('#fctl [data-dk-slet]').length }));
-      const slet = await side.$('#fctl [data-dk-slet]'); if (slet) await slet.click({ timeout: 3000 }); await side.waitForTimeout(800);
-      const efter = await side.evaluate(() => ({ n: maps.length, k: document.querySelectorAll('#fctl [data-dk-slet]').length, s: document.getElementById('status').textContent }));
-      T.tjek(!!slet && efter.n === før.n - 1 && efter.k === før.k - 1 && /slettet/.test(efter.s), `${w} × ${h}: et museklik på Slet i Koblinger sletter koblingen (${før.n} → ${efter.n} regler, ${før.k} → ${efter.k} rækker, beskeden "${efter.s}")`, slet ? `regler ${før.n} → ${efter.n}, rækker ${før.k} → ${efter.k}` : 'knappen Slet blev ikke fundet');
+      /* v9.75: fanen Koblinger er væk. Det samme tjek (et rigtigt museklik inde i Egenskaber når frem, selv om zonernes klik-lytter ligger udenom) laves med knappen ved en egenskab, som åbner matrixen med reglen valgt */
+      await side.evaluate(() => { feFaneSaet('C'); document.querySelectorAll('#fctl details').forEach(x => x.open = true); window.__naaet = 0; window.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-fe-mx]')) window.__naaet++ }) }); await side.waitForTimeout(400);
+      const vis = await side.$('#fctl .fe-regel:not(.fe-tom)'); let visOk = false, mxOk = null;
+      if (vis) { const mx = await vis.getAttribute('data-fe-mx'); await vis.click({ timeout: 3000 }); await side.waitForTimeout(1500); visOk = await side.evaluate(() => window.__naaet === 1); mxOk = await side.evaluate(k => ({ lay: set.lay3, kun: set.ne.mxKun, valgt: NE2.valgt && NE2.N.get(NE2.valgt) && NE2.N.get(NE2.valgt).m && NE2.N.get(NE2.valgt).m.effect === k }), mx); }
+      T.tjek(visOk && mxOk && mxOk.lay === 'ao-regler' && mxOk.kun && mxOk.valgt, `${w} × ${h}: et museklik på knappen ved en egenskab i Egenskaber når frem og åbner matrixen med reglen valgt`, vis ? JSON.stringify({ visOk, mxOk }) : 'knappen blev ikke fundet');
+      await side.evaluate(async () => { lay3Anvend('figurer'); await new Promise(r => setTimeout(r, 1200)) });
       /* zonernes egne knapper virker stadig: ⤢ Stor på Editorens zone og tilbage */
       const stor = await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)), z = document.querySelector('.dk-zone:has(#w6)'), b = z && z.querySelector('[data-dk="stor"]'); if (!b) return 'knappen mangler'; const b0 = z.getBoundingClientRect().width; b.click(); await vent(500); const z1 = document.querySelector('.dk-zone:has(#w6)'), b1 = z1.getBoundingClientRect().width; const t = z1.querySelector('[data-dk="stor"]'); if (t) t.click(); await vent(500); return b1 > b0 ? 'ok' : 'bredde ' + b0 + ' → ' + b1 });
       T.tjek(stor === 'ok', `${w} × ${h}: zonens egen knap ⤢ Stor virker stadig`, stor);

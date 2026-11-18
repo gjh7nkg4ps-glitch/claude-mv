@@ -33,8 +33,7 @@ async function kør(arg) {
       await prøv('Lydlag · kobl', () => bindLyd('klik', 'hihat'), 'samlet', 1);
       await prøv('Lydlag · skift kilde', () => bindLyd('klik', 'snare'), 'samlet', 0);
       await prøv('Lydlag · fjern', () => bindLyd('klik', ''), 'samlet', -1);
-      /* Editoren: slet en kobling */
-      const i = maps.findIndex(m => m.effect.startsWith('obj:')); await prøv('Editoren · slet en kobling', () => { const b = document.createElement('button'); b.dataset.dkSlet = i; document.getElementById('fctl').appendChild(b); b.click(); b.remove() }, 'slet', -1);
+      /* v9.75: Editorens Koblinger (Slet) er væk; regler slettes i matrixen (ne5Slet, prøvet ovenfor) */
       /* Fortryd efter en regel lavet gennem indgangen */
       await vent(1500); const n1 = maps.length; ne5Ny('kick', 'zoom', 'handling'); await vent(1700); feFortryd(); await vent(300); ud.fortryd = maps.length === n1 ? 'ok' : 'længde ' + maps.length + ' mod ' + n1;
       return ud; });

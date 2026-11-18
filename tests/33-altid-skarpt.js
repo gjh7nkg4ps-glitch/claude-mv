@@ -19,7 +19,7 @@ async function kør(arg) {
   try {
     const side = await browser.newPage({ viewport: { width: 2560, height: 1440 }, deviceScaleFactor: 1.5 }); const fejl = [], advarsel = [];
     side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', x => { if (x.type() === 'error') fejl.push('konsol: ' + x.text()); if (/Multiple instances of Three/.test(x.text())) advarsel.push(x.text()); });
-    await side.goto('file://' + fil); await side.waitForTimeout(5000);
+    await side.goto('file://' + fil); await side.waitForTimeout(5000); await side.evaluate(() => lay3Anvend('overblik')); await side.waitForTimeout(1500); /* v9.76: 1 · Sang har kun én zone; Scene-zonen findes i Overblik */
     const maal = cv => side.evaluate(cv => { const c = document.getElementById(cv); return c && c.clientWidth ? { r: c.width / (c.clientWidth * devicePixelRatio), w: c.width, cw: c.clientWidth } : { r: 0, w: 0, cw: 0 }; }, cv);
     const vis = async id => { await side.evaluate(id => scVaelg(id, true), id); await side.waitForTimeout(1800); };
     /* 1 · Live preview, også med regulatoren på trin 2 og et kvalitetsniveau med skala 0,5 */
