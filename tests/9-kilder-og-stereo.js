@@ -31,16 +31,17 @@ async function kør(arg) {
       h = liste(3, []); ud.n3 = { ls: tæl(h, /value="ana:ls/g), fold: tæl(h, /value="__ls:/g), roll: h.includes('value="rolloff"'), hmid: (h.match(/__ls:hmid">([^<]*)/) || [])[1], brill: (h.match(/__ls:brill"[^>]*>([^<]*)/) || [])[1] };
       h = liste(3, ['bas']); const bas = [...h.matchAll(/value="(ana:ls\d+)"/g)].map(m => m[1]); ud.n3bas = { ls: bas.length, foerst: bas[0], sidst: bas[bas.length - 1], lige: h.indexOf('value="bas"') < h.indexOf('__ls:bas') && h.indexOf('__ls:bas') < h.indexOf('value="ana:ls0"') && h.indexOf('value="ana:ls10"') < h.indexOf('value="mid"') };
       h = liste(4, ['bas', 'mid', 'hmid', 'brill']); ud.n4 = { ls: tæl(h, /value="ana:ls/g), roll: h.includes('value="rolloff"'), zcr: h.includes('value="zcr"') };
-      h = liste(2, [], 'rolloff'); ud.valgt = /Valgt \(fra et højere niveau\)[^]*value="rolloff"/.test(h);
+      h = liste(2, [], 'rolloff'); ud.valgt = /Valgt \([^)]*\)[^]*value="rolloff"/.test(h);
       h = liste(3, [], 'ana:ls3'); ud.aabenAfValg = h.includes('value="ana:ls3" selected');
       set.niv = før; set.lsAaben = aab; return ud;
     });
-    T.tjek(L.n2.ls === 0 && L.n2.fold === 0 && !L.n2.roll && !L.n2.zcr, `Niveau 2: ingen smalle bånd, ingen Rolloff og Zero crossing rate ("${L.n2.etiket}")`);
-    T.tjek(L.n3.ls === 0 && L.n3.fold === 4 && !L.n3.roll, `Niveau 3: de smalle bånd er foldet sammen under de 4 brede bånd`);
-    T.tjek(/4 smalle bånd.*1 mere på Niveau 4/.test(L.n3.hmid || '') && /6 smalle bånd vises kun på Niveau 4/.test(L.n3.brill || ''), `Niveau 3: de høje smalle bånd er skjult, og der står det: "${(L.n3.hmid || '').trim()}" · "${(L.n3.brill || '').trim()}"`);
+    /* v9.75: Detaljer-niveauerne er væk; kildelisterne folder altid som på det gamle Niveau 3, uanset set.niv */
+    T.tjek(L.n2.ls === 0 && L.n2.fold === 4 && !L.n2.roll && !L.n2.zcr, `kildelisten (uanset set.niv): de smalle bånd er foldet sammen under de 4 brede bånd, ingen Rolloff og Zero crossing rate ("${L.n2.etiket}")`);
+    T.tjek(L.n3.ls === 0 && L.n3.fold === 4 && !L.n3.roll, `samme liste med set.niv 3`);
+    T.tjek(/4 smalle bånd.*1 mere i matrixen/.test(L.n3.hmid || '') && /6 smalle bånd findes i matrixen/.test(L.n3.brill || ''), `de høje smalle bånd er skjult, og der står, at de findes i matrixen: "${(L.n3.hmid || '').trim()}" · "${(L.n3.brill || '').trim()}"`);
     T.tjek(L.n3bas.ls === 11 && L.n3bas.foerst === 'ana:ls0' && L.n3bas.sidst === 'ana:ls10' && L.n3bas.lige, 'Bas foldet ud: 11 smalle bånd (20 Hz til 200 Hz) står lige under Bas');
-    T.tjek(L.n4.ls === 31 && L.n4.roll && L.n4.zcr, 'Niveau 4 med alt foldet ud: alle 31 smalle bånd, Rolloff og Zero crossing rate');
-    T.tjek(L.valgt && L.aabenAfValg, 'en forbindelse på en skjult kilde viser den stadig (Rolloff på Niveau 2; et smalt bånd folder sin gruppe ud)');
+    T.tjek(L.n4.ls === 24 && !L.n4.roll && !L.n4.zcr, 'alt foldet ud (set.niv 4 ændrer intet): 24 smalle bånd (de 7 høje, Rolloff og Zero crossing rate findes i matrixen)');
+    T.tjek(L.valgt && L.aabenAfValg, 'en forbindelse på en skjult kilde viser den stadig (Rolloff; et smalt bånd folder sin gruppe ud)');
 
     /* rettet i v9.13: de tre glidende hændelses-kilder havde typen slag */
     const gl = await side.evaluate(() => ['hnd:akkordrod', 'hnd:akkordmol', 'hnd:midinote', 'hnd:takt'].map(k => k + '=' + sigInfo(k).mappe + '/' + sigInfo(k).type).join(' '));
