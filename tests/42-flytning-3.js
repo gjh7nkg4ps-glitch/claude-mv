@@ -45,10 +45,10 @@ async function kør(arg) {
       /* Multi-styring: Nulstil */
       puckRebase(); const f3 = uden(maps); Regler.retNr(0, { gain: (maps[0].gain || 1) + .3 }); await vent(700);
       await prøv('Multi-styring · Nulstil', () => document.getElementById('mb-nulstil').click(), () => uden(maps) === f3 || 'ikke som før');
-      /* Nulstil alt (de to bekræftelser besvares med ja) */
-      const gl = sikker; sikker = async () => true;
-      await prøv('Nulstil alt', async () => { await nulstilAlt() }, () => harStd() || 'ikke som Standard'); sikker = gl;
       return ud; });
+    /* Nulstil alt (de to bekræftelser besvares med ja): fra v9.73 genstarter programmet, så reglerne tjekkes efter genstarten */
+    const genstart = side.waitForEvent('load', { timeout: 20000 }); await side.evaluate(() => { sikker = async () => true; nulstilAlt() });
+    try { await genstart; await side.waitForTimeout(4000); r['Nulstil alt'] = await side.evaluate(() => { const par = l => l.map(m => m.band + '>' + m.effect); const ens = new Set(maps.map(m => m.id)).size === maps.length && maps.every(m => m.id); return (par(DEFAULT).every(p => par(maps).includes(p)) && ens) ? 'ok' : 'ikke som Standard efter genstarten' }) } catch (e) { r['Nulstil alt'] = 'genstartede ikke: ' + e.message.split('\n')[0] }
     const dårlig = Object.entries(r).filter(([k, v]) => v !== 'ok');
     T.tjek(!dårlig.length, `${Object.keys(r).length} steder skifter hele listen gennem den fælles indgang, giver beskeden erstat, hvert sit id og de rigtige regler (${Object.keys(r).join('; ')})`, dårlig.map(([k, v]) => k + ' → ' + v).join(' | '));
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
