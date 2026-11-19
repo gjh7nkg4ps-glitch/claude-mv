@@ -1,10 +1,12 @@
-# PLAN · NY BRUGERFLADE · P8.6
+# PLAN · NY BRUGERFLADE · P8.9
 
 *13. november 2026 · skrevet efter en gennemgang af `claude-mv-v9_42.html` · til brugeren og Claude Code · P8.2 afløser P8.1*
 
 *Papirets versioner hedder P (fx P8.1). Programmets versioner hedder v (fx v9.42, v9.43). De to tællere har intet med hinanden at gøre.*
 
 **Status: godkendt af brugeren den 13. november 2026.** Alle valg er afgjort, også V3. Fase 0 (kortlægning) er lavet: `docs/KORTLAEGNING.md`. Intet er bygget.
+
+**Nyt i P8.9** (skrevet ind af Claude Code efter brugerens besked 19. november, `docs/arkiv/BESKED-TIL-CODE-19-nov-P8_9.txt`; P8.7 og P8.8 blev ikke sendt): **valg C** for regel-sæt i Biblioteket (retter B3 og B4: regel-sæt vises kun hos de figurer, de passer til; intet afsnit "Til alle figurer"); **svarene på fase 7** (a: ingen gamle visninger fjernes, fast regel i V3; b: Ikke i brug (parkér) erstattes af Slå fra på lydtræk-rækken i matrixen; c: Kort over forbindelserne bliver og lægges i værktøjslinjen fra B5; d: Lydmotor Klassisk fjernes) er bygget som **et lille trin for sig før pakke 7 (v9.84)**; et eget oprydningstrin efter pakke 7 står under *Senere*. B6 venter stadig på navnene.
 
 **Nyt i P8.6** (skrevet ind af Claude Code efter brugerens besked 19. november, `docs/arkiv/BESKED-TIL-CODE-19-nov-P8_6.txt`; overblik med tegninger: <https://claude.ai/artifact/6AgywiURk8BpvQ6hLw3rEz>): **pakke 7 · Biblioteket** (B1–B6) er den næste pakke efter pakke 6 (afsnit 1.2 og det nye afsnit 4.1); beslutningerne om Figur-generatoren (6c) står i fase 6; nye 2D-figurer, en 3D-scene og analysen står under *Senere*. Pakke 6 er bygget (v9.81–v9.83). Intet fra punkt 3–6 i beskeden bygges nu.
 
@@ -63,9 +65,9 @@ De faste regler i `CLAUDE.md` gælder stadig: test før aflevering, versionsnumm
 | **4 · fase 5, resten** | **5b** fjern sidebjælken, bundbjælken, de 6 layout-knapper, Mine layouts, Niveau, vinduesnumre, Enkel tilstand og resterne af Zoner og Bredt skrivebord; ryd Mere-menuen; docking låst som standard. **5c** ét tema i hele programmet (Warm Analog først); indstillingen Størrelse; Indstillinger samlet ét sted | Fra programmet åbner, til pigerne danser til brugerens egen sang; tæl klik | bygget (v9.71, v9.72); venter på brugerens prøve. Warm Analog er en første gennemgang (faste farver inde i enkelte vinduer er ikke gået efter) |
 | **5 · fase 6** | **6a** figurliste til venstre, stor scene i midten, Egenskaber til højre; træk i figurerne direkte i scenen. **6b** fanen Koblinger bliver til knappen "Vis i matrix"; Detaljer-niveauerne, Adfærd (nr. 74) og kilde-dropdown ved hver egenskab (nr. 77) fjernes. **6c** ny Figur-generator: **VENT**, til brugeren har sendt en skitse. Beslutninger (P8.6): den skal kunne lave både abstrakte figurer og karakterer (piger, dansere og de nye figurer); to veje ind: fra lyden (standard: vælg en lyd, få forslag) og fra figuren; forslagene vises som et galleri med 6 små levende forslag, klik giver "flere som denne", og man kan låse ting (fx farven); hvor generatoren bor, bestemmer Code. Levende figurer og Morgenstjernen må ikke ændre opførsel | Lav en ny figur, sæt den på scenen, og giv den to regler | 6a bygget (v9.74), 6b bygget (v9.75); 6c venter på skitsen |
 | **6 · fase 7** | **7a** fjern det, der står som "fjern" i afsnit 3.1 og endnu ligger der (fx Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag, Detektion, Audit-vinduet, scene-nodens knapper og Fest); behold Audits beregning. **7b** klodsbanen bliver noget, man slår til i en scene (valg V2). **7c** død kode fjernes, blokkene får navn efter, hvad de gør; den nye three.js vurderes; vis filens størrelse før og efter. De gamle visninger: spørg om én ad gangen, fjern ingen uden brugerens ja |  | bygget (v9.81, v9.82, v9.83). 7c: Lyd i 3D, Idé-galleri, Enkel tilstand og Mappings rester er ude af filen; blokkene har ikke fået nye navne (13 test finder dem på navnet); three.js: valg A står ved magt. De gamle visninger, Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk er **ikke rørt** (brugeren spørges) |
-| **7 · Biblioteket** (P8.6, 19. november) | **B1** ryd op og beskyt: test, der beskytter alt indbygget; trommeslageren fjernes (showet Trommeslagerens solo, figur-skabelonen og knappen Eksempel: trommeslager); kun 10 opsætninger bliver (piger_show, danser_show, ms_show, dronning_show, singlen, auto1–3, spilselv, klaverspil), de andre 23 fjernes, efter at det, koden bruger (fx `vis` i Nulstil, `lavRandom` i Tilfældigt), er flyttet; undersøg, om Lyt til sangen (auto1–3) og Lav show gør næsten det samme (fjern intet, skriv svaret). **B2** startskærm med Fortsæt · Start et show · Byg selv (tomt); linjen "Indlæst: … · n figurer · n regler" eller "Tomt", "· ændret" når et show fra Mine er ændret; beforeunload kun ved "ændret". **B3** vinduet Biblioteket i 3 · Regler ved siden af matrixen og Node-editoren: to hylder, Shows (de 10 + Mine + Sangens show) og Figurer (udseende og regel-sæt; "Til alle figurer"); kort med mærket Indbygget (låst) eller Mit (omdøb, slet); Brug · Vis reglerne · Lav en kopi; Fortryd tager af i ét trin; Opsætning 1–20 bliver en liste under Mine uden loft, pladserne flyttes over. **B4** alle figurer ligestillet: Morgenstjernen er en almindelig figur (knappen Tilføj morgenstjerne væk); de 6 regel-skabeloner fordeles på figurerne og "Til alle figurer"; Dansemapping bliver et indbygget regel-sæt under danseren (lægges aldrig på af sig selv; må ikke ændres). **B5** én værktøjslinje over matrixen og Node-editoren: Matrix · Node-editor · Foreslå regler · Lav show · Tilfældigt · Gem som regel-sæt (alle giver forslag). **B6** 5 regel-sæt pr. figur: **SENERE**, først når brugeren har godkendt navnene (forslag: Rolig, Energisk, På trommerne, På vokalen, Hele bandet) | Start programmet, vælg Start et show, se hvad der er indlæst, brug et regel-sæt på en figur og fortryd | venter: bygges efter pakke 6 ("kør pakke 7") |
+| **7 · Biblioteket** (P8.6, 19. november) | **B1** ryd op og beskyt: test, der beskytter alt indbygget; trommeslageren fjernes (showet Trommeslagerens solo, figur-skabelonen og knappen Eksempel: trommeslager); kun 10 opsætninger bliver (piger_show, danser_show, ms_show, dronning_show, singlen, auto1–3, spilselv, klaverspil), de andre 23 fjernes, efter at det, koden bruger (fx `vis` i Nulstil, `lavRandom` i Tilfældigt), er flyttet; undersøg, om Lyt til sangen (auto1–3) og Lav show gør næsten det samme (fjern intet, skriv svaret). **B2** startskærm med Fortsæt · Start et show · Byg selv (tomt); linjen "Indlæst: … · n figurer · n regler" eller "Tomt", "· ændret" når et show fra Mine er ændret; beforeunload kun ved "ændret". **B3** vinduet Biblioteket i 3 · Regler ved siden af matrixen og Node-editoren: to hylder, Shows (de 10 + Mine + Sangens show) og Figurer (udseende og regel-sæt; "Til alle figurer"); kort med mærket Indbygget (låst) eller Mit (omdøb, slet); Brug · Vis reglerne · Lav en kopi; Fortryd tager af i ét trin; Opsætning 1–20 bliver en liste under Mine uden loft, pladserne flyttes over. **B4** alle figurer ligestillet: Morgenstjernen er en almindelig figur (knappen Tilføj morgenstjerne væk); de 6 regel-skabeloner fordeles på figurerne og "Til alle figurer"; Dansemapping bliver et indbygget regel-sæt under danseren (lægges aldrig på af sig selv; må ikke ændres). **B5** én værktøjslinje over matrixen og Node-editoren: Matrix · Node-editor · Foreslå regler · Lav show · Tilfældigt · Gem som regel-sæt (alle giver forslag). **B6** 5 regel-sæt pr. figur: **SENERE**, først når brugeren har godkendt navnene (forslag: Rolig, Energisk, På trommerne, På vokalen, Hele bandet). **Valg C (P8.9) retter B3 og B4:** når en figur er valgt i Biblioteket, står figurens egne regel-sæt øverst, og under dem de fælles regel-sæt, der også passer til netop den figur, med et lille mærke *fælles*; regel-sæt, der ikke passer, vises slet ikke; der er **ikke** et afsnit "Til alle figurer" (et fælles regel-sæt findes kun i én udgave, men vises hos hver figur, det passer til); et regel-sæt passer, når figuren har alle de egenskaber, det styrer (en pige har arme, discokuglen ikke); navnet "regel-sæt" bliver | Start programmet, vælg Start et show, se hvad der er indlæst, brug et regel-sæt på en figur og fortryd | i gang (brugerens "kør" 19. november); v9.84 (svar a–d) ligger foran |
 
-Stadig "ved ikke" hos brugeren: Ikke i brug (parkér), Kort over forbindelserne og Lydmotor Klassisk. Code spørger, når fase 7 nås. Code må dele et trin i to, hvis det bliver for stort, men siger det først.
+Brugerens svar (P8.9, 19. november) på de tre "ved ikke": Ikke i brug (parkér) fjernes og erstattes af Slå fra på lydtræk-rækken; Kort over forbindelserne bliver (lægges i værktøjslinjen fra B5); Lydmotor Klassisk fjernes, og Lydmotor 2 hedder bare Lydmotor. Bygget i v9.84 som et lille trin for sig før pakke 7. Code må dele et trin i to, hvis det bliver for stort, men siger det først.
 
 ### 1.1 · Skærmstørrelse
 
@@ -151,7 +153,7 @@ Tal mærket **målt** er talt i det kørende program i en testbrowser (2560 × 1
 | --- | --- | --- | --- |
 | V1 | Matrix og Node-editor | Matrixen åbner først. En knap skifter til Node-editoren, og de to er ligestillede (se fase 2, trin 2d). Editoren til figurer bygges om i fase 6 | Besluttet 13. nov. |
 | V2 | Klodsbanen (fra rytmespillet) | Den bliver noget, man slår til i en scene. Gamle opsætninger beholder den | Valgt som anbefalet |
-| V3 | De 10 gamle visninger | Ingen af de gamle visninger (Frit netværk, Strømme, Træ, Treemap, Bue-diagram, Hive plot, Ring og 3D-netværk) fjernes, før brugeren har prøvet matrixen med musik. Tidslinje bliver under alle omstændigheder. Den gamle Matrix-visning erstattes af den nye i fase 2 | Besluttet 13. nov. |
+| V3 | De 10 gamle visninger | **Fast regel (P8.9, 19. november): ingen af de gamle visninger fjernes.** Frit netværk, Strømme, Træ, Treemap, Bue-diagram, Hive plot, Ring (chord) og 3D-netværk giver hver især et godt overblik over forbindelserne. En visning må kun fjernes, hvis den erstattes af en ny, opdateret og fornyet udgave af samme slags overblik, og først når brugeren har set den nye og sagt ja. (Før P8.9: ingen fjernes, før brugeren har prøvet matrixen med musik. Tidslinje bliver under alle omstændigheder. Den gamle Matrix-visning erstattes af den nye i fase 2 | Besluttet 13. nov. |
 | V4 | Udseende | Ét tema for hele programmet. Warm Analog først, de andre temaer senere | Valgt som anbefalet |
 | V5 | Docking | Motoren bliver, men er låst som standard. Den kan låses op under Mere | Valgt som anbefalet |
 | V6 | Versionsnummer for den nye brugerflade (fase 5) | Fortsæt v9.x. v10.0 er stadig gemt til senere | Valgt som anbefalet |
@@ -189,17 +191,17 @@ Numrene er dem fra `docs/KORTLAEGNING.md`, afsnit c. Brugeren sagde ja til Codes
 | 23 | Audit | fjern vinduet | **Beregningen bliver** og bruges til forslag i fase 4 |
 | 24 | Detektion | **fjern** |  |
 | 25 | Visning: Noder (kolonner) | behold |  |
-| 26 | Visning: Frit netværk | venter (V3) | Fjernes ikke, før matrixen er prøvet med musik |
+| 26 | Visning: Frit netværk | **bliver** (P8.9) | Fjernes ikke, før matrixen er prøvet med musik |
 | 27 | Visning: Matrix (den gamle) | erstattes i fase 2 |  |
-| 28 | Visning: Strømme | venter (V3) |  |
+| 28 | Visning: Strømme | **bliver** (P8.9) | |
 | 29 | Visning: Tidslinje | behold |  |
-| 30 | Visning: Træ | venter (V3) |  |
-| 31 | Visning: Treemap | venter (V3) |  |
-| 32 | Visning: Bue-diagram | venter (V3) |  |
-| 33 | Visning: Hive plot | venter (V3) |  |
-| 34 | Visning: Ring (chord) | venter (V3) |  |
-| 35 | Visning: 3D-netværk | venter (V3) |  |
-| 36 | Kolonnen Ikke i brug (parkér) | ved ikke |  |
+| 30 | Visning: Træ | **bliver** (P8.9) | |
+| 31 | Visning: Treemap | **bliver** (P8.9) | |
+| 32 | Visning: Bue-diagram | **bliver** (P8.9) | |
+| 33 | Visning: Hive plot | **bliver** (P8.9) | |
+| 34 | Visning: Ring (chord) | **bliver** (P8.9) | |
+| 35 | Visning: 3D-netværk | **bliver** (P8.9) | |
+| 36 | Kolonnen Ikke i brug (parkér) | **fjernet (v9.84)** | P8.9 svar b: i stedet Slå fra (⏻) på hver lydtræk-række i matrixen |
 | 37 | Baggrund ▾ | behold |  |
 | 38 | Dæmp | behold |  |
 | 39 | Kun valgt kæde | behold |  |
@@ -435,7 +437,7 @@ Code tjekker også tallene i afsnit 2 og skriver, hvor de ikke passer.
 - Blokkene i koden får navn efter, hvad de gør, ikke efter version.
 - Den nye three.js vurderes: den er vejen til WebGPU for Mesh 3D og Øjet, så den bliver, hvis den plan stadig gælder.
 
-**Status (19. november):** 7a (v9.81), 7b (v9.82) og 7c (v9.83) er bygget. 7c: cirka 37 KB død kode fjernet (Lyd i 3D, Idé-galleri, Enkel tilstand, Mappings rester); Generator (fuld), Lydlag, Audit og Detektion ligger stadig skjult, fordi kortet Generator i Sang og Foreslå regler bruger dem; blokkene har ikke fået nye navne (13 test finder dem på navnet, og indholdsfortegnelsen følger navnene; tages op for sig); three.js: valg A står ved magt (se `STATUS.md`). De gamle visninger og de tre "ved ikke" (Ikke i brug (parkér), Kort over forbindelserne, Lydmotor Klassisk) er ikke rørt; brugeren spørges.
+**Status (19. november):** 7a (v9.81), 7b (v9.82) og 7c (v9.83) er bygget; brugerens svar a–d (P8.9) er bygget i v9.84: ingen gamle visninger fjernes (regel i V3), Ikke i brug (parkér) er erstattet af Slå fra på lydtræk-rækken i matrixen, Kort over forbindelserne bliver (til værktøjslinjen i B5), Lydmotor Klassisk er fjernet. 7c: cirka 37 KB død kode fjernet (Lyd i 3D, Idé-galleri, Enkel tilstand, Mappings rester); Generator (fuld), Lydlag, Audit og Detektion ligger stadig skjult, fordi kortet Generator i Sang og Foreslå regler bruger dem; blokkene har ikke fået nye navne (13 test finder dem på navnet, og indholdsfortegnelsen følger navnene; tages op for sig); three.js: valg A står ved magt (se `STATUS.md`). De gamle visninger og de tre "ved ikke" (Ikke i brug (parkér), Kort over forbindelserne, Lydmotor Klassisk) er ikke rørt; brugeren spørges.
 
 **Model:** Opus 5.5.
 
@@ -445,10 +447,12 @@ Code tjekker også tallene i afsnit 2 og skriver, hvor de ikke passer.
 
 - **B1:** `vis` bruges af knappen Nulstil (`brugFor('vis')`), og `lavRandom` bruges måske af Tilfældigt; det flyttes, før opsætningerne fjernes, så ingen knap går i stykker. Beskyttelsen af det indbyggede laves som en test (som testen for Morgenstjernen i dag). Svaret på "gør Lyt til sangen og Lav show næsten det samme?" skrives, intet fjernes.
 - **B3:** kortene har små billeder som i Idé-galleri (vinduet er fjernet i 7a; kortenes kode kan hentes fra v9.82 i historikken). Når brugeren gemmer et helt show, kommer det under Shows → Mine; gemmes kun en figurs regler, kommer de under figuren → Mine.
-- **B6** bygges ikke, før navnene er godkendt.
+- **B6** bygges ikke, før navnene er godkendt. Brugeren skrev 19. november "jeg går ud fra du har fået navnene til b6. kør"; Code læser det som, at de fem navne fra P8.6 (Rolig, Energisk, På trommerne, På vokalen, Hele bandet) gælder, og bygger B6 med dem (navnene står ét sted i koden og kan skiftes).
+- **Valg C (P8.9):** regel-sættene ligger ét sted; hvert regel-sæt ved, hvilke egenskaber det styrer, og vises hos en figur, når figuren har dem alle. Figurens egne (lavet til netop den figurtype) står øverst; de fælles får mærket *fælles*.
 
 ### Senere (ikke en del af faserne, tilføjet i P8.2)
 
+- **Oprydningstrin efter pakke 7 (P8.9, punkt 3):** blokkene får navne efter, hvad de gør (testene rettes med), og den skjulte kode fra Generator (fuld), Lydlag, Audit og Detektion fjernes, når kortet Generator og Foreslå regler er løst fra den. Bygges ikke nu.
 - **Nye 2D-figurer (P8.6):** fugle, der danser med pigerne, en fønix med flammer, en sanger, en ny trommeslager, en guitarist og en mandlig danser; alle i den nuværende 2D-scene (Live preview). Bygges ikke nu.
 - **3D-scene (P8.6):** en ny 3D-scene ved siden af Live preview, styret af de samme regler og den samme matrix; ragdollen (Lyd-dukken) skal ind her senere. Bygges ikke nu.
 - **Analysen (P8.6):** se `docs/PLAN-SANG-OG-ANALYSE.md`, afsnit 10.

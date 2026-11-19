@@ -1,7 +1,7 @@
 /* Trin 4 · Det nye i v9.19: Node-editoren, trin 1 (lærredet, kolonnerne og temaet). Se docs/PLAN-NODE-EDITOREN.md.
    Uden browser: temaet i programmet er det samme som docs/node-editoren/tema-warm-analog.json; der står ingen farvekoder
    i Node-editorens kode og stil (alle farver kommer fra temaet); de 6 skrifttyper ligger i filen.
-   I browseren: fanen Node-editor i Arbejdsfeltet; de 9 kolonner i temaets farver og bredder; zoom (musehjul, + og −), træk,
+   I browseren: fanen Node-editor i Arbejdsfeltet; de 8 kolonner i temaets farver og bredder; zoom (musehjul, + og −), træk,
    piletaster og Tilpas; visningen huskes efter genstart; layoutet Noder (med og uden zone-tilstand); maps ændres ikke;
    gamle indstillinger fra v9.18 (uden set.ne) åbner Node-editoren tilpasset.
    Skærmbilleder: tests/ud/node-editor-noder.png og tests/ud/node-editor-zoom.png (deviceScaleFactor 2). */
@@ -74,13 +74,13 @@ async function kør(arg) {
     T.tjek(r.fane && r.byg, 'fanen Node-editor findes i Arbejdsfeltet, og lærredet er bygget');
     T.tjek(r.flade[0] > 600 && r.flade[1] > 150, `lærredet kan ses (${r.flade.join(' × ')} px)`);
     const hex = h => { const n = parseInt(h.slice(1), 16); return `rgb(${n >> 16}, ${(n >> 8) & 255}, ${n & 255})`; };
-    const navne = ['Ikke i brug', 'Lydkilde', 'FFT', 'Analyse', 'Lydtræk', 'Regel', 'Figur', 'Mål', 'Scene'];
-    T.tjek(r.hoveder.length === 9 && r.hoveder.every((h, i) => h.navn === navne[i]), 'de 9 kolonner i rækkefølge: ' + r.hoveder.map(h => h.navn).join(', '));
+    const navne = ['Lydkilde', 'FFT', 'Analyse', 'Lydtræk', 'Regel', 'Figur', 'Mål', 'Scene']; /* v9.84: Ikke i brug er fjernet */
+    T.tjek(r.hoveder.length === 8 && r.hoveder.every((h, i) => h.navn === navne[i]), 'de 8 kolonner i rækkefølge (v9.84: uden Ikke i brug): ' + r.hoveder.map(h => h.navn).join(', '));
     const forkert = r.hoveder.filter(h => h.farve !== hex(docsTema.kolonne[h.k]) || h.linje !== hex(docsTema.kolonne[h.k]));
     T.tjek(!forkert.length, 'hver kolonne har sin farve fra temaet (tekst og streg)', forkert.map(h => h.navn + ' ' + h.farve).join(', '));
     T.tjek(r.hoveder.every(h => /Orbitron/.test(h.font)), 'overskrifterne bruger Orbitron');
     T.tjek(r.fonte.every(Boolean), 'skrifttyperne er indlæst (Orbitron, Exo 2, IBM Plex Sans)', JSON.stringify(r.fonte));
-    const B = docsTema.maal.bredde, ventet = { ikkeIBrug: B.smal, lydkilde: B.bred, regel: B.bred, scene: B.bred };
+    const B = docsTema.maal.bredde, ventet = { lydkilde: B.bred, regel: B.bred, scene: B.bred }; /* v9.84: kolonnen Ikke i brug er fjernet */
     let xx = 0; const breddeOk = r.kol.every(([k, w, x]) => { const ok = w === (ventet[k] || B.normal) && x === xx; xx += w + docsTema.maal.kolonneAfstand; return ok; });
     T.tjek(breddeOk, 'bredder og afstande fra temaet (smal 200, normal 320, bred 440, afstand 120)', JSON.stringify(r.kol));
     T.tjek(r.kp === 'Klik på en node for at se, hvordan den virker.', 'kontrolpanelet viser hjælpeteksten');

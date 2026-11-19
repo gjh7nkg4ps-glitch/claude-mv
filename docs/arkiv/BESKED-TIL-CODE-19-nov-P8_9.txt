@@ -1,0 +1,50 @@
+BESKED TIL CODE · P8.9 · 19. november 2026
+Fra hovedchatten. Erstatter P8.7 og P8.8, som ikke blev sendt (P8.7 står
+som punkt 1 her). Gem beskeden i docs/arkiv/, og ret planerne.
+
+
+1. PAKKE 7: REGEL-SÆT VISES KUN, HVOR DE PASSER (valg C)
+   Retter B3 og B4 fra P8.6.
+   - Når en figur er valgt i Biblioteket, vises figurens egne
+     regel-sæt øverst. Under dem vises de fælles regel-sæt, der også
+     passer til netop den figur, med et lille mærke "fælles".
+   - Regel-sæt, der ikke passer til figuren, vises slet ikke.
+   - Der er IKKE et eget afsnit "Til alle figurer", som P8.6 skrev.
+     Et fælles regel-sæt findes kun i én udgave i programmet, men det
+     vises hos hver figur, det passer til.
+   - Et regel-sæt passer til en figur, når figuren har alle de
+     egenskaber, regel-sættet styrer (fx har en pige arme, det har
+     discokuglen ikke).
+   - Navnet "regel-sæt" bliver.
+
+
+2. SVAR PÅ SPØRGSMÅLENE FRA FASE 7
+   a) De gamle visninger i Node-editoren: fjern INGEN af dem.
+      Frit netværk, Strømme, Træ, Treemap, Bue-diagram, Hive plot,
+      Ring (chord) og 3D-netværk giver hver især et godt overblik over
+      forbindelserne i programmet. En visning må kun fjernes, hvis den
+      erstattes af en ny, opdateret og fornyet udgave af samme slags
+      overblik, og først når jeg har set den nye og sagt ja.
+      Skriv det ind i planen (valg V3) som en fast regel.
+   b) Ikke i brug (parkér): fjern kolonnen. Giv i stedet matrixen
+      "Slå fra" på hver lydtræk-række, ligesom figurerne har det: alle
+      rækkens regler sover, til rækken slås til igen. Det skal kunne
+      fortrydes, og man skal kunne se på rækken, at den er slået fra.
+   c) Kort over forbindelserne: behold. Læg det gerne i værktøjslinjen
+      fra B5, så det er let at finde.
+   d) Lydmotor Klassisk: fjern. Lydmotor 2 bliver den eneste og hedder
+      bare "Lydmotor".
+   Byg a-d som en del af pakke 7, eller som et lille trin for sig
+   før pakke 7; du vælger, men sig hvilket.
+
+
+3. TIL PLANEN (byg ikke nu)
+   Et eget oprydningstrin efter pakke 7: blokkene får navne efter,
+   hvad de gør (testene rettes med), og den skjulte kode fra
+   Generator (fuld), Lydlag, Audit og Detektion fjernes, når kortet
+   Generator og Foreslå regler er løst fra den.
+
+
+4. UÆNDRET
+   B6 (fem regel-sæt pr. figur) venter stadig på, at jeg godkender
+   navnene.

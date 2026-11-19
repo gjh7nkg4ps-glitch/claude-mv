@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.84 (19. november 2026, svar a–d fra fase 7)
+
+| Billede | Hvad |
+| --- | --- |
+| [Slå et lydtræk fra](v9_84-slaa-lydtraek-fra.png) | ⏻ først i hver lydtræk-række; Slag, dyb (kick) er slået fra (grå, "slået fra", cellerne grå) |
+
 ## v9.83 (19. november 2026, trin 7c)
 
 | Billede | Hvad |

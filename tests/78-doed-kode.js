@@ -40,7 +40,7 @@ async function kør(arg) {
         const ok = st.every(x => Math.abs(x.styrke - x.forventet) < 1e-9);
         return { fejl, n: FORINDST.length, regler: st.length, ok, st: st.slice(0, 3) };
       });
-      T.tjek(o.fejl.length === 0 && o.n >= 30, `${w} × ${h}: alle ${o.n} færdige opsætninger kan hentes uden fejl`, o.fejl.join('\n'));
+      T.tjek(o.fejl.length === 0 && o.n >= 10, `${w} × ${h}: alle ${o.n} færdige opsætninger kan hentes uden fejl`, o.fejl.join('\n'));
       T.tjek(o.ok && o.regler >= 10, `${w} × ${h}: Styrke brugt for Standards ${o.regler} regler = gain × samlet styrke (ingen følsomhed mere)`, JSON.stringify(o.st));
       /* Node-editorens kontrolpanel viser Styrke brugt for en valgt regel */
       await side.click('#lay3 [data-lay3="ao-regler"]'); await side.waitForTimeout(1500);

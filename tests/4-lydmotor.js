@@ -1,8 +1,8 @@
 /* Trin 4 · Det nye i v9.8: Lydmotor 2 (vores navn), den nye lydmotor til generatoren.
-   - Alle 7 genrer laves med begge motorer (Ny og Klassisk) i en lydfil uden at spille den (OfflineAudioContext, fagudtryk): ingen klip (peak under 1), ikke stille, og Ny lyder anderledes end Klassisk.
+   - Alle 7 genrer laves med lydmotoren (v9.84: Klassisk er fjernet) i en lydfil uden at spille den (OfflineAudioContext, fagudtryk): ingen klip (peak under 1), ikke stille, og Ny lyder anderledes end Klassisk.
    - Generér automatisk med Ny giver betoninger (accent) og spøgelsesslag (ghost notes), og de kan ses i trinene.
    - Mens generatoren spiller, lyser akkorden lige nu, takten og Fill i takt 4.
-   - Skift til Klassisk bygger mixet om; Tilbage til standard sætter alt tilbage.
+   - Tilbage til standard sætter alt tilbage (v9.84: knappen Ny · Klassisk er væk).
    - Send til editor med Ny: lyden laves og analyseres (128 trin). Bemærk: Send til editor laver ikke tempo-profilen (SHOWPROFIL); det gør kun en lydfil. Sådan var det også før v9.8.
    Lydprøver (WAV) gemmes i tests/ud/lyd/, så et menneske kan lytte. Skærmbilleder i tests/ud/. */
 const fs = require('fs'), path = require('path');
@@ -26,7 +26,7 @@ async function kør(arg) {
     /* Alle genrer med begge motorer */
     const genrer = await side.evaluate(() => Object.keys(GEN));
     const res = {};
-    for (const g of genrer) for (const motor of ['ny', 'klassisk']) {
+    for (const g of genrer) for (const motor of ['ny']) { /* v9.84: kun én lydmotor */
       const r = await side.evaluate(async ([g, motor]) => {
         const før = gs.motor, mr = Math.random; gs.motor = motor; curGen = g; Math.random = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
         autoGen(); const sd = 60 / bpm / 4, N = 64, sr = 44100;
@@ -45,13 +45,12 @@ async function kør(arg) {
       fs.writeFileSync(path.join(LYD, `${g}-${motor}.wav`), Buffer.concat([wav, pcm]));
       res[g + '-' + motor] = r;
     }
-    const tabel = genrer.map(g => { const n = res[g + '-ny'], k = res[g + '-klassisk']; return `${g.padEnd(7)} ny: peak ${n.pk.toFixed(2)} rms ${n.rms.toFixed(3)} · klassisk: peak ${k.pk.toFixed(2)} rms ${k.rms.toFixed(3)}`; });
+    const tabel = genrer.map(g => { const n = res[g + '-ny']; return `${g.padEnd(7)} peak ${n.pk.toFixed(2)} rms ${n.rms.toFixed(3)}`; });
     console.log('     ' + tabel.join('\n     '));
     const ny = genrer.map(g => res[g + '-ny']);
     T.tjek(ny.every(r => !r.nan), 'ingen ugyldige tal i lyden (NaN)');
     T.tjek(ny.every(r => r.pk < 1), 'Ny klipper ikke i nogen genre (peak under 1,00)', ny.map(r => r.pk.toFixed(2)).join(', '));
     T.tjek(ny.every(r => r.rms > .03), 'Ny er ikke for stille i nogen genre (rms over 0,03)', ny.map(r => r.rms.toFixed(3)).join(', '));
-    T.tjek(genrer.every(g => res[g + '-ny'].data !== res[g + '-klassisk'].data), 'Ny lyder anderledes end Klassisk i alle genrer');
     let f = nyeFejl(); T.tjek(!f.length, 'alle genrer uden fejl', f.slice(0, 3).join(' | '));
 
     /* Betoninger og spøgelsesslag */
@@ -77,15 +76,14 @@ async function kør(arg) {
 
     /* Skift motor og Tilbage til standard */
     const skift = await side.evaluate(async () => {
-      document.querySelector('#gen .lm-rad [data-lms="klassisk"]').click(); await new Promise(r => setTimeout(r, 300));
-      const k = { motor: gs.motor, lm: !!(gmk && gmk.lm), akk: !!document.querySelector('#gen .lm-akk') };
+      const k = { seg: !!document.querySelector('#gen .lm-rad [data-lms]'), lm: !!(gmk && gmk.lm), akk: !!document.querySelector('#gen .lm-akk') };
       gs.rum = .8; gs.pad = false;
       document.querySelector('#gen .lm-rad [data-lmstd]').click(); await new Promise(r => setTimeout(r, 300));
       const s = { motor: gs.motor, lm: !!(gmk && gmk.lm), pad: gs.pad, fill: gs.fill, rum: gs.rum };
       gStop(); return { k, s };
     });
-    T.tjek(skift.k.motor === 'klassisk' && !skift.k.lm && !skift.k.akk, 'Klassisk: den gamle motor og det gamle mix, ingen akkord-linje');
-    T.tjek(skift.s.motor === 'ny' && skift.s.lm && skift.s.pad && skift.s.fill && skift.s.rum === .25, 'Tilbage til standard: Ny, akkord-flade og fill til, rumklang 0,25');
+    T.tjek(!skift.k.seg && skift.k.lm && skift.k.akk, 'v9.84: ingen knap Ny · Klassisk; lydmotorens mix og akkord-linjen er der');
+    T.tjek(skift.s.motor === 'ny' && skift.s.lm && skift.s.pad && skift.s.fill && skift.s.rum === .25, 'Tilbage til standard: akkord-flade og fill til, rumklang 0,25');
 
     /* Send til editor med Ny: analysen finder tempoet */
     const t0 = Date.now();
