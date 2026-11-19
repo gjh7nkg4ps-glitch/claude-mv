@@ -20,7 +20,7 @@ async function kør(arg) {
         const faner = [...new Set(dkZoner(set.dock).flatMap(z => z.f))].sort(); return { lay: set.lay3, vinduer: V.map(v => v.id).sort(), faner, ov, paa: (document.querySelector('#lay3 [data-lay3].on') || {}).textContent } });
       /* 1 · kun de fire knapper (v9.71) */
       const kn = await side.evaluate(() => [...document.querySelectorAll('#lay3 [data-lay3]')].map(b => b.textContent));
-      T.tjek(kn.join('|') === '1 · Sang|2 · Scene|3 · Regler|4 · Show', `${w} × ${h}: de fire arbejdsområder står i linjen øverst (1 · Sang, 2 · Scene, 3 · Regler, 4 · Show); de seks gamle layout-knapper er væk (v9.71)`, JSON.stringify(kn));
+      T.tjek(kn.join('|') === '1 · Analyse|2 · Scene|3 · Regler|4 · Show' /* v9.98 */, `${w} × ${h}: de fire arbejdsområder står i linjen øverst (1 · Sang, 2 · Scene, 3 · Regler, 4 · Show); de seks gamle layout-knapper er væk (v9.71)`, JSON.stringify(kn));
       /* 2 · hvert arbejdsområde med et rigtigt klik */
       const vent = { 'ao-sang': ['w35'], 'ao-scene': ['w2', 'w28', 'w29', 'w5', 'w6', 'w34'], 'ao-regler': ['w2', 'w33', 'w36'], /* v9.87: Biblioteket */ 'ao-show': ['w13', 'w17', 'w2', 'w28', 'w29', 'w5'] }; const R = {};
       for (const k of Object.keys(vent)) { await side.click('#lay3 [data-lay3="' + k + '"]'); await side.waitForTimeout(1300); R[k] = await se(); }

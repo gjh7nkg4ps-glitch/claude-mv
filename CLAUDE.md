@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.78 · 19. november 2026 · gælder fra Claude MV v9.97 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.79 · 19. november 2026 · gælder fra Claude MV v9.98 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -98,6 +98,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | forudindstilling | **opsætning** (v9.33) |
 | Scene (Dublets effekt-gruppe) | **Scene-effekter** |
 | Mapping, Router 2.0, Dublet, Routing-overblik | **slettet i v9.35** (din beslutning); reglerne er i Node-editoren |
+| 1 · Sang, vinduet Sang (S2) | **1 · Analyse, vinduet Analyse** (v9.98, P8.14 3b); fanerne inde i vinduet hedder stadig Sang · Spor · Avanceret |
 
 ### Analyse og mapping
 - **Auto-tærskel** flytter tærsklen efter sangen. Den **gain-stak** (fagudtryk: gain staging), der bruges, er: forbindelsens gain × Samlet styrke × Følsomhed (kun Enkel tilstand) × Afsnits-dynamik (kun med Show og en analyseret fil). Den vises ved hver forbindelse som "Styrke brugt".
@@ -120,7 +121,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.97
+## 4. Hvad der er sket fra v8.0 til v9.98
 
 | Version | Hvad |
 | --- | --- |
@@ -230,6 +231,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.95 | **Kortet Detektion (P8.14 svar 2B).** Det skjulte vindue Detektions-tuning (w20) er flyttet ind som kortet **Detektion** under Sang → Avanceret (efter Spektrum+; `sgKort('det')`, DOM-elementerne flyttes med `sgFlyt` som i S2, så id'erne `#tune`, `#s-tol`, `#clr` og `[data-mark]` og deres lyttere er de samme). **Hit-raten står stort i procent** (`.det-pct`) pr. Kick og Snare med ramt/tryk, falske alarmer og bedste tærskel; teksten siger, at tap med hånden er omtrentligt (cirka 30 til 50 ms). **Rettet samtidig:** tasterne K og S blev ignoreret, når generatorens computertastatur (`kbOn`) var slået til (det er det som standard), så man kunne ikke tappe med en fil; nu måler K og S, når kortet kan ses (`detSynlig`). w20 er tomt og skjult. Tal: 6 404 979 bytes (6 403 307), 806 knapper, 27 vinduer. Test 86 ved tre skærmstørrelser (rigtige tastetryk på kickens tidspunkter: 100 % hit-rate på testlyden; Ryd); test 71 og 74 rettet (kortlisten) |
 | v9.96 | **Hele generatoren under Mere … i kortet Generator (P8.14 svar 3B).** Vinduet Generator (fuld) (w4) er væk; `#gen` (hele generatorens flade, bygget af `genUI`) ligger i HTML som en skjult holder og flyttes af `lksByg` ind i `<details id="lks-mere">` i kortet Generator i Sang (trin og pads, tastaturet, Lydmotor-rækken, Gem/Hent 1–5, Send til editor). Alle lyttere er de samme (de sidder på `#gen`). **Rettet samtidig:** kortets Genre sendte `change` til generatorens liste, som kun lytter på `input` (fejl siden v9.6), så genren i kortet ændrede aldrig generatoren. Tast og MIDI og Klaverspil virker (test 87). Tal: 6 406 072 bytes (6 404 979), 801 knapper (806), 26 vinduer (27). Test 87 ved 1920 × 1080 og 2560 × 1440 (rigtige klik på Mere …, en tangent, Genre); test 3 og 4 rettet (w4 findes ikke; test 4 folder Mere … ud) |
 | v9.97 | **P8.14 punkt 3e og 3c.** **Lyt til sangen** (auto1–3, "Program auto") er fjernet fra `FORINDST`: **7 indbyggede opsætninger** (piger_show, danser_show, ms_show, dronning_show, singlen, spilselv, klaverspil); `brugFor`-grenen `f.auto` og `autoSetup` ligger stadig (Radial Mesh' knap Auto bruger `autoSetup`). **Knappen *Opret forbindelse på valgt lydtræk*** (`#eqnew`) i Spektrum (EQ) er fjernet med sin lytter; EQ-grafikken er uændret. Test 21, 38, 40, 78, 80, 81 og 82 rettet (7 i stedet for 10; EQ-knappen) |
+| v9.98 | **Sang hedder Analyse (P8.14 punkt 3b).** Arbejdsområdet **1 · Analyse** (`LAY3`, før 1 · Sang) og vinduet **Analyse** (`DK_NAVN.w35`, før Sang); Automatik siger *Ændres i Analyse*. De interne id'er (`ao-sang`, `w35`, `sg…`, `sgFane`) og fanerne inde i vinduet (Sang · Spor · Avanceret) er uændrede. Der findes ingen fane "Lyd" (kun den gamle effekt-gruppe for lydlag-mål), så brugeren blev ikke spurgt. Test 60, 62, 66 og 71 rettet |
 
 ## 5. Halvfærdigt og kendte fejl
 
