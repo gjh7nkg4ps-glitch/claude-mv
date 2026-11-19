@@ -2,6 +2,13 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.82 (19. november 2026, trin 7b)
+
+| Billede | Hvad |
+| --- | --- |
+| [Klodsbane: Til](v9_82-klodsbane-til.png) | knappen i Live previews overskrift; banen tegnes i scenen |
+| [Klodsbane fra, matrixen](v9_82-klodsbane-fra-matrix.png) | gruppen Bane står med "klodsbane fra"; Live preview uden bane |
+
 ## v9.81 (19. november 2026, trin 7a)
 
 | Billede | Hvad |
