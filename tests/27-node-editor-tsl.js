@@ -18,9 +18,9 @@ async function kør(arg) {
     await side.goto('file://' + fil); await side.waitForTimeout(3500);
     const vent = ms => side.waitForTimeout(ms);
     await side.evaluate(async () => { brugFor('fuld1', true); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1000)); NE.tilpas = false; NE.z = .45; NE.x = -200; NE.y = 110; neVis(); });
-    const st = await side.evaluate(async () => { for (let i = 0; i < 300 && !NE14.ok && /indlæses/.test(NE14.grund); i++) await new Promise(r => setTimeout(r, 100)); return { ok: NE14.ok, backend: NE14.backend, rev: NE14.rev, gammel: THREE.REVISION, grund: NE14.grund, gpu: 'gpu' in navigator, kp: (document.querySelector('#ne-kp [data-ne14="tekst"]') || {}).textContent }; });
+    const st = await side.evaluate(async () => { for (let i = 0; i < 300 && !NE14.ok && /indlæses/.test(NE14.grund); i++) await new Promise(r => setTimeout(r, 100)); return { ok: NE14.ok, backend: NE14.backend, rev: NE14.rev, gammel: THREE.REVISION, grund: NE14.grund, gpu: 'gpu' in navigator, kp: ne14Tekst() /* v9.93: linjen i kontrolpanelet er fjernet; teksten kommer fra ne14Tekst (Indstillinger) */ }; });
     T.tjek(st.ok && /^WebG/.test(st.backend) && st.rev === '186' && st.gammel === '128', `den nye three.js r${st.rev} kører med ${st.backend || '–'} ved siden af r${st.gammel} (window.THREE)${st.ok ? '' : ': ' + st.grund}`);
-    T.tjek(/TSL · WebG/.test(st.kp || ''), `kontrolpanelet siger "Linjer: ${st.kp}"`);
+    T.tjek(/TSL · WebG/.test(st.kp || ''), `linjerne kører med "${st.kp}" (ne14Tekst)`);
     /* pixels: TSL-lærredet har linjerne, Canvas 2D-lærredet er tomt */
     const px = () => side.evaluate(() => { const tael = c => { const k = document.createElement('canvas'); k.width = c.width; k.height = c.height; const g = k.getContext('2d'); g.drawImage(c, 0, 0); const d = g.getImageData(0, 0, k.width, k.height).data; let n = 0; for (let i = 3; i < d.length; i += 4 * 7) if (d[i] > 20) n++; return n }; neLinjerTegn(); return { tsl: tael(document.getElementById('ne-linjer-tsl')), k2d: tael(document.getElementById('ne-linjer')), links: NE14.stat.links, gloed: NE14.stat.gloed }; });
     const a = await px();
@@ -34,9 +34,9 @@ async function kør(arg) {
     let mx = 0; for (let i = 0; i < 6; i++) { const c = await px(); mx = Math.max(mx, c.gloed); await vent(150); }
     T.tjek(mx > 0, `mens generatoren spiller, gløder op til ${mx} links, der slår til`);
     /* Canvas 2D og tilbage */
-    const c2 = await side.evaluate(async () => { document.querySelector('#ne-kp [data-ne14="2d"]').click(); await new Promise(r => setTimeout(r, 300)); return { gemt: set.ne.linjer, skjult: document.getElementById('ne-linjer-tsl').hidden }; });
+    const c2 = await side.evaluate(async () => { neLinjerValg('2d'); /* v9.93: knapperne i kontrolpanelet er fjernet; valget står i Indstillinger (#s-linjer) */ await new Promise(r => setTimeout(r, 300)); return { gemt: set.ne.linjer, skjult: document.getElementById('ne-linjer-tsl').hidden }; });
     const c2p = await px();
-    const au = await side.evaluate(async () => { document.querySelector('#ne-kp [data-ne14="auto"]').click(); await new Promise(r => setTimeout(r, 300)); return { gemt: set.ne.linjer === undefined, brug: NE14.brug() }; });
+    const au = await side.evaluate(async () => { neLinjerValg('auto'); await new Promise(r => setTimeout(r, 300)); return { gemt: set.ne.linjer === undefined, brug: NE14.brug() }; });
     const aup = await px();
     T.tjek(c2.gemt === '2d' && c2.skjult && c2p.k2d > 300 && au.gemt && au.brug && aup.tsl > 500 && aup.k2d === 0, `Canvas 2D tegner linjerne som før (${c2p.k2d} prøver), og Auto skifter tilbage til TSL`);
     /* r128 er uændret: Mesh 3D og Øjet starter */

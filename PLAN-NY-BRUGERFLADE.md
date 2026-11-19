@@ -452,7 +452,7 @@ Code tjekker også tallene i afsnit 2 og skriver, hvor de ikke passer.
 
 ### Senere (ikke en del af faserne, tilføjet i P8.2)
 
-- **Oprydningstrin efter pakke 7 (P8.9, punkt 3):** blokkene får navne efter, hvad de gør (testene rettes med), og den skjulte kode fra Generator (fuld), Lydlag, Audit og Detektion fjernes, når kortet Generator og Foreslå regler er løst fra den. **Første bid er lavet i v9.92** (Håndtag i billedet, den gamle Matrix-visning, data-ne9-lytterne; blokken v9.42 omdøbt). Resten venter.
+- **Oprydningstrin efter pakke 7 (P8.9, punkt 3):** blokkene får navne efter, hvad de gør (testene rettes med), og den skjulte kode fra Generator (fuld), Lydlag, Audit og Detektion fjernes, når kortet Generator og Foreslå regler er løst fra den. **Første bid er lavet i v9.92** (Håndtag i billedet, den gamle Matrix-visning, data-ne9-lytterne; blokken v9.42 omdøbt), **anden bid i v9.93** (Normalisering-knappen, Linjer-knapperne, Audit, Niveau-resterne). Resten venter på svar: bloknavne (A/B), Detektion (fjern/flyt), Generator (fuld) (funktionerne må forsvinde eller skal ind i kortet).
 - **Nye 2D-figurer (P8.6):** fugle, der danser med pigerne, en fønix med flammer, en sanger, en ny trommeslager, en guitarist og en mandlig danser; alle i den nuværende 2D-scene (Live preview). Bygges ikke nu.
 - **3D-scene (P8.6):** en ny 3D-scene ved siden af Live preview, styret af de samme regler og den samme matrix; ragdollen (Lyd-dukken) skal ind her senere. Bygges ikke nu.
 - **Analysen (P8.6):** se `docs/PLAN-SANG-OG-ANALYSE.md`, afsnit 10.

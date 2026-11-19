@@ -26,11 +26,11 @@ async function kør(arg) {
         const el = ['w9', 'w22', 'enkel', 'enkelbtn', 'd3btn', 'galbtn', 'tb-gen', 'ops-gal', 'mb-auto-gal', 'gal', 'd3'].filter(id => document.getElementById(id));
         const uk = document.getElementById('ud-kilde');
         const ord = (typeof ORDBOG !== 'undefined' && Array.isArray(ORDBOG)) ? ORDBOG.filter(o => o[0] === 'Lyd i 3D' || o[1] === 'Enkel tilstand').length : -1;
-        return { u, el, udkilde: set.udkilde, valg: uk ? [...uk.options].map(o => o.value) : null, ord, bruger: typeof stakFor === 'function' && typeof taktValg === 'function' && typeof stemValg === 'function' && typeof taktGrund === 'function' && typeof stemGrund === 'function' && typeof stakTal === 'function' && typeof renderAudit === 'function' };
+        return { u, el, udkilde: set.udkilde, valg: uk ? [...uk.options].map(o => o.value) : null, ord, bruger: typeof stakFor === 'function' && typeof taktValg === 'function' && typeof stemValg === 'function' && typeof taktGrund === 'function' && typeof stemGrund === 'function' && typeof stakTal === 'function' && typeof renderAudit === 'undefined' /* v9.93: renderAudit er fjernet; corr bruges af autoListe */ && typeof corr === 'function' };
       });
       T.tjek(r.u.length === 0 && r.el.length === 0, `${w} × ${h}: funktionerne og elementerne findes ikke (${r.u.join(',')} ${r.el.join(',')})`, JSON.stringify(r));
       T.tjek(r.udkilde === 'oeje' && r.valg && r.valg.join(',') === 'pv,mesh,mesh3d,oeje', `${w} × ${h}: Udgangsvinduet viser husker Øjet og har fire valg (${r.valg})`, JSON.stringify(r));
-      T.tjek(r.ord === 0 && r.bruger, `${w} × ${h}: ordlisten har intet under Lyd i 3D og Enkel tilstand (${r.ord}); stakFor, taktValg, stemValg, taktGrund, stemGrund, stakTal og renderAudit findes stadig`, JSON.stringify(r));
+      T.tjek(r.ord === 0 && r.bruger, `${w} × ${h}: ordlisten har intet under Lyd i 3D og Enkel tilstand (${r.ord}); stakFor, taktValg, stemValg, taktGrund, stemGrund, stakTal og corr findes stadig (renderAudit er væk fra v9.93)`, JSON.stringify(r));
       /* alle opsætninger kan hentes; Standard regner som før */
       const o = await side.evaluate(async () => {
         const vent = ms => new Promise(r => setTimeout(r, ms)); const fejl = [];
