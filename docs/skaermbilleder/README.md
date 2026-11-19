@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.88 (19. november 2026, pakke 7, B4)
+
+| Billede | Hvad |
+| --- | --- |
+| [Dansemapping som regel-sæt](v9_88-dansemapping.png) | Biblioteket → Figurer → Danser: Dansemapping (danserens standard) står som Indbygget regel-sæt |
+
 ## v9.87 (19. november 2026, pakke 7, B3)
 
 | Billede | Hvad |

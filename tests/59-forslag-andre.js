@@ -27,7 +27,7 @@ async function kør(arg) {
       /* en skabelon på den nye danser: forslagene findes allerede (Standardforbindelser), så de springes over */
       FS.liste = []; const sk = ne11Alle().find(s => { try { return ne11Passer(s, 'f:' + ny.id) } catch (e) { return false } }); if (sk) neBrugSkabelon(sk, 'f:' + ny.id); await vent(900); ud.skab = { navn: sk && sk.navn, ens: R() === r0, fs: fra(ny.id) };
       /* Tilføj morgenstjerne: figuren laves, reglerne bliver forslag */
-      const harMs = fase2.objekter.some(o => o.id === 'ms'); const f1 = FS.liste.length; document.getElementById('addms').click(); await vent(1200); ud.ms = { foer: harMs, figur: fase2.objekter.some(o => o.id === 'ms'), ens: R() === r0, fs: FS.liste.length - f1 };
+      const harMs = fase2.objekter.some(o => o.id === 'ms'); addMorgenstjerne(true); await vent(600); ud.ms = { foer: harMs, figur: fase2.objekter.some(o => o.id === 'ms'), ens: R() === r0, fs: 0 }; /* v9.88: knappen er væk; figuren lægges på uden regler */
       /* uden for fange-tilstand skriver Regler som før */
       const n0 = maps.length; const idd = Regler.tilfoej({ band: 'kick', effect: 'puls', thr: .5, gain: 1, att: 10, rel: 100, curve: 1, gap: 120 }); ud.normal = { n: maps.length - n0, id: !!idd }; Regler.slet(idd);
       /* det, der er fjernet fra skærmen */
@@ -37,7 +37,7 @@ async function kør(arg) {
     T.tjek(r.auto.knap && r.auto.ens && r.auto.fs >= 1 && r.auto.uds, `Auto-kobl ændrer ingen regler og giver ${r.auto.fs} forslag til figuren; dens udsving er ikke ændret`, JSON.stringify(r.auto));
     T.tjek(r.rnd.ens && /Tilfældige slag: /.test(r.rnd.status) && /Ingen regler er ændret/.test(r.rnd.status), `Tilfældige slag ændrer ingen regler (${r.rnd.fs} nye forslag; resten springes over, fordi målene har regler)`, JSON.stringify(r.rnd));
     T.tjek(!!r.skab.navn && r.skab.ens && r.skab.fs >= 1, `skabelonen "${r.skab.navn}" på den nye danser ændrer ingen regler og giver ${r.skab.fs} forslag`, JSON.stringify(r.skab));
-    T.tjek(r.ms.figur && r.ms.ens && (r.ms.foer || r.ms.fs >= 1), `Tilføj morgenstjerne laver figuren, men ingen regler: de ${r.ms.fs} regler står som forslag`, JSON.stringify(r.ms));
+    T.tjek(r.ms.figur && r.ms.ens, `Morgenstjernen lægges på scenen uden regler (v9.88; regel-sættet ligger i Biblioteket)`, JSON.stringify(r.ms));
     T.tjek(r.normal.n === 1 && r.normal.id, 'uden for forslags-knapperne skriver Regler stadig, som den plejer (en regel lagt til og slettet igen)', JSON.stringify(r.normal));
     T.tjek(!r.vaek.rnd && !r.vaek.fg && !r.vaek.show && !r.vaek.ops && !r.vaek.tb, 'Fortryd tilfældigt, Fortryd figurer, Fortryd sidste show og Random alt: skift automatisk kan ikke ses mere', JSON.stringify(r.vaek));
     /* Ja til alle med rigtig mus: forslagene bliver til regler, og de gamle er der stadig */
