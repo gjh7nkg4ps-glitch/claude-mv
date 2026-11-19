@@ -2,6 +2,13 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.99 og v9.100 (19. november 2026, P8.14 3f og P8.15 1)
+
+| Billede | Hvad |
+| --- | --- |
+| [⋯ Mere](v9_99-vaerktoejslinje-mere.png) | 3 · Regler ved 1920 × 1080: værktøjslinjen ruller ikke; 15 knapper bag ⋯ Mere, listen åben |
+| [Navne](v9_100-navne.png) | Live preview med Navne: Til på Pigernes show |
+
 ## v9.96 (19. november 2026, P8.14 svar 3B)
 
 | Billede | Hvad |
