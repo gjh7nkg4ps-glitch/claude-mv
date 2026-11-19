@@ -2,13 +2,14 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/STATUS-historik.md` og pr. version i `CLAUDE.md` afsnit 4. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.102, 19. november 2026)
+## Nu (v9.104, 19. november 2026)
 
 - **Pakke 7 (Biblioteket) er færdig** (v9.85–v9.90) og rettet efter hele testpakken (v9.91).
 - **Oprydningstrinnet efter pakke 7** er lavet i tre bidder (v9.92–v9.94): død kode, Normalisering som funktion, Audit og Niveau-rester væk, bloknavne efter hvad de gør (svar 1B).
 - **P8.14 punkt 1 og 3 er bygget:** Detektion som kort under Analyse → Avanceret (v9.95, 2B); hele generatoren under Mere … i kortet Generator (v9.96, 3B); Lyt til sangen og EQ-knappen Opret forbindelse er væk (v9.97, 3e og 3c); Sang hedder Analyse (v9.98, 3b); værktøjslinjen ruller ikke mere (⋯ Mere), og Radial Mesh er helt i fuld skærm (v9.99, 3f); Navne: Til · Fra i Live preview (v9.100, P8.15 1); hent 4 spor på én gang, filer eller mappe (v9.101, 3a); en CSS-rettelse (v9.102).
 - **Svarene på P8.14 punkt 5** står i `docs/SVAR-P8_14.md`; **planen for punkt 7 ("På scenen")** i `docs/PLAN-PAA-SCENEN.md`; **listen over pigernes egenskaber** (punkt 9) i `docs/PIGERNES-EGENSKABER.md`.
-- Hele testpakken (86 testfiler) sættes i gang på v9.102; resultatet står i afleveringen.
+- Hele testpakken (86 testfiler) er kørt på v9.102: 78 grønne, 8 rettet i v9.103 (én rigtig fejl: ⋯ Mere ved træk i zonerne).
+- **P8.18 D1–D3 er bygget (v9.104):** Gemt ✓ og banner, når gemningen fejler; tasten ?; Hvad er nyt på startskærmen. Svar på D6 i `docs/SVAR-P8_18.md`.
 
 ## Næste (rækkefølgen fra P8.14 punkt 8)
 
@@ -19,7 +20,8 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Venter på brugeren
 
-- Prøv v9.102 med musik: Biblioteket og de fem regel-sæt (B6-navnene er ikke sagt god for udtrykkeligt), Detektion med K og S på egen musik, Mere … i Generator, ⋯ Mere i værktøjslinjen, Navne: Til.
+- **D6 (P8.18):** ja eller nej til *Gem hele arbejdet / Hent hele arbejdet* (én fil med alt; `docs/SVAR-P8_18.md`). *Gem alle på computeren* dækker i dag kun Opsætning 1–20, ikke Mine shows i Biblioteket.
+- Prøv v9.104 med musik: Biblioteket og de fem regel-sæt (B6-navnene er ikke sagt god for udtrykkeligt), Detektion med K og S på egen musik, Mere … i Generator, ⋯ Mere i værktøjslinjen, Navne: Til.
 - Svar på `docs/PLAN-PAA-SCENEN.md` (navn, rækkefølge, navne på effekt-regel-sæt).
 - Valg i `docs/PIGERNES-EGENSKABER.md` (hvad der må fjernes; intet er fjernet).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
@@ -39,4 +41,5 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 - **Radial Mesh-værksted** med rigtig bloom i WebGL, sort baggrund med stjerner og galakser, uden at røre originalen (`docs/SVAR-P8_14.md` e).
 - **Stregerne i Node-editoren** (farve pr. lyd, lys der rejser) lige efter analysen; S7 HPSS og S8 spilleliste sammen med analysen.
 - **Nye 2D-figurer** (fugle, fønix, sanger, ny trommeslager, guitarist, mandlig danser) på et skelet med led (fagudtryk: rig), Cascadeur som inspiration; ragdollen kan bruge samme skelet (P8.15 3).
+- **D4** ét fælles Fortryd (lyset i Mesh 3D og Øjet, EQ+, Form-editoren) og **D5** manualen som sidepanel (P8.18). **D7** feltfarven røres ikke.
 - 3D-scene, Unity-udgaven af Mesh 3D (aldrig testet i Unity).
