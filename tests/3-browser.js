@@ -49,8 +49,9 @@ async function kør(arg, { udenLyd = false } = {}) {
     }));
     T.tjek(!faner.plan.some(n => /Generator/i.test(n)) && !faner.synlige.some(n => /Generator/i.test(n)), `ingen Generator-fane i Arbejdsfeltet (faner: ${faner.synlige.join(', ')}; i alt: ${faner.plan.join(', ')})`);
     /* v9.81: Generator (fuld) er fjernet fra skærmen (vinduet er skjult, knappen Avanceret … er væk) */
-    const adv = await side.evaluate(() => ({ skjult: document.getElementById('w4').hidden, knap: !!document.querySelector('button#lks-adv'), navn: !!DK_NAVN.w4 }));
-    T.tjek(faner.w4 && adv.skjult && !adv.knap && !adv.navn, 'Generator (fuld) er væk fra skærmen: vinduet er skjult, Avanceret … i Lydkilde er væk, og det står ikke i ＋ (v9.81)', JSON.stringify(adv));
+    /* v9.96: vinduet w4 er væk; hele generatoren ligger under Mere … i kortet Generator */
+    const adv = await side.evaluate(() => ({ mere: !!document.querySelector('#lks-mere #gen'), knap: !!document.querySelector('button#lks-adv'), navn: !!DK_NAVN.w4 }));
+    T.tjek(!faner.w4 && adv.mere && !adv.knap && !adv.navn, 'Generator (fuld) er væk som vindue: hele generatoren ligger under Mere … i kortet Generator (v9.96), Avanceret … er væk, og det står ikke i ＋', JSON.stringify(adv));
 
     /* Testlydfil og analyse */
     if (!udenLyd) {

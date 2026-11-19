@@ -54,7 +54,7 @@ async function kør(arg) {
     let f = nyeFejl(); T.tjek(!f.length, 'alle genrer uden fejl', f.slice(0, 3).join(' | '));
 
     /* Betoninger og spøgelsesslag */
-    const bet = await side.evaluate(() => { curGen = 'house'; gs.dens = .7; autoGen(); const w4 = document.getElementById('w4'); w4.hidden = false; w4.classList.remove('zon-skjult'); /* v9.81: Generator (fuld) er væk fra skærmen; testen viser vinduet selv */
+    const bet = await side.evaluate(() => { curGen = 'house'; gs.dens = .7; autoGen(); lay3Anvend('ao-sang'); const m = document.getElementById('lks-mere'); if (m) m.open = true; /* v9.96: generatoren ligger under Mere … i kortet Generator (Sang); testen folder den ud */
       const fl = pat.slice(0, 6).flat(); return { acc: fl.filter(v => v === 2).length, gh: fl.filter(v => v === 3).length, vAcc: document.querySelectorAll('#pads .pad.acc').length, vGh: document.querySelectorAll('#pads .pad.gh').length }; });
     T.tjek(bet.acc > 0 && bet.gh > 0, `Generér automatisk giver betoninger (${bet.acc}) og spøgelsesslag (${bet.gh})`);
     T.tjek(bet.vAcc > 0 && bet.vGh > 0, `de kan ses i trinene (${bet.vAcc} lyser stærkere, ${bet.vGh} svagere)`);
@@ -64,7 +64,7 @@ async function kør(arg) {
     await side.waitForTimeout(2500);
     const live1 = await side.evaluate(() => ({ nu: [...document.querySelectorAll('#gen .lm-akk .lm-a.nu')].map(a => a.textContent), takt: (document.querySelector('#gen .lm-takt') || {}).textContent, alle: [...document.querySelectorAll('#gen .lm-akk .lm-a')].map(a => a.textContent) }));
     T.tjek(live1.nu.length === 1 && /takt \d af 4/.test(live1.takt), `mens den spiller, lyser akkorden lige nu (${live1.nu[0]} af ${live1.alle.join(' → ')}; ${live1.takt})`);
-    await side.locator('#w4').screenshot({ path: path.join(UD, 'lydmotor-w4.png') });
+    await side.waitForTimeout(800); await side.locator('#lks-mere').screenshot({ path: path.join(UD, 'lydmotor-w4.png') });
     /* Vent til fill i takt 4 (en takt ved 124 BPM er 1,94 s) */
     const fill = await side.evaluate(async () => { for (let i = 0; i < 120; i++) { await new Promise(r => setTimeout(r, 50)); const f = document.querySelector('#gen .lm-fill'); if (f && f.classList.contains('nu')) return document.querySelector('#gen .lm-takt').textContent; } return null; });
     T.tjek(fill === 'takt 4 af 4', 'Fill lyser i takt 4', String(fill));

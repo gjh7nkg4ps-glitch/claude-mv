@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.96 (19. november 2026, P8.14 svar 3B)
+
+| Billede | Hvad |
+| --- | --- |
+| [Generator under Mere …](v9_96-generator-mere.png) | Sang → kortet Generator med Mere … foldet ud: hele generatoren |
+
 ## v9.95 (19. november 2026, P8.14 svar 2B)
 
 | Billede | Hvad |
