@@ -24,8 +24,7 @@ async function kør(arg) {
       const uden = l => JSON.stringify(l.map(m => { const k = Object.assign({}, m); delete k.id; return k }));
       const prøv = async (navn, fn, tjek) => { H.length = 0; try { await fn() } catch (e) { ud[navn] = 'fejl: ' + e.message; return } await vent(700); const ens = new Set(maps.map(m => m.id)).size === maps.length && maps.every(m => m.id); let t = true; try { if (tjek) t = tjek() } catch (e) { t = 'fejl i tjek: ' + e.message }
         ud[navn] = (H.join() === 'erstat' && ens && t === true) ? 'ok' : 'beskeder: ' + H.join() + ' · id: ' + ens + ' · indhold: ' + t };
-      const anden = FORINDST.find(f => !f.auto && f.id !== 'fuld2' && f.id !== 'std');
-      await prøv('Hent en færdig opsætning', () => brugFor(anden.id, true), () => maps.length > 0);
+      await prøv('Hent en færdig opsætning', () => brugFor('fuld1', true), () => maps.length > 0); /* v9.85: Alle effekter (OPS_TEST); de 10 shows bygges i et rum (samlet-beskeder) */
       await prøv('applyPreset (Standard)', () => applyPreset(DEFAULT), () => harStd() || 'ikke som Standard');
       /* Opsætning 1–20: gem, lav om, hent */
       brugFor('fuld2', true); await vent(700); const gemt = uden(maps); slotSave('A'); await vent(300); Regler.sletNr(0); await vent(700);

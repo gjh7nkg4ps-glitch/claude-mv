@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.85 (19. november 2026, pakke 7, B1)
+
+| Billede | Hvad |
+| --- | --- |
+| [Opsætninger: de 10](v9_85-opsaetninger.png) | listen i Opsætninger har kun de 10 opsætninger (Lyt til sangen ×3, fem figur-shows, Spil selv ×2) |
+
 ## v9.84 (19. november 2026, svar a–d fra fase 7)
 
 | Billede | Hvad |

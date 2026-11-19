@@ -32,7 +32,7 @@ async function kør(arg) {
     await side.reload(); await side.waitForTimeout(4000);
     const gl = await side.evaluate(() => ({ n: maps.length, fj: maps.map(m => m.fjernet || ''), off: maps.map(m => !!m.off), status: document.getElementById('status').textContent, navn: bandNavn('pad:x'), v: kildeV('pad:x', 0), zoner: dkZoner(set.dock).map(z => z.f.join(',')).join(' | '), aktiv: set.scene.aktiv, valg: [...document.querySelectorAll('select option')].filter(o => /^pad:|hnd:pad/.test(o.value)).length, for: FORINDST.length }));
     T.tjek(gl.n === 4 && gl.fj.join() === 'pad,pad,pad,' && gl.off.join() === 'true,true,true,false' && gl.v === 0 && /Morph Pad, som er fjernet i v9\.43/.test(gl.status), `gamle regler med en pad-kilde åbner: de 3 står der, er slået fra og giver 0; reglen fra Bas er urørt. Statuslinjen: "${gl.status.slice(0, 90)}…"`);
-    T.tjek(!/w11/.test(gl.zoner) && gl.aktiv !== 'w11' && gl.valg === 0 && gl.for === 33 && !/'tast','pad'\]/.test(kode) && !fejl.length, `gemt Scene-fane og gemt layout med W11 åbner uden fejl (${gl.zoner}); ingen pad-kilder i listerne; ${gl.for} færdige opsætninger (før 34)`, fejl[0] || '');
+    T.tjek(!/w11/.test(gl.zoner) && gl.aktiv !== 'w11' && gl.valg === 0 && gl.for === 10 && !/'tast','pad'\]/.test(kode) && !fejl.length, `gemt Scene-fane og gemt layout med W11 åbner uden fejl (${gl.zoner}); ingen pad-kilder i listerne; ${gl.for} færdige opsætninger (v9.85: 10)`, fejl[0] || '');
     /* 3 · den fælles indgang */
     const api = await side.evaluate(async () => { brugFor('fuld1', true); await new Promise(r => setTimeout(r, 300)); const n0 = maps.length, hændt = []; const stop = Regler.lyt(b => hændt.push(b.hvad));
       const id = Regler.tilfoej({ band: 'kick', effect: 'puls', thr: .4, gain: 1, att: 8, rel: 120, curve: 1, gap: 120, id: 'snyd' }); const fundet = Regler.find(id), iListen = maps[maps.length - 1] === fundet && fundet.id === id && id !== 'snyd';
@@ -66,7 +66,7 @@ async function kør(arg) {
     T.tjek(fo.tilbage && eft === fo.ids, 'Fortryd (Ctrl+Z) giver reglen tilbage med det samme id; efter genstart har alle regler de samme id\'er');
     /* 5 · motoren regner ens med og uden id */
     const mo = await side.evaluate(async () => { brugFor('fuld1', true); curGen = 'house'; gStart(); await new Promise(r => setTimeout(r, 2500)); const snap = () => maps.map((m, i) => +(R2M.ud[i] || 0).toFixed(4)).join(); const felter = maps.map(m => { const k = { ...m }; delete k.id; return JSON.stringify(k) }).join('|');
-      const std = FORINDST.find(f => f.id === 'fuld1').lav().maps.map(m => JSON.stringify({ curve: 1, gap: 120, ...m })).length; gStop && gStop(); return { n: maps.length, std, aktive: maps.filter((m, i) => (R2M.ud[i] || 0) > 0).length, kunId: maps.every(m => Object.keys(m).includes('id')), felter: felter.length }; });
+      const std = OPS_TEST.fuld1.lav().maps.map(m => JSON.stringify({ curve: 1, gap: 120, ...m })).length; gStop && gStop(); return { n: maps.length, std, aktive: maps.filter((m, i) => (R2M.ud[i] || 0) > 0).length, kunId: maps.every(m => Object.keys(m).includes('id')), felter: felter.length }; });
     T.tjek(mo.n === mo.std && mo.aktive > 0 && mo.kunId, `opsætningen Alle effekter har de samme ${mo.n} regler som før, kun med et id mere; motoren giver udslag på ${mo.aktive} af dem med generatoren`);
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
   } catch (e) { T.fejl('testen stoppede: ' + e.message.split('\n')[0]); } finally { await browser.close(); }

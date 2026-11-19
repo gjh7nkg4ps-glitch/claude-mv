@@ -1,5 +1,5 @@
 /* Trin 4 · Det nye i v9.49: de sidste 9 steder bruger den fælles indgang (fase 1, trin 3, femte og sidste bid).
-   Diskodronningerne, Eksempel: trommeslager, Perfect, hændelser på figurerne, Lyd og vision (til og fra) og Node-editorens skabeloner.
+   Diskodronningerne, Perfect, hændelser på figurerne, Lyd og vision (til og fra) og Node-editorens skabeloner.
    Testen tæller, at der kun er de 11 steder tilbage, som ikke skal flyttes (let maps, de to ved opstart, den midlertidige liste i lavIsoleret
    og lavSinglen, og den lokale liste i den tilfældige opsætning), lytter på Regler og ser, at ingen af handlingerne giver beskeden "andet",
    og trykker med et rigtigt museklik på en Lyd og vision-knap i Editoren. */
@@ -24,7 +24,7 @@ async function kør(arg) {
         ud[navn] = (H.length > 0 && !H.includes('andet') && ens && t === true) ? 'ok' : 'beskeder: ' + H.join() + ' · id: ' + ens + ' · indhold: ' + t };
       const flere = n0 => maps.length > n0 || 'ingen nye regler';
       await prøv('Diskodronningerne', () => opDronninger(), flere);
-      await prøv('Eksempel: trommeslager', () => opTrommer(), flere);
+      /* v9.85: Eksempel: trommeslager er fjernet */
       brugFor('std', true); await vent(700);
       await prøv('Perfect 1', () => opPerfect(1), flere);
       brugFor('fuld2', true); await vent(1500);
