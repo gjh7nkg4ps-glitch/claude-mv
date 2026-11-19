@@ -1,0 +1,23 @@
+BESKED TIL CODE · P8.20 · fra hovedchatten
+(brugerens svar på docs/PLAN-PAA-SCENEN.md og på rapporten for v9.104)
+
+1. PLANEN FOR "PÅ SCENEN": JA
+   Spørgsmål 1: Ja. Vinduet hedder "På scenen"; arbejdsområdet 2 · Scene beholder sit navn.
+   Spørgsmål 2: Ja, effekterne står nederst, og afsnittet Effekter er foldet sammen fra start (som du foreslog: "Effekter (19) · hele billedet"). Alle tre afsnit (Karakterer, Figurer, Effekter) kan foldes på samme måde, og programmet husker, hvad brugeren har foldet ud.
+   Spørgsmål 3: Ja, effekternes regel-sæt hedder efter effekten (fx "Lys-puls på kick").
+
+2. RÆKKEFØLGE
+   a) Kør først hele testpakken på v9.104 (den er kun kørt på v9.102), og ret det, der fejler.
+   b) Byg så PS1. Stop efter PS1, så brugeren kan prøve den, før PS2.
+
+3. D6 "GEM HELE ARBEJDET"
+   Brugeren har ikke svaret endnu. Byg den ikke før et ja.
+
+4. PIGERNES EGENSKABER
+   Venter. Brugeren tager det op senere. Fjern intet, og lad docs/PIGERNES-EGENSKABER.md stå, som den er. Skriv i planen under Senere: "Pigernes egenskaber: brugeren vælger senere; forslag fra hovedchatten: fjern de fem, der intet viser, og fold de 'lidt'-synlige sammen under Finere detaljer."
+
+5. LILLE RETTELSE TIL docs/SVAR-P8_14.md (g)
+   Der står, at trin 1 måler med hop 512 (cirka 10,7 ms). I koden står H=1024, både i analyze og i baggrunds-trådene, altså cirka 21 ms ved 48 kHz. Ret teksten.
+
+6. ANALYSEN
+   Hovedchatten har lavet planen "Den nye analyse P8.19" (https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs) med trinene A0–A8. Brugeren har ikke valgt endnu (valg a–e). Byg intet i analysen endnu.

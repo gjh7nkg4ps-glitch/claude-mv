@@ -67,14 +67,14 @@ async function kør(arg) {
     /* 3 · Flyt en node, genstart, Placér */
     const fra = await side.evaluate(k => { const n = NE2.N.get(k), r = n.el.getBoundingClientRect(); return { x: r.left + 40, y: r.top + 14, nx: n.x, ny: n.y }; }, rk.key);
     await side.mouse.move(fra.x, fra.y); await side.mouse.down(); await side.mouse.move(fra.x - 120, fra.y + 90, { steps: 6 }); await side.mouse.up(); await side.waitForTimeout(700);
-    const flyttet = await side.evaluate(k => { const n = NE2.N.get(k); return { x: n.x, y: n.y, pos: (JSON.parse(localStorage.getItem('rytme-set')).ne.pos || {})[k], valgt: NE2.valgt }; }, rk.key);
+    const flyttet = await side.evaluate(k => { const n = NE2.N.get(k); return { x: n.x, y: n.y, pos: ((JSON.parse(localStorage.getItem('rytme-scene')).ne || {}).pos || {})[k]/* v9.105: pladsen gemmes i showet (scene.ne.pos) */, valgt: NE2.valgt }; }, rk.key);
     T.tjek(flyttet.pos && flyttet.pos[0] === flyttet.x && flyttet.y !== fra.ny && flyttet.x % 8 === 0 && flyttet.y % 8 === 0 && !flyttet.valgt, `træk flytter noden (${fra.nx},${fra.ny} → ${flyttet.x},${flyttet.y}, i trin af 8) og gemmer pladsen; et træk vælger ikke`);
     await side.reload(); await side.waitForTimeout(3500);
     const efter = await side.evaluate(async k => { lay3Anvend('noder'); await new Promise(r => setTimeout(r, 900)); const n = NE2.N.get(k); return n ? { x: n.x, y: n.y } : null; }, rk.key);
     T.tjek(efter && efter.x === flyttet.x && efter.y === flyttet.y, 'efter genstart står noden, hvor den blev sat');
     await side.click('.ne-k[data-ne="placer"]'); await side.waitForTimeout(400);
-    const pl = await side.evaluate(k => ({ pos: Object.keys(NE.pos).length, n: NE2.N.get(k).y }), rk.key);
-    T.tjek(pl.pos === 0 && pl.n !== flyttet.y, 'Placér stiller alle noder automatisk igen');
+    const pl = await side.evaluate(k => ({ pos: Object.keys(NE.pos).length, n: NE2.N.get(k).y, alle: [...NE2.N.values()].filter(n => n.el).length, git: !!(scene.ne.git && scene.ne.git.ramme) }), rk.key);
+    T.tjek(pl.pos === pl.alle && pl.git && pl.n !== flyttet.y, 'Placér stiller alle noder automatisk igen (fra v9.105: standard-gitteret, alle noder får en plads i showet)', JSON.stringify(pl));
 
     /* 4 · Slukket og Gate */
     const sg = await side.evaluate(async () => {

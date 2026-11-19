@@ -469,7 +469,9 @@ Skrevet ind af Claude Code efter brugerens beskeder (`docs/arkiv/BESKED-TIL-CODE
 
 **Nye 2D-figurer (P8.15 punkt 3):** de nye karakterer bygges på et **skelet med led** (fagudtryk: rig), Cascadeur som inspiration, så de bevæger sig som rigtige kroppe; ragdollen kan senere bruge det samme skelet. (Flyttet fra Idé-kassen.)
 
-**Pigernes egenskaber (P8.14 punkt 9):** listen står i `docs/PIGERNES-EGENSKABER.md`; brugeren vælger; intet fjernes før da.
+**Pigernes egenskaber (P8.14 punkt 9):** listen står i `docs/PIGERNES-EGENSKABER.md`; brugeren vælger; intet fjernes før da. **Senere (P8.20 punkt 4):** Pigernes egenskaber: brugeren vælger senere; forslag fra hovedchatten: fjern de fem, der intet viser, og fold de "lidt"-synlige sammen under *Finere detaljer*.
+
+**P8.20 (19. november, `docs/arkiv/BESKED-TIL-CODE-19-nov-P8_20.txt`):** planen for "På scenen" er godkendt (vinduet hedder *På scenen*, 2 · Scene beholder navnet; effekterne nederst, foldet fra start som *Effekter (19) · hele billedet*, alle tre afsnit kan foldes, og det huskes; effekternes regel-sæt hedder efter effekten, fx *Lys-puls på kick*). Rækkefølge: hele testpakken først, så **PS1, og STOP efter PS1**. D6 bygges ikke før et ja. Analysen: planen "Den nye analyse P8.19" (A0–A8) venter på brugerens valg a–e; byg intet.
 
 **Analysen (P8.14 punkt 4, P8.16 punkt 2):** analysen er programmets hjerte (grundregel i `CLAUDE.md` afsnit 3); byg intet nyt i analysen, før samtalen med hovedchatten er ført (skemaet "Status og lydtræk P8.10", https://claude.ai/artifact/UvGRe7tbJ1RN5xWigewvNV, og procenterne i P8.12).
 

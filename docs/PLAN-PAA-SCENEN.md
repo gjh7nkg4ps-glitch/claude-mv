@@ -48,7 +48,10 @@ Udkast 1 · 19. november 2026 · skrevet af Claude Code. **Bygges først, når b
 | PS3 | Noder og matrixen viser øje/Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne; Figur-generatoren (6c) får adgang til effekterne | gruppernes knapper i Noder bliver genveje |
 | PS4 | Oprydning: det, der er blevet dobbelt (dit valg: gruppe-knapperne) | tal før og efter |
 
-## 7. Spørgsmål til brugeren
+## 7. Spørgsmål til brugeren · **besvaret i P8.20 (19. november): ja til alle tre**
+
+Vinduet hedder **På scenen** (2 · Scene beholder navnet). Effekterne står **nederst**, foldet fra start som *Effekter (19) · hele billedet*; alle tre afsnit (Karakterer, Figurer, Effekter) kan foldes, og programmet husker, hvad der er foldet ud. Effekternes regel-sæt hedder **efter effekten** (fx *Lys-puls på kick*). Rækkefølge: hele testpakken først, så PS1, og **stop efter PS1**, så brugeren kan prøve den før PS2.
+
 
 1. Skal vinduet hedde **På scenen** (og 2 · Scene beholde navnet)?
 2. Skal effekterne stå **øverst eller nederst** i listen? (forslag: nederst, foldet som *Effekter (19) · hele billedet*)

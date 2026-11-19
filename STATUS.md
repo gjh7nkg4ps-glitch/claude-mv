@@ -2,28 +2,29 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/STATUS-historik.md` og pr. version i `CLAUDE.md` afsnit 4. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.104, 19. november 2026)
+## Nu (v9.105, 19. november 2026)
 
 - **Pakke 7 (Biblioteket) er færdig** (v9.85–v9.90) og rettet efter hele testpakken (v9.91).
 - **Oprydningstrinnet efter pakke 7** er lavet i tre bidder (v9.92–v9.94): død kode, Normalisering som funktion, Audit og Niveau-rester væk, bloknavne efter hvad de gør (svar 1B).
 - **P8.14 punkt 1 og 3 er bygget:** Detektion som kort under Analyse → Avanceret (v9.95, 2B); hele generatoren under Mere … i kortet Generator (v9.96, 3B); Lyt til sangen og EQ-knappen Opret forbindelse er væk (v9.97, 3e og 3c); Sang hedder Analyse (v9.98, 3b); værktøjslinjen ruller ikke mere (⋯ Mere), og Radial Mesh er helt i fuld skærm (v9.99, 3f); Navne: Til · Fra i Live preview (v9.100, P8.15 1); hent 4 spor på én gang, filer eller mappe (v9.101, 3a); en CSS-rettelse (v9.102).
 - **Svarene på P8.14 punkt 5** står i `docs/SVAR-P8_14.md`; **planen for punkt 7 ("På scenen")** i `docs/PLAN-PAA-SCENEN.md`; **listen over pigernes egenskaber** (punkt 9) i `docs/PIGERNES-EGENSKABER.md`.
 - Hele testpakken (86 testfiler) er kørt på v9.102: 78 grønne, 8 rettet i v9.103 (én rigtig fejl: ⋯ Mere ved træk i zonerne).
+- **Gitter i Node-editoren (v9.105, P8.12):** faste kolonner, Ret op, A/B/C, Del, skyderne Lodret og Vandret, tre kæmpe opstillinger; pladser og skydere gemmes med showet; Ctrl+Z.
 - **P8.18 D1–D3 er bygget (v9.104):** Gemt ✓ og banner, når gemningen fejler; tasten ?; Hvad er nyt på startskærmen. Svar på D6 i `docs/SVAR-P8_18.md`.
 
 ## Næste (rækkefølgen fra P8.14 punkt 8)
 
-1. Brugeren læser `docs/SVAR-P8_14.md` og siger ja eller nej til `docs/PLAN-PAA-SCENEN.md` (tre spørgsmål nederst).
-2. **"På scenen"** (PS1–PS4), når planen er godkendt.
-3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
-4. Analysen planlægges sammen med hovedchatten (P8.14 punkt 4, P8.16 punkt 2); byg intet nyt i analysen før det.
+1. **D6 Gem hele arbejdet / Hent hele arbejdet** (brugerens ja 19. november) som v9.106.
+2. **Hele testpakken** på den nyeste version (P8.20 punkt 2a), ret det, der fejler.
+3. **"På scenen" PS1** (planen er godkendt i P8.20: vinduet hedder På scenen, effekter nederst foldet, regel-sæt efter effekten); **STOP efter PS1**.
+4. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
+5. Analysen: planen "Den nye analyse P8.19" (A0–A8) venter på brugerens valg a–e; byg intet.
 
 ## Venter på brugeren
 
-- **D6 (P8.18):** ja eller nej til *Gem hele arbejdet / Hent hele arbejdet* (én fil med alt; `docs/SVAR-P8_18.md`). *Gem alle på computeren* dækker i dag kun Opsætning 1–20, ikke Mine shows i Biblioteket.
-- Prøv v9.104 med musik: Biblioteket og de fem regel-sæt (B6-navnene er ikke sagt god for udtrykkeligt), Detektion med K og S på egen musik, Mere … i Generator, ⋯ Mere i værktøjslinjen, Navne: Til.
-- Svar på `docs/PLAN-PAA-SCENEN.md` (navn, rækkefølge, navne på effekt-regel-sæt).
-- Valg i `docs/PIGERNES-EGENSKABER.md` (hvad der må fjernes; intet er fjernet).
+- Prøv v9.105 med musik: gitteret i Node-editoren (Ret op, A/B/C, skyderne, Gitter · Kæmpe), Biblioteket og de fem regel-sæt (B6-navnene er ikke sagt god for udtrykkeligt), Detektion med K og S på egen musik, Mere … i Generator, ⋯ Mere i værktøjslinjen, Navne: Til.
+- Valg i `docs/PIGERNES-EGENSKABER.md` senere (P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
+- Valg a–e i "Den nye analyse P8.19".
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
 
 ## Åbne spørgsmål

@@ -85,7 +85,7 @@ async function kør(arg) {
     T.tjek(breddeOk, 'bredder og afstande fra temaet (smal 200, normal 320, bred 440, afstand 120)', JSON.stringify(r.kol));
     T.tjek(r.kp === 'Klik på en node for at se, hvordan den virker.', 'kontrolpanelet viser hjælpeteksten');
     T.tjek(/radial-gradient/.test(r.baggrund), 'baggrunden er temaets radiale gradient');
-    const t = r.tilpas; T.tjek(t.tilpas && t.x + t.x0 * t.z >= -1 && t.x + t.x1 * t.z <= t.W + 1 && t.z > .2, `Tilpas ved start: alt kan ses i bredden (fra v9.20 alle noder, uden noder alle kolonner; zoom ${Math.round(t.z * 100)} %)`);
+    const t = r.tilpas; T.tjek(t.tilpas && t.x + t.x0 * t.z >= -1 && t.x + t.x1 * t.z <= t.W + 1 && t.z >= .02, `Tilpas ved start: alt kan ses i bredden (fra v9.20 alle noder, uden noder alle kolonner; fra v9.105 er standard-gitteret bredt, så zoom kan være lille: ${Math.round(t.z * 100)} %)`);
 
     /* zoom, træk, taster */
     const fb = await side.locator('#ne-flade').boundingBox();

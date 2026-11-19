@@ -65,7 +65,7 @@ Skønnet for 74 minutter forudsætter, at hukommelsen til den afkodede lyd løse
 ## g) Andet, I bør vide, før analyse-vinduet planlægges
 
 1. **Facit først.** "Mere sikkert" kan kun måles med et facit: Detektion (dine tryk), generatoren (mønsteret er kendt, så kick og snare kendes præcist) og 4 spor (trommesporet er næsten et facit for kick/snare/hihat). Byg et lille måle-sæt (3–5 sange + generatoren) før nye metoder, så hver metode får et tal.
-- **Samplerate og hop.** Analysen regner i rammer på 2048 prøver med hop 512 ved 48 kHz (cirka 10,7 ms pr. ramme, 21,5 Hz pr. trin under 50 Hz er groft). Bedre bas-opløsning kræver større FFT (8192 bruges allerede til toner og de 31 bånd) eller en ekstra lav-frekvens-analyse.
+- **Samplerate og hop.** Analysen regner i rammer på 2048 prøver med hop 1024 (`H=1024`, både i `analyze` og i baggrunds-trådene) ved 48 kHz, cirka 21 ms pr. ramme (rettet efter P8.20 punkt 5; før stod der 512 og 10,7 ms); 21,5 Hz pr. trin, så under 50 Hz er det groft. Bedre bas-opløsning kræver større FFT (8192 bruges allerede til toner og de 31 bånd) eller en ekstra lav-frekvens-analyse.
 - **Kick, snare og hihat i dag** er båndenergi med flux og tærskel (ingen model). Det første, der vil give "tydeligt mere sikkert", er sandsynligvis en onset-detektor pr. bånd med adaptiv tærskel og spærretid (fagudtryk: spectral flux onset detection), målt mod facit, før der bruges AI.
 - **74 minutter** sætter grænser for alt med spor (hukommelse, se a og b). Beslut, om 4 spor skal virke på hele sange, eller kun på sange under cirka 15 minutter, før det bygges.
 - **Cachen** gemmer kun den samlede lyd; sporene skal vælges igen efter genstart. Et nyt analyse-vindue bør gemme sporenes analyse med en nøgle pr. filnavn og længde.
