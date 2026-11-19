@@ -23,7 +23,7 @@ async function kør(arg) {
     await side.goto('file://' + fil); await side.waitForTimeout(3500);
     const r = await side.evaluate(async () => { brugFor('fuld2', true); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 2000)); const H = []; Regler.lyt(b => H.push(b.hvad)); const ud = {}, vent = ms => new Promise(r => setTimeout(r, ms));
       const prøv = async (navn, fn, ventet, dn) => { H.length = 0; const n0 = maps.length; try { await fn() } catch (e) { ud[navn] = 'fejl: ' + e.message; return } await vent(700); const ens = new Set(maps.map(m => m.id)).size === maps.length && maps.every(m => m.id); ud[navn] = (H.join() === ventet && maps.length - n0 === dn && ens) ? 'ok' : 'beskeder: ' + H.join() + ' · ændring: ' + (maps.length - n0) + ' · id: ' + ens };
-      await prøv('EQ · ny regel', () => document.getElementById('eqnew').click(), 'tilfoej', 1);
+      /* v9.97: EQ's knap Opret forbindelse er fjernet (P8.14 3c) */
       await prøv('Radial Mesh · slet-knap', () => { meshSel = maps.length - 1; document.getElementById('mdel').click() }, 'slet', -1);
       await prøv('Radial Mesh · ny regel', () => { const G = { exact: true }; meshKobl({ kind: 'b', key: 'rms' }, { kind: 'e', key: 'ryst' }, G) }, 'samlet', 1);
       await prøv('Radial Mesh · Delete', () => { scVaelg('w5', true); meshSel = maps.length - 1; const c = document.getElementById('mesh'); c.focus(); c.dispatchEvent(new KeyboardEvent('keydown', { key: 'Delete', bubbles: true })) }, 'slet', -1);

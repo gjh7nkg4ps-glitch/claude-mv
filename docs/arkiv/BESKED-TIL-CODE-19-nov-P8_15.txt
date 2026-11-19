@@ -1,0 +1,24 @@
+BESKED TIL CODE · P8.15 · 19. november 2026
+Tilføjelse til P8.14. Gem i docs/arkiv/, og skriv punkterne ind i
+planerne.
+
+1. NAVNE I LIVE PREVIEW (med næste "kør")
+   En knap i Live previews overskrift: "Navne: Til · Fra". Når den er
+   til, står hver figurs og karakters navn med lille tekst ved figuren
+   på scenen, så man kan se, hvad der er hvad. Fra som standard. Når
+   "På scenen" (P8.14 punkt 7) er bygget, vises effekternes navne i et
+   hjørne, fordi de virker på hele billedet.
+
+2. .STEM.MP4 (til planen under "Senere", men ikke slettet)
+   Jeg vil gerne bruge sange i Native Instruments' stems-format. Læs
+   .stem.mp4 (de 4 spor i én fil) bliver stående i planen, og sporene
+   skal havne på deres pladser af sig selv, som når jeg henter 4 filer
+   på én gang (P8.14 punkt 3a).
+
+3. SKELET TIL DE NYE FIGURER (til planen, under nye 2D-figurer)
+   Idéen "figurer på et skelet med Cascadeur som inspiration" flyttes
+   fra Idé-kassen til punktet om de nye 2D-figurer (fugle, fønix,
+   sanger, ny trommeslager, guitarist, mandlig danser): de nye
+   karakterer bygges på et skelet med led (fagudtryk: rig), så de
+   bevæger sig som rigtige kroppe. Ragdollen kan senere bruge det samme
+   skelet.

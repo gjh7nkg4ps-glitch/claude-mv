@@ -19,7 +19,7 @@ async function kør(arg) {
     const ens = await side.evaluate(() => { const ud = []; FORINDST.forEach(f => { try { brugFor(f.id, true); } catch (e) { return; } const M = JSON.parse(JSON.stringify(maps)); if (!M.length) return; M.forEach(m => { m.gap = 0; delete m.hyst; delete m.holdMs; delete m.slew; }); /* spærretid, hysterese, hold med tid og slew er testet i test 5 og 6 */
       const kør = koer => { const o = { v: (m, i) => ((i * 37) % 100) / 100, off: m => !!m.off, master: 1, dt: 1 / 60, env: [], pe: [], E: {}, kant: () => {} }; for (let k = 0; k < 20; k++) { o.E = {}; koer(M, o); } return JSON.stringify(o.E); };
       ud.push(kør(Rytme.koer) === kør(R2M.gammel) ? '' : f.id); }); return { n: ud.length, fejl: ud.filter(Boolean) }; });
-    T.tjek(ens.n >= 10 && !ens.fejl.length, `uden m.komb regner motoren præcis som den gamle (${ens.n} forudindstillinger)`, ens.fejl.join(', '));
+    T.tjek(ens.n >= 7 /* v9.97: 7 opsætninger */ && !ens.fejl.length, `uden m.komb regner motoren præcis som den gamle (${ens.n} forudindstillinger)`, ens.fejl.join(', '));
     /* to regler på samme mål */
     const tal = await side.evaluate(() => { const r = {}; for (const k of [undefined, 'sum', 'gang']) { const M = [{ band: 'a', effect: 'puls', thr: 0, gain: 1, att: 1, rel: 1, curve: 1, gap: 0, komb: k }, { band: 'b', effect: 'puls', thr: 0, gain: 1, att: 1, rel: 1, curve: 1, gap: 0, komb: k }];
       if (!k) M.forEach(m => delete m.komb); const sv = maps; maps = M; NE8.cache = null; const o = { v: (m) => m.band === 'a' ? .6 : .5, off: () => false, master: 1, dt: 1, env: [], pe: [], E: {}, kant: () => {} }; for (let j = 0; j < 5; j++) { o.E = {}; Rytme.koer(M, o); } maps = sv; NE8.cache = null; r[k || 'max'] = Math.round(o.E.puls * 1000) / 1000; } return r; });

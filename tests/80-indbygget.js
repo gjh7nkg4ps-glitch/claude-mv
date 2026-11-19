@@ -2,7 +2,7 @@
    de 7 færdige opsætninger, der ikke afhænger af en sang (figurer og regler; figur-id'er normaliseres), de 6 regel-skabeloner (NE11_STD), danserens
    standardforbindelser (DANS_STD og danserStandard), diskokuglens kobling (diskoKobl), Morgenstjernen (nyMorgenstjerne og de 6 regler i skabelonen)
    og Standards regler (DEFAULT). Ændrer noget sig, fejler testen. Er ændringen villet: node tests/80-indbygget.js <fil> --opdater skriver nye fingeraftryk.
-   Testen tjekker også, at kun de 10 opsætninger findes, at trommeslageren er væk, og at Nulstil bane, klods, figurer og lyd stadig virker. */
+   Testen tjekker også, at kun de 7 opsætninger findes (v9.97; 10 før), at trommeslageren er væk, og at Nulstil bane, klods, figurer og lyd stadig virker. */
 const path = require('path'); const fs = require('fs');
 const { chromium } = require('playwright');
 const { findFil, tæller } = require('./faelles');
@@ -37,10 +37,10 @@ async function kør(arg) {
       const nulstil = { n0, m0, n1: fase2.objekter.length, m1: maps.length, std: maps.length === DEFAULT.length && maps.every((m, i) => m.band === DEFAULT[i].band && m.effect === DEFAULT[i].effect), spor: scene.spor };
       return { F, ids, trommer, nulstil, skift: !!document.getElementById('ops-skift') || !!document.getElementById('tb-skift'), label: (document.querySelector('#opsui label') || {}).textContent || '' };
     });
-    T.tjek(r.ids.join(',') === 'auto1,auto2,auto3,piger_show,danser_show,ms_show,dronning_show,singlen,spilselv,klaverspil', `kun de 10 opsætninger findes: ${r.ids.join(', ')}`);
+    T.tjek(r.ids.join(',') === 'piger_show,danser_show,ms_show,dronning_show,singlen,spilselv,klaverspil', `kun de 7 opsætninger findes (v9.97: Lyt til sangen er væk): ${r.ids.join(', ')}`);
     T.tjek(r.trommer.fn === 'undefined' && !r.trommer.knap && !r.trommer.ops && !r.trommer.tip && !r.skift, 'trommeslageren (opTrommer, knappen, showet, tippet) og Random alt: skift automatisk er væk', JSON.stringify(r.trommer));
     T.tjek(r.nulstil.n0 >= 2 && r.nulstil.m0 > 11 && r.nulstil.n1 === 1 && r.nulstil.std, `Nulstil bane, klods, figurer og lyd virker uden opsætningen Nulstil (fra ${r.nulstil.n0} figurer og ${r.nulstil.m0} regler til 1 skjult figur og Standards 11 regler)`, JSON.stringify(r.nulstil));
-    T.tjek(/^Opsætning \(10\)/.test(r.label.trim()), `Opsætninger skriver det rigtige antal: "${r.label.trim().slice(0, 20)}"`);
+    T.tjek(/^Opsætning \(7\)/.test(r.label.trim()) /* v9.97 */, `Opsætninger skriver det rigtige antal: "${r.label.trim().slice(0, 20)}"`);
     const fejlH = Object.entries(r.F).filter(([k, v]) => typeof v !== 'number');
     T.tjek(!fejlH.length, 'alle fingeraftryk kunne regnes', fejlH.map(x => x.join(': ')).join('; '));
     if (opdater) { fs.writeFileSync(JSONFIL, JSON.stringify(r.F, null, 1) + '\n'); console.log('  fingeraftryk skrevet til tests/indbygget.json'); }
