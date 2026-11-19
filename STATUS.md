@@ -38,6 +38,8 @@ Planen er `PLAN-NY-BRUGERFLADE.md` (P8.2), godkendt af brugeren 13. november; al
 - **Trin S6 (v9.80):** fanen Spor med én række pr. spor (fil, bølgeform, niveau, M og S); M/S ændrer kun det, man hører; Niveau og Lyd over tid måler stadig den samlede lyd. Test: `tests/75-spor-ms.js`. **Sang og analyse (S0–S6) er færdig.** Næste: pakke 6 (7a, 7b, 7c).
 - **Pakke 6, trin 7a (v9.81):** Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag, Audit og Detektion er væk fra skærmen (koden ligger til 7c); lydlag-regler slås fra med en besked; scene-nodens knapper er væk. Lydtræk-guide er beholdt (Tilslut MIDI med flere findes kun dér). Test: `tests/76-oprydning-7a.js`.
 - **Pakke 6, trin 7b (v9.82):** Klodsbane: Til · Fra i Live preview og under Mere i 2 · Scene; fra som standard ved en helt ny start; gemte opsætninger beholder banen. Test: `tests/77-klodsbane.js`.
+- **Pakke 6, trin 7c (v9.83):** død kode fjernet (cirka 37 KB: Lyd i 3D, Idé-galleri, Enkel tilstand, Mappings rester); Generator (fuld), Lydlag, Audit og Detektion ligger stadig skjult; blokkene har ikke fået nye navne (13 test finder dem på navnet); three.js: valg A står ved magt (se nedenfor). Rettet samtidig: et gemt valg af Mesh 3D eller Øjet i Udgangsvinduet viser huskes nu. Test: `tests/78-doed-kode.js`. **Pakke 6 er færdig.** Ikke rørt (brugeren spørges): de gamle visninger, Ikke i brug (parkér), Kort over forbindelserne, Lydmotor Klassisk.
+- **Brugerens besked P8.6 (19. november, `docs/arkiv/BESKED-TIL-CODE-19-nov-P8_6.txt`):** næste pakke er **pakke 7 · Biblioteket** (B1–B6; B6 venter på navne); skrevet ind i `PLAN-NY-BRUGERFLADE.md` (afsnit 1.2 og 4.1) og `docs/PLAN-SANG-OG-ANALYSE.md` (afsnit 10). Beslutningerne om Figur-generatoren (6c) står i planens fase 6; nye 2D-figurer og en 3D-scene står under Senere. Intet fra punkt 3–6 bygges nu.
 - **v9.69 (ydelse, 17. november):** tre ting, der kørte uden grund, er rettet (dockingens sløjfe ved hvert billede, Sikker visnings pixel-læsning ved hvert billede, værktøjstip på alle knapper ved hver ændring), og Kvalitet har fået *Skarphed (Live preview)*: Fuld · Højst 2× · 1×, som regulatoren må sænke. Test: `tests/64-ydelse.js`. Ikke målt på brugerens maskine.
 - **v9.70 (trin S1, 17. november):** analysen regnes i baggrunds-tråde med præcis de samme tal; sangen kan bruges efter trin 1; flueben pr. del af analysen i Automatik. Test: `tests/65-traade.js`. Målt i testmaskinen (3 tråde, under belastning): 5 minutters lyd 25 s → 10 s. **Farten på brugerens 74 minutter er ikke målt** (bed om tiden). 4 spor regnes stadig i samme tråd.
 - **Rettelser 17. november (v9.68, uden for pakkerne):** tydelig bjælke og Annullér under analysen; fejlen i Tidslinjen ved hvert billede er rettet; Node-editoren zoomer ud til 2 %; Meget luftig dobbelt så luftig, Kolonner lavet om, Bred fem felter bred. Test: `tests/63-analyse-bjaelke.js`. **Ny plan til brugeren og hovedchatten:** `docs/PLAN-SANG-OG-ANALYSE.md` (udkast 1; intet bygget ud over S0). Analysens fart er ikke forbedret endnu (trin S1 i den plan).
@@ -145,6 +147,10 @@ Baggrund (fra v9.18, da trin 0 stoppede ved punkt 2):
 - **Opdeling inde i MV bygges ikke nu.**
 
 ## Senere
+
+### three.js: vurderet igen i 7c (v9.83, 19. november)
+
+- **Valg A står ved magt.** Node-editorens linjer bruger den nye three.js (0.186.1, TSL, WebGL2 i praksis; WebGPU gav ingen linjer hos brugeren i v9.62). Mesh 3D og Øjet er på r128 og virker. Et skift til B (én three.js, esbuild) giver i dag kun mindre fil (cirka 0,6 MB) og kræver, at Mesh 3D's og Øjets shaders og bloom skrives om; det er ikke prisen værd, før der er en plan om WebGPU for dem. Vurderingen gøres om, når 3D-scenen (P8.6, Senere) planlægges: en ny 3D-scene bør bygges på den nye three.js fra start, og så er B det rigtige tidspunkt.
 
 ### three.js: skift til B (én three.js)
 

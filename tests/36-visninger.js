@@ -20,16 +20,16 @@ async function kør(arg) {
     await side.goto('file://' + fil); await side.waitForTimeout(4000);
     await side.evaluate(async () => { brugFor('fuld1', true); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1500)); });
     const valg = await side.evaluate(() => [...$('ne41-vis').options].map(o => o.value + ':' + o.textContent));
-    T.tjek(valg.length === 10 && valg[0] === 'kol:Noder (kolonner)' && !valg.some(v => /^matrix:/.test(v)), `Visning ▾ har ${valg.length} valg: ${valg.map(v => v.split(':')[1]).join(', ')}`);
+    T.tjek(valg.length === 9 && valg[0] === 'kol:Noder (kolonner)' && !valg.some(v => /^matrix:|^tid:/.test(v)), `Visning ▾ har ${valg.length} valg (v9.77: Tidslinje er fjernet): ${valg.map(v => v.split(':')[1]).join(', ')}`);
     const res = [];
-    for (const v of ['fri', 'strom', 'tid', 'trae', 'treemap', 'bue', 'hive', 'ring', 'd3']) { /* v9.55: Matrix (gammel) er fjernet */
+    for (const v of ['fri', 'strom', 'trae', 'treemap', 'bue', 'hive', 'ring', 'd3']) { /* v9.55: Matrix (gammel) er fjernet; v9.77: Tidslinje er fjernet */
       const r = await side.evaluate(async v => { ne41Vis(v); await new Promise(r => setTimeout(r, 900)); const c = $('rt'), g = c.getContext('2d'), d = g.getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 0; i < d.length; i += 16) if (Math.abs(d[i] - 16) + Math.abs(d[i + 1] - 22) + Math.abs(d[i + 2] - 28) > 30) n++;
         return { v, px: n, w: c.width, h: c.height, ov: !$('ne-vis').hidden, fl: getComputedStyle($('ne-flade')).display, kp: !!$('ne-kp').offsetParent, kraft: !$('rtkraft').hidden, lay: set.rtLay }; }, v);
       res.push(r);
       if (['fri', 'strom', 'ring', 'd3'].includes(v)) await side.screenshot({ path: path.join(UD, 'visning-' + v + '.png'), clip: await side.evaluate(() => { const r = $('ne').getBoundingClientRect(); return { x: r.left, y: r.top, width: r.width, height: r.height }; }) });
     }
     const dårlig = res.filter(r => !(r.ov && r.fl === 'none' && r.kp && r.px > 200 && r.w > 300 && r.lay === r.v));
-    T.tjek(!dårlig.length, `de 9 visninger tegner reglerne i stedet for nodernes lærred (kontrolpanelet bliver): ${res.map(r => r.v + ' ' + r.px).join(', ')} farvede punkter`, JSON.stringify(dårlig.slice(0, 2)));
+    T.tjek(!dårlig.length, `de 8 visninger tegner reglerne i stedet for nodernes lærred (kontrolpanelet bliver): ${res.map(r => r.v + ' ' + r.px).join(', ')} farvede punkter`, JSON.stringify(dårlig.slice(0, 2)));
     T.tjek(res.every(r => r.kraft === (r.v === 'fri' || r.v === 'd3')), `Kræfter-bjælken kun i Frit netværk og 3D-netværk`);
     /* fokus, valg og båndet */
     const fv = await side.evaluate(async () => { ne41Vis('strom'); await new Promise(r => setTimeout(r, 300)); ne41Vis('fri'); await new Promise(r => setTimeout(r, 900)); const L = rt.lay, nd = Object.values(L.alle)[0]; rtFokus(nd); const fok = rt.fokus; rtVaelg(0); await new Promise(r => setTimeout(r, 400));
@@ -45,7 +45,7 @@ async function kør(arg) {
     T.tjek(efter.a.vis === 'ring' && efter.a.ov && efter.a.sel === 'ring', `valget huskes efter genstart (Ring (chord) står der igen)`);
     T.tjek(!efter.ov && efter.fl !== 'none' && efter.noder > 0 && efter.h > 100, `Noder (kolonner) giver noderne tilbage (${efter.noder} noder, lærredet ${efter.h} px)`);
     const ck = await side.evaluate(() => { const L = []; neKpPunkter(L); return L.filter(x => /^Visning: /.test(x.n)).length; });
-    T.tjek(ck === 10, `Ctrl+K har ${ck} punkter "Visning: …" (Noder og de 9 visninger)`);
+    T.tjek(ck === 9, `Ctrl+K har ${ck} punkter "Visning: …" (Noder og de 8 visninger)`);
     T.tjek(!fejl.length, 'ingen fejl i browseren', fejl.slice(0, 3).join(' | '));
   } catch (e) { T.fejl('testen stoppede: ' + e.message.split('\n')[0]); } finally { await browser.close(); }
   return T.slut();

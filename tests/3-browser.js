@@ -35,7 +35,7 @@ async function kør(arg, { udenLyd = false } = {}) {
     for (const id of scFaner) {
       await side.evaluate(id => { const s = JSON.parse(localStorage.getItem('rytme-set') || '{}'); s.scene = s.scene || {}; s.scene.aktiv = id; s.niv = 4; localStorage.setItem('rytme-set', JSON.stringify(s)); }, id);
       await side.reload(); await side.waitForTimeout(3000);
-      const ok = await side.evaluate(() => { try { return !!D3ST && typeof R2 === 'object'; } catch (e) { return false; } });
+      const ok = await side.evaluate(() => { try { return typeof dkStd === 'function' && typeof R2 === 'object'; } catch (e) { return false; } });
       const ff = nyeFejl(); if (ff.length || !ok) stopFejl.push(id + ': ' + (ff[0] || 'scriptet stoppede'));
     }
     T.tjek(!stopFejl.length, `opstart uden fejl med hver af de ${scFaner.length} Scene-faner gemt som valgt (${scFaner.join(', ')})`, stopFejl.slice(0, 3).join(' | '));

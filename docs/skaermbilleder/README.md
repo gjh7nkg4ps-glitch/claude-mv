@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.83 (19. november 2026, trin 7c)
+
+| Billede | Hvad |
+| --- | --- |
+| [3 · Regler efter oprydningen](v9_83-regler-efter-oprydning.png) | ingen forskel på skærmen: Node-editoren med en valgt regel og Styrke brugt i kontrolpanelet; filen er 37 KB mindre |
+
 ## v9.82 (19. november 2026, trin 7b)
 
 | Billede | Hvad |

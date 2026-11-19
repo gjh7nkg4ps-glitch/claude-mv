@@ -24,7 +24,7 @@ async function kør(arg) {
       try {
         await side.goto('file://' + fil); await side.waitForTimeout(4500);
         const r = await side.evaluate(async () => {
-          const ud = { ende: false }; try { ud.ende = !!D3ST && typeof R2 === 'object' && typeof STEM === 'object'; } catch (e) { ud.ende = false; }
+          const ud = { ende: false }; try { ud.ende = typeof dkStd === 'function' && typeof R2 === 'object' && typeof STEM === 'object'; } catch (e) { ud.ende = false; }
           const vent = ms => new Promise(r => setTimeout(r, ms));
           try { lay3Anvend('noder', true); await vent(1500) } catch (e) { } /* v9.71: programmet starter i 1 · Sang; Noder har Node-editor, Lydkilde, Mesh 3D og Øjet som faner */
           ud.maps = maps.length; ud.fjernet = maps.filter(m => m.fjernet).length;

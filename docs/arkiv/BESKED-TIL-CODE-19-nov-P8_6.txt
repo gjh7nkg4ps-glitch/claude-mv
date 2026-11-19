@@ -1,0 +1,127 @@
+BESKED TIL CODE · P8.6 · 19. november 2026
+Fra hovedchatten. Erstatter P8.5, som aldrig blev sendt.
+Overblik med tegninger: "Det gemte i MV1 og Biblioteket P8.6"
+https://claude.ai/artifact/6AgywiURk8BpvQ6hLw3rEz
+Gem beskeden i docs/arkiv/, og skriv punkterne ind i planerne.
+Byg først pakke 6 færdig, som planlagt. Derefter er pakke 7
+(Biblioteket) den næste. Byg intet fra punkt 3-6 nu.
+
+
+1. PAKKE 7 · BIBLIOTEKET (ny pakke efter pakke 6)
+   Mål: alt færdigt indhold ét sted, alt ligestillet, intet lagt på af
+   sig selv, og man kan altid se, hvad der er indlæst.
+
+   B1 · Ryd op og beskyt
+   - Beskyt alt indbygget, der bliver tilbage, med en test, så reglerne
+     ikke ændrer sig ved en fejl (som I gør for Morgenstjernen i dag).
+   - Fjern trommeslageren nu: showet Trommeslagerens solo,
+     figur-skabelonen trommeslager og knappen "Eksempel: trommeslager".
+     En ny trommeslager laves senere.
+   - Behold kun disse 10 opsætninger (FORINDST):
+       piger_show, danser_show, ms_show, dronning_show, singlen,
+       auto1, auto2, auto3 (Lyt til sangen), spilselv, klaverspil.
+     Fjern de andre 23: std, ai1, ai2, fuld1, fuld2, fuld3, rand,
+     rand2, fest, toner, vis, trommer_show, takt_akkord, drop_omk,
+     liv_takt, techno, hiphop, ballade, rock, klaver, droem, selyden,
+     basdiskant.
+   - Pas på: 'vis' bruges af knappen Nulstil (brugFor('vis')), og
+     lavRandom bruges måske af Tilfældigt. Flyt det, koden bruger, før
+     opsætningen fjernes, så ingen knap går i stykker.
+   - Undersøg, om "Lyt til sangen" (auto1-3) og "Lav show" (Rolig,
+     Balanceret, Vild) gør næsten det samme. Fjern intet; skriv kun
+     svaret, så jeg kan vælge.
+
+   B2 · Start og "Indlæst"
+   - Programmet husker som nu det sidste arbejde og det sidste
+     arbejdsområde.
+   - Ved start vises en startskærm med tre valg:
+     Fortsæt, hvor du slap (fremhævet) · Start et show (fra
+     Biblioteket) · Byg selv (helt tomt: ingen figurer, ingen regler).
+   - En linje øverst viser altid, hvad der er indlæst, fx
+     "Indlæst: Pigernes show · 6 figurer · 48 regler" eller "Tomt".
+     Er et show fra Mine ændret uden at være gemt, står der
+     "· ændret".
+   - Kun når der står "ændret", spørger browseren, før siden lukkes
+     (beforeunload). Ellers ingen spørgsmål.
+
+   B3 · Biblioteket
+   - Ét vindue, Biblioteket, i arbejdsområdet 3 · Regler ved siden af
+     matrixen og Node-editoren. Kort med små billeder, som i
+     Idé-galleri (vinduet Idé-galleri må gerne fjernes i 7a).
+   - TO hylder: Shows og Figurer.
+     Shows: de 10 opsætninger + mine egne + Sangens show (det, Lav
+     show laver, gemmes under Mine med sangens navn).
+     Figurer: hver figur viser sit udseende og sine regel-sæt. De
+     regel-sæt, der passer til alle figurer (fx Puls på kick), står
+     under "Til alle figurer".
+   - Hvert kort har mærket Indbygget (låst, kan ikke slettes) eller
+     Mit (kan omdøbes og slettes).
+   - Knapper ved det valgte kort: Brug · Vis reglerne · Lav en kopi
+     (Mit). Brug lægger på; Fortryd tager af i ét trin. Intet lægges
+     på af sig selv.
+   - Opsætning 1-20 bliver til en liste med navne under Mine, uden
+     loft på 20. Mine nuværende pladser flyttes over automatisk.
+   - Når jeg gemmer et helt show, kommer det under Shows -> Mine.
+     Gemmer jeg kun en figurs regler, kommer de under figuren -> Mine.
+
+   B4 · Alle figurer ligestillet
+   - Morgenstjernen er en almindelig figur. Fjern knappen
+     "Tilføj morgenstjerne" de steder, hvor den er en ekstra knap;
+     den findes som figur i Biblioteket.
+   - De 6 regel-skabeloner fordeles: Dans på trommer og Dans på bas
+     og vokal under danseren, Diskokugle på bas under discokuglen,
+     Morgenstjerne under Morgenstjernen, Puls på kick og Klodsbane på
+     slag under "Til alle figurer".
+   - Dansemapping (danserens Standardforbindelser) bliver et
+     almindeligt, indbygget regel-sæt under danseren. Det lægges
+     aldrig på af sig selv, og det må ikke ændres.
+
+   B5 · Værktøjslinjen
+   - Én linje over matrixen og Node-editoren, som begge bruger:
+     Matrix | Node-editor · Foreslå regler · Lav show · Tilfældigt ·
+     Gem som regel-sæt. Alle værktøjer giver forslag (stiplede
+     celler), ikke færdige regler.
+
+   B6 · 5 regel-sæt pr. figur (SENERE, først når jeg har godkendt
+   navnene)
+   - Hver figur skal have 5 regel-sæt, som du laver.
+   - Forslag fra hovedchatten: de samme fem navne til alle figurer,
+     fx Rolig, Energisk, På trommerne, På vokalen og Hele bandet.
+     Navnene er IKKE besluttet endnu.
+
+
+2. FIGUR-GENERATOREN (6c) · beslutninger, byg ikke endnu
+   - Den skal kunne lave både abstrakte figurer og karakterer (piger,
+     dansere og de nye figurer).
+   - To veje ind: fra lyden (standard: vælg en lyd, få forslag) og fra
+     figuren.
+   - Forslagene vises som et galleri med 6 små levende forslag; klik
+     giver "flere som denne", og man kan låse ting (fx farven).
+   - Hvor generatoren bor, bestemmer du.
+   - 6c venter stadig på skitsen fra hovedchatten.
+
+
+3. NYE 2D-FIGURER (til planen under "Senere")
+   Fugle, der danser med pigerne, en fønix med flammer, en sanger, en
+   ny trommeslager, en guitarist og en mandlig danser. Alle i den
+   nuværende 2D-scene (Live preview).
+
+
+4. 3D-SCENE (til planen under "Senere")
+   En ny 3D-scene ved siden af Live preview, styret af de samme regler
+   og den samme matrix. Her skal ragdollen (Lyd-dukken) ind senere.
+
+
+5. ANALYSEN (til planen)
+   - Ventetiden er ikke længere et problem efter v9.70. Mulighederne
+     for "mindre arbejde" bygges ikke.
+   - Før Lydtidslinjen bygges, vender jeg og hovedchatten, hvordan
+     lydene findes mere sikkert. Til den samtale hører
+     Lydanalyse-kort v1.0, Lydanalyse-guide v1.0 og fem veje:
+     A ret i hånden · B trommerne skilt ad (DrumSep, LarsNet) ·
+     C AI uden for programmet (ADTOF, Beat This!) · D takten som
+     hjælp (quantization) · E lær sangens egne lyde (template
+     matching).
+   - Husk: de 4 spor regnes endnu ikke i baggrunds-trådene. Det skal
+     med, før hele analysen køres på hvert spor.
+
