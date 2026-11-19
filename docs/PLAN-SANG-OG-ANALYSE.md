@@ -242,3 +242,12 @@ Hvert trin får sit eget versionsnummer, sin egen test og sit eget gem, som i pa
 - Et spektrogram for 74 minutter med de 31 bånd bruger tal, der allerede ligger i hukommelsen (191.000 målinger × 31 bånd, cirka 24 MB); billedet af det fylder cirka 6 MB. Et finere spektrogram (fx 256 bånd) ville fylde cirka 50 MB som billede og er ikke med i planen.
 - Billederne er læst som skærmbilleder; knapper, der ikke kan ses på dem, er ikke med i sammenligningen.
 - Planen siger ikke, hvordan kortene skal se ud (farver, skrift). Det hører til trin 5c (ét tema i hele programmet).
+
+## 11 · Grundregel og det næste (P8.14 og P8.16, 19. november 2026)
+
+> **Analysen er programmets hjerte.** MV er bygget op omkring analysen. Målet er en meget stærk analyse: vi bruger alle de midler, der findes (spor, bedre metoder i browseren, et lokalt modul med AI og AI udenfor), når det kan betale sig. "Kan betale sig" betyder, at et lydtræk, der bruges, bliver tydeligt mere sikkert, og at det kan måles (fx med Detektion eller musikgeneratoren som facit).
+
+- **Byg intet nyt i analysen**, før hovedchatten og brugeren har talt om den (P8.14 punkt 4): til samtalen hører skemaet "Status og lydtræk P8.10" (https://claude.ai/artifact/UvGRe7tbJ1RN5xWigewvNV), procenterne i P8.12 og Codes svar i `docs/SVAR-P8_14.md` (4 spor i dag, hele analysen pr. spor, formater og grænser, det der findes, Radial Mesh, spor-deling i browseren, andet).
+- **Lavet siden P8.4:** S1–S6 (v9.70–v9.80); **Detektion** er et kort under Analyse → Avanceret med hit-rate i procent (v9.95); **4 spor på én gang** fra filer eller en mappe, fordelt efter navn (v9.101); arbejdsområdet og vinduet hedder **Analyse** (v9.98).
+- **Åbent:** S7 HPSS, S8 spilleliste, .stem.mp4 (Stem Creator Tool kan lave filerne), 4 spor i trådene og med hele analysen, sikkerhed pr. lydtræk (● ▲ !), bedre slag-metoder målt mod et facit, lokalt modul med AI, 74 minutter med spor (hukommelse), samplerate.
+

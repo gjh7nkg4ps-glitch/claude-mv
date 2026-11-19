@@ -450,6 +450,31 @@ Code tjekker også tallene i afsnit 2 og skriver, hvor de ikke passer.
 - **B6** bygges ikke, før navnene er godkendt. Brugeren skrev 19. november "jeg går ud fra du har fået navnene til b6. kør"; Code læser det som, at de fem navne fra P8.6 (Rolig, Energisk, På trommerne, På vokalen, Hele bandet) gælder, og bygger B6 med dem (navnene står ét sted i koden og kan skiftes).
 - **Valg C (P8.9):** regel-sættene ligger ét sted; hvert regel-sæt ved, hvilke egenskaber det styrer, og vises hos en figur, når figuren har dem alle. Figurens egne (lavet til netop den figurtype) står øverst; de fælles får mærket *fælles*.
 
+### 4.2 · P8.14, P8.15 og P8.16 (19. november): det næste efter pakke 7
+
+Skrevet ind af Claude Code efter brugerens beskeder (`docs/arkiv/BESKED-TIL-CODE-19-nov-P8_14.txt`, `…P8_15.txt`, `…P8_16.txt`).
+
+**Rækkefølgen (P8.14 punkt 8):** 1) punkt 1 (svar 1B, 2B, 3B) og punkt 3 (små rettelser a–f) med næste "kør": **lavet i v9.94–v9.101**; 2) svar på punkt 5 (`docs/SVAR-P8_14.md`) og planen for punkt 7 (`docs/PLAN-PAA-SCENEN.md`): **lavet**; 3) **"På scenen"** (punkt 7), når brugeren har sagt ja til planen; 4) **6c Figur-generatoren** (punkt 2).
+
+**6c Figur-generatoren · beslutningerne er truffet (P8.14 punkt 2; skitsen "Skitse: Figur-generatoren P8.11", https://claude.ai/artifact/8kkrE327ui87cjM1gkQi55):**
+- To veje ind: **Fra lyden** (standard) og **Fra figuren**.
+- Galleri med **6 levende forslag**, der bevæger sig til sangen. Figurer og karakterer blandes som standard; knapperne Begge · Figurer · Karakterer øverst.
+- Fra lyden: sikre lyde (● og ▲) øverst, usikre (!) sidst og svagere. Generatoren bruger kun usikre lyde, hvis brugeren vælger dem.
+- Fra figuren: figurens regel-sæt fra Biblioteket (Rolig, Energisk, På trommerne, På vokalen, Hele bandet) + ét nyt mix af to lyde. De nye figurer (fugle, fønix, sanger, ny trommeslager, guitarist, mandlig danser) står gråt under "Kommer senere".
+- Knapper: Nye forslag · Flere som den valgte (ændrer KUN udseendet; lyd og bevægelse bliver) · forrige forslag · frø. **Ingen Lås.**
+- Til højre: det valgte forslag og de regler, det giver. Læg på scenen (reglerne kommer som forslag, stiplede celler) · Gem i Biblioteket (Mit) · Erstat den valgte figur. Alt kan fortrydes i ét trin; linjen Indlæst viser det.
+- Opskrifterne (hvilke figurer passer til hvilke lyde) som i skitsens afsnit 4.
+- Den gamle generator (mange tilfældige figurer) fjernes, når den nye virker. Hvor generatoren bor, bestemmer Code.
+- Generatoren skal også kunne foreslå effekter, når "På scenen" er bygget.
+
+**Nye 2D-figurer (P8.15 punkt 3):** de nye karakterer bygges på et **skelet med led** (fagudtryk: rig), Cascadeur som inspiration, så de bevæger sig som rigtige kroppe; ragdollen kan senere bruge det samme skelet. (Flyttet fra Idé-kassen.)
+
+**Pigernes egenskaber (P8.14 punkt 9):** listen står i `docs/PIGERNES-EGENSKABER.md`; brugeren vælger; intet fjernes før da.
+
+**Analysen (P8.14 punkt 4, P8.16 punkt 2):** analysen er programmets hjerte (grundregel i `CLAUDE.md` afsnit 3); byg intet nyt i analysen, før samtalen med hovedchatten er ført (skemaet "Status og lydtræk P8.10", https://claude.ai/artifact/UvGRe7tbJ1RN5xWigewvNV, og procenterne i P8.12).
+
+**Senere (P8.14 punkt 6, P8.15 punkt 2, P8.16 punkt 1; byg ikke nu):** indbygget spor-deling som et lokalt modul (ét klik at installere; MV virker uden; `docs/SVAR-P8_14.md` f siger, om browseren alene kan); målervæg (meter bridge); et ekstra tema med tekstur, glans, kanter og former; Radial Mesh-værksted (kopi, rigtig bloom, sort baggrund med stjerner og galakser, det rejsende lys må ikke forringes); stregerne i Node-editoren lige efter analysen; S7 og S8 sammen med analysen; **.stem.mp4** læses, og sporene havner på deres pladser af sig selv (som Vælg 4 filer …; Native Instruments' gratis Stem Creator Tool kan samle 4 spor til én .stem.mp4).
+
 ### Senere (ikke en del af faserne, tilføjet i P8.2)
 
 - **Oprydningstrin efter pakke 7 (P8.9, punkt 3):** blokkene får navne efter, hvad de gør (testene rettes med), og den skjulte kode fra Generator (fuld), Lydlag, Audit og Detektion fjernes, når kortet Generator og Foreslå regler er løst fra den. **Første bid er lavet i v9.92** (Håndtag i billedet, den gamle Matrix-visning, data-ne9-lytterne; blokken v9.42 omdøbt), **anden bid i v9.93** (Normalisering-knappen, Linjer-knapperne, Audit, Niveau-resterne). Resten venter på svar: bloknavne (A/B), Detektion (fjern/flyt), Generator (fuld) (funktionerne må forsvinde eller skal ind i kortet).
