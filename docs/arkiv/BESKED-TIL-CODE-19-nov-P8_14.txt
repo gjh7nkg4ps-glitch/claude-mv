@@ -1,0 +1,165 @@
+BESKED TIL CODE · P8.14 · 19. november 2026
+Fra hovedchatten. Erstatter P8.13, som ikke blev sendt. Gem beskeden i
+docs/arkiv/, og skriv punkterne ind i planerne. Svar på punkt 5 i
+tekst. Rækkefølgen for byggeriet står i punkt 8.
+
+
+1. SVAR PÅ DINE TRE SPØRGSMÅL
+   1B · Bloknavne: kun de blokke, hvis navn ikke længere siger, hvad de
+        gør.
+   2B · Detektion: flyt den ind under Sang → Avanceret. Jeg vil bruge
+        den til at måle, hvor sikkert Kick og Snare er på min egen
+        musik. Vis tallet tydeligt (hit-rate i procent), og skriv, at
+        tap med hånden er omtrentligt (cirka 30-50 ms).
+   3B · Generator (fuld): behold funktionerne, og flyt dem ind i kortet
+        Generator som en foldet del "Mere ...". Tjek, at opsætningerne
+        Tast og MIDI og Klaverspil stadig virker, når tastatur-spillet
+        flyttes.
+
+
+2. FIGUR-GENERATOREN (6c) · beslutningerne er truffet
+   Skitse: "Skitse: Figur-generatoren P8.11"
+   https://claude.ai/artifact/8kkrE327ui87cjM1gkQi55
+   - To veje ind: Fra lyden (standard) og Fra figuren.
+   - Galleri med 6 levende forslag, der bevæger sig til sangen.
+     Figurer og karakterer blandes som standard; knapperne
+     Begge · Figurer · Karakterer øverst.
+   - Fra lyden: sikre lyde (● og ▲) står øverst, usikre (!) sidst og
+     svagere. Generatoren bruger kun usikre lyde, hvis jeg vælger dem.
+   - Fra figuren: figurens regel-sæt fra Biblioteket (Rolig, Energisk,
+     På trommerne, På vokalen, Hele bandet) + ét nyt mix af to lyde.
+     De nye figurer (fugle, fønix, sanger, ny trommeslager, guitarist,
+     mandlig danser) står gråt under "Kommer senere".
+   - Knapper: Nye forslag · Flere som den valgte (ændrer KUN
+     udseendet; lyd og bevægelse bliver) · forrige forslag · frø.
+   - INGEN Lås.
+   - Til højre: det valgte forslag og de regler, det giver.
+     Læg på scenen (reglerne kommer som forslag, stiplede celler) ·
+     Gem i Biblioteket (Mit) · Erstat den valgte figur. Alt kan
+     fortrydes i ét trin; linjen "Indlæst" viser det.
+   - Opskrifterne (hvilke figurer passer til hvilke lyde) som i
+     skitsens afsnit 4.
+   - Den gamle generator (mange tilfældige figurer) fjernes, når den
+     nye virker.
+   - Hvor generatoren bor, bestemmer du.
+   - Generatoren skal også kunne foreslå effekter, når punkt 7 ("På
+     scenen") er bygget.
+   - 6c bygges efter punkt 7 (se rækkefølgen i punkt 8).
+
+
+3. SMÅ RETTELSER (med næste "kør")
+   a) Hent alle 4 spor på én gang: vælg flere filer eller en hel mappe.
+      Sporene fordeles efter filnavnet (Ultimate Vocal Remover skriver
+      fx Vocals, Drums, Bass, Other eller Instrumental). Vis bagefter,
+      hvilken fil der kom på hvilket spor, så jeg kan rette det.
+   b) Navn: det, der handler om analysen af sangen (arbejdsområdet
+      1 · Sang og vinduet Sang), skal hedde "Analyse". Er der en fane,
+      der hedder "Lyd", som jeg kan have ment, så spørg mig først.
+   c) Knappen "Opret forbindelse på valgt lydtræk" i EQ-vinduet: hvert
+      klik laver en ny regel (lydtræk → Glød) uden synligt tegn, så
+      man kan komme til at lave flere ens regler. Fjern knappen;
+      regler laves i matrixen. EQ-visningens grafik må ikke ændres.
+   d) STATUS.md skal gøres kort, så intet glemmes: højst cirka 80
+      linjer med afsnittene Nu (version), Næste, Venter på brugeren,
+      Åbne spørgsmål og Senere (kort, med henvisning til planerne).
+      Historikken flyttes til docs/arkiv/STATUS-historik.md. Skriv
+      reglen om længden ind i CLAUDE.md.
+   e) Lyt til sangen (auto1, auto2, auto3) fjernes. Så er der 7
+      indbyggede opsætninger tilbage. Ret testen af det indbyggede.
+   f) Værktøjslinjen over matrixen og Node-editoren skal kunne være der
+      uden at rulle ved 1920 og 2560 px, fx ved at de sjældne knapper
+      kommer bag en ⋯-knap.
+
+
+4. FØR ANALYSE-VINDUET BYGGES
+   Hovedchatten og jeg skal først tale om analysen. Til den samtale
+   hører "Status og lydtræk P8.10" (skemaet med alle lydtræk)
+   https://claude.ai/artifact/UvGRe7tbJ1RN5xWigewvNV
+   og procenterne i P8.12 (står i hovedchatten). Byg intet nyt i
+   analysen, før den samtale er ført.
+
+
+5. SPØRGSMÅL TIL DIG (svar i tekst; byg intet)
+   a) De 4 spor: hvilke lydtræk måles på dem i dag, hvor lang tid tager
+      det, og regnes de i baggrunds-trådene?
+   b) Hvad kræver det at køre HELE analysen (tonehøjde, toner, klang,
+      31 bånd, rytme) på hvert spor? Skøn tid og hukommelse for en sang
+      på 4 minutter og for min sang på 74 minutter.
+   c) Hvilke lydformater kan MV læse (mp3, wav, flac)? Er der grænser
+      for filstørrelse eller længde?
+   d) Hvad findes allerede, som et nyt analyse-vindue kan bygge på
+      (Lyd over tid, Niveau, Stereo, Spor, Detektion), og hvad står
+      stadig åbent i docs/PLAN-SANG-OG-ANALYSE.md?
+   e) Radial Mesh: hvorfor er den lille i fuld skærm? Hovedchatten har
+      læst, at baggrunden er en tegnet gradient (#16202c til #0b0f14,
+      blågrå), og at gløden er shadowBlur, ikke rigtig bloom. Passer
+      det? Hvad kræver et separat "Radial Mesh-værksted" med rigtig
+      bloom i WebGL, hvor kun de lyse dele gløder, og baggrunden
+      bliver helt sort?
+   f) Spor-deling inde i MV: kan en model som Demucs eller RoFormer
+      køre i browseren (ONNX Runtime Web med WebGPU)? Skøn filstørrelse
+      og tid for en sang på 4 minutter på et RTX 2070.
+   g) Er der noget andet, vi bør vide, før analyse-vinduet planlægges?
+
+
+6. TIL PLANEN UNDER "SENERE" (byg ikke nu)
+   - Indbygget spor-deling som et ekstra valg i Analyse, så folk, der
+     ikke kender til spor, kan tage en mp3, wav eller flac ind og få
+     den delt. Bedst som et lokalt modul (et lille program på pc'en,
+     der bruger grafikkortet, og som MV taler med), der kan kobles
+     til. Det skal kunne installeres med ét klik, og MV skal virke fint
+     uden. Svaret på 5f viser, om browseren alene kan klare det.
+   - Målervæg (vores navn; fagudtryk: meter bridge eller dashboard):
+     et stort ekstra vindue eller fuld skærm med mange flotte målere,
+     så analyse-vinduet selv har plads til at arbejde.
+   - Et ekstra tema, der ikke kun ændrer farver, men også look:
+     tekstur, glans, kanter og former. Knapper og tekst bliver, hvor de
+     er.
+   - Radial Mesh-værksted: et separat vindue med en kopi, så originalen
+     ikke røres. Større i fuld skærm, glans og rigtig bloom, der kan
+     justeres og ikke gør baggrunden grå, sort baggrund med små fine
+     stjerner og farvede galakser, flere baggrunde at vælge imellem, og
+     justering af lys og bloom. Det rejsende lys gennem banerne må ikke
+     forringes.
+   - Stregerne i Node-editoren (farve pr. lyd, lys, der rejser i
+     stregen) er vigtige; de tages op lige efter analysen.
+   - S7 (HPSS) og S8 (spilleliste) tages op sammen med analysen.
+
+
+7. "PÅ SCENEN": KARAKTERER, FIGURER OG EFFEKTER LIGESTILLET
+   Effekterne (Lys-puls, Baggrundsfarve, Partikel-burst, Bølge, Glød,
+   Kamera-ryst, Banens fart, Zoom-puls og de andre) skal være på lige
+   vilkår med figurerne.
+   - Én liste "På scenen" med tre slags: Karakterer, Figurer og
+     Effekter. Alle kan lægges på og tages af, har øje og Slå fra, kan
+     få regel-sæt, findes i Biblioteket og i Figur-generatoren.
+   - Effekterne får et lille mærke "hele billedet", fordi de virker på
+     hele scenen og ikke er én ting på scenen.
+   - Skriv først en kort plan (hvad ændres, hvad flyttes, hvad
+     fjernes, og hvad det betyder for de indbyggede opsætninger), og
+     vis mig den, før du bygger.
+
+
+8. RÆKKEFØLGEN
+   1) Punkt 1 og 3 (små rettelser og oprydning) med næste "kør".
+   2) Svar på punkt 5 og planen for punkt 7 i tekst.
+   3) "På scenen" (punkt 7), når jeg har sagt ja til planen.
+   4) 6c Figur-generatoren (punkt 2).
+
+
+9. PIGERNES EGENSKABER
+   Pigerne (Lyshåret pige, Pige på stangen og de andre karakterer) har
+   mange egenskaber, der ikke viser noget eller ikke giver mening at
+   bruge. Lav en liste over alle deres egenskaber med en kolonne, der
+   siger: viser noget tydeligt · viser lidt · viser intet. Marker de
+   egenskaber, som de indbyggede opsætninger og regel-sæt bruger. Jeg
+   vælger derefter, hvad der fjernes. Fjern intet, før jeg har valgt.
+
+
+10. RET I DOKUMENTERNE
+   - Kendte fejl: "den lange sang giver intet lys" er løst (med den
+     længere analyse i to trin). Fjern den fra listen over kendte fejl.
+   - Min skærm er en 43" ASUS (3840 x 2160). Jeg prøver selv hver
+     version på den.
+   - MV2 udgår sandsynligvis. Flyt afsnittet om MV2 i CLAUDE.md til
+     docs/arkiv/.

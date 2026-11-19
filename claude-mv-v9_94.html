@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Claude MV v9.93 (Rytme-editor)</title>
+<title>Claude MV v9.94 (Rytme-editor)</title>
 
 <style>
 :root{--ok:#2fb86a;--adv:#e5a50a;--fejl:#e04b45;--info:#3b8eea;--bg:#e8e6df;--panel:#f4f2ec;--ink:#1c2321;--mute:#5d6560;--line:#c7c3b8;--acc:#0a7d6b;--bad:#b3261e;--wave:#fbfaf6;
@@ -1080,7 +1080,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 </script>
 </head>
 <body>
-<h1 class="sr-only">Claude MV: musik bliver til billeder</h1><div id="tb-hot" aria-hidden="true"></div><header id="tb" data-tb="fuld" data-dock="fast"><div class="tbm"><div class="brand"><svg class="logo" viewBox="0 0 36 28" width="30" height="24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#59d2ff"/><stop offset="1" stop-color="#b57bff"/></linearGradient></defs><g fill="url(#lg)"><rect x="1" y="11" width="4" height="6" rx="2"/><rect x="8" y="5" width="4" height="18" rx="2"/><rect x="15" y="1" width="4" height="26" rx="2"/><rect x="22" y="7" width="4" height="14" rx="2"/><rect x="29" y="12" width="4" height="4" rx="2"/></g></svg><b>Rytme</b><small title="Versionsnummer. Det stiger med 0,1, hver gang filen samles til udgivelse.">v9.93</small></div><button id="tb-udv" class="ghost" aria-expanded="false" title="Vis eller skjul hele topbaren. Knappen findes kun i størrelsen Minimal.">☰</button><label class="filebtn" title="Vælg en lydfil fra din computer (mp3, wav, ogg ...). Filen sendes ikke væk: alt sker i din browser."><input type="file" id="file" accept="audio/*" aria-label="Vælg lydfil"><span id="tb-filtekst">Vælg lydfil</span></label><button id="play" disabled title="Afspil fra der, hvor du er. Mellemrumstasten skifter mellem afspil og pause.">▶ Afspil</button><button id="pause" disabled title="Sæt på pause. Afspil fortsætter derfra.">❚❚ Pause</button><span id="tid" class="small" style="min-width:96px" aria-live="off"></span><div id="player" class="player" role="group" aria-label="Afspiller"><button id="pl-start" disabled>⏮ Start</button><button id="pl-back" disabled>−5 s</button><button id="pl-stop" disabled>■ Stop</button><button id="pl-fwd" disabled>+5 s</button><input type="range" id="pl-pos" min="0" max="1000" value="0" step="1" disabled aria-label="Position i nummeret"><button id="pl-mute" aria-pressed="false">Lyd</button><input type="range" id="pl-vol" min="0" max="100" value="100" step="1" aria-label="Volumen"><span id="pl-db" class="small">0 dB</span><canvas id="pl-meter" width="120" height="14" aria-label="Niveaumåler: styrken af det, der spilles" title="Niveaumåler: styrken af det, der spilles (efter volumen). Rød øverst betyder, at lyden er tæt på at klippe."></canvas></div><label class="tbl" title="Når nummeret er slut, starter det forfra af sig selv, så showet bliver ved. Slået til fra start."><input type="checkbox" id="tb-gentag" checked> Gentag</label><label class="tbl tb-niv" title="Niveau for hele programmet: hvor meget du ser. 1 Simpel: det vigtigste. 2 Medium: almindelige ting. 3 Høj: næsten alt. 4 Ekstrem: alt. Alle vinduer følger det, også Form-editoren. Intet slettes ved at gå ned; det skjules og virker stadig.">Niveau <select id="tb-niv" aria-label="Niveau for hele programmet"><option value="1">1 · Simpel</option><option value="2">2 · Medium</option><option value="3">3 · Høj</option><option value="4">4 · Ekstrem</option></select></label><nav class="menuer" aria-label="Menuer"><div class="menu"><button class="menub" id="mn-ops" aria-expanded="false" aria-controls="mp-ops" title="Hent og gem opsætninger: opsætninger, dine egne opsætninger, kopi som tekst og nulstil">Opsætning<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-ops" role="group" aria-label="Opsætning" hidden><h4>Hent</h4><label class="tbl">Opsætning <select id="tb-ops" data-ms="tb-ops" aria-label="Hent en opsætning"><option value="">Vælg …</option></select></label><label class="tbl">Mine opsætninger <select id="tb-mine" data-ms="tb-mine" aria-label="Hent en af dine egne opsætninger"><option value="">Vælg …</option></select></label><h4>Gem og del</h4><button class="ghost" data-ma="klik:copy">Kopiér preset</button><button class="ghost" data-ma="gaa:json">Preset som tekst</button><h4>Start forfra</h4><button class="ghost fare" data-ma="klik:s-reset">Nulstil alt…</button></div></div><div class="menu"><button class="menub" id="mn-show" aria-expanded="false" aria-controls="mp-show" title="Lav et show til sangen: Kør Auto, Rolig, Balanceret eller Vild, og Fortryd">Show<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-show" role="group" aria-label="Show" hidden><h4>Lav en opsætning</h4><button class="ghost" data-ma="klik:show-rolig">Lav show: Rolig</button><button class="ghost" data-ma="klik:show-bal">Lav show: Balanceret</button><button class="ghost" data-ma="klik:show-vild">Lav show: Vild</button><button class="ghost" data-ma="klik:show-fortryd">Fortryd sidste show</button><h4>Automatik</h4><h4>Mere</h4><button class="ghost" data-ma="gaa:showsec">Gå til Show-panelet</button></div></div><div class="menu"><button class="menub" id="mn-vin" aria-expanded="false" aria-controls="mp-vin" title="Dublet, Lyd i 3D, flyt effekter og orden i vinduerne">Vinduer<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-vin" role="group" aria-label="Vinduer" hidden><h4>Udgang (projektor)</h4><label class="tbl">Udgangsvinduet viser <select id="ud-kilde" aria-label="Hvad udgangsvinduet viser"><option value="pv">Live preview</option><option value="mesh">Radial Mesh</option><option value="mesh3d">Mesh 3D</option><option value="oeje">Øjet</option></select></label><h4>Redigér</h4><button class="ghost" data-ma="klik:mvbtn" id="tb-mv"></button><button class="ghost" data-ma="klik:mvrst">Nulstil pos.</button><h4>Orden</h4><button id="rwin" class="ghost">Ordn vinduer</button><button id="mina" class="ghost">Minimér alle vinduer</button><h4>Layouts</h4><label class="tbl">Vælg layout <select id="lay-vaelg" aria-label="Vælg et layout"></select></label><button class="ghost" id="lay-brug" title="Layoutet bruges, så snart du vælger det. Denne knap bruger det igen, fx hvis du har flyttet vinduerne.">Brug igen</button><label class="tbl">Navn <input type="text" id="lay-navn" maxlength="24" placeholder="fx Disco" aria-label="Navn til et nyt layout" title="Giv det nuværende layout et navn (højst 24 tegn), og tryk Gem layout."></label><button class="ghost" id="lay-gem" title="Gem alle vinduers placering, størrelse og minimering under dette navn.">Gem layout</button><button class="ghost fare" id="lay-slet" title="Slet det valgte layout (kun dine egne).">Slet layout</button><h4>Topbar</h4><label class="tbl">Størrelse <select id="tb-stoerrelse" aria-label="Topbarens størrelse"><option value="fuld">Fuld</option><option value="kompakt">Kompakt (halv)</option><option value="minimal">Minimal (kvart)</option></select></label><label class="tbl">Dock <select id="tb-dock" aria-label="Topbarens dock"><option value="fast">Fastgjort øverst</option><option value="auto">Skjul automatisk</option></select></label></div></div><div class="menu"><button class="menub" id="mn-lyd" aria-expanded="false" aria-controls="mp-lyd" title="Kvalitet og ydelse, normalisering, lydlag og indstillinger">Lyd og ydelse<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-lyd" role="group" aria-label="Lyd og ydelse" hidden><h4>Ydelse</h4><label class="tbl">Kvalitet <select id="tb-kval" data-ms="tb-kval" aria-label="Kvalitetsniveau"><option value="disco">Disco</option><option value="undervisning">Undervisning</option><option value="spar">Spar</option><option value="fuld">Fuld</option><option value="egen">Egen</option></select></label><label class="tbl">Skarphed <select id="tb-skarp" aria-label="Skarphed (Live preview)" title="Live previews skarphed: Fuld = skærmens skalering (fx 1,5× eller 2×). Højst 2× og 1× gør tegnefladen mindre, så hvert billede koster mindre. Det samme valg står i Kvalitet."><option value="fuld">Fuld</option><option value="2">Højst 2×</option><option value="1">1×</option></select></label><label class="tbl"><input type="checkbox" id="tb-reg" data-ms="tb-reg"> Kvalitetsregulator</label><button class="ghost" data-ma="klik:bench-start">Kør måletest</button><h4>Lyd</h4><button class="ghost" data-ma="klik:lmute">Mute lydlag</button><h4>Mere</h4><button id="sbtn" class="ghost">Indstillinger</button></div></div><div class="menu hoejre"><button class="menub" id="mn-hjp" aria-expanded="false" aria-controls="mp-hjp" title="Ordliste, manual og hurtige genveje til forklaringer">Hjælp<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-hjp" role="group" aria-label="Hjælp" hidden><h4>Slå op</h4><button id="hjbtn" class="ghost">Ordliste (søg i begreber)</button><button id="gbtn" class="ghost">Manual (bruger og teknik)</button><h4>Hurtigt</h4><button class="ghost" data-ma="manual:genveje">Tastaturgenveje</button><button class="ghost" data-ma="manual:figur-form">Figur og form: forskellen</button></div></div></nav><div class="chips" role="group" aria-label="Visning og sikkerhed"><button id="tb-sikker" class="chip" aria-pressed="true">Sikker visning: Til</button><button id="ud-btn" class="chip" aria-pressed="false">Udgangsvindue: Fra</button><button id="ud-sort" class="chip" aria-pressed="false">Sort skærm</button><button id="rec-btn" class="chip" aria-pressed="false">Optag: Fra</button><button id="lin-btn" class="chip" aria-pressed="false">Lyd ind: Fra</button></div></div><div class="tbs"><span id="status" role="status" aria-live="polite">Vælg en lydfil for at starte</span></div></header>
+<h1 class="sr-only">Claude MV: musik bliver til billeder</h1><div id="tb-hot" aria-hidden="true"></div><header id="tb" data-tb="fuld" data-dock="fast"><div class="tbm"><div class="brand"><svg class="logo" viewBox="0 0 36 28" width="30" height="24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#59d2ff"/><stop offset="1" stop-color="#b57bff"/></linearGradient></defs><g fill="url(#lg)"><rect x="1" y="11" width="4" height="6" rx="2"/><rect x="8" y="5" width="4" height="18" rx="2"/><rect x="15" y="1" width="4" height="26" rx="2"/><rect x="22" y="7" width="4" height="14" rx="2"/><rect x="29" y="12" width="4" height="4" rx="2"/></g></svg><b>Rytme</b><small title="Versionsnummer. Det stiger med 0,1, hver gang filen samles til udgivelse.">v9.94</small></div><button id="tb-udv" class="ghost" aria-expanded="false" title="Vis eller skjul hele topbaren. Knappen findes kun i størrelsen Minimal.">☰</button><label class="filebtn" title="Vælg en lydfil fra din computer (mp3, wav, ogg ...). Filen sendes ikke væk: alt sker i din browser."><input type="file" id="file" accept="audio/*" aria-label="Vælg lydfil"><span id="tb-filtekst">Vælg lydfil</span></label><button id="play" disabled title="Afspil fra der, hvor du er. Mellemrumstasten skifter mellem afspil og pause.">▶ Afspil</button><button id="pause" disabled title="Sæt på pause. Afspil fortsætter derfra.">❚❚ Pause</button><span id="tid" class="small" style="min-width:96px" aria-live="off"></span><div id="player" class="player" role="group" aria-label="Afspiller"><button id="pl-start" disabled>⏮ Start</button><button id="pl-back" disabled>−5 s</button><button id="pl-stop" disabled>■ Stop</button><button id="pl-fwd" disabled>+5 s</button><input type="range" id="pl-pos" min="0" max="1000" value="0" step="1" disabled aria-label="Position i nummeret"><button id="pl-mute" aria-pressed="false">Lyd</button><input type="range" id="pl-vol" min="0" max="100" value="100" step="1" aria-label="Volumen"><span id="pl-db" class="small">0 dB</span><canvas id="pl-meter" width="120" height="14" aria-label="Niveaumåler: styrken af det, der spilles" title="Niveaumåler: styrken af det, der spilles (efter volumen). Rød øverst betyder, at lyden er tæt på at klippe."></canvas></div><label class="tbl" title="Når nummeret er slut, starter det forfra af sig selv, så showet bliver ved. Slået til fra start."><input type="checkbox" id="tb-gentag" checked> Gentag</label><label class="tbl tb-niv" title="Niveau for hele programmet: hvor meget du ser. 1 Simpel: det vigtigste. 2 Medium: almindelige ting. 3 Høj: næsten alt. 4 Ekstrem: alt. Alle vinduer følger det, også Form-editoren. Intet slettes ved at gå ned; det skjules og virker stadig.">Niveau <select id="tb-niv" aria-label="Niveau for hele programmet"><option value="1">1 · Simpel</option><option value="2">2 · Medium</option><option value="3">3 · Høj</option><option value="4">4 · Ekstrem</option></select></label><nav class="menuer" aria-label="Menuer"><div class="menu"><button class="menub" id="mn-ops" aria-expanded="false" aria-controls="mp-ops" title="Hent og gem opsætninger: opsætninger, dine egne opsætninger, kopi som tekst og nulstil">Opsætning<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-ops" role="group" aria-label="Opsætning" hidden><h4>Hent</h4><label class="tbl">Opsætning <select id="tb-ops" data-ms="tb-ops" aria-label="Hent en opsætning"><option value="">Vælg …</option></select></label><label class="tbl">Mine opsætninger <select id="tb-mine" data-ms="tb-mine" aria-label="Hent en af dine egne opsætninger"><option value="">Vælg …</option></select></label><h4>Gem og del</h4><button class="ghost" data-ma="klik:copy">Kopiér preset</button><button class="ghost" data-ma="gaa:json">Preset som tekst</button><h4>Start forfra</h4><button class="ghost fare" data-ma="klik:s-reset">Nulstil alt…</button></div></div><div class="menu"><button class="menub" id="mn-show" aria-expanded="false" aria-controls="mp-show" title="Lav et show til sangen: Kør Auto, Rolig, Balanceret eller Vild, og Fortryd">Show<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-show" role="group" aria-label="Show" hidden><h4>Lav en opsætning</h4><button class="ghost" data-ma="klik:show-rolig">Lav show: Rolig</button><button class="ghost" data-ma="klik:show-bal">Lav show: Balanceret</button><button class="ghost" data-ma="klik:show-vild">Lav show: Vild</button><button class="ghost" data-ma="klik:show-fortryd">Fortryd sidste show</button><h4>Automatik</h4><h4>Mere</h4><button class="ghost" data-ma="gaa:showsec">Gå til Show-panelet</button></div></div><div class="menu"><button class="menub" id="mn-vin" aria-expanded="false" aria-controls="mp-vin" title="Dublet, Lyd i 3D, flyt effekter og orden i vinduerne">Vinduer<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-vin" role="group" aria-label="Vinduer" hidden><h4>Udgang (projektor)</h4><label class="tbl">Udgangsvinduet viser <select id="ud-kilde" aria-label="Hvad udgangsvinduet viser"><option value="pv">Live preview</option><option value="mesh">Radial Mesh</option><option value="mesh3d">Mesh 3D</option><option value="oeje">Øjet</option></select></label><h4>Redigér</h4><button class="ghost" data-ma="klik:mvbtn" id="tb-mv"></button><button class="ghost" data-ma="klik:mvrst">Nulstil pos.</button><h4>Orden</h4><button id="rwin" class="ghost">Ordn vinduer</button><button id="mina" class="ghost">Minimér alle vinduer</button><h4>Layouts</h4><label class="tbl">Vælg layout <select id="lay-vaelg" aria-label="Vælg et layout"></select></label><button class="ghost" id="lay-brug" title="Layoutet bruges, så snart du vælger det. Denne knap bruger det igen, fx hvis du har flyttet vinduerne.">Brug igen</button><label class="tbl">Navn <input type="text" id="lay-navn" maxlength="24" placeholder="fx Disco" aria-label="Navn til et nyt layout" title="Giv det nuværende layout et navn (højst 24 tegn), og tryk Gem layout."></label><button class="ghost" id="lay-gem" title="Gem alle vinduers placering, størrelse og minimering under dette navn.">Gem layout</button><button class="ghost fare" id="lay-slet" title="Slet det valgte layout (kun dine egne).">Slet layout</button><h4>Topbar</h4><label class="tbl">Størrelse <select id="tb-stoerrelse" aria-label="Topbarens størrelse"><option value="fuld">Fuld</option><option value="kompakt">Kompakt (halv)</option><option value="minimal">Minimal (kvart)</option></select></label><label class="tbl">Dock <select id="tb-dock" aria-label="Topbarens dock"><option value="fast">Fastgjort øverst</option><option value="auto">Skjul automatisk</option></select></label></div></div><div class="menu"><button class="menub" id="mn-lyd" aria-expanded="false" aria-controls="mp-lyd" title="Kvalitet og ydelse, normalisering, lydlag og indstillinger">Lyd og ydelse<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-lyd" role="group" aria-label="Lyd og ydelse" hidden><h4>Ydelse</h4><label class="tbl">Kvalitet <select id="tb-kval" data-ms="tb-kval" aria-label="Kvalitetsniveau"><option value="disco">Disco</option><option value="undervisning">Undervisning</option><option value="spar">Spar</option><option value="fuld">Fuld</option><option value="egen">Egen</option></select></label><label class="tbl">Skarphed <select id="tb-skarp" aria-label="Skarphed (Live preview)" title="Live previews skarphed: Fuld = skærmens skalering (fx 1,5× eller 2×). Højst 2× og 1× gør tegnefladen mindre, så hvert billede koster mindre. Det samme valg står i Kvalitet."><option value="fuld">Fuld</option><option value="2">Højst 2×</option><option value="1">1×</option></select></label><label class="tbl"><input type="checkbox" id="tb-reg" data-ms="tb-reg"> Kvalitetsregulator</label><button class="ghost" data-ma="klik:bench-start">Kør måletest</button><h4>Lyd</h4><button class="ghost" data-ma="klik:lmute">Mute lydlag</button><h4>Mere</h4><button id="sbtn" class="ghost">Indstillinger</button></div></div><div class="menu hoejre"><button class="menub" id="mn-hjp" aria-expanded="false" aria-controls="mp-hjp" title="Ordliste, manual og hurtige genveje til forklaringer">Hjælp<span class="caret" aria-hidden="true"></span></button><div class="menup" id="mp-hjp" role="group" aria-label="Hjælp" hidden><h4>Slå op</h4><button id="hjbtn" class="ghost">Ordliste (søg i begreber)</button><button id="gbtn" class="ghost">Manual (bruger og teknik)</button><h4>Hurtigt</h4><button class="ghost" data-ma="manual:genveje">Tastaturgenveje</button><button class="ghost" data-ma="manual:figur-form">Figur og form: forskellen</button></div></div></nav><div class="chips" role="group" aria-label="Visning og sikkerhed"><button id="tb-sikker" class="chip" aria-pressed="true">Sikker visning: Til</button><button id="ud-btn" class="chip" aria-pressed="false">Udgangsvindue: Fra</button><button id="ud-sort" class="chip" aria-pressed="false">Sort skærm</button><button id="rec-btn" class="chip" aria-pressed="false">Optag: Fra</button><button id="lin-btn" class="chip" aria-pressed="false">Lyd ind: Fra</button></div></div><div class="tbs"><span id="status" role="status" aria-live="polite">Vælg en lydfil for at starte</span></div></header>
 <div id="dockL" class="dock" role="region" aria-label="Minimerede vinduer, venstre side"></div><div id="dockR" class="dock" role="region" aria-label="Minimerede vinduer, højre side"></div>
 <div id="mvk" class="mvk" hidden role="dialog" aria-label="Kort over forbindelserne"><div class="mvk-bar"><b>🗺 Kort over forbindelserne</b><span id="mvk-info" class="small"></span><label class="small"><input type="checkbox" id="mvk-tal" checked> Tal på pilene</label><span class="mvk-sk"></span><button class="ghost" id="mvk-zud" aria-label="Zoom ud">−</button><span id="mvk-z" class="small">100 %</span><button class="ghost" id="mvk-zind" aria-label="Zoom ind">＋</button><button class="ghost" id="mvk-tilpas">Tilpas</button><button class="ghost" id="mvk-kode">📋 Kopiér Mermaid-kode</button><button class="ghost" id="mvk-png">⬇ PNG</button><button class="ghost" id="mvk-svg">⬇ SVG</button><button id="mvk-luk">Luk (Esc)</button></div><div class="mvk-flade" id="mvk-flade"><div id="mvk-ud"></div></div><textarea id="mvk-txt" class="mvk-txt" hidden readonly aria-label="Mermaid-kode"></textarea></div>
 <div id="ws">
@@ -1205,7 +1205,7 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
  <div id="g1">
 <h2 id="man-del-bruger">Brugermanual</h2>
 <p class="small">Manualen er ordnet efter <b>emne</b>. Inden for hvert emne står vejledningerne først, så referencen (de nummererede afsnit) og til sidst nyhederne fra hver version. Søg i feltet øverst, hvis du leder efter et bestemt ord. Den <b>tekniske manual</b> og <b>visionen</b> ligger i de andre faner.</p>
-<div class="man-nyt"><b>Nyt i v9.93:</b> <a href="#man-v993" onclick="return !manualGaa('man-v993')">oprydning efter pakke 7, anden bid (Normalisering-knappen, Linjer-knapperne, Audit og Niveau-resterne)</a>. De forrige: <a href="#man-v992" onclick="return !manualGaa('man-v992')">v9.92</a> · <a href="#man-v991" onclick="return !manualGaa('man-v991')">v9.91</a> · <a href="#man-v990" onclick="return !manualGaa('man-v990')">v9.90</a> · <a href="#man-v989" onclick="return !manualGaa('man-v989')">v9.89</a> · <a href="#man-v988" onclick="return !manualGaa('man-v988')">v9.88</a> · <a href="#man-v987" onclick="return !manualGaa('man-v987')">v9.87</a> · <a href="#man-v986" onclick="return !manualGaa('man-v986')">v9.86</a> · <a href="#man-v985" onclick="return !manualGaa('man-v985')">v9.85</a> · <a href="#man-v984" onclick="return !manualGaa('man-v984')">v9.84</a> · <a href="#man-v983" onclick="return !manualGaa('man-v983')">v9.83</a> · <a href="#man-v982" onclick="return !manualGaa('man-v982')">v9.82</a> · <a href="#man-v981" onclick="return !manualGaa('man-v981')">v9.81</a> · <a href="#man-v980" onclick="return !manualGaa('man-v980')">v9.80</a> · <a href="#man-v979" onclick="return !manualGaa('man-v979')">v9.79</a> · <a href="#man-v978" onclick="return !manualGaa('man-v978')">v9.78</a> · <a href="#man-v977" onclick="return !manualGaa('man-v977')">v9.77</a> · <a href="#man-v976" onclick="return !manualGaa('man-v976')">v9.76</a> · <a href="#man-v975" onclick="return !manualGaa('man-v975')">v9.75</a> · <a href="#man-v974" onclick="return !manualGaa('man-v974')">v9.74</a> · <a href="#man-v973" onclick="return !manualGaa('man-v973')">v9.73</a> · <a href="#man-v972" onclick="return !manualGaa('man-v972')">v9.72</a> · <a href="#man-v971" onclick="return !manualGaa('man-v971')">v9.71</a> · <a href="#man-v970" onclick="return !manualGaa('man-v970')">v9.70</a> · <a href="#man-v969" onclick="return !manualGaa('man-v969')">v9.69</a> · <a href="#man-v968" onclick="return !manualGaa('man-v968')">v9.68</a> · <a href="#man-v967" onclick="return !manualGaa('man-v967')">v9.67</a> · <a href="#man-v966" onclick="return !manualGaa('man-v966')">v9.66</a> · <a href="#man-v965" onclick="return !manualGaa('man-v965')">v9.65</a> · <a href="#man-v964" onclick="return !manualGaa('man-v964')">v9.64</a> · <a href="#man-v963" onclick="return !manualGaa('man-v963')">v9.63</a> · <a href="#man-v962" onclick="return !manualGaa('man-v962')">v9.62</a> · <a href="#man-v961" onclick="return !manualGaa('man-v961')">v9.61</a> · <a href="#man-v960" onclick="return !manualGaa('man-v960')">v9.60</a> · <a href="#man-v959" onclick="return !manualGaa('man-v959')">v9.59</a> · <a href="#man-v958" onclick="return !manualGaa('man-v958')">v9.58</a> · <a href="#man-v957" onclick="return !manualGaa('man-v957')">v9.57</a> · <a href="#man-v956" onclick="return !manualGaa('man-v956')">v9.56</a> · <a href="#man-v955" onclick="return !manualGaa('man-v955')">v9.55</a> · <a href="#man-v954" onclick="return !manualGaa('man-v954')">v9.54</a> · <a href="#man-v953" onclick="return !manualGaa('man-v953')">v9.53</a> · <a href="#man-v952" onclick="return !manualGaa('man-v952')">v9.52</a> · <a href="#man-v951" onclick="return !manualGaa('man-v951')">v9.51</a> · <a href="#man-v950" onclick="return !manualGaa('man-v950')">v9.50</a> · <a href="#man-v949" onclick="return !manualGaa('man-v949')">v9.49</a> · <a href="#man-v948" onclick="return !manualGaa('man-v948')">v9.48</a> · <a href="#man-v947" onclick="return !manualGaa('man-v947')">v9.47</a> · <a href="#man-v946" onclick="return !manualGaa('man-v946')">v9.46</a> · <a href="#man-v945" onclick="return !manualGaa('man-v945')">v9.45</a> · <a href="#man-v944" onclick="return !manualGaa('man-v944')">v9.44</a> · <a href="#man-v943" onclick="return !manualGaa('man-v943')">v9.43</a> · <a href="#man-v942" onclick="return !manualGaa('man-v942')">v9.42</a> · <a href="#man-v941" onclick="return !manualGaa('man-v941')">v9.41</a> · <a href="#man-v940" onclick="return !manualGaa('man-v940')">v9.40</a> · <a href="#man-v939" onclick="return !manualGaa('man-v939')">v9.39</a> · <a href="#man-v938" onclick="return !manualGaa('man-v938')">v9.38</a> · <a href="#man-v937" onclick="return !manualGaa('man-v937')">v9.37</a> · <a href="#man-v936" onclick="return !manualGaa('man-v936')">v9.36</a> · <a href="#man-v935" onclick="return !manualGaa('man-v935')">v9.35</a> · <a href="#man-v934" onclick="return !manualGaa('man-v934')">v9.34</a> · <a href="#man-v933" onclick="return !manualGaa('man-v933')">v9.33</a> · <a href="#man-v932" onclick="return !manualGaa('man-v932')">v9.32</a> · <a href="#man-v931" onclick="return !manualGaa('man-v931')">v9.31</a> · <a href="#man-v930" onclick="return !manualGaa('man-v930')">v9.30</a> · <a href="#man-v929" onclick="return !manualGaa('man-v929')">v9.29</a> · <a href="#man-v928" onclick="return !manualGaa('man-v928')">v9.28</a> · <a href="#man-v927" onclick="return !manualGaa('man-v927')">v9.27</a> · <a href="#man-v926" onclick="return !manualGaa('man-v926')">v9.26</a> · <a href="#man-v925" onclick="return !manualGaa('man-v925')">v9.25</a> · <a href="#man-v924" onclick="return !manualGaa('man-v924')">v9.24</a> · <a href="#man-v923" onclick="return !manualGaa('man-v923')">v9.23</a> · <a href="#man-v922" onclick="return !manualGaa('man-v922')">v9.22</a> · <a href="#man-v921" onclick="return !manualGaa('man-v921')">v9.21</a> · <a href="#man-v920" onclick="return !manualGaa('man-v920')">v9.20</a> · <a href="#man-v919" onclick="return !manualGaa('man-v919')">v9.19</a> · <a href="#man-v918" onclick="return !manualGaa('man-v918')">v9.18</a> · <a href="#man-v917" onclick="return !manualGaa('man-v917')">v9.17</a> · <a href="#man-v916" onclick="return !manualGaa('man-v916')">v9.16</a> · <a href="#man-v915" onclick="return !manualGaa('man-v915')">v9.15</a> · <a href="#man-v914" onclick="return !manualGaa('man-v914')">v9.14</a> · <a href="#man-v913" onclick="return !manualGaa('man-v913')">v9.13</a> · <a href="#man-v912" onclick="return !manualGaa('man-v912')">v9.12</a> · <a href="#man-v911" onclick="return !manualGaa('man-v911')">v9.11</a> · <a href="#man-v910" onclick="return !manualGaa('man-v910')">v9.10</a> · <a href="#man-v99" onclick="return !manualGaa('man-v99')">v9.9</a> · <a href="#man-v98" onclick="return !manualGaa('man-v98')">v9.8</a> · <a href="#man-v97" onclick="return !manualGaa('man-v97')">v9.7</a> · <a href="#man-v96" onclick="return !manualGaa('man-v96')">v9.6</a> · <a href="#man-v95" onclick="return !manualGaa('man-v95')">v9.5</a> · <a href="#man-v94" onclick="return !manualGaa('man-v94')">v9.4</a> · <a href="#man-v93" onclick="return !manualGaa('man-v93')">v9.3</a> · <a href="#man-v92" onclick="return !manualGaa('man-v92')">v9.2</a> · <a href="#man-v91" onclick="return !manualGaa('man-v91')">v9.1</a> · <a href="#man-v90" onclick="return !manualGaa('man-v90')">v9.0</a> · <a href="#man-v89" onclick="return !manualGaa('man-v89')">v8.9</a> · <a href="#man-v88" onclick="return !manualGaa('man-v88')">v8.8</a> · <a href="#man-v87" onclick="return !manualGaa('man-v87')">v8.7</a> · <a href="#man-v86" onclick="return !manualGaa('man-v86')">v8.6</a> · <a href="#man-v85" onclick="return !manualGaa('man-v85')">v8.5</a> · <a href="#man-v84" onclick="return !manualGaa('man-v84')">v8.4</a> · <a href="#man-v83" onclick="return !manualGaa('man-v83')">v8.3</a> · <a href="#man-v82" onclick="return !manualGaa('man-v82')">v8.2</a> · <a href="#man-v81" onclick="return !manualGaa('man-v81')">v8.1</a> · <a href="#man-v80" onclick="return !manualGaa('man-v80')">v8.0</a> · <a href="#man-v79" onclick="return !manualGaa('man-v79')">v7.9</a> · <a href="#man-v78" onclick="return !manualGaa('man-v78')">v7.8</a> · <a href="#man-v77" onclick="return !manualGaa('man-v77')">v7.7</a> · <a href="#man-v76" onclick="return !manualGaa('man-v76')">v7.6</a> · <a href="#man-v75" onclick="return !manualGaa('man-v75')">v7.5</a> · <a href="#man-v74" onclick="return !manualGaa('man-v74')">v7.4</a> · <a href="#man-v73" onclick="return !manualGaa('man-v73')">v7.3</a> · <a href="#man-v72" onclick="return !manualGaa('man-v72')">v7.2</a> · <a href="#man-v71" onclick="return !manualGaa('man-v71')">v7.1</a> · <a href="#man-v70" onclick="return !manualGaa('man-v70')">v7.0</a> · <a href="#man-v69" onclick="return !manualGaa('man-v69')">v6.9</a> · <a href="#man-v68" onclick="return !manualGaa('man-v68')">v6.8</a> · <a href="#man-v67" onclick="return !manualGaa('man-v67')">v6.7</a> · <a href="#man-v66" onclick="return !manualGaa('man-v66')">v6.6</a></div>
+<div class="man-nyt"><b>Nyt i v9.94:</b> <a href="#man-v994" onclick="return !manualGaa('man-v994')">36 blokke i koden har fået navne efter, hvad de gør</a>. De forrige: <a href="#man-v993" onclick="return !manualGaa('man-v993')">v9.93</a> · <a href="#man-v992" onclick="return !manualGaa('man-v992')">v9.92</a> · <a href="#man-v991" onclick="return !manualGaa('man-v991')">v9.91</a> · <a href="#man-v990" onclick="return !manualGaa('man-v990')">v9.90</a> · <a href="#man-v989" onclick="return !manualGaa('man-v989')">v9.89</a> · <a href="#man-v988" onclick="return !manualGaa('man-v988')">v9.88</a> · <a href="#man-v987" onclick="return !manualGaa('man-v987')">v9.87</a> · <a href="#man-v986" onclick="return !manualGaa('man-v986')">v9.86</a> · <a href="#man-v985" onclick="return !manualGaa('man-v985')">v9.85</a> · <a href="#man-v984" onclick="return !manualGaa('man-v984')">v9.84</a> · <a href="#man-v983" onclick="return !manualGaa('man-v983')">v9.83</a> · <a href="#man-v982" onclick="return !manualGaa('man-v982')">v9.82</a> · <a href="#man-v981" onclick="return !manualGaa('man-v981')">v9.81</a> · <a href="#man-v980" onclick="return !manualGaa('man-v980')">v9.80</a> · <a href="#man-v979" onclick="return !manualGaa('man-v979')">v9.79</a> · <a href="#man-v978" onclick="return !manualGaa('man-v978')">v9.78</a> · <a href="#man-v977" onclick="return !manualGaa('man-v977')">v9.77</a> · <a href="#man-v976" onclick="return !manualGaa('man-v976')">v9.76</a> · <a href="#man-v975" onclick="return !manualGaa('man-v975')">v9.75</a> · <a href="#man-v974" onclick="return !manualGaa('man-v974')">v9.74</a> · <a href="#man-v973" onclick="return !manualGaa('man-v973')">v9.73</a> · <a href="#man-v972" onclick="return !manualGaa('man-v972')">v9.72</a> · <a href="#man-v971" onclick="return !manualGaa('man-v971')">v9.71</a> · <a href="#man-v970" onclick="return !manualGaa('man-v970')">v9.70</a> · <a href="#man-v969" onclick="return !manualGaa('man-v969')">v9.69</a> · <a href="#man-v968" onclick="return !manualGaa('man-v968')">v9.68</a> · <a href="#man-v967" onclick="return !manualGaa('man-v967')">v9.67</a> · <a href="#man-v966" onclick="return !manualGaa('man-v966')">v9.66</a> · <a href="#man-v965" onclick="return !manualGaa('man-v965')">v9.65</a> · <a href="#man-v964" onclick="return !manualGaa('man-v964')">v9.64</a> · <a href="#man-v963" onclick="return !manualGaa('man-v963')">v9.63</a> · <a href="#man-v962" onclick="return !manualGaa('man-v962')">v9.62</a> · <a href="#man-v961" onclick="return !manualGaa('man-v961')">v9.61</a> · <a href="#man-v960" onclick="return !manualGaa('man-v960')">v9.60</a> · <a href="#man-v959" onclick="return !manualGaa('man-v959')">v9.59</a> · <a href="#man-v958" onclick="return !manualGaa('man-v958')">v9.58</a> · <a href="#man-v957" onclick="return !manualGaa('man-v957')">v9.57</a> · <a href="#man-v956" onclick="return !manualGaa('man-v956')">v9.56</a> · <a href="#man-v955" onclick="return !manualGaa('man-v955')">v9.55</a> · <a href="#man-v954" onclick="return !manualGaa('man-v954')">v9.54</a> · <a href="#man-v953" onclick="return !manualGaa('man-v953')">v9.53</a> · <a href="#man-v952" onclick="return !manualGaa('man-v952')">v9.52</a> · <a href="#man-v951" onclick="return !manualGaa('man-v951')">v9.51</a> · <a href="#man-v950" onclick="return !manualGaa('man-v950')">v9.50</a> · <a href="#man-v949" onclick="return !manualGaa('man-v949')">v9.49</a> · <a href="#man-v948" onclick="return !manualGaa('man-v948')">v9.48</a> · <a href="#man-v947" onclick="return !manualGaa('man-v947')">v9.47</a> · <a href="#man-v946" onclick="return !manualGaa('man-v946')">v9.46</a> · <a href="#man-v945" onclick="return !manualGaa('man-v945')">v9.45</a> · <a href="#man-v944" onclick="return !manualGaa('man-v944')">v9.44</a> · <a href="#man-v943" onclick="return !manualGaa('man-v943')">v9.43</a> · <a href="#man-v942" onclick="return !manualGaa('man-v942')">v9.42</a> · <a href="#man-v941" onclick="return !manualGaa('man-v941')">v9.41</a> · <a href="#man-v940" onclick="return !manualGaa('man-v940')">v9.40</a> · <a href="#man-v939" onclick="return !manualGaa('man-v939')">v9.39</a> · <a href="#man-v938" onclick="return !manualGaa('man-v938')">v9.38</a> · <a href="#man-v937" onclick="return !manualGaa('man-v937')">v9.37</a> · <a href="#man-v936" onclick="return !manualGaa('man-v936')">v9.36</a> · <a href="#man-v935" onclick="return !manualGaa('man-v935')">v9.35</a> · <a href="#man-v934" onclick="return !manualGaa('man-v934')">v9.34</a> · <a href="#man-v933" onclick="return !manualGaa('man-v933')">v9.33</a> · <a href="#man-v932" onclick="return !manualGaa('man-v932')">v9.32</a> · <a href="#man-v931" onclick="return !manualGaa('man-v931')">v9.31</a> · <a href="#man-v930" onclick="return !manualGaa('man-v930')">v9.30</a> · <a href="#man-v929" onclick="return !manualGaa('man-v929')">v9.29</a> · <a href="#man-v928" onclick="return !manualGaa('man-v928')">v9.28</a> · <a href="#man-v927" onclick="return !manualGaa('man-v927')">v9.27</a> · <a href="#man-v926" onclick="return !manualGaa('man-v926')">v9.26</a> · <a href="#man-v925" onclick="return !manualGaa('man-v925')">v9.25</a> · <a href="#man-v924" onclick="return !manualGaa('man-v924')">v9.24</a> · <a href="#man-v923" onclick="return !manualGaa('man-v923')">v9.23</a> · <a href="#man-v922" onclick="return !manualGaa('man-v922')">v9.22</a> · <a href="#man-v921" onclick="return !manualGaa('man-v921')">v9.21</a> · <a href="#man-v920" onclick="return !manualGaa('man-v920')">v9.20</a> · <a href="#man-v919" onclick="return !manualGaa('man-v919')">v9.19</a> · <a href="#man-v918" onclick="return !manualGaa('man-v918')">v9.18</a> · <a href="#man-v917" onclick="return !manualGaa('man-v917')">v9.17</a> · <a href="#man-v916" onclick="return !manualGaa('man-v916')">v9.16</a> · <a href="#man-v915" onclick="return !manualGaa('man-v915')">v9.15</a> · <a href="#man-v914" onclick="return !manualGaa('man-v914')">v9.14</a> · <a href="#man-v913" onclick="return !manualGaa('man-v913')">v9.13</a> · <a href="#man-v912" onclick="return !manualGaa('man-v912')">v9.12</a> · <a href="#man-v911" onclick="return !manualGaa('man-v911')">v9.11</a> · <a href="#man-v910" onclick="return !manualGaa('man-v910')">v9.10</a> · <a href="#man-v99" onclick="return !manualGaa('man-v99')">v9.9</a> · <a href="#man-v98" onclick="return !manualGaa('man-v98')">v9.8</a> · <a href="#man-v97" onclick="return !manualGaa('man-v97')">v9.7</a> · <a href="#man-v96" onclick="return !manualGaa('man-v96')">v9.6</a> · <a href="#man-v95" onclick="return !manualGaa('man-v95')">v9.5</a> · <a href="#man-v94" onclick="return !manualGaa('man-v94')">v9.4</a> · <a href="#man-v93" onclick="return !manualGaa('man-v93')">v9.3</a> · <a href="#man-v92" onclick="return !manualGaa('man-v92')">v9.2</a> · <a href="#man-v91" onclick="return !manualGaa('man-v91')">v9.1</a> · <a href="#man-v90" onclick="return !manualGaa('man-v90')">v9.0</a> · <a href="#man-v89" onclick="return !manualGaa('man-v89')">v8.9</a> · <a href="#man-v88" onclick="return !manualGaa('man-v88')">v8.8</a> · <a href="#man-v87" onclick="return !manualGaa('man-v87')">v8.7</a> · <a href="#man-v86" onclick="return !manualGaa('man-v86')">v8.6</a> · <a href="#man-v85" onclick="return !manualGaa('man-v85')">v8.5</a> · <a href="#man-v84" onclick="return !manualGaa('man-v84')">v8.4</a> · <a href="#man-v83" onclick="return !manualGaa('man-v83')">v8.3</a> · <a href="#man-v82" onclick="return !manualGaa('man-v82')">v8.2</a> · <a href="#man-v81" onclick="return !manualGaa('man-v81')">v8.1</a> · <a href="#man-v80" onclick="return !manualGaa('man-v80')">v8.0</a> · <a href="#man-v79" onclick="return !manualGaa('man-v79')">v7.9</a> · <a href="#man-v78" onclick="return !manualGaa('man-v78')">v7.8</a> · <a href="#man-v77" onclick="return !manualGaa('man-v77')">v7.7</a> · <a href="#man-v76" onclick="return !manualGaa('man-v76')">v7.6</a> · <a href="#man-v75" onclick="return !manualGaa('man-v75')">v7.5</a> · <a href="#man-v74" onclick="return !manualGaa('man-v74')">v7.4</a> · <a href="#man-v73" onclick="return !manualGaa('man-v73')">v7.3</a> · <a href="#man-v72" onclick="return !manualGaa('man-v72')">v7.2</a> · <a href="#man-v71" onclick="return !manualGaa('man-v71')">v7.1</a> · <a href="#man-v70" onclick="return !manualGaa('man-v70')">v7.0</a> · <a href="#man-v69" onclick="return !manualGaa('man-v69')">v6.9</a> · <a href="#man-v68" onclick="return !manualGaa('man-v68')">v6.8</a> · <a href="#man-v67" onclick="return !manualGaa('man-v67')">v6.7</a> · <a href="#man-v66" onclick="return !manualGaa('man-v66')">v6.6</a></div>
 <h2 id="man-emne-kom">Kom i gang</h2>
 <h3 id="man-kom-i-gang">Kom i gang på fem minutter</h3>
 <ol>
@@ -1380,6 +1380,10 @@ header#tb[data-tb="kompakt"].stat .tbs,header#tb[data-tb="minimal"].stat .tbs{op
 <li><b>Øverst</b> står kun <b>🔍 Søg</b> og statuslinjen, så vinduerne får mere plads.</li>
 <li><b>Søg</b> (Ctrl+K, på Mac ⌘K): skriv et par bogstaver, fx <i>udgang</i>, <i>pigernes</i>, <i>editor</i> eller <i>glød</i>, og vælg med pilene og Enter. Søgningen finder knapper i menuerne, vinduer, Scene-faner, forudindstillinger og layouts.</li>
 <li>Knapperne er flyttet, ikke lavet om, så alt virker som før.</li>
+</ul>
+<h3 id="man-v994">Bloknavne i koden (v9.94)</h3>
+<ul>
+<li>36 af kodens 130 blokke har fået navne efter, hvad de gør i dag (fx <i>Foreslå regler</i> i stedet for <i>Forslag i stedet for auto (fase 4)</i>, og <i>Biblioteket</i> uden pakke- og trin-numre). Intet er ændret på skærmen.</li>
 </ul>
 <h3 id="man-v993">Oprydning efter pakke 7, anden bid (v9.93)</h3>
 <ul>
@@ -4018,11 +4022,11 @@ if(typeof module!=='undefined'&&module.exports)module.exports=Rytme;
     37. DANSER: eksempel, Dansemapping og udseender
     38. FASE 2: FORM-EDITOR (trin 1 og 2)
     39. PERFECT 1 OG PERFECT 2 (lyd og vision)
-    40. v5.1: NIVEAUER I FORM-EDITOREN
+    40. v5.1: EDITORENS EGENSKABER PR. NIVEAU (rest; feNiv er altid 4)
     41. v5.2: HÆNDELSER PÅ DE FÆRDIGE FIGURER
-    42. v6.0: ADFÆRD OG LEVENDE PRIKKER
+    42. v6.0: LEVENDE PRIKKER (Adfærd er fjernet i v9.75)
     43. v6.1: HÅNDTAG I EDITORENS BILLEDE
-    44. v6.2: TILPAS TIL SANGEN (dynamiske tærskler)
+    44. v6.2: ADAPTIV TÆRSKEL (dynamiske tærskler; hed Tilpas til sangen)
     45. v6.4: EQ+ (udvidet EQ ved siden af den gamle)
     46. v7.0: SKABELON ERSTATTER DEN URØRTE FIGUR 1
     47. v6.9 / v7.1: MESH 3D (Radial Mesh i rigtig 3D med shaders)
@@ -4038,34 +4042,34 @@ if(typeof module!=='undefined'&&module.exports)module.exports=Rytme;
     57. v6.8: SAMLINGER (faner som i Scene)
     58. v8.3: ARBEJDSFLADE, TOPBAR-LAYOUTS OG OPRYDNING
     59. v8.4: GAIN-STAKKEN VISES OG KORT OVER FORBINDELSERNE
-    60. v8.5: LÅS VINDUER OG STORT SKRIVEBORD
+    60. v8.5: LÅS VINDUER
     61. v8.6: MESH 3D-LYSPANELET I NY STIL, DIODER FØLGER ATTACK OG RELEASE, FULD VISNING MED EN VEJ UD, VINDUER INDENFOR
     62. v8.7: ZONE-TILSTAND (vinduessystem A)
-    63. v8.8: NY BUNDBAR OG SIDEBJÆLKE
+    63. v8.8: BUNDBAR OG SIDEBJÆLKE (bygges og fjernes ved start siden v9.71)
     64. v8.9: LEVENDE BAGGRUND OG GLØD PÅ MÅLERNE
     65. v9.3: EDITOREN RYDDET OP
     66. v9.4: EDITORENS EGENSKABER I NY STIL
     67. v9.5: FORKLARINGER TIL DANSERENS OG DISKOKUGLENS EGENSKABER
-    68. v9.6: LYDKILDE (W31)
+    68. v9.6: LYDKILDE-KORTENE (Lydfil, Generator, Lyd ind; i Sang siden v9.76)
     69. v9.10: SIGNALTYPER (D2)
-    70. v9.9: ROUTER 2.0 MOTOR
-    71. v9.40: ROUTER 2.0-HJÆLPERE
+    70. v9.9: MOTORENS KÆDE: HYSTERESE, HOLD OG SLEW (fra Router 2.0)
+    71. v9.40: HOLD-TRIN, STANDARDKÆDE OG KILDELISTE (fra Router 2.0)
     72. v9.12: FJERNEDE KILDER
     73. v9.13: SMALLE BÅND FOLDET SAMMEN
     74. v9.13: TAKTSLAG AUTO
     75. v9.15: 4 SPOR (STEMS)
-    76. v6.3: SIDEBJÆLKE, TRANSPORT NEDERST OG SØG (Ctrl+K)
+    76. v6.3: SØG (Ctrl+K); sidebjælken og transporten nederst er fjernet i v9.71
     77. Søg (kommandopalet)
     78. FASE 2: MESH-LINJER (tykkelse og lys-flow)
     79. FASE 2: SOLO OG MÆRK PREVIEW
-    80. v9.35: REST AF DUBLET
-    81. v4.0: NUMRE PÅ KNAPPER, DROPDOWNS OG FELTER
+    80. v9.35: EFFEKT-GRUPPERNES NAVNE (fra Dublet)
+    81. v4.0: NUMRE PÅ KNAPPER, DROPDOWNS OG FELTER (slået fra siden v9.71)
     82. v4.9: FLERE MÅDER AT FØDES PÅ
     83. v5.9: TAKT I REALTID SOM KILDE OG HÆNDELSE
-    84. v5.3: ÉT NIVEAU FOR HELE PROGRAMMET
+    84. v5.3: VINDUESLISTEN NIV_VIN OG nivAnvend (rest af Niveau)
     85. v5.8: SCENE-VINDUET
     86. v4.1: OPSÆTNINGER PÅ COMPUTEREN
-    87. v9.19: NODE-EDITOR (TRIN 1)
+    87. v9.19: NODE-EDITOR (TRIN 1): LÆRRED, ZOOM, TEMA OG KONTROLPANEL
     88. v9.20: NODE-EDITOR (TRIN 2): REGLERNE VISES
     89. v9.21: NODE-EDITOR (TRIN 3): LYDKILDE, FFT OG ANALYSER
     90. v9.22: NODE-EDITOR (TRIN 4): RET EN REGEL
@@ -4078,36 +4082,36 @@ if(typeof module!=='undefined'&&module.exports)module.exports=Rytme;
     97. v9.30: NODE-EDITOR (TRIN 12): SCENE-NODER OG EFFEKT-GRUPPER
     98. v9.31: NODE-EDITOR (TRIN 13): ZOOM UD, KUN VALGT KÆDE, DÆMP OG TASTATUR
     99. v9.32: NODE-EDITOR (TRIN 14): LINJER OG GLØD I TSL
-   100. v9.33: NODE-EDITOR (TRIN 15): NYE NAVNE OG · GAMMEL
-   101. v9.34: NODE-EDITOR (TRIN 16): FUNKTIONSLISTE-TJEK
+   100. v9.33: NODE-EDITOR (TRIN 15): PAPIRETS NAVNE
+   101. v9.34: NODE-EDITOR (TRIN 16): KORT OVER FORBINDELSERNE I CTRL+K
    102. v9.36: DOCKING (VINDUESSYSTEM C)
-   103. v9.67: DE FIRE ARBEJDSOMRÅDER (FASE 5, TRIN 5a)
+   103. v9.67: DE FIRE ARBEJDSOMRÅDER
    104. v9.37: TRÆK UDEN MARKERING
    105. v9.38: ALTID SKARPT
    106. v9.69: YDELSE
-   107. v9.71: ÉN LINJE ØVERST (5b)
-   108. v9.72: ÉT TEMA, STØRRELSE OG INDSTILLINGER (5c)
-   109. v9.74: FIGURER, SCENE OG EGENSKABER (6a)
-   110. v9.75: VIS I MATRIX (6b)
-   111. v9.76: SANG-VINDUET (S2)
-   112. v9.77: LYD OVER TID (S3)
-   113. v9.78: NIVEAU (S4)
-   114. v9.79: STEREO (S5)
-   115. v9.80: SPOR MED M/S (S6)
-   116. v9.81: OPRYDNING 7a
-   117. v9.82: KLODSBANEN SLÅS TIL I SCENEN (7b)
-   118. v9.83: DØD KODE FJERNET (7c)
+   107. v9.71: ÉN LINJE ØVERST
+   108. v9.72: ÉT TEMA, STØRRELSE OG INDSTILLINGER
+   109. v9.74: FIGURER, SCENE OG EGENSKABER
+   110. v9.75: VIS I MATRIX
+   111. v9.76: SANG-VINDUET
+   112. v9.77: LYD OVER TID
+   113. v9.78: KORTET NIVEAU (LUFS, topværdi, klip)
+   114. v9.79: KORTET STEREO (goniometer)
+   115. v9.80: SPOR MED M/S
+   116. v9.81: SKJULTE VINDUER OG FJERNEDE LYDLAG-MÅL (oprydning)
+   117. v9.82: KLODSBANEN SLÅS TIL I SCENEN
+   118. v9.83: DØD KODE FJERNET (kun en kommentar)
    119. v9.84: SLÅ ET LYDTRÆK FRA (I STEDET FOR PARKÉR)
-   120. v9.85: PAKKE 7, B1: RYD OP OG BESKYT
-   121. v9.86: PAKKE 7, B2: STARTSKÆRM OG INDLÆST
-   122. v9.87: PAKKE 7, B3: BIBLIOTEKET
-   123. v9.89: PAKKE 7, B5: ÉN VÆRKTØJSLINJE
+   120. v9.85: OPSÆTNINGERNE RYDDET OP (FORINDST, OPS_TEST, Nulstil)
+   121. v9.86: STARTSKÆRM OG INDLÆST
+   122. v9.87: BIBLIOTEKET
+   123. v9.89: ÉN VÆRKTØJSLINJE I NODE-EDITOREN
    124. v9.41: DE 10 VISNINGER I NODE-EDITOREN
    125. v9.42: D2 PÅ LÆRREDET
    126. FÆLLES INDGANG TIL REGLERNE (v9.43)
-   127. v9.51: MATRIXEN (FASE 2 OG 3)
-   128. v9.63: FORSLAG I STEDET FOR AUTO (FASE 4)
-   129. v9.65: PANELET AUTOMATIK (FASE 4, TRIN 4c)
+   127. v9.51: MATRIXEN
+   128. v9.63: FORESLÅ REGLER
+   129. v9.65: PANELET AUTOMATIK
    130. v9.61: NODE-EDITOR: OPSTILLINGER, KOLONNENAVNE DER FØLGER MED, OG SIKRING MOD EN TOM FLADE
    ====================================================================== */
 
@@ -6384,7 +6388,7 @@ function feGendan(j){const d=JSON.parse(j),navn=fase2.objekter[selO]&&fase2.obje
 function feFortryd(){if(FEH.afv){FEH.u.push(FEH.afv);FEH.afv=null}if(!FEH.u.length){msg('Der er intet at fortryde.');return}FEH.r.push(feSnap());feGendan(FEH.u.pop());msg('Fortrudt. '+FEH.u.length+' skridt mere kan fortrydes.')}
 function feGentag(){if(!FEH.r.length){msg('Der er intet at gentage.');return}FEH.u.push(feSnap());feGendan(FEH.r.pop());msg('Gentaget.')}
 
-/* ========== v5.1: NIVEAUER I FORM-EDITOREN ==========
+/* ========== v5.1: EDITORENS EGENSKABER PR. NIVEAU (rest; feNiv er altid 4) ==========
    1 Simpel: skabeloner, navn og placering, fem egenskaber (størrelse, farvetone, drejehastighed, glød, synlighed), Auto-kobl, Levende til og fra (Slag, Tone, Taktslag), kilder: de 14 lydtræk og tre hændelser. Ingen fane D.
    2 Medium: + Figur-generatoren, lagene, cirka 16 almindelige egenskaber, tekstur, Levende (Akkordskift, Tast, Højst samtidig og levetid), kilder: + alle hændelser, gain ved hver kobling, fane D.
    3 Høj: + alle egenskaber undtagen Kloner og dybde/perspektiv, alle 11 fødselsmåder og placering, kilder: + toner og klang og Master Morph Pad, tærskel og Slået fra, danserens bevægelser.
@@ -6400,7 +6404,7 @@ function feKildeOpts(v){return bandOptsAlle(v);/* v9.93: altid alle kilder */con
  let h='<optgroup label="De 14 lydtræk">'+BANDS.map(b=>o(b[0],b[1])).join('')+'</optgroup>';const hn=n===1?HND_KILDER.filter(k=>['hnd:takt','hnd:takt4','hnd:klang:slag'].includes(k.key)):HND_KILDER;h+='<optgroup label="Hændelser">'+hn.map(k=>o(k.key,k.label)).join('')+'</optgroup>';
  if(n>=3){const g=[];Rytme.ANA_KILDER.filter(k=>!/^Eksperimentel/.test(k.gruppe)).forEach(k=>{let x=g.find(q=>q.n===k.gruppe);if(!x){x={n:k.gruppe,l:[]};g.push(x)}x.l.push(k)});g.forEach(x=>{h+='<optgroup label="'+esc(x.n)+'">'+x.l.map(k=>o(k.key,k.label)).join('')+'</optgroup>'});}
  if(v&&h.indexOf('value="'+v+'"')<0)h+='<optgroup label="Valgt (fra et højere niveau)">'+o(v,bandNavn(v))+'</optgroup>';return h}
-/* ========== SLUT: NIVEAUER ========== */
+/* ========== SLUT: EGENSKABER PR. NIVEAU ========== */
 
 /* ========== v5.2: HÆNDELSER PÅ DE FÆRDIGE FIGURER ==========
    Når en skabelon laves med "Med hændelser" slået til (standard), lægges forbindelser fra hændelserne oven i skabelonens egne forbindelser fra lydtrækkene. De gamle bliver, så figurerne også bevæger sig med generatoren og lyd ind, hvor der ikke findes taktslag og afsnit. Morgenstjernen er uændret.
@@ -6418,14 +6422,14 @@ function skabHnd(op,foer){const R=SKAB_HND[op];if(!R||set.skabHnd!==true)return 
  if(n){renderMaps();save();try{syncTargets()}catch(e){}}return n}
 /* ========== SLUT: HÆNDELSER PÅ FIGURERNE ========== */
 
-/* ========== v6.0: ADFÆRD OG LEVENDE PRIKKER ========== (v9.75: Adfærd er fjernet; kun de levende prikker er tilbage)
+/* ========== v6.0: LEVENDE PRIKKER (Adfærd er fjernet i v9.75) ========== (v9.75: Adfærd er fjernet; kun de levende prikker er tilbage)
    Fanen ★ Adfærd: et bibliotek af adfærd, man lægger på figuren med ét klik (som Apple Motions Behaviors). Hver adfærd er en eller flere almindelige forbindelser (eller Levende), så alt andet i programmet virker som før. Den lægges på det valgte lag og foretrækker figurens egne egenskaber (danserens Hop og Spot, discokuglens Glimt og farve), ellers de almindelige (Løft, Glød, Farvetone). Til-værdien sættes, så bevægelsen er tydelig, men kan finjusteres.
    Levende prikker: under hver koblet egenskab (i fane C og i Adfærd) viser en prik forbindelsens værdi lige nu (venstre = fra, højre = til) og bliver gul, når kilden slår ud. */
 /* v9.75: Adfærd (ADF, adfFind, adfAktiv, adfSlaa, feAdfaerd) er fjernet: reglerne laves i matrixen eller med Foreslå regler */
 /* levende prikker: hvert billede, mens editoren er åben */
 let feLiveT=0;function feLiveTik(){const w=$('w6');if(!w||w.hidden||w.classList.contains('min'))return;const nu=performance.now();if(nu-feLiveT<40)return;feLiveT=nu;const els=document.querySelectorAll('#fctl .fe-live[data-lt]');if(!els.length)return;const idx={};maps.forEach((m,i)=>{idx[m.effect]=i});
  els.forEach(el=>{const i=idx[el.dataset.lt];const v=i===undefined?0:Math.max(0,Math.min(1,+(env[i]||0)));el.style.setProperty('--v',v.toFixed(3));el.classList.toggle('hit',v>.6)})}
-/* ========== SLUT: ADFÆRD ========== */
+/* ========== SLUT: LEVENDE PRIKKER ========== */
 
 /* ========== v6.1: HÅNDTAG I EDITORENS BILLEDE ==========
    Det valgte lag får en stiplet ramme med fire hjørner (størrelse), en drejeknap over rammen (rotation) og nede i hjørnet et lille kort over scenen, hvor figurens prik kan trækkes (placering). Rammen bygger på hvile-værdierne (Fra): radius = billedhøjde × 2,2 × størrelse × skala, flyttet op med Løft og drejet med Rotation, som figuren tegnes. Til-værdien følger med: størrelse i samme forhold, rotation med samme forskel. Værdien vises ved musen under trækket. Alt kan fortrydes. */
@@ -6458,7 +6462,7 @@ function feHaandRam(q){const G=feHaandGeo();if(!G)return null;const P=feHaandPun
  const slut=e=>{if(!FH.drag)return;const h=FH.drag,t=FH.sidst;FH.drag=null;FH.sidst=null;c.style.cursor='';try{formUI()}catch(x){}if(t)msg(t+'. '+(h==='s'?'Til-værdien fulgte med, så figuren stadig vokser lige så meget med musikken.':h==='r'?'Drejningen med musikken er uændret.':'Figuren står nu dér på scenen.')+' Fortryd med Ctrl+Z.')};
  c.addEventListener('pointerup',slut);c.addEventListener('pointercancel',slut);c.addEventListener('pointerleave',()=>{if(!FH.drag){FH.hover=null;c.style.cursor=''}})}}
 /* ========== SLUT: HÅNDTAG ========== */
-/* ========== v6.2: TILPAS TIL SANGEN (dynamiske tærskler) ==========
+/* ========== v6.2: ADAPTIV TÆRSKEL (dynamiske tærskler; hed Tilpas til sangen) ==========
    Lånt fra dynamisk EQ, men brugt på billedet i stedet for lyden: for hvert af de 14 lydtræk følger programmet niveauet (glidende gennemsnit over cirka 3 sekunder, valgbart 1 til 8). Den tærskel, der bruges, er gennemsnittet plus et antal typiske udsving (som i professionel slag-detektion): din tærskel 0,3 giver 1,2 udsving, højere tærskel flere (mindre følsom). Så hæver den sig, når der er et konstant højt lydtæppe, og sænker sig i stille passager. Den går aldrig under bundgrænsen (standard 0,05) og aldrig over 0,95. Gælder de jævne lydtræk (bas, mid, høj-mid, brilliance, RMS, vokal og klangmålene); kick, snare, hihat og flux er allerede slag-signaler og tilpasses ikke. Hændelser, toner og Morph Pad påvirkes ikke. Lyden og lyd-EQ'en ændres ikke. Slået fra fra start. */
 const TIL={mu:{},dev:{},sidst:{},eff:{}};
 const TIL_SLAG=['kick','snare','hihat','flux'];/* slag-signaler (allerede 0 mellem anslag) tilpasses ikke */
@@ -6473,7 +6477,7 @@ $('eq-tilpas-maerke').onclick=()=>{if($('eq-panel').hidden)$('eq-ops').click()};
 $('eq-tilpas').onchange=e=>{set.tilpas=e.target.checked;TIL.mu={};TIL.eff={};tilpasGem();msg(set.tilpas?'Adaptiv tærskel er slået TIL: tærsklerne følger nu sangen. Den orange streg i EQ viser tærsklen lige nu.':'Adaptiv tærskel er slået fra: tærsklerne står fast, hvor du har sat dem.')};
 $('eq-tilpas-tid').oninput=e=>{set.tilpasTid=+e.target.value;tilpasGem()};$('eq-tilpas-bund').oninput=e=>{set.tilpasBund=+e.target.value;tilpasGem()};
 tilpasUI();
-/* ========== SLUT: TILPAS TIL SANGEN ========== */
+/* ========== SLUT: ADAPTIV TÆRSKEL ========== */
 /* ========== v6.4: EQ+ (udvidet EQ ved siden af den gamle) ==========
    Den gamle EQ (W3) er uændret. EQ+ (W24) er en ekstra fane i Scene med de samme søjler og fem ting, der hver kan slås til og fra:
    Vandfald (de sidste cirka 6 sekunder ruller ned under søjlerne som et farvetæppe; lysere = kraftigere), Topværdi-streg (hvor højt hvert bånd har været de sidste 10 sekunder), 🎧 Lyt til ét bånd (klik på en søjle og hør kun dens frekvenser; et højpas- og et lavpasfilter lige før højttalerne, helt åbne, når Lyt er slået fra), 31 smalle bånd i stedet for de 14 lydtræk, og Hvad ligger her? (hvilke instrumenter et bånd typisk fanger, vist ved musen).
@@ -6892,7 +6896,7 @@ $('mvk-png').onclick=()=>{const s=$('mvk-ud').querySelector('svg'),t=mvkSvgTekst
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('mvk').hidden){e.stopPropagation();mvkLuk()}},true);
 $('mvk-aaben').onclick=mvkAaben;
 /* ========== SLUT: GAIN-STAK OG KORT ========== */
-/* ========== v8.5: LÅS VINDUER OG STORT SKRIVEBORD ==========
+/* ========== v8.5: LÅS VINDUER ==========
    🔓/🔒 i topbaren låser alle vinduers plads og størrelse på én gang (de kan ikke trækkes eller gøres større/mindre). Layout-knapperne virker stadig, fordi man selv vælger dem. Valget huskes.
    Skrivebordet (arbejdsfladen) er altid mindst dobbelt så langt som det synlige. ↔ Bredt skrivebord gør det dobbelt så bredt; layoutene bruger så hele bredden, så store vinduer kan stå side om side, og man ruller vandret. Valget huskes. */
 function skrivebordOpdat(){const ws=$('ws');if(!ws)return;let p=$('ws-plads');if(!p){p=document.createElement('div');p.id='ws-plads';p.setAttribute('aria-hidden','true');ws.prepend(p)}p.style.width=Math.round(ws.clientWidth*(set.bredt?2:1))+'px';p.style.height=Math.round(ws.clientHeight*2)+'px'}
@@ -6905,7 +6909,7 @@ document.addEventListener('click',e=>{if(e.target.closest('#laas-knap')){set.laa
 document.addEventListener('pointerdown',e=>{if(!set.laast)return;const w=e.target.closest&&e.target.closest('#ws > .win');if(!w)return;const r=w.getBoundingClientRect();if(e.clientX>r.right-18&&e.clientY>r.bottom-18)laasHint()},true);
 addEventListener('resize',()=>skrivebordOpdat());
 setTimeout(laasUI,60);
-/* ========== SLUT: LÅS OG SKRIVEBORD ========== */
+/* ========== SLUT: LÅS VINDUER ========== */
 /* ========== v8.6: MESH 3D-LYSPANELET I NY STIL, DIODER FØLGER ATTACK OG RELEASE, FULD VISNING MED EN VEJ UD, VINDUER INDENFOR ==========
    1) 💡 Lys-panelet i Mesh 3D: glas og glød som router-boksen, grupper der kan foldes sammen, en forklaring under hver skyder og en ?-knap, der åbner manualen ved det rigtige afsnit. Denne m3LysUI erstatter den gamle (samme knapper og navne, så gem og hent af lys virker som før).
    2) Pumpede dioder: "Fart følger attack og release" (slået til fra start). Kort attack = toget skyder hurtigt af sted; langt attack = blød start. Kort release = kort tog, der er hurtigt væk; lang release = længere tog, der løber langsommere.
@@ -6992,7 +6996,7 @@ document.addEventListener('keydown',e=>{if(e.key!=='Escape'||!set.zoner)return;c
 addEventListener('resize',()=>{if(set.zoner)zonerAnvend()});
 setTimeout(()=>{const tb=$('lay3');if(tb&&!$('zon-knap')){tb.insertAdjacentHTML('beforeend','<button class="ghost" id="zon-knap" aria-pressed="false" title="Zone-tilstand: Scene, Editor og Arbejdsfelt fylder skærmen uden at overlappe. Slå fra for frie vinduer.">▦ Zoner</button>');$('zon-knap').onclick=()=>zonerSaet(!set.zoner)}zonerSaet(!!set.zoner);if(set.zoner&&set.lay3)zonerLayout(set.lay3,true)},700);
 /* ========== SLUT: ZONE-TILSTAND ========== */
-/* ========== v8.8: NY BUNDBAR OG SIDEBJÆLKE ==========
+/* ========== v8.8: BUNDBAR OG SIDEBJÆLKE (bygges og fjernes ved start siden v9.71) ==========
    Bundbaren (#tp) i glas: afspilning; tid og afsnit (Afsnit 2/5 · drop om 4,2 s); A/B-sløjfe (A, B og ⟲, de samme som Tidslinjens, med klippet vist som et gult felt på positionslinjen); rytme (tempo, fire prikker der blinker på taktslagene, og toneart); lyd; og til højre de sjældne ting som små knapper: Lyd ind og Projektor, plus billeder i sekundet.
    Sidebjælken (#sb) i glas med tegnede ikoner i stedet for emoji. */
 const SB_IKON={musik:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',scene:'<rect x="3" y="5" width="18" height="13" rx="2"/><path d="M8 21h8"/>',editor:'<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/>',forb:'<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="18" r="2.5"/><path d="M8.5 6.5l7 4.5M8.5 17.5l7-4.5"/>',galleri:'<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/>',ops:'<path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="17" r="2"/>',vis:'<rect x="3" y="7" width="18" height="10" rx="2"/><circle cx="15" cy="12" r="2.5"/><path d="M6 20l2-3M18 20l-2-3"/>',mere:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',hjaelp:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17.5v.5"/>'};
@@ -7094,7 +7098,7 @@ Object.assign(PROP_FORKL,{
 Object.keys(PROP_FORKL).filter(k=>/^d[A-Z]/.test(k)).forEach(k=>{if(!PROP_MAN[k])PROP_MAN[k]=/^dStang/.test(k)?'man-piger':'man-danser'});
 Object.keys(PROP_FORKL).filter(k=>/^k[A-Z]/.test(k)).forEach(k=>PROP_MAN[k]='man-disko');
 /* ========== SLUT: FORKLARINGER TIL DANSER OG DISKOKUGLE ========== */
-/* ========== v9.6: LYDKILDE (W31) ==========
+/* ========== v9.6: LYDKILDE-KORTENE (Lydfil, Generator, Lyd ind; i Sang siden v9.76) ==========
    Ny fane i Arbejdsfeltet i stedet for Generator. Fire kort: Lydfil (træk en fil ind eller klik; navn, længde, tempo, toneart og om analysen kører), Generator (genre, tempo, tæthed, afspil, nyt mønster; styrer den eksisterende generator, hvis fulde flade kan åbnes under Avanceret), Lyd ind (mikrofon eller fanelyd). v9.12: kortet Lydkort er fjernet. */
 function lksTal(t){t=Math.max(0,t||0);return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
 function lksByg(){const box=$('lks');if(!box||box.dataset.klar)return;box.dataset.klar='1';
@@ -7122,7 +7126,7 @@ function lksTik(){const box=$('lks');if(!box)return;if(!box.dataset.klar){if($('
  let h='';if(fil){h='<dt>Fil</dt><dd>'+esc(fil.name)+'</dd><dt>Længde</dt><dd>'+(typeof dur==='number'&&dur>0?lksTal(dur):'…')+'</dd><dt>Tempo</dt><dd>'+(P&&P.bpm?Math.round(P.bpm)+' BPM':'…')+'</dd><dt>Toneart</dt><dd>'+(P&&P.toneart&&P.toneart.navn?esc(P.toneart.navn):'…')+'</dd><dt>Status</dt><dd>'+(analyse?'<span class="lks-analyse">Analyserer …</span>':'Klar')+'</dd>'}else h='<dt>Fil</dt><dd>Ingen fil valgt endnu</dd>';
  const info=$('lks-info');if(info&&info.__h!==h){info.__h=h;info.innerHTML=h}}
 setInterval(lksTik,300);
-/* ========== SLUT: LYDKILDE ========== */
+/* ========== SLUT: LYDKILDE-KORTENE ========== */
 
 /* ========== v9.10: SIGNALTYPER (D2) ==========
    Hver kilde får en type og en mappe efter valget D2 (vores navn for sorteringen af signaler):
@@ -7153,7 +7157,7 @@ function sigInfo(k){k=String(k||'');if(k.startsWith('stem:'))return sigInfo(k.sp
 const sigSlag=k=>sigInfo(k).type==='slag';
 /* ========== SLUT: SIGNALTYPER ========== */
 
-/* ========== v9.9: ROUTER 2.0 MOTOR ==========
+/* ========== v9.9: MOTORENS KÆDE: HYSTERESE, HOLD OG SLEW (fra Router 2.0) ==========
    Forbindelsernes motor (Rytme.koer) i den faste kæde fra planen: vend om → tærskel med hysterese → kurve → gain → attack og release → hold → slew.
    Nyt i kæden (kun når de er sat; ellers regner den præcis som før):
    - Hysterese (m.hyst, fagudtryk: to tærskler): effekten tænder ved tærsklen og slukker først, når lyden er hysterese under den, så den ikke flimrer.
@@ -7187,9 +7191,9 @@ Rytme.koer=function(maps,o){maps.forEach((m,i)=>{
  const vv=Number.isFinite(+v)?(m.inv?1-v:+v):0;R2M.v[i]=vv;R2M.thr[i]=mm0.thr;R2M.ud[i]=cur;R2M.port[i]=gated;
  const nu=performance.now();if(!(R2M.pk[i]>=vv)||nu-(R2M.pkT[i]||0)>1500){R2M.pk[i]=vv;R2M.pkT[i]=nu}
  let H=R2M.h[i];if(!H)H=R2M.h[i]={ind:new Float32Array(R2M.N),ud:new Float32Array(R2M.N),p:0};H.ind[H.p]=vv;H.ud[H.p]=cur;H.p=(H.p+1)%R2M.N})};
-/* ========== SLUT: ROUTER 2.0 MOTOR ========== */
+/* ========== SLUT: MOTORENS KÆDE ========== */
 
-/* ========== v9.40: ROUTER 2.0-HJÆLPERE ==========
+/* ========== v9.40: HOLD-TRIN, STANDARDKÆDE OG KILDELISTE (fra Router 2.0) ==========
    Resten af Router 2.0 (v9.9–v9.11). Vinduet Router blev slettet i v9.35; i v9.40 er Router-boksens tegninger, knapper, skydere, lyttere og den
    tegneløkke, der kørte hvert billede, fjernet. Tilbage er det, Node-editoren bruger: Holds trin (R2_HOLD), kædens standard (R2_STD), Hold-teksten,
    klods-spor, om Spærretid virker, hvor en kilde er målt (r2Hvor), alle kilder (r2AlleKilder) og D2-rækkefølgen (r2Orden). */
@@ -7209,7 +7213,7 @@ function r2Hue(k){return R2_TYPEHUE[sigInfo(k).type]}
 /* Kildernes rækkefølge: D2 (mappe efter musik, så type, så navn) eller den rækkefølge, de bruges i. */
 function r2Orden(kilder){if(set.r2sort!=='d2')return kilder.slice();return kilder.slice().sort((a,b)=>{const A=sigInfo(a),B=sigInfo(b);return SIG_MAPPER.indexOf(A.mappe)-SIG_MAPPER.indexOf(B.mappe)||R2_TYPEORD.indexOf(A.type)-R2_TYPEORD.indexOf(B.type)||String(bandNavn(a)).localeCompare(String(bandNavn(b)),'da')})}
 function r2AlleKilder(){const L=[];const add=k=>{if(k&&!L.includes(k))L.push(k)};try{BANDS.forEach(b=>add(b[0]));Rytme.ANA_KILDER.forEach(k=>add(k.key));HND_KILDER.forEach(k=>add(k.key||k[0]));stemKilder().forEach(add)}catch(e){}return L}
-/* ========== SLUT: ROUTER 2.0-HJÆLPERE ==========
+/* ========== SLUT: HOLD-TRIN, STANDARDKÆDE OG KILDELISTE ==========
 /* ========== v9.12: FJERNEDE KILDER ==========
    Lydkort (kildegruppen lk: fra Lydkosmos) er fjernet i v9.12, fordi det gjorde tingene for komplicerede (se CLAUDE.md). Tagget milepael-med-lydkort er den sidste version med Lydkort.
    Gemte opsætninger, pladser og opsætninger, der bruger en lk:-kilde (som kilde eller som port), går ikke i stykker: forbindelsen bliver stående, men slås fra (m.off), og der kommer en tydelig besked.
@@ -7360,7 +7364,7 @@ function stemGrund(m){const t=stemValg(m);if(!t)return'';return t.auto?'<b>Auto-
 
 
 
-/* ========== v6.3: SIDEBJÆLKE, TRANSPORT NEDERST OG SØG (Ctrl+K) ==========
+/* ========== v6.3: SØG (Ctrl+K); sidebjælken og transporten nederst er fjernet i v9.71 ==========
    Topbaren er delt op efter, hvad man laver: en sidebjælke til venstre med store ikoner (Musik, Scene, Editor, Forbindelser, Galleri, Opsætninger, Vis, Mere, Hjælp og Niveau), afspilningen i en bjælke nederst, og øverst kun en tynd linje med søgning og status. De eksisterende knapper er FLYTTET (ikke kopieret), så alt virker som før. De fem gamle menuer ligger samlet og udfoldet under ☰ Mere; visningsknapperne (Sikker visning, Udgangsvindue, Sort skærm, Optag) under 📽 Vis.
    Søg (Ctrl+K eller ⌘K): skriv et par bogstaver for at finde en knap, et vindue, en fane, en opsætning eller et layout; pil op og ned vælger, Enter gør det, Escape lukker. Bygges, når resten af programmet er klar (setTimeout), så alt, den bruger, findes. */
 setTimeout(function(){
@@ -7427,7 +7431,7 @@ setTimeout(function(){
  document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&!e.altKey&&(e.key==='k'||e.key==='K')){e.preventDefault();kp.hidden?kpAabn():kpLuk()}});
  try{tbhSaet()}catch(e){}requestAnimationFrame(()=>{try{tbhSaet();dockOpdat()}catch(e){}});
 },0);
-/* ========== SLUT: SIDEBJÆLKE ========== */
+/* ========== SLUT: SØG (Ctrl+K) ========== */
 
 
 
@@ -7598,16 +7602,16 @@ function miniSync(){if(!document.querySelector('.win.min'))return;const tx=(q,v)
  ls('[data-ms="vis"]','mb-vis');ls('[data-ms="fobj"]','fobj');const k=document.querySelector('[data-ms="kilder"]');if(k)k.value=meshKilder;
  const d=anaNu();tx('[data-mt="tone"]',d&&d.f0>0?noteNavn(d.f0)+' · '+Math.round(d.f0)+' Hz · '+Math.round(d.klar*100)+' %':d?'ingen tydelig tone':'udvid vinduet for at måle')}
 $('rwin').onclick=ordnVinduer;$('mina').onclick=minimerAlle;
-/* ========== v9.35: REST AF DUBLET ==========
+/* ========== v9.35: EFFEKT-GRUPPERNES NAVNE (fra Dublet) ==========
    Dublet (W8) er slettet i v9.35 (brugerens valg). Effekt-gruppernes navne bruges stadig af Node-editoren, Radial Mesh og Mesh 3D, så de står her. */
 const DUB_KASSER=['Scene','Lys og former','Bane','Efterspil og orden','Lyd','Figurer'];
 const DUB_KASSE={farve:'Scene',zoom:'Scene',ryst:'Scene',strobe:'Scene',fart:'Scene',puls:'Lys og former',glod:'Lys og former',ring:'Lys og former',burst:'Lys og former',daempring:'Lys og former',sky:'Lys og former',banelys:'Bane',bolge:'Bane',slange:'Bane',slange_farve:'Bane',ekko:'Efterspil og orden',usikker:'Efterspil og orden',hale:'Efterspil og orden',relation:'Efterspil og orden',fokus:'Efterspil og orden',sloer:'Efterspil og orden'};
 const DUB_KORT={fokus:'Prioritet (fokus)',relation:'Relationer',hale:'Halespor',sloer:'Dybdeskarphed',daempring:'Dæmpningsringe',banelys:'Spor-lys (alle)',slange:'Slange: bølge',slange_farve:'Slange: farve','lyd:klik':'Klik','lyd:tone':'Tone','lyd:suus':'Suus',usikker:'Usikkerhedssky',ekko:'Ekko-skygger'};
-/* ========== SLUT: REST AF DUBLET ========== */
+/* ========== SLUT: EFFEKT-GRUPPERNES NAVNE ========== */
 
 
 
-/* ========== v4.0: NUMRE PÅ KNAPPER, DROPDOWNS OG FELTER ========== */
+/* ========== v4.0: NUMRE PÅ KNAPPER, DROPDOWNS OG FELTER (slået fra siden v9.71) ========== */
 /* Hvert vindue nummererer sine knapper (K), dropdown-menuer (V for valg) og felter (F: skydere, afkrydsning, tekst og tal) i den rækkefølge, de står: W5:K7 er syvende knap i W5, W5:V2 anden dropdown. Topbaren og dens menuer hedder T. Numrene lægges i et lag oven på siden (de skubber ikke til noget) og vises kun for det, der kan ses. Listen regnes igen hvert 1,5 sekund, så nye rækker (fx en ny forbindelse i Mapping) får numre. Nye knapper kan få numrene efter dem til at skifte. */
 const NRK={til:false,liste:[],lag:null,pulje:[],t:0,byg:0};
 function nrkByg(){const L=[],kode=(rod,pre)=>{const c={K:0,V:0,F:0};rod.querySelectorAll('button,select,input,textarea').forEach(el=>{if(el.type==='hidden'||el.closest('.wmini')||el.closest('#nrk-lag'))return;const t=el.tagName==='BUTTON'?'K':el.tagName==='SELECT'?'V':'F';L.push([el,pre+':'+t+(++c[t])])})};
@@ -7704,7 +7708,7 @@ function lbtTik(){const nu=performance.now()/1000,s=TAKT.tilstand(nu),kick=+(lv.
 /* ========== SLUT: TAKT I REALTID ========== */
 
 
-/* ========== v5.3: ÉT NIVEAU FOR HELE PROGRAMMET ==========
+/* ========== v5.3: VINDUESLISTEN NIV_VIN OG nivAnvend (rest af Niveau) ==========
    Knappen Niveau i topbaren styrer hele programmet (Form-editorens niveauknap viser det samme og ændrer det samme). Samme fire trin overalt:
    1 Simpel: vinduerne Live preview (W2), Form-editor (W6), Radial Mesh (W5), Mapping (W12) og Opsætninger (W13). 17 kilder. Mapping viser kilde, mål og gain.
    2 Medium: + Tidslinje (W1), EQ (W3), Generator (W4), Dublet (W8) og Show (W17). 32 kilder. + tærskel.
@@ -7719,7 +7723,7 @@ function nivAnvend(){const n=4/* v9.71: Niveau er fjernet; alle vinduer vises (E
  try{dockOpdat()}catch(e){}try{if(typeof fgFaner==='function')Object.keys(FG).forEach(g=>{fgFaner(g);const a=set.fg[g].aktiv;if(fgIGruppe(a)&&$(a).classList.contains('niv-skjult')){const f=FG[g].faner.find(x=>fgIGruppe(x[0])&&!$(x[0]).classList.contains('niv-skjult'));if(f)fgVaelg(g,f[0],true)}})}catch(e){}try{if(typeof scFaner==='function'){scFaner();if(scIScene(set.scene.aktiv)&&$(set.scene.aktiv).classList.contains('niv-skjult')){const f=SC_FANER.find(x=>scIScene(x[0])&&!$(x[0]).classList.contains('niv-skjult'));if(f)scVaelg(f[0],true)}}}catch(e){}}
 /* v9.93: nivSaet, NIV_KNAP og lytteren til #tb-niv er fjernet (Niveau forsvandt i v9.71) */
 nivAnvend();
-/* ========== SLUT: ÉT NIVEAU ========== */
+/* ========== SLUT: VINDUESLISTEN ========== */
 
 /* ========== v5.8: SCENE-VINDUET ==========
    Live preview (W2), Radial Mesh (W5), Routing-overblik (W10), EQ (W3), Master Morph Pad (W11), Dublet (W8) og Lyd i 3D (W9) bor som faner i ét vindue, Scene (W23), med store skifteknapper. Den valgte fane fylder vinduet; de andre er usynlige, men tegner videre, hvis de er udgangsvinduets kilde, så projektoren aldrig fryser. Dublet, Lyd i 3D, Routing og Morph Pad sættes på pause, når de ikke er valgt (medmindre de er projektorens kilde).
@@ -7788,7 +7792,7 @@ async function opsImport(f){let d;try{d=JSON.parse(await f.text())}catch(e){msg(
 
 
 
-/* ========== v9.19: NODE-EDITOR (TRIN 1) ==========
+/* ========== v9.19: NODE-EDITOR (TRIN 1): LÆRRED, ZOOM, TEMA OG KONTROLPANEL ==========
    Node-editoren (vores navn; fagudtryk: node editor) som fanen Node-editor i Arbejdsfeltet (W33) og layoutet Noder i topbaren.
    Trin 1 af 16 (docs/PLAN-NODE-EDITOREN.md): kun lærredet, de 9 kolonner, værktøjslinjen med zoom og Tilpas, og kontrolpanelet.
    Der er ingen noder endnu, og intet i maps ændres.
@@ -7851,7 +7855,7 @@ function neGem(){clearTimeout(NE.gemT);NE.gemT=setTimeout(()=>{set.ne=Object.ass
 /* Layoutet Noder uden zone-tilstand: vælg fanen Node-editor i Arbejdsfeltet (i zone-tilstand gør ZONE_PLAN det). */
 {const gl=window.lay3Anvend;window.lay3Anvend=function(k){const r=gl.apply(this,arguments);if(k==='noder'&&!set.zoner){try{fgVaelg('lyd','w33',true);fgVisHost('lyd')}catch(e){}}return r}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',neByg);else setTimeout(neByg,0);
-/* ========== SLUT: NODE-EDITOR (TRIN 1) ========== */
+/* ========== SLUT: NODE-EDITOR (TRIN 1): LÆRRED, ZOOM, TEMA OG KONTROLPANEL ========== */
 /* ========== v9.20: NODE-EDITOR (TRIN 2): REGLERNE VISES ==========
    Trin 2 af 16 (docs/PLAN-NODE-EDITOREN.md): noderne Lydtræk → Regel → Figur → Mål og linjerne mellem dem bygges ud fra maps (forbindelserne).
    Kun til at se på: intet i maps ændres. Indstillinger rettes stadig i Mapping og Router, og noderne følger med.
@@ -8856,7 +8860,7 @@ function ne14Start(){const rod=$('ne');if(!rod||!NE.byg){setTimeout(ne14Start,30
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(ne14Start,0));else setTimeout(ne14Start,0);
 /* ========== SLUT: NODE-EDITOR (TRIN 14): LINJER OG GLØD I TSL ========== */
-/* ========== v9.33: NODE-EDITOR (TRIN 15): NYE NAVNE OG · GAMMEL ==========
+/* ========== v9.33: NODE-EDITOR (TRIN 15): PAPIRETS NAVNE ==========
    Trin 15 af 16 (papirets afsnit 2 og 8): navnene fra papiret står nu i hele programmet (Adaptiv tærskel, Gate og Gate-tærskel, Auto-mapping,
    Normalisering: Adaptiv · Fast, Auto-valg, Opsætning 1–20, Sammenlign 1 ↔ 2, opsætning, Scene-effekter). De interne nøgler er de samme
    (rytme-A … rytme-T, set.tilpas, m.port, mode 'auto'), så gemte opsætninger åbnes som før; plads A vises som Opsætning 1 (slotNr).
@@ -8868,15 +8872,15 @@ function ne15Gammel(){NE15_GAMMEL.forEach(id=>{document.querySelectorAll('[data-
 {const gl=fgFaner;window.fgFaner=function(){const r=gl.apply(this,arguments);ne15Gammel();return r}}
 {const gl=scFaner;window.scFaner=function(){const r=gl.apply(this,arguments);ne15Gammel();return r}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(ne15Gammel,0));else setTimeout(ne15Gammel,0);setTimeout(ne15Gammel,1500);
-/* ========== SLUT: NODE-EDITOR (TRIN 15): NYE NAVNE OG · GAMMEL ========== */
-/* ========== v9.34: NODE-EDITOR (TRIN 16): FUNKTIONSLISTE-TJEK ==========
+/* ========== SLUT: NODE-EDITOR (TRIN 15): PAPIRETS NAVNE ========== */
+/* ========== v9.34: NODE-EDITOR (TRIN 16): KORT OVER FORBINDELSERNE I CTRL+K ==========
    Trin 16 af 16 (papirets afsnit 8): tabellen docs/node-editoren/FUNKTIONSLISTE-TJEK.md har hver linje fra FUNKTIONER.md og dens plads i
    Node-editoren (lavet, delvis, mangler eller ikke nødvendig); testen tests/29-funktionsliste.js går alle linjer igennem.
    - Kort over forbindelserne (Mermaid, PNG, SVG) må ikke forsvinde: det åbnes nu også fra Node-editorens Ctrl+K (Knapper · Node-editor).
    - v9.55: tallene fra funktionslisten vises ikke mere (planen P8.2: ingen udvikler-tekst på skærmen, og reglen om funktionslisten gælder ikke længere).
    - Intet gammelt vindue fjernes uden brugerens besked. */
 {const gl=neKpPunkter;window.neKpPunkter=function(L){gl(L);if(!NE.byg||typeof mvkAaben!=='function')return;L.push({n:'Kort over forbindelserne (Mermaid, PNG, SVG)',kat:'Knapper · Node-editor',fn:()=>mvkAaben(),ikon:'🗺'})}}
-/* ========== SLUT: NODE-EDITOR (TRIN 16): FUNKTIONSLISTE-TJEK ========== */
+/* ========== SLUT: NODE-EDITOR (TRIN 16): KORT OVER FORBINDELSERNE I CTRL+K ========== */
 /* ========== v9.36: DOCKING (VINDUESSYSTEM C) ==========
    Brugerens valg C (8. november 2026, 43" skærm): ét docking-system (fagudtryk: docking) i stedet for zonerne og de frie vinduer.
    - Arbejdsfladen er delt i zoner (vores navn). Hver zone har sin egen fanebjælke; hver fane er et vindue (Live preview, Node-editor, Editor …).
@@ -8899,7 +8903,7 @@ function dkStd(k){const SC=DK_SC,AF=DK_AF;return ({
  lyd:{t:'d',r:'v',s:[.6,.4],c:[{t:'d',r:'h',s:[.6,.4],c:[dkZ('sc',SC,'w24'),dkZ('af',['w31','w1','w7','w33'],'w31')]},dkZ('gen',['w4','w15'],'w4')]},
  figurer:{t:'d',r:'h',s:[.55,.45],c:[dkZ('sc',SC,'w2'),dkZ('ed',['w6','w13'],'w6')]},
  noder:{t:'d',r:'v',s:[.3,.7],c:[dkZ('sc',SC,'w2'),dkZ('af',AF,'w33')]}}[k]||null)}
-/* ========== v9.67: DE FIRE ARBEJDSOMRÅDER (FASE 5, TRIN 5a) ==========
+/* ========== v9.67: DE FIRE ARBEJDSOMRÅDER ==========
    Planens fase 5: fire arbejdsområder, Sang, Scene, Regler og Show (tasterne 1 til 4). Hvert er et docking-layout (som Overblik og de andre),
    så stregerne og fanerne kan trækkes, ændringerne huskes, og ↺ Standard sætter det tilbage. Knapperne står først i topbjælken (LAY3).
    De gamle layouts, sidebjælken og bundbjælken ligger der stadig; de fjernes i trin 5b. */
@@ -8911,7 +8915,7 @@ const AO_STD={'ao-sang':()=>dkZ('af',['w35'],'w35'),/* v9.76: ét vindue, Sang *
 {const gl=dkStd;window.dkStd=function(k){return AO_STD[k]?AO_STD[k]():gl(k)}}
 function aoVaelg(k){if(!AO_STD[k])return;try{lay3Anvend(k)}catch(e){console.error(e)}}
 document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||e.key.length!==1)return;const i='1234'.indexOf(e.key);if(i<0)return;const t=e.target;if(t&&t.closest&&t.closest('input,textarea,select,[contenteditable="true"]'))return;e.preventDefault();aoVaelg(AO[i])});
-/* ========== SLUT: DE FIRE ARBEJDSOMRÅDER (FASE 5, TRIN 5a) ========== */
+/* ========== SLUT: DE FIRE ARBEJDSOMRÅDER ========== */
 const dkKopi=x=>JSON.parse(JSON.stringify(x));
 function dkZoner(n,L){L=L||[];if(!n)return L;if(n.t==='z')L.push(n);else n.c.forEach(c=>dkZoner(c,L));return L}
 function dkZoneAf(w){return dkZoner(set.dock).find(z=>z.f.includes(w))||null}
@@ -9090,7 +9094,7 @@ setInterval(sk69UI,500);
 document.addEventListener('change',e=>{if(e.target&&(e.target.id==='kv-skarp'||e.target.id==='tb-skarp')){set.skarp=e.target.value;try{localStorage.setItem('rytme-set',JSON.stringify(set))}catch(x){}try{pvResize()}catch(x){}sk69UI();msg('Skarphed: '+({fuld:'Fuld (skærmens skalering)','2':'højst 2×','1':'1×'}[set.skarp]||set.skarp)+'.')}});
 /* ========== SLUT: YDELSE ========== */
 
-/* ========== v9.71: ÉN LINJE ØVERST (5b) ==========
+/* ========== v9.71: ÉN LINJE ØVERST ==========
    Planen PLAN-NY-BRUGERFLADE.md, fase 5, trin 5b (pakke 4). Alt samles i én linje øverst: de fire arbejdsområder (#lay3, kun ao-*), afspilningen
    (#tp flyttes ind i linjen; dens CSS gælder stadig), statuslinjen, og til højre Søg, ↶ Fortryd, ↷ Gentag, 💾 Gem ▾ (Opsætning 1–20) og ☰ Mere ▾.
    Fjernes: sidebjælken (#sb) og dens flyout (#sb-fly), bundbjælken (#tp som bjælke), de seks gamle layout-knapper, Mine ▾ og 💾 Gem layout,
@@ -9156,9 +9160,9 @@ function el9Byg(){const tb=$('tb'),tbm=tb&&tb.querySelector('.tbm'),tp=$('tp'),l
  document.body.classList.add('el9');try{nul73Besked()}catch(e){}try{indlStart()}catch(e){}try{startSkVis()}catch(e){}try{tbhSaet()}catch(e){}try{nivAnvend()}catch(e){}try{lay3UI()}catch(e){}requestAnimationFrame(()=>{try{tbhSaet();window.dispatchEvent(new Event('resize'))}catch(e){}});
 }
 setTimeout(el9Byg,1500);
-/* ========== SLUT: ÉN LINJE ØVERST (5b) ========== */
+/* ========== SLUT: ÉN LINJE ØVERST ========== */
 
-/* ========== v9.72: ÉT TEMA, STØRRELSE OG INDSTILLINGER (5c) ==========
+/* ========== v9.72: ÉT TEMA, STØRRELSE OG INDSTILLINGER ==========
    Planen PLAN-NY-BRUGERFLADE.md, fase 5, trin 5c (pakke 4).
    - Tema: set.theme 'warm' (standard; Node-editorens Warm Analog i hele programmet), 'dark' (det gamle blå) eller 'light'. Warm sætter
      html.tema-warm; CSS'en nedenfor giver programmets variabler (--bg, --panel, --ink, --mute, --line, --acc …) temaets farver og retter
@@ -9195,9 +9199,9 @@ function st9Byg(){const sd=$('sd'),pan=$('mere-pan');if(!sd||!pan||!$('mere-lyd'
  if($('sbtn'))$('sbtn').onclick=()=>{try{el9MereLuk()}catch(e){}try{st9Anvend()}catch(e){}$('sd').showModal()};
  st9Anvend();}
 setTimeout(st9Byg,2200);try{document.documentElement.classList.toggle('tema-warm',set.theme==='warm')}catch(e){}
-/* ========== SLUT: ÉT TEMA, STØRRELSE OG INDSTILLINGER (5c) ========== */
+/* ========== SLUT: ÉT TEMA, STØRRELSE OG INDSTILLINGER ========== */
 
-/* ========== v9.74: FIGURER, SCENE OG EGENSKABER (6a) ==========
+/* ========== v9.74: FIGURER, SCENE OG EGENSKABER ==========
    Planens fase 6, trin 6a: 2 · Scene er delt som i de kendte 3D- og tegneprogrammer (fagudtryk: outliner, viewport, inspector):
    vinduet Figurer (w34, listen over figurerne: vælg, øje = på scenen eller ej, omdøb, + Ny figur med Tom figur og skabelonerne,
    Duplikér, Slet, ▲ ▼, Vis i spindelvæv, og Figur-generatoren nederst), scenen i midten, og Egenskaber (Editoren w6 uden
@@ -9232,9 +9236,9 @@ function fg74Tegn(g,W,H){if(!fg74Aktiv())return;const sel=fase2.objekter[selO];g
   const r=e.target.closest&&e.target.closest('[data-fg34]');if(!r)return;if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const i=Math.max(0,Math.min(fase2.objekter.length-1,selO+(e.key==='ArrowDown'?1:-1)));if(i!==selO){selO=i;selL=0;armed=null;formUI();const q=h.querySelector('[data-fg34="'+i+'"]');if(q)q.focus()}}else if(e.key==='Delete'){e.preventDefault();opSlet()}});
  h.addEventListener('focusout',e=>{if(e.target.classList.contains('fg34-omd'))setTimeout(()=>{if(FG34.omd>=0&&!h.contains(document.activeElement))omdFaerdig(true)},0)});
  h.addEventListener('dragstart',e=>e.preventDefault());try{fg34Byg()}catch(e){console.error(e)}})();
-/* ========== SLUT: FIGURER, SCENE OG EGENSKABER (6a) ========== */
+/* ========== SLUT: FIGURER, SCENE OG EGENSKABER ========== */
 
-/* ========== v9.75: VIS I MATRIX (6b) ==========
+/* ========== v9.75: VIS I MATRIX ==========
    Planens trin 6b: fanen Koblinger er blevet til knappen Vis i matrix (i Egenskaber og i Figurer), som åbner 3 · Regler med matrixen
    sat til kun at vise én figur (set.ne.mxKun: alle figurens egenskaber som kolonner, de 14 lydtræk som rækker, chippen "Kun: navn · × alle"
    øverst til venstre i matrixen). Knappen ved en egenskab (data-fe-mx = reglens mål) gør det samme og vælger reglen, hvis den findes.
@@ -9247,9 +9251,9 @@ function neVisAlleFigurer(){mxInd().mxKun='';try{mxGem()}catch(e){}try{mxEfterAl
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#fe-vismx,#fg34-mx,[data-fe-mx],[data-mxkun]');if(!t)return;
  if(t.dataset.mxkun!==undefined){neVisAlleFigurer();return}
  const{o}=cur();if(!o)return;neVisFigur(o.id,t.dataset.feMx||null)});
-/* ========== SLUT: VIS I MATRIX (6b) ========== */
+/* ========== SLUT: VIS I MATRIX ========== */
 
-/* ========== v9.76: SANG-VINDUET (S2) ==========
+/* ========== v9.76: SANG-VINDUET ==========
    Planen docs/PLAN-SANG-OG-ANALYSE.md, trin S2 (layout B, P8.4): arbejdsområdet 1 · Sang er ét vindue (w35) med Lydkilde til venstre
    og fanerne Sang · Spor · Avanceret til højre. Kortene er de gamle vinduers indhold, flyttet ind som DOM-elementer (samme id'er, samme
    lyttere, samme tal): Tidslinje (w1) = Bølgeform og sløjfe, EQ (w3) = Spektrum, Analyse (w7) = Toner og klang, EQ+ (w24) = Spektrum+,
@@ -9293,9 +9297,9 @@ function sgIndstTegn(tving){const k=document.querySelector('#sg [data-sgk="indst
   +rk('Sangens analyse','Sammenligner analysen med lyden i 8 dele af sangen.','<span>'+neHtml(String(T.ana))+'</span> <button class="ghost" data-sgau="anaigen" title="Analysér sangen forfra og gem den nye analyse">Analysér igen</button>'+(typeof atDeleHtml==='function'?atDeleHtml():''))}
 function sgTik(){try{nivStart()}catch(e){}const h=$('sg');if(!h||h.offsetParent===null)return;const st=document.querySelector('#lks .lks-stem');if(st){const f=h.querySelector('.sg-fane[data-sg="spor"]');if(f)f.appendChild(st)}sgMaal();sgIndstTegn()}
 sgByg();
-/* ========== SLUT: SANG-VINDUET (S2) ========== */
+/* ========== SLUT: SANG-VINDUET ========== */
 
-/* ========== v9.77: LYD OVER TID (S3) ==========
+/* ========== v9.77: LYD OVER TID ==========
    Planen docs/PLAN-SANG-OG-ANALYSE.md, afsnit 3: hele sangen på én tidsakse (kortet Lyd over tid, det første under Sang → Avanceret).
    Rækker (set.lot.rk): Afsnit (SHOWPROFIL.sektioner), Bølgeform (lydfilen buf; en nedskaleret kontur regnes én gang i bidder, zoomet
    ind læses prøverne direkte), Spektrogram (A['ana:ls0'..'ls30'] som et billede), Taktslag (SHOWPROFIL.beats, under 90 s udsnit),
@@ -9356,9 +9360,9 @@ function lotTegnFast(g,W,Hh,R,V){g.clearRect(0,0,W,Hh);g.font='11px Schibsted Gr
    g.fillStyle=ink;g.font='700 11px Schibsted Grotesk,sans-serif';g.fillText(navnK+(ms.length?'  →  '+[...new Set(ms.map(m=>effName(m.effect)))].join(', '):'  (ingen regel)'),6,y+3);g.font='11px Schibsted Grotesk,sans-serif'}
   y+=h})}
 try{lotByg()}catch(e){console.error(e)}
-/* ========== SLUT: LYD OVER TID (S3) ========== */
+/* ========== SLUT: LYD OVER TID ========== */
 
-/* ========== v9.78: NIVEAU (S4) ==========
+/* ========== v9.78: KORTET NIVEAU (LUFS, topværdi, klip) ==========
    Planen docs/PLAN-SANG-OG-ANALYSE.md, trin S4: kortet Niveau under Sang → Sang. Lige nu: V og H i dB fra den samme lytter som Lydfil-noden
    (ne3Tap: AnalyserNode på UDG.pre, før EQ), topmærke (holder 1,5 s) og klip-tæller (prøver ≥ 0,989 = −0,1 dBFS). Hele sangen (nivStart, regnet
    i bidder på cirka 1 s lyd ad gangen, så siden ikke fryser; 74 minutter tager nogle sekunder): K-vægtning (to biquad-filtre efter ITU-R BS.1770),
@@ -9411,9 +9415,9 @@ function nivTik(){const k=document.querySelector('#sg [data-sgk="niv"]');if(!k||
  const sx=(q,s)=>{const e=k.querySelector('[data-niv="'+q+'"]');if(e&&e.textContent!==s)e.textContent=s},sw=(q,x)=>{const e=k.querySelector('[data-niv="'+q+'"]');if(e&&e.style.width!==pct(x))e.style.width=pct(x)},sl=(q,x)=>{const e=k.querySelector('[data-niv="'+q+'"]');if(e&&e.style.left!==pct(x))e.style.left=pct(x)};
  sw('L',mx(L));sw('R',mx(R));sx('Ldb',ne3DbTxt(L));sx('Rdb',ne3DbTxt(R));sl('pL',mx(NIV.peak.L));sl('pR',mx(NIV.peak.R));sx('klip',String(NIV.klip))}
 try{nivByg()}catch(e){console.error(e)}
-/* ========== SLUT: NIVEAU (S4) ========== */
+/* ========== SLUT: KORTET NIVEAU ========== */
 
-/* ========== v9.79: STEREO (S5) ==========
+/* ========== v9.79: KORTET STEREO (goniometer) ==========
    Planen docs/PLAN-SANG-OG-ANALYSE.md, trin S5: kortet Stereo under Sang → Avanceret. Goniometeret tegnes hvert billede fra de to
    AnalyserNodes i ne3Tap (venstre og højre, tidsdomæne, 1024 prøver): x = (V − H)/√2, y = (V + H)/√2, med et svagt spor fra de forrige billeder.
    De tre tal er analysens egne rækker (ana:bredde, ana:pan, ana:fase via kildeV ved now()), ikke en ny beregning (planens regel 1).
@@ -9434,9 +9438,9 @@ function steTik(){const k=document.querySelector('#sg [data-sgk="ste"]');if(!k||
  const n=1024,bl=STE.bL||(STE.bL=new Float32Array(n)),br=STE.bR||(STE.bR=new Float32Array(n));try{tap.L.getFloatTimeDomainData(bl);if(tap.R)tap.R.getFloatTimeDomainData(br);else br.set(bl)}catch(e){return}
  g.fillStyle='rgba(255,176,0,.55)';const s=W/2*.9,r2=Math.SQRT1_2;for(let i=0;i<n;i+=2){const l=bl[i],rr=br[i],x=(l-rr)*r2,y=(l+rr)*r2;g.fillRect(W/2+x*s,H/2-y*s,1.5,1.5)}}
 try{steByg()}catch(e){console.error(e)}
-/* ========== SLUT: STEREO (S5) ========== */
+/* ========== SLUT: KORTET STEREO ========== */
 
-/* ========== v9.80: SPOR MED M/S (S6) ==========
+/* ========== v9.80: SPOR MED M/S ==========
    Planen docs/PLAN-SANG-OG-ANALYSE.md, trin S6 og afsnit 4 (valg A + B): fanen Spor tegner én række pr. spor i STEM_SPOR (stemKort):
    filen, bølgeformen (konturen regnes i bidder, STEM.env), niveauet lige nu (stem:SPOR:rms fra analysen) og M/S. M og S ændrer kun det,
    man hører: sporene lægges sammen igen uden de fjernede (stemMixAf, cachen STEM.mixCache), og buf skiftes, mens afspilningen fortsætter
@@ -9460,9 +9464,9 @@ function stemEnvStart(s){const b=STEM.buf[s];if(!b)return;STEM.env=STEM.env||{};
 function stemTik(){const rk=document.querySelector('.stem-rk');if(!rk||rk.offsetParent===null)return;const t=typeof now==='function'?now():0,spil=(typeof playing!=='undefined'&&playing)||offset>0;
  STEM_SPOR.forEach(([s])=>{const b=STEM.buf[s];const c=rk.querySelector('[data-stembf="'+s+'"]');if(c){const g=c.getContext('2d'),W=c.width,H=c.height;g.clearRect(0,0,W,H);if(b){stemEnvStart(s);const E=STEM.env&&STEM.env[s];if(E&&E.klar){const hb=stemHoerbare().includes(s);g.fillStyle=hb?'hsl(32 70% 55% / .85)':'rgba(200,168,152,.35)';for(let x=0;x<W;x++){const v=E.a[Math.floor(x/W*E.N)]||0;g.fillRect(x,H/2-v*(H/2-2),1,Math.max(1,v*(H-4)))}}else{g.fillStyle='rgba(200,168,152,.5)';g.fillText('regner …',6,H/2+4)}if(STEM.klar&&dur>0){const px=t/dur*W;g.fillStyle='#ffb000';g.fillRect(px-1,0,2,H)}}else{g.fillStyle='rgba(200,168,152,.35)';g.fillText('ingen fil',6,H/2+4)}}
   const u=rk.querySelector('[data-stemniv="'+s+'"]');if(u){let v=0;try{v=STEM.klar&&spil?stemV('stem:'+s+':rms',t):0}catch(e){}const w=(Math.max(0,Math.min(1,v))*100).toFixed(1)+'%';if(u.style.width!==w)u.style.width=w}})}
-/* ========== SLUT: SPOR MED M/S (S6) ========== */
+/* ========== SLUT: SPOR MED M/S ========== */
 
-/* ========== v9.81: OPRYDNING 7a ==========
+/* ========== v9.81: SKJULTE VINDUER OG FJERNEDE LYDLAG-MÅL (oprydning) ==========
    Planens fase 7, trin 7a (PLAN-NY-BRUGERFLADE.md, afsnit 3.1): det, der stod som "fjern" og stadig lå i programmet, tages væk fra skærmen:
    vinduerne Lyd i 3D (w9), Idé-galleri (w22), Generator (fuld) (w4), Lydlag (w15), Audit (w19) og Detektion (w20) (ude af DK_NAVN, Scene,
    arbejdsområderne og ☰ Mere; skjult her), knapperne til dem i de gamle menuer, scene-nodens knapper i Node-editoren, Lydkildes Avanceret …
@@ -9470,9 +9474,9 @@ function stemTik(){const rk=document.querySelector('.stem-rk');if(!rk||rk.offset
 ['w4','w15','w20'].forEach(id=>{const w=$(id);if(w){w.hidden=true;w.classList.add('zon-skjult')}});/* v9.83: Lyd i 3D (w9) og Idé-galleri (w22) er ude af filen */
 try{if(set.ne&&Array.isArray(set.ne.sluk)&&set.ne.sluk.length){set.ne.sluk=[];localStorage.setItem('rytme-set',JSON.stringify(set))}}catch(e){}/* en slukket scene tændes: knappen Sluk er væk */
 try{const om=n=>{if(!n)return;if(n.t==='z'){n.f=n.f.filter(id=>DK_NAVN[id]);if(!DK_NAVN[n.a])n.a=n.f[0]||null;return}(n.c||[]).forEach(om)};om(set.dock);Object.values(set.dockLay||{}).forEach(om)}catch(e){}
-/* ========== SLUT: OPRYDNING 7a ========== */
+/* ========== SLUT: SKJULTE VINDUER OG FJERNEDE LYDLAG-MÅL ========== */
 
-/* ========== v9.82: KLODSBANEN SLÅS TIL I SCENEN (7b) ==========
+/* ========== v9.82: KLODSBANEN SLÅS TIL I SCENEN ==========
    Planens valg V2: banen er ikke fundamentet, men noget, man slår til i scenen. Knappen Klodsbane: Til · Fra i Live previews overskrift
    (#pv-bane) og under ☰ Mere i 2 · Scene er det samme som scene.bane (Vis bane i Bane og klods): fra tegnes hverken gulv, spor, trefferlinje,
    slange eller klodser; figurer og effekter tegnes stadig, og klods-reglerne regner videre. Første start uden gemte indstillinger: banen er fra
@@ -9483,16 +9487,16 @@ function baneUI(){const b=$('pv-bane');if(!b)return;const til=scene.bane!==false
 function baneSkift(til){scene.bane=til===undefined?!(scene.bane!==false):!!til;try{sceneStatus()}catch(e){}persistScene();baneUI();try{sceneUI()}catch(e){}try{if(typeof MX!=='undefined'&&mxTil())mxByg()}catch(e){}msg(scene.bane!==false?'Klodsbanen vises: gulv, spor, trefferlinje, slange og klodser.':'Klodsbanen er fra: scenen er tom, indtil du lægger figurer og effekter på. Klods-reglerne regner videre.')}
 {const b=$('pv-bane');if(b)b.onclick=()=>baneSkift()}
 baneUI();setInterval(baneUI,500);
-/* ========== SLUT: KLODSBANEN SLÅS TIL I SCENEN (7b) ========== */
+/* ========== SLUT: KLODSBANEN SLÅS TIL I SCENEN ========== */
 
-/* ========== v9.83: DØD KODE FJERNET (7c) ==========
+/* ========== v9.83: DØD KODE FJERNET (kun en kommentar) ==========
    Pakke 6, trin 7c: det, der blev skjult i v9.81, og som intet andet bruger, er fjernet fra filen: Lyd i 3D (blokkene LYD I 3D og
    TASTATURSTYRING AF LYD I 3D, vinduet w9, D3ST, valget i Udgangsvinduet viser, ordlisten), Idé-galleri (blokken, vinduet w22, CSS,
    knapperne i Opsætninger og Radial Mesh), Enkel tilstand (panelet, knappen, enkelTempo/enkelBolge/enkelNorm/enkelSync, følsomheden
    i stakFor og i motoren) og Mappings rester (syncRow, stakHtml, STAK_AABEN, taktLinje, stemLinje, fjernetBanner, fjernetHvad,
    lytterne og intervallerne for .tk-rad og .st-rad, CSS). Generator (fuld), Lydlag, Audit og Detektion ligger stadig skjult (se manualen).
    Blokkene har ikke fået nye navne (13 test finder dem på navnet). Rettet samtidig: set.udkilde 'mesh3d' og 'oeje' huskes ved start. */
-/* ========== SLUT: DØD KODE FJERNET (7c) ========== */
+/* ========== SLUT: DØD KODE FJERNET ========== */
 
 /* ========== v9.84: SLÅ ET LYDTRÆK FRA (I STEDET FOR PARKÉR) ==========
    Brugerens svar b (P8.9): kolonnen Ikke i brug (parkér, v9.25) er fjernet. I stedet kan hver lydtræk-række i matrixen slås fra med knappen ⏻
@@ -9509,7 +9513,7 @@ function mxLtFraKnap(b){const fra=neLtFra(b);return '<button class="mx-ltfra'+(f
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ne84="ltfra"]');if(!b)return;e.preventDefault();neSaetLtFra(b.dataset.b,!neLtFra(b.dataset.b));try{ne2Kp(true);const k=document.querySelector('#ne-kp [data-ne84="ltfra"]');if(k)k.focus({preventScroll:true})}catch(e){}});
 /* ========== SLUT: SLÅ ET LYDTRÆK FRA (I STEDET FOR PARKÉR) ========== */
 
-/* ========== v9.85: PAKKE 7, B1: RYD OP OG BESKYT ==========
+/* ========== v9.85: OPSÆTNINGERNE RYDDET OP (FORINDST, OPS_TEST, Nulstil) ==========
    Brugerens B1 (P8.6): kun 10 færdige opsætninger bliver (FORINDST); 23 er fjernet sammen med deres funktioner, Random alt: skift automatisk,
    trommeslageren (opTrommer, showet Trommeslagerens solo, knappen under + Ny figur) og blokken FEST.
    Det, koden brugte, er flyttet hertil: opsNulstilVisuelt() er det, opsætningen Nulstil (vis) gjorde (knappen Nulstil bane, klods, figurer og lyd
@@ -9520,9 +9524,9 @@ function opsNulstilVisuelt(){return{maps:kl(DEFAULT),master:1,scene:kl(SCENE0),l
 const OPS_TEST={std:{id:'std',navn:'Standard',aktiv:'std',lav:()=>({maps:kl(DEFAULT),master:1})},
  fuld1:{id:'fuld1',navn:'Alle effekter',lav:()=>({maps:fuldBase(),master:1})},
  fuld2:{id:'fuld2',navn:'Alle effekter + figurer',lav:()=>{const o=fuldObjekter();return{maps:[...fuldBase(),...o.maps],objekter:o.objekter,master:1}}}};
-/* ========== SLUT: PAKKE 7, B1: RYD OP OG BESKYT ========== */
+/* ========== SLUT: OPSÆTNINGERNE RYDDET OP ========== */
 
-/* ========== v9.86: PAKKE 7, B2: STARTSKÆRM OG INDLÆST ==========
+/* ========== v9.86: STARTSKÆRM OG INDLÆST ==========
    Brugerens B2 (P8.6): programmet husker som før det sidste arbejde og arbejdsområde. Ved start vises en startskærm (#start-sk) med tre valg:
    Fortsæt, hvor du slap (fremhævet) · Start et show (de 10 i FORINDST og Mine i Opsætning 1–20; Biblioteket kommer i B3) · Byg selv (helt tomt).
    Linjen øverst viser altid, hvad der er indlæst (#el9-indl, indlTekst): navnet fra active (navnAktiv), antal figurer på scenen og regler, "Tomt",
@@ -9552,9 +9556,9 @@ function startSkLuk(){const d=$('start-sk');if(d&&d.open)d.close()}
   if(b.id==='start-show'){startSkLuk();bibVis('shows');return}/* v9.87: Biblioteket */
   const k=b.dataset.start;if(!k)return;startSkLuk();if(k.startsWith('f:'))brugFor(k.slice(2));else if(k.startsWith('m:'))bibHent(k.slice(2));setTimeout(indlUI,50)});
  d.addEventListener('cancel',e=>{e.preventDefault();startSkLuk()})}}
-/* ========== SLUT: PAKKE 7, B2: STARTSKÆRM OG INDLÆST ========== */
+/* ========== SLUT: STARTSKÆRM OG INDLÆST ========== */
 
-/* ========== v9.87: PAKKE 7, B3: BIBLIOTEKET ==========
+/* ========== v9.87: BIBLIOTEKET ==========
    Brugerens B3 (P8.6) med valg C (P8.9): ét vindue, Biblioteket (w36), i 3 · Regler til venstre for matrixen og Node-editoren.
    Hylden Shows: FORINDST (Indbygget), BIB.mine (Mit; listen rytme-bib uden loft; Opsætning 1–20 flyttes over én gang, set.bib3a) og
    Sangens show (det gemte show til den valgte sang). Hylden Figurer: BIB_FIG (danser, to piger, discokugle, Morgenstjerne, Diskodronningerne,
@@ -9665,9 +9669,9 @@ function bibBrugFigur(fig){const fn=({danser:()=>opDanser(true),piger:()=>opPige
  setTimeout(()=>{try{const p=$('ops-pladser');if(p)p.hidden=!SLOTS.some(n=>slotRead(n))}catch(e){}},1700);
  {const gl=opsByg;window.opsByg=function(){const r=gl.apply(this,arguments);try{const p=$('ops-pladser');if(p)p.hidden=!SLOTS.some(n=>slotRead(n));const k=$('ops-bib-knap');if(k)k.onclick=()=>bibVis('shows')}catch(e){}return r}}
  {const gl=slotSave;window.slotSave=function(n,navn){const r=gl.apply(this,arguments);try{const p=$('ops-pladser');if(p)p.hidden=false}catch(e){}return r}}}
-/* ========== SLUT: PAKKE 7, B3: BIBLIOTEKET ========== */
+/* ========== SLUT: BIBLIOTEKET ========== */
 
-/* ========== v9.89: PAKKE 7, B5: ÉN VÆRKTØJSLINJE ==========
+/* ========== v9.89: ÉN VÆRKTØJSLINJE I NODE-EDITOREN ==========
    Brugerens B5 (P8.6): én linje over matrixen og Node-editoren, som begge bruger (.ne-vlinje). Gruppen #ne89-vaerk lægges efter Fortryd og Gentag:
    Foreslå regler (fsForeslaa), Lav show ▾ (fsFang(lavShow)), Tilfældigt ▾ (fsFang(tilfaeldigt)), Gem som regel-sæt (neGemSkabelon for den valgte
    figur) og Kort over forbindelserne (mvkAaben; svar c i P8.9). Alle værktøjer giver forslag, ikke færdige regler. Knappen Foreslå regler i linjen
@@ -9692,7 +9696,7 @@ function ne89Start(){const vl=document.querySelector('#ne .ne-vlinje');if(!vl||$
   else if(k==='gem')ne89GemSaet(b)
   else if(k==='kort'){try{mvkAaben()}catch(x){}}});}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(ne89Start,400));else setTimeout(ne89Start,400);
-/* ========== SLUT: PAKKE 7, B5: ÉN VÆRKTØJSLINJE ========== */
+/* ========== SLUT: ÉN VÆRKTØJSLINJE I NODE-EDITOREN ========== */
 /* ========== v9.41: DE 10 VISNINGER I NODE-EDITOREN ==========
    Brugerens valg (11. november): de 10 visninger fra Routing-overblik (slettet i v9.35) kommer tilbage, nu inde i Node-editoren.
    Værktøjslinjen har "Visning ▾": Noder (kolonner) er Node-editoren selv; de 10 andre er Frit netværk (kræfter), Matrix, Strømme, Tidslinje,
@@ -10082,7 +10086,7 @@ try{Regler.tjek()}catch(e){}
 /* v9.50: Node-editoren lytter her; den bygger noderne om ved næste tjek (højst et halvt sekund efter, som før) */
 Regler.lyt(()=>{try{NE2.snavs=true}catch(e){}});
 /* ========== SLUT: FÆLLES INDGANG TIL REGLERNE ========== */
-/* ========== v9.51: MATRIXEN (FASE 2 OG 3) ==========
+/* ========== v9.51: MATRIXEN ==========
    Fase 2 i PLAN-NY-BRUGERFLADE.md (P8.2), trin 2a. Matrixen viser alle regler i ét gitter (fagudtryk: modulation matrix):
    rækker = de lydtræk, der er i brug, i mapper efter musik (D2, samme rækkefølge som på lærredet: ne42Sml);
    kolonner = de mål, der er i brug, samlet pr. figur og effekt-gruppe (samme grupper som Node-editorens kolonne Figur).
@@ -10394,8 +10398,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  k('Matrix: vis alle lydtræk og mål','▦',()=>{mxSaet(true,true);mxSaetAlle(true)});k('Matrix: vis kun de brugte','▦',()=>{mxSaet(true,true);mxSaetAlle(false)});
  k('Lange sange: normalisér i stykker på 2 minutter (til/fra)','♪',()=>normLokalSkift());k('Automatik: se og slå det fra, programmet vælger selv','⚙',()=>auAaben(true));k('Analysér sangen igen (og gem den nye analyse)','♪',()=>anaIgen());[1,2].forEach(i=>{k('Opstilling af noderne: Min opstilling '+i,'▤',()=>{mxSaet(false,true);setTimeout(()=>neOpstilEgen(i),80)});k('Opstilling af noderne: gem som Min opstilling '+i,'▤',()=>{mxSaet(false,true);setTimeout(()=>neOpstilGem(i),80)})});
  NE_OPST.forEach(o=>k('Opstilling af noderne: '+o[1],'▤',()=>{mxSaet(false,true);setTimeout(()=>neOpstil(o[0]),80)}))}}
-/* ========== SLUT: MATRIXEN (FASE 2 OG 3) ========== */
-/* ========== v9.63: FORSLAG I STEDET FOR AUTO (FASE 4) ==========
+/* ========== SLUT: MATRIXEN ========== */
+/* ========== v9.63: FORESLÅ REGLER ==========
    Planens fase 4: intet skriver regler uden at spørge. Et forslag er en regel, der endnu ikke står i maps (FS.liste: {id, regel, hvorfor}).
    Forslagene vises som stiplede celler i matrixen (fsTegn, kaldt efter mxByg); ✓ eller Ja laver reglen (Regler.tilfoej), ✕ eller Nej fjerner forslaget.
    fsBeregn() kender figurerne (danserens bevægelser fra DANS_STD, discokuglens glimt og lys) og bruger Auto-mappings beregning (autoListe) til scenens
@@ -10452,8 +10456,8 @@ function fsStart(){const mx=$('ne-mx'),bj0=$('mx-bj');if(!mx||!bj0){setTimeout(f
  mx.addEventListener('keydown',e=>{const td=e.target.closest&&e.target.closest('td.mx-forslag');if(!td||e.ctrlKey||e.metaKey)return;if(e.key==='Enter'){e.preventDefault();e.stopPropagation();fsJa(td.dataset.fs)}else if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();e.stopPropagation();fsNej(td.dataset.fs)}},true);
  mx.addEventListener('pointerdown',e=>{if(e.target.closest('td.mx-forslag'))e.stopPropagation()},true);fsBj()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(fsStart,700));else setTimeout(fsStart,700);
-/* ========== SLUT: FORSLAG I STEDET FOR AUTO (FASE 4) ========== */
-/* ========== v9.65: PANELET AUTOMATIK (FASE 4, TRIN 4c) ==========
+/* ========== SLUT: FORESLÅ REGLER ========== */
+/* ========== v9.65: PANELET AUTOMATIK ==========
    Planens fase 4: alt, programmet vælger selv om målingerne, kan ses ét sted og slås fra, og én knap giver standard tilbage.
    Panelet (#ne65-pan) åbnes med knappen Automatik i Node-editorens værktøjslinje. Det bruger de samme kontakter som resten af programmet:
    Normalisering (#norm), lange sange (set.normLokal), Adaptiv tærskel (ne10Saet), Taktslag og Spor (m.takt og m.spor på reglerne) og
@@ -10489,7 +10493,7 @@ function auStart(anker){const rod=$('ne');if(!rod||$('ne65-pan'))return;const b=
  rod.addEventListener('click',e=>{const k=e.target.closest('[data-au]');if(!k)return;const h=k.dataset.au;if(h==='aaben')auAaben();else if(h==='luk')auAaben(false);else auSaet(h,k.dataset.v)});
  p.addEventListener('pointerdown',e=>e.stopPropagation());p.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();auAaben(false)}else if(!(e.ctrlKey||e.metaKey))e.stopPropagation()});p.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
  setInterval(auTegn,500)}
-/* ========== SLUT: PANELET AUTOMATIK (FASE 4, TRIN 4c) ========== */
+/* ========== SLUT: PANELET AUTOMATIK ========== */
 /* ========== v9.61: NODE-EDITOR: OPSTILLINGER, KOLONNENAVNE DER FØLGER MED, OG SIKRING MOD EN TOM FLADE ==========
    Brugerens ønske 16. november: faste opstillinger af noderne (seks: Kolonner, Bred, Luftig, Meget luftig, Kompakt og Kæmpe, der fylder feltet ved 10 % zoom),
    kolonnenavne, der følger zoom og kan trækkes (flytter hele kolonnen), og Node-editoren var helt tom hos brugeren (kunne ikke genskabes).
@@ -10591,7 +10595,7 @@ if(t-(window.__rydT||0)>30000){window.__rydT=t;Rytme.rydTilstand(t/1000,120)} Ry
 genUI();drawGrid();slotUI();renderMaps();save();abStatus();requestAnimationFrame(frame);
 </script>
 <script>
-/* ========== v9.16: AUTO I LYDKILDE ==========
+/* ========== v9.16: FORESLÅ REGLER I LYDKILDE (før Auto-mapping) ==========
    Knapperne "Auto: Til/Fra" og "Kør Auto-mapping nu" flyttes (ikke kopieres) fra Lydtræk-guide (W18) til toppen af fanen
    Lydkilde (W31), fælles for Lydfil og 4 spor. Knapperne beholder deres id og deres kode; kun pladsen er ny.
    W18 beholder guiden og Standard/Fast 2 og får en linje om, hvor Auto er flyttet hen. */
@@ -10603,7 +10607,7 @@ genUI();drawGrid();slotUI();renderMaps();save();abStatus();requestAnimationFrame
  const wh=w.querySelector('.wh'),mx=wh&&wh.querySelector('.mx');if(wh){wh.insertBefore(d,mx||null)}else wb.insertBefore(d,wb.firstChild);
  if(gl){const t=document.createElement('span');t.className='small';t.textContent='Foreslå regler ligger øverst i fanen Lydkilde og under matrixen.';gl.insertBefore(t,gl.firstChild)}};
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ind);else ind()})();
-/* ========== SLUT: AUTO I LYDKILDE ========== */
+/* ========== SLUT: FORESLÅ REGLER I LYDKILDE ========== */
 </script>
 <style>.lk-auto{display:inline-flex;align-items:center;gap:6px;margin-left:auto;margin-right:8px}.lk-auto button{font-size:12px;padding:3px 10px;line-height:1.3}
 /* v9.17: Lydkildes indhold ruller inde i vinduet i stedet for at blive skåret af ved bundbaren */#w31>.wb{overflow-y:auto;min-height:0;overscroll-behavior:contain}/* v9.18: Router (W32) havde samme fejl */#w32>.wb{overflow-y:auto;min-height:0;overscroll-behavior:contain}</style>

@@ -29,7 +29,7 @@ async function kør(arg) {
   T.tjek(tema && JSON.stringify(tema) === JSON.stringify(docsTema), 'temaet i programmet er det samme som docs/node-editoren/tema-warm-analog.json');
 
   /* 2 · Ingen farvekoder i Node-editorens kode og stil */
-  const kode = uddrag(html, '/* ========== v9.19: NODE-EDITOR (TRIN 1) ==========', '/* ========== SLUT: NODE-EDITOR (TRIN 1) ========== */');
+  const kode = uddrag(html, '/* ========== v9.19: NODE-EDITOR (TRIN 1): LÆRRED, ZOOM, TEMA OG KONTROLPANEL ==========', '/* ========== SLUT: NODE-EDITOR (TRIN 1): LÆRRED, ZOOM, TEMA OG KONTROLPANEL ========== */');
   const stilM = html.match(/\n<style id="ne-stil">([^]*?)<\/style>/);
   T.tjek(!!kode && !!stilM, 'Node-editorens blok og <style id="ne-stil"> findes');
   for (const [navn, tekst] of [['koden', kode || ''], ['stilen', stilM ? stilM[1] : '']]) {
