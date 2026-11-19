@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.80 · 19. november 2026 · gælder fra Claude MV v9.100 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.81 · 19. november 2026 · gælder fra Claude MV v9.101 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -121,7 +121,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.100
+## 4. Hvad der er sket fra v8.0 til v9.101
 
 | Version | Hvad |
 | --- | --- |
@@ -234,6 +234,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.98 | **Sang hedder Analyse (P8.14 punkt 3b).** Arbejdsområdet **1 · Analyse** (`LAY3`, før 1 · Sang) og vinduet **Analyse** (`DK_NAVN.w35`, før Sang); Automatik siger *Ændres i Analyse*. De interne id'er (`ao-sang`, `w35`, `sg…`, `sgFane`) og fanerne inde i vinduet (Sang · Spor · Avanceret) er uændrede. Der findes ingen fane "Lyd" (kun den gamle effekt-gruppe for lydlag-mål), så brugeren blev ikke spurgt. Test 60, 62, 66 og 71 rettet |
 | v9.99 | **Værktøjslinjen passer (P8.14 punkt 3f) og Radial Mesh helt i fuld skærm (brugerens besked).** Blokken *VÆRKTØJSLINJEN PASSER (⋯ MERE)*: `vlPas` måler `.ne-vlinje` og flytter det, der ikke er plads til, ind i `#ne-vl-pop` bag knappen **⋯ Mere (n)** (`#ne-vl-mere`), i rækkefølgen `VL_FOERST` (Baggrund, Dæmp, Kun valgt kæde, Opstilling, Visning, Automatik, Normalisering, Samlet styrke, Placér, Tilpas, zoom), så de sidste knapper i `#ne89-vaerk` (Kort, Gem som regel-sæt, Tilfældigt, Lav show; Foreslå regler bliver), til sidst Gentag og Fortryd. Elementerne flyttes med en skjult pladsholder (`data-vlph`), så de kommer tilbage, når der er plads; listen ligger **inde i linjen** (`position:fixed` med målt forskydning som v9.53), så de uddelegerede lyttere på `.ne-vlinje` og `.ne`-stilen virker. ResizeObserver og MutationObserver kalder `vlTjek` (kun når linjen er for smal, er blevet bredere, eller har fået nye børn, ellers kalder vores egne flytninger dem igen og igen); `mxSaet` kalder `vlPas`. **Radial Mesh:** `#w5:fullscreen>.wh{display:none}`, og × (`#fuld-x`) er usynligt sammen med bjælken *Afslut fuld visning* (begge 3 s efter musen stod stille; `fuldVis`). Tal: 6 414 588 bytes (6 406 389), 801 knapper. Test 88 ved tre skærmstørrelser (Noder og Matrix: scrollWidth ≤ clientWidth; rigtige klik på ⋯ og Automatik derinde; Esc; bjælke og ×) |
 | v9.100 | **Navne i Live preview (P8.15 punkt 1).** Blokken *NAVNE I LIVE PREVIEW*: knappen **Navne: Til · Fra** (`#pv-navne`, efter Klodsbane i Live previews overskrift; også under ☰ Mere → I arbejdsområdet i 2 · Scene). Til: `pvNavneTegn` skriver hver synlig figurs navn med lille tekst 22 px under figurens midte (`o.pos`) i billedløkken efter `fg74Tegn`; fra som standard; `set.pvNavne` (gælder alle opsætninger). Effekternes navne kommer i et hjørne med "På scenen" (P8.14 punkt 7). Tal: 6 417 232 bytes, 802 knapper. Test 89 ved 1920 × 1080 og 2560 × 1440 med Pigernes show (rigtigt klik; navnene tegnes; huskes efter genstart) |
+| v9.101 | **Hent alle 4 spor på én gang (P8.14 punkt 3a).** I kortet Spor (Analyse → Spor): **Vælg 4 filer …** (fandtes) og det nye **Vælg en mappe …** (`#stem-mappe`, `webkitdirectory`). `stemSaetFlere` filtrerer til lydfiler, fordeler efter filnavnet med `STEM_SPOR`s udtryk (udvidet: bass, lead, instrumental, no vocals, karaoke …; vokalen matches først, og "no vocals"/"instrumental" går aldrig til Vokal), giver filer uden kendt ord den ledige plads, og `stemFordeltVis` skriver linjen `#stem-fordelt` ("Fordelt efter filnavnet: Trommer ← …; uden plads: …; vælg en anden fil på rækken") og statuslinjen. Tal: 6 419 512 bytes, 803 knapper. Test 90 (UVR-navne i en mappe: Drums, Bass, Vocals, Instrumental; No Vocals → Resten; ukendt → ledig plads; noter.txt springes over; rigtig mappe-vælger) |
 
 ## 5. Halvfærdigt og kendte fejl
 

@@ -1,0 +1,19 @@
+BESKED TIL CODE · P8.16 · 19. november 2026
+Tilføjelse til P8.14 og P8.15. Gem i docs/arkiv/, og skriv punkterne
+ind i planerne. Byg intet.
+
+1. .STEM.MP4: VÆRKTØJ TIL PLANEN
+   Ved punktet "Læs .stem.mp4" under "Senere": Native Instruments har
+   et gratis værktøj, Stem Creator Tool, der kan samle 4 spor (fx fra
+   Ultimate Vocal Remover) til én .stem.mp4-fil. Skriv det ind som en
+   mulig vej til at lave sådanne filer selv.
+
+2. ANALYSEN ER PROGRAMMETS HJERTE (skriv det ind som en grundregel i
+   docs/PLAN-SANG-OG-ANALYSE.md og i CLAUDE.md)
+   MV er bygget op omkring analysen. Målet er en meget stærk analyse:
+   vi bruger alle de midler, der findes (spor, bedre metoder i
+   browseren, et lokalt modul med AI og AI udenfor), når det kan betale
+   sig. "Kan betale sig" betyder, at et lydtræk, der bruges, bliver
+   tydeligt mere sikkert, og at det kan måles (fx med Detektion eller
+   musikgeneratoren som facit). Planen for den nye analyse laves
+   sammen med hovedchatten, når du har svaret på P8.14 punkt 5.
