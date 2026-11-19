@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.89 (19. november 2026, pakke 7, B5)
+
+| Billede | Hvad |
+| --- | --- |
+| [Én værktøjslinje](v9_89-vaerktoejslinje.png) | Foreslå regler, Lav show ▾, Tilfældigt ▾, Gem som regel-sæt og 🗺 Kort i Node-editorens linje; matrixen med forslag (stiplede celler) |
+
 ## v9.88 (19. november 2026, pakke 7, B4)
 
 | Billede | Hvad |
