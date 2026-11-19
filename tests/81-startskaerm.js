@@ -1,7 +1,7 @@
 /* Trin 4 · Det nye i v9.86 (pakke 7, B2): startskærmen og linjen Indlæst. Ved tre skærmstørrelser (startskærmen slås til i testbrowseren med set.startSkTest):
    startskærmen står åben ved start med Fortsæt (fremhævet, har fokus), Start et show og Byg selv; et rigtigt klik på Fortsæt lukker den, og intet er ændret;
    linjen øverst viser Indlæst: … · n figurer · n regler; Startskærm fra Ctrl+K → Start et show viser de 10 shows og Mine → Pigernes show indlæses, og Indlæst
-   viser navnet; gem i Opsætning 3, ændr en regel → "· ændret" og browseren vil spørge før lukning (beforeunload); hent igen → ikke ændret; Byg selv → Tomt
+   viser navnet; gem som et Mit show, ændr en regel → "· ændret" og browseren vil spørge før lukning (beforeunload); hent igen → ikke ændret; Byg selv → Tomt
    (0 figurer, 0 regler, klodsbane fra) og ingen beforeunload; Esc lukker som Fortsæt; linjen øverst ruller ikke. */
 const path = require('path');
 const { chromium } = require('playwright');
@@ -22,18 +22,19 @@ async function kør(arg) {
       const b = await side.evaluate(() => ({ open: document.getElementById('start-sk').open, n: maps.length, o: fase2.objekter.length, indl: document.getElementById('el9-indl').textContent }));
       T.tjek(!b.open && b.n === a.n0 && b.o === a.o0 && /^Indlæst: .+ · \d+ figur(er)? · \d+ regler?$/.test(b.indl), `${w} × ${h}: Fortsæt lukker uden at ændre noget; linjen øverst: "${b.indl}"`, JSON.stringify(b));
       /* Startskærm igen → Start et show → Pigernes show */
-      await side.evaluate(() => startSkVis(true)); await side.waitForTimeout(300); await side.click('#start-show'); await side.waitForTimeout(300);
-      const c = await side.evaluate(() => ({ liste: [...document.querySelectorAll('#start-liste .start-v')].map(b => b.dataset.start), grupper: [...document.querySelectorAll('#start-liste h4')].map(x => x.textContent) }));
-      T.tjek(c.liste.filter(x => x.startsWith('f:')).length === 10 && c.grupper.includes('Figur-shows'), `${w} × ${h}: Start et show viser de 10 shows i grupper (${c.grupper.join(', ')})`, JSON.stringify(c));
-      await side.click('#start-liste [data-start="f:piger_show"]'); await side.waitForTimeout(800);
+      await side.evaluate(() => startSkVis(true)); await side.waitForTimeout(300); await side.click('#start-show'); await side.waitForTimeout(1800);
+      /* v9.87: Start et show åbner Biblioteket (hylden Shows) i 3 · Regler */
+      const c = await side.evaluate(() => ({ open: document.getElementById('start-sk').open, lay: set.lay3, bib: !document.getElementById('w36').hidden, hylde: BIB.hylde, kort: [...document.querySelectorAll('#bib .bib-k')].map(b => b.dataset.bib), grupper: [...document.querySelectorAll('#bib .bib-kort h4')].map(x => x.textContent) }));
+      T.tjek(!c.open && c.lay === 'ao-regler' && c.bib && c.hylde === 'shows' && c.kort.filter(x => x.startsWith('s:f:')).length === 10 && c.grupper.includes('Figur-shows'), `${w} × ${h}: Start et show åbner Biblioteket med de 10 shows i grupper (${c.grupper.join(', ')})`, JSON.stringify(c));
+      await side.click('#bib .bib-k[data-bib="s:f:piger_show"]'); await side.waitForTimeout(400); await side.click('#bib-det [data-biba="brug"]'); await side.waitForTimeout(800);
       const d = await side.evaluate(() => ({ open: document.getElementById('start-sk').open, indl: document.getElementById('el9-indl').textContent, aktiv: active, fig: fase2.objekter.filter(o => o.synlig !== false).length, n: maps.length }));
-      T.tjek(!d.open && d.aktiv === 'f:piger_show' && d.indl === `Indlæst: Pigernes show · ${d.fig} figurer · ${d.n} regler`, `${w} × ${h}: Pigernes show er indlæst: "${d.indl}"`, JSON.stringify(d));
-      /* Mine: gem i Opsætning 3, ændr → ændret + beforeunload; hent → ikke ændret */
-      const e = await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); slotSave('C', 'Min test'); await vent(700); const t0 = document.getElementById('el9-indl').textContent, bu0 = (() => { const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); return ev.defaultPrevented })();
+      T.tjek(!d.open && d.aktiv === 'f:piger_show' && d.indl === `Indlæst: Pigernes show · ${d.fig} figurer · ${d.n} regler`, `${w} × ${h}: Pigernes show er indlæst fra Biblioteket (Brug): "${d.indl}"`, JSON.stringify(d));
+      /* Mine: gem som nyt show "Min test" (v9.87: Mine er en liste i Biblioteket), ændr → ændret + beforeunload; hent → ikke ændret */
+      const e = await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); const x = bibGemShow('Min test', null); window.__mit = x.id; await vent(700); const t0 = document.getElementById('el9-indl').textContent, bu0 = (() => { const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); return ev.defaultPrevented })();
         Regler.retNr(0, { gain: 1.37 }); await vent(800); const t1 = document.getElementById('el9-indl').textContent, bu1 = (() => { const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); return ev.defaultPrevented })(), kl = document.getElementById('el9-indl').className;
-        slotLoad('C'); await vent(800); const t2 = document.getElementById('el9-indl').textContent, bu2 = (() => { const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); return ev.defaultPrevented })();
+        bibHent(window.__mit); await vent(800); const t2 = document.getElementById('el9-indl').textContent, bu2 = (() => { const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); return ev.defaultPrevented })();
         return { t0, bu0, t1, bu1, kl, t2, bu2 } });
-      T.tjek(/^Indlæst: Opsætning 3 \(Min test\) · \d+ figurer · \d+ regler$/.test(e.t0) && !e.bu0 && /· ændret$/.test(e.t1) && e.bu1 && /indl-aendret/.test(e.kl) && !/ændret/.test(e.t2) && !e.bu2, `${w} × ${h}: gemt i Opsætning 3: "${e.t0}"; efter en ændring: "${e.t1}" (browseren spørger før lukning); hentet igen: "${e.t2}" (ingen spørgsmål)`, JSON.stringify(e));
+      T.tjek(/^Indlæst: Min test · \d+ figurer · \d+ regler$/.test(e.t0) && !e.bu0 && /· ændret$/.test(e.t1) && e.bu1 && /indl-aendret/.test(e.kl) && !/ændret/.test(e.t2) && !e.bu2, `${w} × ${h}: gemt som Mit show: "${e.t0}"; efter en ændring: "${e.t1}" (browseren spørger før lukning); hentet igen: "${e.t2}" (ingen spørgsmål)`, JSON.stringify(e));
       /* Byg selv → Tomt; Esc = Fortsæt */
       await side.evaluate(() => startSkVis(true)); await side.waitForTimeout(300); await side.click('#start-byg'); await side.waitForTimeout(800);
       const f = await side.evaluate(() => ({ open: document.getElementById('start-sk').open, indl: document.getElementById('el9-indl').textContent, n: maps.length, fig: fase2.objekter.filter(o => o.synlig !== false).length, bane: scene.bane, bu: (() => { const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); return ev.defaultPrevented })() }));

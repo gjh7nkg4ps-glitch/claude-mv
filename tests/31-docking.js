@@ -73,7 +73,7 @@ async function kør(arg) {
     /* 7 · layoutet husker, ↺ Standard og genstart */
     const før = await Z(); await side.evaluate(() => lay3Anvend('noder')); await vent(300); await side.evaluate(() => lay3Anvend('overblik')); await vent(300);
     const husk = await Z(); await side.click('#el9-mere'); await vent(300); await side.click('#dk-std'); await vent(300); /* v9.71: ↺ Standard står under ☰ Mere → Vinduer */ const std = await Z();
-    T.tjek(husk === før && std === 'sc:w2,w5,w28,w29*w2 | af:w33,w35*w33 | ed:w6,w13*w6' /* v9.76; v9.81: uden Lyd i 3D og Idé-galleri */, `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
+    T.tjek(husk === før && std === 'sc:w2,w5,w28,w29*w2 | af:w33,w36,w35*w33 | ed:w6,w13*w6' /* v9.76; v9.81: uden Lyd i 3D og Idé-galleri */, `layoutet Overblik husker ændringerne; ↺ Standard sætter det tilbage (${std})`);
     await side.evaluate(async () => { lay3Anvend('ao-sang', true); /* v9.71: programmet starter altid i et arbejdsområde */ await new Promise(r => setTimeout(r, 800)); dkZone('af').a = 'w35'; sgFane('avanceret'); dkGem(); dkAnvend(); }); await side.reload(); await vent(5000);
     T.tjek(await side.evaluate(() => dkZone('af').a === 'w35' && !document.getElementById('w35').hidden && set.sgFane === 'avanceret'), 'efter genstart: opdelingen, den valgte fane (Sang) og Sangs fane (Avanceret) huskes');
     /* 8 · Lås (tilbage i Overblik, hvor Radial Mesh og Editorens zone findes) */

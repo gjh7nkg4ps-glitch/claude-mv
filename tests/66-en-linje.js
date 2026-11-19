@@ -34,11 +34,12 @@ async function kør(arg) {
         const kv = await side.evaluate(() => { const w = document.getElementById('w14'); return { lukket: document.getElementById('mere-pan').hidden, synlig: !!w && w.getBoundingClientRect().width > 200 && !w.hidden, fane: !!document.querySelector('.dk-fane[data-w="w14"]') } });
         T.tjek(kv.lukket && kv.synlig && kv.fane, 'Kvalitet åbnes som fane fra Mere (vinduet var før skjult på Niveau 1 og 2), og Mere lukker', JSON.stringify(kv));
         /* Gem ▾ */
-        await side.evaluate(() => { try { localStorage.removeItem('rytme-T') } catch (e) { } }); await klik('el9-gem');
-        const g1 = await side.evaluate(() => { const p = document.getElementById('el9-gem-pan'); const b = p.querySelector('[data-el9gem="T"]'); const q = b.getBoundingClientRect(); return { vis: !p.hidden, n: p.querySelectorAll('[data-el9gem]').length, tekst: b.textContent, x: q.x + q.width / 2, y: q.y + q.height / 2 } });
+        /* v9.87: Gem ▾ gemmer som et show i Biblioteket (Mine, uden loft) */
+        await klik('el9-gem'); await side.waitForTimeout(300); await side.fill('#el9-gem-navn', 'Test ' + w);
+        const g1 = await side.evaluate(() => { const p = document.getElementById('el9-gem-pan'); const b = p.querySelector('[data-el9gemny]'); const q = b.getBoundingClientRect(); return { vis: !p.hidden, tekst: b.textContent, foer: BIB.mine.length, x: q.x + q.width / 2, y: q.y + q.height / 2 } });
         await side.mouse.click(g1.x, g1.y); await side.waitForTimeout(500);
-        const g2 = await side.evaluate(() => { const d = slotRead('T'); return { gemt: !!d && Array.isArray(d.maps) && d.maps.length === maps.length, lukket: document.getElementById('el9-gem-pan').hidden, status: document.getElementById('status').textContent } });
-        T.tjek(g1.vis && g1.n === 20 && /Opsætning 20 · tom/.test(g1.tekst) && g2.gemt && g2.lukket && /gemt i Opsætning 20/.test(g2.status), `💾 Gem ▾ viser Opsætning 1 til 20 (${g1.n}); et rigtigt klik på "${g1.tekst}" gemmer alt dér: "${g2.status}"`, JSON.stringify({ g1, g2 }));
+        const g2 = await side.evaluate(w => { const x = BIB.mine.find(y => y.navn === 'Test ' + w); return { gemt: !!x && Array.isArray(x.data.maps) && x.data.maps.length === maps.length, n: BIB.mine.length, aktiv: active, lukket: document.getElementById('el9-gem-pan').hidden, status: document.getElementById('status').textContent } }, w);
+        T.tjek(g1.vis && /Gem som nyt show/.test(g1.tekst) && g2.gemt && g2.n === g1.foer + 1 && /^m:/.test(g2.aktiv) && g2.lukket && /Gemt som nyt show: Test/.test(g2.status), `💾 Gem ▾: et rigtigt klik på "${g1.tekst}" gemmer alt som et nyt show i Biblioteket: "${g2.status}"`, JSON.stringify({ g1, g2 }));
         /* Fortryd */
         const f0 = await side.evaluate(() => { const i = maps.findIndex(m => m && m.band); const g = maps[i].gain; Regler.retNr(i, { gain: Math.round((g + 0.37) * 100) / 100 }); return { i, g, ny: maps[i].gain } });
         await side.waitForTimeout(900); await klik('el9-fortryd');

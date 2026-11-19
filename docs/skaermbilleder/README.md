@@ -2,6 +2,13 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.87 (19. november 2026, pakke 7, B3)
+
+| Billede | Hvad |
+| --- | --- |
+| [Biblioteket: Shows](v9_87-biblioteket-shows.png) | hylden Shows med kort og små billeder i 3 · Regler, til venstre for Node-editoren |
+| [Biblioteket: Figurer](v9_87-biblioteket-figurer.png) | hylden Figurer; danseren valgt med sine regel-sæt og et fælles regel-sæt |
+
 ## v9.86 (19. november 2026, pakke 7, B2)
 
 | Billede | Hvad |
