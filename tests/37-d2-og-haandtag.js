@@ -29,7 +29,7 @@ async function kør(arg) {
     const fm = await side.evaluate(async () => { ne42SaetSort('figur'); await new Promise(r => setTimeout(r, 600)); return { sort: set.ne.sort, hoved: document.querySelectorAll('#ne-verden .ne42-mappe').length }; });
     T.tjek(fm.sort === 'figur' && fm.hoved === 0, 'Figur → mål giver det gamle (ingen mappe-overskrifter)');
     /* 2 · Håndtag i billedet er fjernet i v9.55 (brugerens fjerne-liste nr. 41); Flyt effekter i Live preview bliver */
-    const hv = await side.evaluate(async () => { const n = [...NE2.N.values()].find(x => x.kol === 'scene' && x.sc === 'w2'); if (n) { neVaelg(n.key); await new Promise(r => setTimeout(r, 400)) } return { knap: !!document.querySelector('#ne-kp [data-ne42="haand"]'), til: ne42Haand() } });
+    const hv = await side.evaluate(async () => { const n = [...NE2.N.values()].find(x => x.kol === 'scene' && x.sc === 'w2'); if (n) { neVaelg(n.key); await new Promise(r => setTimeout(r, 400)) } return { knap: !!document.querySelector('#ne-kp [data-ne42="haand"]'), til: typeof ne42Haand === 'function' && ne42Haand() } }); /* v9.92: koden bag håndtagene er fjernet (ne42Haand findes ikke) */
     T.tjek(!hv.knap && !hv.til, 'knappen Håndtag i billedet er væk fra scene-nodens kontrolpanel');
     const ck = await side.evaluate(() => { const L = []; neKpPunkter(L); return L.filter(x => /^Sortér: /.test(x.n)).length + (L.some(x => /^Håndtag i billedet/.test(x.n)) ? 10 : 0); });
     T.tjek(ck === 2, `Ctrl+K har Sortér (2) og ikke længere Håndtag i billedet (${ck} punkter)`);
