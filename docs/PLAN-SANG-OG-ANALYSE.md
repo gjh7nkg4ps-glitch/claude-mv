@@ -195,7 +195,7 @@ Hvert trin får sit eget versionsnummer, sin egen test og sit eget gem, som i pa
 | **S3** (**lavet i v9.77**) | Lyd over tid (afsnit 3) som kort under Avanceret: Afsnit, Bølgeform, Spektrogram, Taktslag, Toner, Stereo og lydtræk med tærskler; rækkerne er en liste (`LOT.rk`), så Lydtidslinjens rækker kan lægges til senere | Node-editorens visning Tidslinje (ja, P8.4) | S2 |
 | **S4** (**lavet i v9.78**) | Kortet Niveau: klip-tæller, lydstyrke (LUFS), dynamisk område (LRA og crest factor); rækken Lydstyrke i Lyd over tid | V/H-målerne på Lydfil-noden bliver en kopi af kortet (samme tal) | S2 |
 | **S5** (**lavet i v9.79**) | Kortet Stereo: goniometer lige nu og de tre tal med Brug i en regel; kurverne er rækken Stereo i Lyd over tid | – | S2 |
-| **S6** | Fanen Spor: én række pr. spor og M / S til at lytte | kortet 4 spor i Lydkilde | S2 |
+| **S6** (**lavet i v9.80**) | Fanen Spor: én række pr. spor (fil, bølgeform, niveau) og M / S til at lytte; analysen, Niveau og Lyd over tid bruger stadig den samlede lyd | kortet 4 spor i Lydkilde (gitteret) | S2 |
 | **S7** (vent, P8.4) | Harmonisk og perkussiv deling (HPSS) som to nye kilder | – | S1 (tung beregning) |
 | **S8** (senere, P8.4) | Spilleliste | – | S2 |
 
