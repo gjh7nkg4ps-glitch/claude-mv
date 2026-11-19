@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.90 (19. november 2026, pakke 7, B6)
+
+| Billede | Hvad |
+| --- | --- |
+| [Fem regel-sæt](v9_90-fem-regelsaet.png) | Biblioteket → Figurer → Discokugle: Diskokugle på bas, Rolig, Energisk, På trommerne, På vokalen, Hele bandet og Puls på kick (fælles) |
+
 ## v9.89 (19. november 2026, pakke 7, B5)
 
 | Billede | Hvad |
