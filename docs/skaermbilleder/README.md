@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.95 (19. november 2026, P8.14 svar 2B)
+
+| Billede | Hvad |
+| --- | --- |
+| [Detektion](v9_95-detektion.png) | Sang → Avanceret → Detektion: 8 tryk på K på testlydens kick giver 100 % hit-rate |
+
 ## v9.90 (19. november 2026, pakke 7, B6)
 
 | Billede | Hvad |

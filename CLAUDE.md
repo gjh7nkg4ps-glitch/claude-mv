@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 2.75 · 19. november 2026 · gælder fra Claude MV v9.94 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
+Version 2.76 · 19. november 2026 · gælder fra Claude MV v9.95 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code.
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, og hvad der er halvfærdigt. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -120,7 +120,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Auto:** med 4 spor læser kick, snare og hihat fra Trommer, bas fra Bas og vokal fra Vokal; grunden står ved forbindelsen; Manuel kan vælges (*Samlet lyd* eller *Sporet …*).
 - **Værktøj til at dele en mp3 i 4 spor er valgt: Ultimate Vocal Remover, brugt uden for MV.** Opdeling inde i MV bygges ikke nu; se `STATUS.md`. **.stem.mp4** kan ikke læses endnu (se `STATUS.md`, Senere).
 
-## 4. Hvad der er sket fra v8.0 til v9.94
+## 4. Hvad der er sket fra v8.0 til v9.95
 
 | Version | Hvad |
 | --- | --- |
@@ -227,6 +227,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | v9.92 | **Oprydning efter pakke 7, første bid** (P8.9 punkt 3; brugerens "ryd op lidt" 19. november, mens figur-generatorens layout laves i hovedchatten). **Død kode fjernet (cirka 5,8 KB):** koden bag *Håndtag i billedet* i blokken v9.42 (`ne42SaetHaand`, `ne42Liste`, `ne42Kort`, `ne42Prikker`, `ne12Kopi`-indpakningen, `ne42Tegn`, `ne42Ved`, de tre pointer-lyttere, intervallet og `ne42Haand`; knappen forsvandt i v9.55), den gamle visning *Matrix* (`rtMatrix` og dens plads i `RT_LAYS`, `RT_SPOERG` og tegne-tabellen; væk fra Visning ▾ siden v9.55) og lytterne til de fjernede skydere Trim og Styrke i kontrolpanelet (`data-ne9`, v9.59). **Blokken v9.42 hedder nu *D2 PÅ LÆRREDET*** (indholdsfortegnelsen rettet; `NE42` har kun `mapper`). Intet er ændret på skærmen. Tal: 6 404 782 bytes (6 410 559), 814 knapper, 28 vinduer (uændret). Test 37 rettet (`ne42Haand` findes ikke) |
 | v9.93 | **Oprydning efter pakke 7, anden bid** (brugerens "kør" 19. november). **Fjernet (cirka 2,5 KB):** den skjulte knap `#norm` og holderen `#el9-skjult` (Normalisering er nu funktionen `normSkift()`, som Automatik, Node-editorens værktøjslinje og `anvend` bruger; `mode` er det samme); linjen *Linjer: Auto · Canvas 2D* i Node-editorens kontrolpanel (`ne2Kp`-indpakningen, lytteren `data-ne14`, CSS `.ne14-linje`; `neLinjerValg` og Indstillinger → Linjer bliver); vinduet **Lydtræk-audit** (w19, `#audit`, `renderAudit` og dens 7 kald; `corr` bliver til `autoListe`); **Niveau-resterne** (`FE_N1/N2/N4KUN`, `feTilladt` er altid sand, `feKildeOpts` giver altid alle kilder, `feNivSaet`, `nivSaet`, `NIV_KNAP`, lytteren til `#tb-niv`; `nivAnvend` og `feNiv` (altid 4) bliver). Intet er ændret på skærmen. Tal: 6 402 284 bytes (6 404 782), 806 knapper (814; de 8 lå skjult i Audit, Normalisering og Linjer), 27 vinduer (28). Test 17, 27, 60 og 78 rettet (knappen `#norm`, `data-ne14` og `renderAudit` findes ikke mere). Prøvet med 20 test; hele pakken sættes i gang bagefter |
 | v9.94 | **Bloknavne (P8.14 svar 1B).** 36 blokke har fået navne efter, hvad de gør i dag; versionsnummeret står stadig foran. Fx `v9.63: FORESLÅ REGLER` (før *FORSLAG I STEDET FOR AUTO (FASE 4)*), `v9.87: BIBLIOTEKET`, `v9.9: MOTORENS KÆDE: HYSTERESE, HOLD OG SLEW (fra Router 2.0)`, `v5.3: VINDUESLISTEN NIV_VIN OG nivAnvend (rest af Niveau)`, `v9.19: NODE-EDITOR (TRIN 1): LÆRRED, ZOOM, TEMA OG KONTROLPANEL`; trin- og pakkekoder som (5b), (S4), (7c), "PAKKE 7, B3" er væk. Slutmarkeringerne og indholdsfortegnelsen følger med (test 2 tjekker dem); test 14 rettet. Intet er ændret på skærmen. Tal uændret (6 403 307 bytes) |
+| v9.95 | **Kortet Detektion (P8.14 svar 2B).** Det skjulte vindue Detektions-tuning (w20) er flyttet ind som kortet **Detektion** under Sang → Avanceret (efter Spektrum+; `sgKort('det')`, DOM-elementerne flyttes med `sgFlyt` som i S2, så id'erne `#tune`, `#s-tol`, `#clr` og `[data-mark]` og deres lyttere er de samme). **Hit-raten står stort i procent** (`.det-pct`) pr. Kick og Snare med ramt/tryk, falske alarmer og bedste tærskel; teksten siger, at tap med hånden er omtrentligt (cirka 30 til 50 ms). **Rettet samtidig:** tasterne K og S blev ignoreret, når generatorens computertastatur (`kbOn`) var slået til (det er det som standard), så man kunne ikke tappe med en fil; nu måler K og S, når kortet kan ses (`detSynlig`). w20 er tomt og skjult. Tal: 6 404 979 bytes (6 403 307), 806 knapper, 27 vinduer. Test 86 ved tre skærmstørrelser (rigtige tastetryk på kickens tidspunkter: 100 % hit-rate på testlyden; Ryd); test 71 og 74 rettet (kortlisten) |
 
 ## 5. Halvfærdigt og kendte fejl
 
