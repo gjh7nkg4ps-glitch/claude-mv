@@ -1,0 +1,30 @@
+BESKED TIL CODE · P8.18 · fra hovedchatten
+(efter en gennemgang af DeepSeeks UX-audit; brugeren har sagt ja til alt herunder)
+
+Baggrund: DeepSeek har kun læst CSS'en og troede, at MV er et program til at mixe musik (DAW). De fleste punkter fandtes allerede eller passer ikke til MV. Disse punkter er tilbage, og brugeren har sagt ja til dem.
+
+NU (små rettelser; læg dem efter "På scenen" eller hvor det passer bedst, du bestemmer):
+
+D1 · Gemning, der fejler uden at sige det (vigtigst)
+   save() har en tom catch(e){} rundt om localStorage.setItem. Bliver lageret fuldt (QuotaExceededError), gemmes intet, og brugeren får ikke noget at vide.
+   - Vis et lille, roligt mærke "Gemt ✓" (fx i værktøjslinjen eller statuslinjen), når en gemning er lykkedes.
+   - Fejler gemningen: et tydeligt banner (samme mønster som Lyd fra-banneret): "Kunne ikke gemme. Tag en sikkerhedskopi (Gem alle på computeren)." med en knap direkte til sikkerhedskopien.
+   - Tjek de andre localStorage.setItem-steder (cirka 70) for samme tomme catch, og saml dem gerne i én hjælpefunktion.
+   - Skriv i svaret, hvor meget MV fylder i localStorage i dag med Biblioteket og en stor figur (fx Perfect 2), så vi ved, hvor tæt vi er på grænsen.
+
+D2 · Tasten ? åbner Manual → Tastaturgenveje direkte (ikke når man skriver i et felt).
+
+D3 · "Hvad er nyt i v9.x" på Startskærmen
+   Et par linjer (højst cirka 5) om, hvad den nyeste version ændrede, så brugeren ved, hvad der skal testes. Kan foldes sammen. Gerne et link til hele listen i manualen.
+
+D6 · Hvad tager sikkerhedskopien med?
+   Svar først: tager "Gem alle på computeren" ALT med (regler, figurer, scene, show, vinduernes placering, Lys-indstillinger, Biblioteket og egne regel-sæt), eller kun opsætningerne A–T? Mangler der noget, så foreslå, hvordan det kommer med (én fil = hele arbejdet), og byg det, når brugeren har sagt ja.
+
+SENERE (til planen, PLAN-NY-BRUGERFLADE.md):
+
+D4 · Én fælles Fortryd (Ctrl+Z / Ctrl+Shift+Z) for regler, figurer og scene i stedet for flere særskilte Fortryd-knapper. Tages med forenklingen af brugerfladen.
+D5 · Manualen som sidepanel (ikke en dialog ovenpå), så man kan læse og klikke samtidig. Lav prioritet.
+
+UÆNDRET: D7 Feltfarven (neon-lilla som standard). Rør den ikke, før brugeren har valgt.
+
+Ingen af punkterne må fjerne noget eksisterende.

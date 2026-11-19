@@ -12,7 +12,7 @@ async function kør(arg) {
   const html = fs.readFileSync(fil, 'utf8'), kode = html.slice(0, html.indexOf('<script type="text/plain" id="three-ny-core">'));
   const væk = ['r2Boks', 'r2Byg', 'r2Layout', 'r2Tegn', 'r2OpdaterBoks', 'R2_KNAP', 'r2Knap', 'vinParker', 'vinAabnAlle', 'zonHjem', 'zonSamlUde', 'tkGammelBoks', 'fjGammelR2Byg', 'lsGammelR2Byg'].filter(n => new RegExp('(?<![\\w$.])' + n + '(?![\\w$])').test(kode));
   T.tjek(!væk.length && !/\.r2-boks|\.r2-chip|\.r2-uchip/.test(kode) && !/Tastatur i Dublet/.test(kode), 'Router-boksens kode og CSS, de frie vinduers rester og "Tastatur i Dublet" er væk', væk.join(', '));
-  T.tjek(/Tastatur i Node-editoren/.test(kode) && /ROUTER 2\.0-HJÆLPERE/.test(kode), 'manualen beskriver Node-editorens tastatur; blokken ROUTER 2.0-HJÆLPERE findes');
+  T.tjek(/Tastatur i Node-editoren/.test(kode) && /HOLD-TRIN, STANDARDKÆDE OG KILDELISTE \(fra Router 2\.0\)/.test(kode), 'manualen beskriver Node-editorens tastatur; blokken HOLD-TRIN, STANDARDKÆDE OG KILDELISTE (fra Router 2.0; hed ROUTER 2.0-HJÆLPERE til v9.94) findes');
   const browser = await chromium.launch();
   try {
     const side = await browser.newPage({ viewport: { width: 1600, height: 1000 } }); const fejl = [];

@@ -1,0 +1,35 @@
+BESKED TIL CODE · P8.17 · 19. november 2026
+Til planen (docs/PLAN-SANG-OG-ANALYSE.md, afsnittet om den nye
+analyse). Byg intet. Gem i docs/arkiv/. Alle punkter her skal tages op
+i samtalen om den nye analyse; de må ikke glemmes.
+
+1. INSTRUMENT-GENKENDELSE, LOKALT (fagudtryk: audio tagging /
+   instrument recognition)
+   - Lag 2, i browseren: YAMNet (Google, 521 slags lyde, TensorFlow.js)
+     og Essentias instrument-modeller (cirka 40 instrumenter).
+   - Lag 3, i det lokale modul på grafikkortet: PANNs (527 slags lyde)
+     og CLAP (man skriver et ord, fx "saxophone", og får et svar;
+     fagudtryk: zero-shot).
+   - Køres helst på sporet Resten, så trommer, bas og stemme ikke
+     forstyrrer.
+   - Giver afsnit på tidslinjen som "saxofon spiller her" og kan føde
+     figurer i Figur-generatoren.
+
+2. RETTELSE AF LAGENE
+   Næsten alt kan køre lokalt på et RTX 2070: også ord med tid
+   (WhisperX), navngivne afsnit (allin1), taktslag (Beat This!) og
+   instrumenter. "AI udenfor" (lag 4) er kun for det, der ikke kan køre
+   på pc'en, eller for brugere uden et stærkt grafikkort.
+
+3. VIS USIKKERHEDEN, OG UNDGÅ FALSKE HANDLINGER
+   - Vis sikkerheden: hver hændelse og hver kurve får et tal for, hvor
+     sikker den er (fagudtryk: confidence). I Lyd over tid vises usikre
+     steder svagere eller skraveret.
+   - Sikkerhedsgrænse pr. regel: en skyder "kræv sikkerhed mindst ..."
+     ved siden af tærsklen, så en regel kun slår til, når målingen er
+     sikker nok (som Tonesikkerhed kan bruges som port i dag).
+   - To kilder skal være enige (valgfrit pr. regel): fx slår reglen kun
+     til, når både Kick · Trommer og bassens stigning siger "kick".
+   - Foreslå regler giver lydtræk med ▲ en højere tærskel som standard.
+   - På skærmen forklares valget: højere grænse = færre falske
+     handlinger, men flere slag, der ikke bliver fundet.

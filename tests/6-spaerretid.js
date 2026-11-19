@@ -51,13 +51,13 @@ async function kør(arg) {
     let f = nyeFejl(); T.tjek(!f.length, 'motoren uden fejl', f.slice(0, 3).join(' | '));
 
     /* W4: M-knappen */
-    await side.evaluate(() => { const w4 = document.getElementById('w4'); w4.hidden = false; w4.classList.remove('zon-skjult'); w4.style.cssText = 'position:absolute;left:0;top:60px;width:900px;height:600px;z-index:50'; }); /* v9.81: Generator (fuld) er væk fra skærmen; testen viser vinduet selv */
+    await side.evaluate(async () => { lay3Anvend('ao-sang'); await new Promise(r => setTimeout(r, 1200)); const m = document.getElementById('lks-mere'); if (m) m.open = true; const g = document.getElementById('gen'); g.scrollIntoView({ block: 'start' }); }); /* v9.96: generatoren ligger under Mere … i kortet Generator (Analyse); testen folder den ud */ /* v9.81: Generator (fuld) er væk fra skærmen; testen viser vinduet selv */
     await side.waitForTimeout(600);
     const w4 = await side.evaluate(() => { const row = document.querySelector('#pads .gr'), mt = row.querySelector('.mt'), vr = row.querySelector('input[type=range]'), pad = row.querySelector('.pad'); const R = e => e.getBoundingClientRect();
-      return { mt: Math.round(R(mt).width), afstand: Math.round(R(pad).left - R(vr).right), alleSynlige: [...document.querySelectorAll('#pads .gr')].every(g => { const p = g.querySelectorAll('.pad:not([hidden])'); return p.length && R(p[p.length - 1]).right <= R(document.getElementById('w4')).right + 1; }) }; });
+      return { mt: Math.round(R(mt).width), afstand: Math.round(R(pad).left - R(vr).right), alleSynlige: [...document.querySelectorAll('#pads .gr')].every(g => { const p = g.querySelectorAll('.pad:not([hidden])'); const P = document.getElementById('pads'); return p.length && R(p[p.length - 1]).right - R(P).left <= P.scrollWidth + 1; }) }; }); /* v9.96: generatoren ligger i det 300 px brede kort, så trinene rulles sidelæns i #pads; alle trin skal kunne nås ved at rulle */
     T.tjek(w4.mt < 40, `M-knappen er ${w4.mt} px bred (før cirka 760 px)`);
-    T.tjek(w4.afstand < 20 && w4.alleSynlige, `trinene står lige efter lydstyrken (${w4.afstand} px), og alle trin kan ses i vinduet`);
-    await side.locator('#w4').screenshot({ path: path.join(UD, 'w4-m-knap.png') });
+    T.tjek(w4.afstand < 20 && w4.alleSynlige, `trinene står lige efter lydstyrken (${w4.afstand} px), og alle trin kan nås i trin-feltet (ruller sidelæns i kortet)`);
+    await side.locator('#lks-mere').screenshot({ path: path.join(UD, 'w4-m-knap.png') });
     f = nyeFejl(); T.tjek(!f.length, 'W4 uden fejl', f.slice(0, 3).join(' | '));
   } catch (e) {
     T.fejl('testen stoppede: ' + e.message.split('\n')[0]);

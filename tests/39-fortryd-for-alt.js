@@ -24,7 +24,7 @@ async function kør(arg) {
     await prøv('Effekt-gruppens Slå fra', () => neSaetFra(window.__g, true), () => String(!!(ne12Grp()[window.__g.slice(2)] || {}).fra));
     await prøv('Effekt-gruppens øje', () => neSaetOeje(window.__g, false), () => String(!!(ne12Grp()[window.__g.slice(2)] || {}).skjult));
     await prøv('Samlet styrke', () => { const s = document.getElementById('ne-master'); s.value = 1.5; s.dispatchEvent(new Event('input', { bubbles: true })) }, () => gmaster + ' (skyder ' + document.getElementById('ne-master').value + ', Radial Mesh ' + document.getElementById('mmaster').value + ')');
-    await prøv('Normalisering', () => document.querySelector('#ne [data-ne4="norm"][data-v="fast"]').click(), () => mode + ' ("' + document.getElementById('norm').textContent + '")');
+    await prøv('Normalisering', () => document.querySelector('#ne [data-ne4="norm"][data-v="fast"]').click(), () => mode + ' ("Normalisering: ' + (mode === 'auto' ? 'Adaptiv' : 'Fast') + '")'); /* v9.93: knappen #norm er fjernet */
     const slut = await side.evaluate(async ids0 => { const u0 = FEH.u.length; neVaelg([...NE2.N.values()].find(x => x.kol === 'lydtraek').key); await new Promise(r => setTimeout(r, 1700)); neVaelg(null); await new Promise(r => setTimeout(r, 1700));
       neSaetTrim('bas', -3, true); const knap = !!document.querySelector('#ne-toast [data-ne4="fortryd"]'); await new Promise(r => setTimeout(r, 1700)); document.querySelector('#ne-toast [data-ne4="fortryd"]').click(); await new Promise(r => setTimeout(r, 400));
       return { ids: maps.map(m => m.id).join() === ids0, tomt: FEH.u.length === u0, knap, bas: neTrimDb('bas') }; }, ids0);
