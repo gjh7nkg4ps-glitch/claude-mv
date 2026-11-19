@@ -2,6 +2,12 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.86 (19. november 2026, pakke 7, B2)
+
+| Billede | Hvad |
+| --- | --- |
+| [Startskærmen](v9_86-startskaerm.png) | Fortsæt, hvor du slap (fremhævet, med det indlæste), Start et show, Byg selv; Indlæst står i linjen øverst |
+
 ## v9.85 (19. november 2026, pakke 7, B1)
 
 | Billede | Hvad |
