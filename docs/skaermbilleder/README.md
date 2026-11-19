@@ -2,6 +2,38 @@
 
 Taget i testbrowseren (1920 × 1080, 2× skarphed) med testlyden og Pigernes show. Klik på et billede for at se det stort.
 
+## v9.81 (19. november 2026, trin 7a)
+
+| Billede | Hvad |
+| --- | --- |
+| [2 · Scene med ＋-listen](v9_81-scene-plus.png) | ＋ i en zone viser kun de vinduer, der er tilbage; Lyd i 3D, Idé-galleri, Generator (fuld), Lydlag, Audit og Detektion er væk |
+
+## v9.80 (19. november 2026, trin S6)
+
+| Billede | Hvad |
+| --- | --- |
+| [Sang: fanen Spor](v9_80-spor.png) | én række pr. spor med fil, bølgeform, niveau, M og S |
+
+## v9.79 (18. november 2026, trin S5)
+
+| Billede | Hvad |
+| --- | --- |
+| [Sang: Stereo](v9_79-stereo.png) | goniometer, stereobredde, panorering og faselighed med Brug i en regel og Vis over tid |
+
+## v9.78 (18. november 2026, trin S4)
+
+| Billede | Hvad |
+| --- | --- |
+| [Sang: Niveau](v9_78-niveau.png) | V og H lige nu med topmærke og klip; hele sangen i LUFS, LRA, topværdi, RMS og crest factor |
+| [Niveau i fanen Sang](v9_78-niveau-sang.png) | kortet mellem Spektrum og Taktslag |
+
+## v9.77 (18. november 2026, trin S3)
+
+| Billede | Hvad |
+| --- | --- |
+| [Lyd over tid](v9_77-lyd-over-tid.png) | hele sangen på én tidsakse: afsnit, bølgeform, spektrogram, toner, stereo og lydtræk med tærskler |
+| [Lyd over tid, zoomet](v9_77-lyd-over-tid-zoom.png) | udsnit under 90 s med taktslag |
+
 ## v9.76 (18. november 2026, trin S2)
 
 | Billede | Hvad |

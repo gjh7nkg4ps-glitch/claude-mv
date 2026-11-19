@@ -55,7 +55,7 @@ async function kør(arg) {
     let f = nyeFejl(); T.tjek(!f.length, 'alle genrer uden fejl', f.slice(0, 3).join(' | '));
 
     /* Betoninger og spøgelsesslag */
-    const bet = await side.evaluate(() => { curGen = 'house'; gs.dens = .7; autoGen(); sbAabn('w4');
+    const bet = await side.evaluate(() => { curGen = 'house'; gs.dens = .7; autoGen(); const w4 = document.getElementById('w4'); w4.hidden = false; w4.classList.remove('zon-skjult'); /* v9.81: Generator (fuld) er væk fra skærmen; testen viser vinduet selv */
       const fl = pat.slice(0, 6).flat(); return { acc: fl.filter(v => v === 2).length, gh: fl.filter(v => v === 3).length, vAcc: document.querySelectorAll('#pads .pad.acc').length, vGh: document.querySelectorAll('#pads .pad.gh').length }; });
     T.tjek(bet.acc > 0 && bet.gh > 0, `Generér automatisk giver betoninger (${bet.acc}) og spøgelsesslag (${bet.gh})`);
     T.tjek(bet.vAcc > 0 && bet.vGh > 0, `de kan ses i trinene (${bet.vAcc} lyser stærkere, ${bet.vGh} svagere)`);

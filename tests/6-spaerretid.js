@@ -51,7 +51,7 @@ async function kør(arg) {
     let f = nyeFejl(); T.tjek(!f.length, 'motoren uden fejl', f.slice(0, 3).join(' | '));
 
     /* W4: M-knappen */
-    await side.evaluate(() => { sbAabn('w4'); });
+    await side.evaluate(() => { const w4 = document.getElementById('w4'); w4.hidden = false; w4.classList.remove('zon-skjult'); w4.style.cssText = 'position:absolute;left:0;top:60px;width:900px;height:600px;z-index:50'; }); /* v9.81: Generator (fuld) er væk fra skærmen; testen viser vinduet selv */
     await side.waitForTimeout(600);
     const w4 = await side.evaluate(() => { const row = document.querySelector('#pads .gr'), mt = row.querySelector('.mt'), vr = row.querySelector('input[type=range]'), pad = row.querySelector('.pad'); const R = e => e.getBoundingClientRect();
       return { mt: Math.round(R(mt).width), afstand: Math.round(R(pad).left - R(vr).right), alleSynlige: [...document.querySelectorAll('#pads .gr')].every(g => { const p = g.querySelectorAll('.pad:not([hidden])'); return p.length && R(p[p.length - 1]).right <= R(document.getElementById('w4')).right + 1; }) }; });

@@ -48,11 +48,9 @@ async function kør(arg, { udenLyd = false } = {}) {
       w4: !!document.getElementById('w4'),
     }));
     T.tjek(!faner.plan.some(n => /Generator/i.test(n)) && !faner.synlige.some(n => /Generator/i.test(n)), `ingen Generator-fane i Arbejdsfeltet (faner: ${faner.synlige.join(', ')}; i alt: ${faner.plan.join(', ')})`);
-    T.tjek(faner.w4, 'Generator-vinduet (W4) findes stadig');
-    const adv = await side.evaluate(async () => { const b = document.getElementById('lks-adv'); if (!b) return 'ingen knap'; b.click(); await new Promise(r => setTimeout(r, 400));
-      const w = document.getElementById('w4'), q = w.getBoundingClientRect(); const ok = getComputedStyle(w).display !== 'none' && q.width > 0;
-      const x = w.querySelector('.zon-luk'); if (x) x.click(); return ok ? 'ok' : 'W4 blev ikke vist'; });
-    T.tjek(adv === 'ok', '"Avanceret …" i Lydkilde åbner Generator-vinduet (W4)', adv);
+    /* v9.81: Generator (fuld) er fjernet fra skærmen (vinduet er skjult, knappen Avanceret … er væk) */
+    const adv = await side.evaluate(() => ({ skjult: document.getElementById('w4').hidden, knap: !!document.querySelector('button#lks-adv'), navn: !!DK_NAVN.w4 }));
+    T.tjek(faner.w4 && adv.skjult && !adv.knap && !adv.navn, 'Generator (fuld) er væk fra skærmen: vinduet er skjult, Avanceret … i Lydkilde er væk, og det står ikke i ＋ (v9.81)', JSON.stringify(adv));
 
     /* Testlydfil og analyse */
     if (!udenLyd) {

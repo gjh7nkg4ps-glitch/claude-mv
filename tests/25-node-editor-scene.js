@@ -39,11 +39,9 @@ async function kør(arg) {
     /* 4 · vælgeren: Mesh 3D, og Sluk */
     const m = await side.evaluate(async () => { brugFor('fuld1', true); scVaelg('w2', true); await new Promise(r => setTimeout(r, 1200)); const s = NE2.N.get('s:w2').el.querySelector('[data-ne12="vaelg"]'); s.value = 'w28'; s.dispatchEvent(new Event('change', { bubbles: true })); await new Promise(r => setTimeout(r, 2500)); const n = NE2.N.get('s:w28'); const t0 = M3.tTot; await new Promise(r => setTimeout(r, 800)); return { aktiv: set.scene.aktiv, node: !!n, w2: NE2.N.has('s:w2'), gaar: M3.tTot > t0, r: !!M3.r }; });
     T.tjek(m.aktiv === 'w28' && m.node && !m.w2 && m.r && m.gaar, 'vælgeren skifter Scene til Mesh 3D: scene-noden er nu Mesh 3D, og Mesh 3D tegner');
-    const sl = await side.evaluate(async () => { neVaelg('s:w28'); await new Promise(r => setTimeout(r, 200)); document.querySelector('#ne-kp [data-ne12="sluk"]').click(); await new Promise(r => setTimeout(r, 500)); const t0 = M3.tTot; await new Promise(r => setTimeout(r, 1200)); return { staar: M3.tTot === t0, vindue: document.getElementById('w28').classList.contains('ne-sc-sluk'), node: NE2.N.get('s:w28').el.classList.contains('ne-slukket'), gemt: set.ne.sluk.slice() }; });
-    await side.screenshot({ path: path.join(UD, 'node-editor-scene-sluk.png') });
-    T.tjek(sl.staar && sl.vindue && sl.node && sl.gemt.includes('w28'), 'Sluk Mesh 3D: den tegner ikke (tiden står stille), vinduet og noden viser Slukket, og det huskes i set.ne.sluk');
-    const tn = await side.evaluate(async () => { document.querySelector('#ne-kp [data-ne12="sluk"]').click(); await new Promise(r => setTimeout(r, 400)); const t0 = M3.tTot; await new Promise(r => setTimeout(r, 1500)); return { gaar: M3.tTot > t0, vindue: document.getElementById('w28').classList.contains('ne-sc-sluk') }; });
-    T.tjek(tn.gaar && !tn.vindue, 'Tænd: Mesh 3D tegner igen');
+    /* v9.81: scene-nodens knapper (Riv løs, Send til skærm, Sluk, Åbn stort) er fjernet */
+    const sl = await side.evaluate(async () => { neVaelg('s:w28'); await new Promise(r => setTimeout(r, 300)); return { knapper: document.querySelectorAll('#ne-kp [data-ne12="sluk"],#ne-kp [data-ne12="riv"],#ne-kp [data-ne12="ud"],#ne-kp [data-ne12="stort"]').length, tekst: (document.querySelector('#ne-kp .ne-kp-ind') || {}).textContent || '' }; });
+    T.tjek(sl.knapper === 0 && /zonens bjælke/.test(sl.tekst), 'scene-nodens kontrolpanel har ingen knapper mere (Riv løs, Send til skærm, Sluk og Åbn stort er fjernet i v9.81); teksten henviser til zonens bjælke', JSON.stringify(sl));
     /* 5 · Øjet (scene) starter, og Live preview slukket står stille */
     const oj = await side.evaluate(async () => { ne12Vis('w29'); await new Promise(r => setTimeout(r, 2500)); return { node: NE2.N.has('s:w29'), r: !!OJ.r, tabt: !!OJ.tabt }; });
     T.tjek(oj.node && oj.r && !oj.tabt, 'Øjet vælges fra Scene-kolonnens liste og starter');

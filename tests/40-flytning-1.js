@@ -30,9 +30,7 @@ async function kør(arg) {
       await prøv('Node-editoren · ny regel', () => { ne5Ny('hihat', 'strobe', 'handling') }, 'tilfoej', 1);
       await prøv('Node-editoren · slet', () => ne5Slet(maps.length - 1), 'slet', -1);
       await prøv('Visningerne · slet', () => { maps.length && (rt.conn = maps.length - 1); rtSlet() }, 'slet', -1);
-      await prøv('Lydlag · kobl', () => bindLyd('klik', 'hihat'), 'samlet', 1);
-      await prøv('Lydlag · skift kilde', () => bindLyd('klik', 'snare'), 'samlet', 0);
-      await prøv('Lydlag · fjern', () => bindLyd('klik', ''), 'samlet', -1);
+      /* v9.81: Lydlag og målene lyd:… er fjernet */
       /* v9.75: Editorens Koblinger (Slet) er væk; regler slettes i matrixen (ne5Slet, prøvet ovenfor) */
       /* Fortryd efter en regel lavet gennem indgangen */
       await vent(1500); const n1 = maps.length; ne5Ny('kick', 'zoom', 'handling'); await vent(1700); feFortryd(); await vent(300); ud.fortryd = maps.length === n1 ? 'ok' : 'længde ' + maps.length + ' mod ' + n1;
