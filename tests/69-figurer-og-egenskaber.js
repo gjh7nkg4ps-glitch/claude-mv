@@ -7,7 +7,7 @@
 const path = require('path');
 const { chromium } = require('playwright');
 const { findFil, tæller } = require('./faelles');
-const HASH = { addMorgenstjerne: 3757928788, nyMorgenstjerne: 4209020805, livUI: 3464871260, livKopi: 2438001433, levKoe: 1102397250 };
+const HASH = { addMorgenstjerne: 2609745743 /* v9.91: addMorgenstjerne fik feltet udenRegler i v9.88 (B4); før 3757928788 */, nyMorgenstjerne: 4209020805, livUI: 3464871260, livKopi: 2438001433, levKoe: 1102397250 };
 async function kør(arg) {
   const fil = findFil(arg), T = tæller('Figurer og Egenskaber');
   console.log('69 · Figurer, scene og Egenskaber (6a) · ' + path.basename(fil));
@@ -64,9 +64,9 @@ async function kør(arg) {
       const ms = await side.evaluate(H => { const m0 = maps.length; document.querySelector('#fg34-ny').click(); document.querySelector('#fg34 [data-op="morgenstjerne"]').click(); const o = fase2.objekter[fase2.objekter.length - 1]; const regler = maps.slice(m0).map(m => [m.band, m.effect.split(':').slice(3).join(':'), m.thr, m.gain, m.att, m.rel].join('|'));
         const hsh = s => [...s].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7); const hash = {}; Object.keys(H).forEach(n => { try { hash[n] = hsh(eval(n).toString()) } catch (e) { hash[n] = 'mangler' } });
         return { navn: o.navn, form: o.lag[0].form, regler, hash, liv: !!document.querySelector('#fctl input[id^="lv-"],#fctl [data-lvfod]') || /Levende/.test(document.getElementById('fctl').textContent) } }, HASH);
-      const forv = ['hmid|piglaengde|0.3|1|20|250', 'bas|storrelse|0.2|1|20|250', 'flux|drej|0.2|1|20|250', 'kick|skala|0.3|1|20|250', 'vokal|svaev|0.2|1|20|250', 'vokal|loeft|0.2|1|20|250'];
+      const forv = []; /* v9.91: siden v9.88 (B4) lægges Morgenstjernen på uden regler fra + Ny figur; de 6 regler er regel-sættet Morgenstjerne i Biblioteket */
       const hashOk = Object.keys(HASH).every(n => ms.hash[n] === HASH[n]);
-      T.tjek(ms.navn === 'Morgenstjerne' && ms.form === 'pigkugle' && ms.regler.join(';') === forv.join(';') && hashOk && ms.liv, `Morgenstjernen laves som før (pigkugle med de 6 regler), og Levende figurers kode er uændret (${Object.keys(HASH).join(', ')})`, JSON.stringify(ms));
+      T.tjek(ms.navn === 'Morgenstjerne' && ms.form === 'pigkugle' && ms.regler.join(';') === forv.join(';') && hashOk && ms.liv, `Morgenstjernen laves som før (pigkugle, uden regler siden v9.88), og Levende figurers kode er uændret (${Object.keys(HASH).join(', ')})`, JSON.stringify(ms));
       T.tjek(fejl.length === 0, `${w} × ${h}: ingen fejl i konsollen`, fejl.slice(0, 5).join('\n'));
       await ctx.close();
     }

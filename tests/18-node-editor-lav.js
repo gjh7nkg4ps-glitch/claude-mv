@@ -32,7 +32,7 @@ async function kør(arg) {
     await vent(400);
     /* skærm-punkter */
     const port = (key, p) => side.evaluate(([key, p]) => { if (NE2.valgt && !NE5.kladder.length) neVaelg(null); const n = NE2.N.get(key), e = n.el.querySelector('.ne-port[data-p="' + p + '"]'); const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, [key, p]);
-    const midt = key => side.evaluate(key => { const r = NE2.N.get(key).el.querySelector('.ne-nh').getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, key);
+    const midt = key => side.evaluate(key => { const r = NE2.N.get(key).el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height * .7 }; }, key); /* v9.91: nodens nederste del, så kolonnens navn (der bliver stående øverst) ikke dækker punktet */
     const træk = async (fra, til) => { await side.mouse.move(fra.x, fra.y); await side.mouse.down(); await side.mouse.move((fra.x + til.x) / 2, (fra.y + til.y) / 2, { steps: 4 }); await side.mouse.move(til.x, til.y, { steps: 4 }); await side.mouse.up(); await vent(300); };
     const tomt = () => side.evaluate(() => { const fl = document.getElementById('ne-flade').getBoundingClientRect(); for (let y = fl.top + 120; y < fl.bottom - 40; y += 20) for (let x = fl.left + fl.width * .55; x < fl.right - 60; x += 20) { const e = document.elementFromPoint(x, y); if (e && (e.id === 'ne-flade' || e.id === 'ne-linjer' || e.id === 'ne-verden')) return { x, y }; } return null; });
     const før0 = await side.evaluate(() => maps.length);
@@ -40,6 +40,9 @@ async function kør(arg) {
     /* 1 · Forløb 1: lydtræk → tomt sted → Tilføj-listen → kladde */
     const lt = await side.evaluate(() => [...NE2.N.values()].find(n => n.kol === 'lydtraek').key);
     await læg(lt, 'lydtraek', -480); await vent(300);
+    /* v9.91: figuren lægges op, før det tomme sted findes; siden v9.84 (8 kolonner) lå kladden ellers oven på den */
+    const fig = await side.evaluate(() => [...NE2.N.values()].find(n => n.kol === 'figur' && !n.gruppe) ? [...NE2.N.values()].find(n => n.kol === 'figur' && !n.gruppe).key : [...NE2.N.values()].find(n => n.kol === 'figur').key);
+    await læg(fig, 'figur', -480); await vent(300);
     const t1 = await tomt();
     await træk(await port(lt, 'ud'), t1);
     const liste = await side.evaluate(() => { const m = document.getElementById('ne-menu'); return m ? { titel: m.querySelector('.ne-menu-t').textContent, valg: [...m.querySelectorAll('.ne-menu-i')].map(b => b.textContent) } : null; });
@@ -49,8 +52,6 @@ async function kør(arg) {
     const kl = await side.evaluate(([t1]) => { const k = NE5.kladder[0], n = k && NE2.N.get(k.key), fl = document.getElementById('ne-flade').getBoundingClientRect(); return k ? { maps: maps.length, sover: n.el.classList.contains('ne-kladde'), link: NE2.L.some(l => l.til === k.key), wx: NE.x + n.x * NE.z + fl.left, wy: NE.y + n.y * NE.z + fl.top, valgt: NE2.valgt === k.key, kp: document.querySelector('#ne-kp .ne-kp-tekst').textContent } : null; }, [t1]);
     T.tjek(kl && kl.maps === før0 && kl.sover && kl.link && Math.abs(kl.wx - t1.x) < 12 && Math.abs(kl.wy - t1.y) < 12 && kl.valgt && /mangler et mål/.test(kl.kp), 'den nye regel lægges, hvor man slap, sover (mangler mål), har et link fra lydtrækket og står ikke i maps endnu');
     /* kladde → figur → menu med mål */
-    const fig = await side.evaluate(() => [...NE2.N.values()].find(n => n.kol === 'figur' && !n.gruppe) ? [...NE2.N.values()].find(n => n.kol === 'figur' && !n.gruppe).key : [...NE2.N.values()].find(n => n.kol === 'figur').key);
-    await læg(fig, 'figur', -480); await vent(300);
     const kKey = await side.evaluate(() => NE5.kladder[0].key);
     await træk(await port(kKey, 'ud'), await midt(fig));
     const menu = await side.evaluate(() => { const m = document.getElementById('ne-menu'); return m ? { titel: m.querySelector('.ne-menu-t').textContent, n: m.querySelectorAll('.ne-menu-i').length, søg: !!m.querySelector('.ne-menu-s'), første: m.querySelector('.ne-menu-i').dataset.v } : null; });
