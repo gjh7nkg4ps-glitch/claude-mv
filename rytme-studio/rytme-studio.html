@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rytme Studio 0.1 (Run 1: afspiller og tidslinje)</title>
+<title>Rytme Studio 0.2 (Run 1: afspiller, tidslinje og tre stile)</title>
 <!--
   RYTME STUDIO · én fil, der åbnes direkte i browseren (ingen server, intet internet).
 
@@ -11,6 +11,7 @@
     kerne        RS (det eneste globale navn), RS.util, RS.Events (beskeder mellem modulerne)
     i18n         RS.I18n          tekster på dansk og engelsk
     state        RS.State         indstillinger, gemt i localStorage; husker loop og tempo pr. sang
+    stil         RS.Stil          de tre stile (Glas, Neon, Analog): farver og former til lærrederne
     kommandoer   RS.Kommandoer    alt, brugeren kan gøre (knapper, genveje; senere Ctrl+K)
     audio        RS.Audio         Web Audio: indlæs, afspil, pause, stop, søg, loop, lydstyrke
     analyse      RS.Analyse       Run 1: bølgeform, niveau (RMS), tempo-gitter og snap. Run 2: resten
@@ -138,6 +139,7 @@ button:disabled { cursor: default; }
 .knap-fyldt:hover:not(:disabled) { background: #fff; }
 .knap-lille { padding: 7px 11px; font-size: 13px; }
 .knap[aria-pressed="true"] { background: rgba(255, 184, 92, .13); color: var(--tid); }
+.top-hoejre .tl-etiket { margin-right: -2px; }
 .knap-tekst { background: none; padding: 6px 2px; color: var(--tekst-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--tekst-3); }
 .knap-tekst:hover:not(:disabled) { background: none; color: var(--tekst); }
 .rund {
@@ -300,6 +302,158 @@ body.slipper .slip { display: grid; }
 @media (prefers-reduced-motion: reduce) {
   .status-prik[data-type="arbejder"] { animation: none; }
 }
+
+/* ========== STIL 1 · GLAS: roligt blågråt, glas og glød ========== */
+html[data-stil="glas"] body {
+  background:
+    radial-gradient(900px 520px at 80% -8%, rgba(79, 224, 200, .11), transparent 62%),
+    radial-gradient(1100px 700px at 6% 108%, rgba(92, 132, 255, .12), transparent 60%),
+    radial-gradient(1400px 620px at 60% -12%, #1d2937, transparent 62%), #121820;
+}
+html[data-stil="glas"] .flade {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .022));
+  border: 1px solid rgba(255, 255, 255, .08);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+html[data-stil="glas"] .preview { border: 1px solid rgba(255, 255, 255, .07); }
+html[data-stil="glas"] .nav-punkt[aria-current="page"] { background: linear-gradient(90deg, rgba(79, 224, 200, .15), rgba(255, 255, 255, .04)); box-shadow: inset 2px 0 0 var(--lyd); }
+html[data-stil="glas"] .knap, html[data-stil="glas"] .rund, html[data-stil="glas"] .seg { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06); }
+html[data-stil="glas"] .knap-fyldt, html[data-stil="glas"] .rund-stor { background: linear-gradient(180deg, #f4f8fc, #c9d6e4); }
+html[data-stil="glas"] .rund-stor { box-shadow: 0 0 0 6px rgba(255, 255, 255, .06), 0 10px 26px rgba(0, 0, 0, .45); }
+html[data-stil="glas"] .maaler-fyld { box-shadow: 0 0 14px rgba(79, 224, 200, .55); }
+html[data-stil="glas"] .maaler-tal .tal { text-shadow: 0 0 22px rgba(79, 224, 200, .4); }
+html[data-stil="glas"] .tl-oversigt, html[data-stil="glas"] .tl-laerred { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05), inset 0 12px 30px rgba(0, 0, 0, .35); }
+html[data-stil="glas"] .skyder-tid::-webkit-slider-thumb { box-shadow: 0 0 12px rgba(255, 184, 92, .7); }
+
+/* ========== STIL 2 · NEON: dyb violet, lysende farveforløb, runde former ========== */
+html[data-stil="neon"] {
+  --grund: #0c0a1a; --flade: #141128; --flade-2: #1e1a3a; --flade-3: #2c2654; --dyb: #090714;
+  --tekst: #f1eeff; --tekst-2: #a79fd0; --tekst-3: #6c648f;
+  --lyd: #2de2ff; --lyd-lys: #ff5fa8; --tid: #ffe066; --fejl: #ff7b8e; --fokus: #ffe066;
+  --luft: 16px; --r-stor: 26px; --r: 999px;
+  --skrift: "Avenir Next", "Century Gothic", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --skrift-tal: "Avenir Next", "Century Gothic", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --neon: linear-gradient(120deg, #2de2ff, #7a5cff 52%, #ff5fa8);
+}
+html[data-stil="neon"] body {
+  background:
+    radial-gradient(900px 600px at 88% -10%, rgba(255, 95, 168, .20), transparent 60%),
+    radial-gradient(1000px 700px at -4% 104%, rgba(45, 226, 255, .16), transparent 58%),
+    radial-gradient(900px 700px at 45% 40%, rgba(122, 92, 255, .10), transparent 65%), var(--grund);
+}
+html[data-stil="neon"] .flade {
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, #17142e, #110e23) padding-box, linear-gradient(140deg, rgba(45, 226, 255, .55), rgba(122, 92, 255, .18) 40%, rgba(255, 95, 168, .5)) border-box;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
+}
+html[data-stil="neon"] .brand-navn { background: var(--neon); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; letter-spacing: .01em; }
+html[data-stil="neon"] .preview {
+  border: 1px solid rgba(122, 92, 255, .3);
+  background: radial-gradient(ellipse at 50% 50%, #1a1438 0%, #0e0b20 60%, #080612 100%);
+  box-shadow: inset 0 0 140px rgba(0, 0, 0, .5), 0 24px 60px rgba(0, 0, 0, .45);
+}
+html[data-stil="neon"] .preview-tom h1 { background: var(--neon); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+html[data-stil="neon"] .knap { padding-left: 18px; padding-right: 18px; }
+html[data-stil="neon"] .knap-tekst { padding-left: 2px; padding-right: 2px; }
+html[data-stil="neon"] .knap-fyldt, html[data-stil="neon"] .rund-stor { background: var(--neon); color: #0c0a1a; box-shadow: 0 8px 28px rgba(122, 92, 255, .55), 0 0 0 1px rgba(255, 255, 255, .12) inset; }
+html[data-stil="neon"] .knap-fyldt:hover:not(:disabled), html[data-stil="neon"] .rund-stor:hover:not(:disabled) { background: var(--neon); filter: brightness(1.15); }
+html[data-stil="neon"] .knap[aria-pressed="true"], html[data-stil="neon"] .rund[aria-pressed="true"] { background: rgba(255, 224, 102, .13); box-shadow: 0 0 0 1px rgba(255, 224, 102, .45), 0 0 18px rgba(255, 224, 102, .22); }
+html[data-stil="neon"] .seg { border-radius: 999px; padding: 4px; }
+html[data-stil="neon"] .seg button { border-radius: 999px; padding: 5px 13px; }
+html[data-stil="neon"] .seg button[aria-pressed="true"] { background: linear-gradient(120deg, rgba(45, 226, 255, .28), rgba(255, 95, 168, .28)); box-shadow: 0 0 0 1px rgba(255, 255, 255, .14) inset; }
+html[data-stil="neon"] .nav-punkt { padding: 11px 16px; }
+html[data-stil="neon"] .nav-punkt[aria-current="page"] { background: linear-gradient(120deg, rgba(45, 226, 255, .22), rgba(122, 92, 255, .16) 55%, rgba(255, 95, 168, .22)); box-shadow: 0 0 0 1px rgba(255, 255, 255, .1) inset, 0 8px 24px rgba(122, 92, 255, .25); }
+html[data-stil="neon"] .nav-punkt[aria-current="page"] .ikon { color: var(--lyd); }
+html[data-stil="neon"] .felt { border-radius: 14px; }
+html[data-stil="neon"] .skyder { --fyld: #7a5cff; }
+html[data-stil="neon"] .skyder::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; }
+html[data-stil="neon"] .skyder::-webkit-slider-thumb { width: 16px; height: 16px; box-shadow: 0 0 14px rgba(122, 92, 255, .9); }
+html[data-stil="neon"] .skyder-tid { --fyld: var(--tid); }
+html[data-stil="neon"] .skyder-tid::-webkit-slider-thumb { box-shadow: 0 0 14px rgba(255, 224, 102, .9); }
+html[data-stil="neon"] .maaler { height: 16px; border-radius: 8px; }
+html[data-stil="neon"] .maaler-fyld { background: linear-gradient(90deg, #2de2ff, #7a5cff 55%, #ff5fa8); box-shadow: 0 0 18px rgba(122, 92, 255, .8); }
+html[data-stil="neon"] .maaler-tal .tal { text-shadow: 0 0 24px currentColor; font-weight: 600; }
+html[data-stil="neon"] .tl-oversigt, html[data-stil="neon"] .tl-laerred { border-radius: 16px; box-shadow: inset 0 0 0 1px rgba(122, 92, 255, .22); }
+html[data-stil="neon"] .side h2, html[data-stil="neon"] .panel h2, html[data-stil="neon"] .tl h2 { color: var(--tekst); font-weight: 700; }
+html[data-stil="neon"] .raekke-ab b { color: var(--tid); }
+html[data-stil="neon"] .slip { border-color: #7a5cff; background: rgba(12, 10, 26, .9); }
+html[data-stil="neon"] .log { border-radius: 20px; border: 1px solid rgba(122, 92, 255, .35); }
+
+/* ========== STIL 3 · ANALOG: varmt udstyr, taster, fadere og VU-meter ========== */
+html[data-stil="analog"] {
+  --grund: #171310; --flade: #26211a; --flade-2: #342c22; --flade-3: #453a2c; --dyb: #110e0b;
+  --tekst: #f0e7d6; --tekst-2: #b8aa90; --tekst-3: #7d715e;
+  --lyd: #f0c35a; --lyd-lys: #fff1c9; --tid: #ff5d3a; --fejl: #ff9a8a; --fokus: #f0c35a;
+  --luft: 10px; --r-stor: 8px; --r: 5px;
+  --skrift: "Gill Sans", "Gill Sans MT", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --skrift-tal: Bahnschrift, "DIN Alternate", "Gill Sans", "Trebuchet MS", system-ui, sans-serif;
+  --serif: Rockwell, "Rockwell Nova", Georgia, "Times New Roman", serif;
+}
+html[data-stil="analog"] body {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 240, 210, .016) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #1c1713, #120f0c);
+}
+html[data-stil="analog"] .flade {
+  border: 1px solid #40362a;
+  background:
+    radial-gradient(circle at 11px 11px, #6a5b46 0 1.6px, #14100c 2px 3.4px, transparent 3.8px),
+    radial-gradient(circle at calc(100% - 11px) 11px, #6a5b46 0 1.6px, #14100c 2px 3.4px, transparent 3.8px),
+    radial-gradient(circle at 11px calc(100% - 11px), #6a5b46 0 1.6px, #14100c 2px 3.4px, transparent 3.8px),
+    radial-gradient(circle at calc(100% - 11px) calc(100% - 11px), #6a5b46 0 1.6px, #14100c 2px 3.4px, transparent 3.8px),
+    repeating-linear-gradient(0deg, rgba(255, 240, 210, .014) 0 1px, transparent 1px 2px),
+    linear-gradient(180deg, #2c261e, #211c16);
+  box-shadow: inset 0 1px 0 rgba(255, 240, 210, .09), 0 3px 0 #0b0907, 0 12px 26px rgba(0, 0, 0, .4);
+}
+html[data-stil="analog"] .side, html[data-stil="analog"] .panel { padding: 22px 20px 18px; }
+html[data-stil="analog"] .tl { padding: 16px 20px 20px; }
+html[data-stil="analog"] .player { padding: 14px 26px; }
+html[data-stil="analog"] .brand-navn { font: 700 20px/1 var(--serif); letter-spacing: .03em; }
+html[data-stil="analog"] .side h2, html[data-stil="analog"] .panel h2 { display: flex; align-items: center; gap: 10px; font: 700 13px var(--serif); letter-spacing: .08em; color: var(--tekst-2); }
+html[data-stil="analog"] .side h2::after, html[data-stil="analog"] .panel h2::after { content: ""; flex: 1; height: 2px; border-top: 1px solid #14100c; border-bottom: 1px solid rgba(255, 240, 210, .09); }
+html[data-stil="analog"] .tl h2, html[data-stil="analog"] .log h2 { font: 700 13px var(--serif); letter-spacing: .08em; }
+html[data-stil="analog"] .preview {
+  border: 1px solid #0b0907; border-radius: 8px;
+  background: radial-gradient(ellipse at 50% 40%, #2b241c 0%, #1b1612 62%, #110e0b 100%);
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 240, 210, .08);
+}
+html[data-stil="analog"] .preview-tom h1 { font-family: var(--serif); letter-spacing: 0; }
+html[data-stil="analog"] .knap, html[data-stil="analog"] .rund {
+  border: 1px solid #4d4132; background: linear-gradient(180deg, #40372b, #2f281f);
+  box-shadow: 0 2px 0 #0b0907, inset 0 1px 0 rgba(255, 240, 210, .12);
+}
+html[data-stil="analog"] .knap:hover:not(:disabled), html[data-stil="analog"] .rund:hover:not(:disabled) { background: linear-gradient(180deg, #4b4133, #382f25); }
+html[data-stil="analog"] .knap:active:not(:disabled), html[data-stil="analog"] .rund:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 0 0 #0b0907, inset 0 1px 0 rgba(255, 240, 210, .08); }
+html[data-stil="analog"] .rund { border-radius: 7px; }
+html[data-stil="analog"] .knap-fyldt { background: linear-gradient(180deg, #f6eedd, #d9cbb0); color: #1b120c; border-color: #8f8168; }
+html[data-stil="analog"] .knap-fyldt:hover:not(:disabled) { background: linear-gradient(180deg, #fffaf0, #e4d7be); }
+html[data-stil="analog"] .rund-stor { width: 62px; background: linear-gradient(180deg, #ff7d55, #dd4424); color: #1b120c; border-color: #8a2a14; }
+html[data-stil="analog"] .rund-stor:hover:not(:disabled) { background: linear-gradient(180deg, #ff8f6a, #e8502e); }
+html[data-stil="analog"] .knap[aria-pressed="true"], html[data-stil="analog"] .rund[aria-pressed="true"] { background: linear-gradient(180deg, #2a231b, #332b21); color: var(--tid); box-shadow: inset 0 2px 5px rgba(0, 0, 0, .6), 0 1px 0 rgba(255, 240, 210, .07); text-shadow: 0 0 10px rgba(255, 93, 58, .6); }
+html[data-stil="analog"] .knap-tekst { border: 0; background: none; box-shadow: none; }
+html[data-stil="analog"] .knap-tekst:hover:not(:disabled) { background: none; }
+html[data-stil="analog"] .seg { border-radius: 6px; background: #14100c; box-shadow: inset 0 2px 5px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 240, 210, .07); }
+html[data-stil="analog"] .seg button { border-radius: 4px; }
+html[data-stil="analog"] .seg button[aria-pressed="true"] { background: linear-gradient(180deg, #5a4d3b, #40372b); box-shadow: 0 1px 0 #0b0907, inset 0 1px 0 rgba(255, 240, 210, .16); }
+html[data-stil="analog"] .nav-punkt[aria-current="page"] { background: #14100c; box-shadow: inset 0 2px 5px rgba(0, 0, 0, .7), inset 3px 0 0 var(--tid), 0 1px 0 rgba(255, 240, 210, .07); }
+html[data-stil="analog"] .felt { background: #14100c; border-color: #0b0907; box-shadow: inset 0 2px 4px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 240, 210, .08); color: var(--lyd); }
+html[data-stil="analog"] .skyder { --fyld: var(--tekst-2); height: 24px; }
+html[data-stil="analog"] .skyder::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--fyld) var(--p), #0e0b08 var(--p)); box-shadow: inset 0 1px 2px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 240, 210, .08); }
+html[data-stil="analog"] .skyder::-webkit-slider-thumb { width: 12px; height: 22px; margin-top: -8px; border-radius: 2px; background: linear-gradient(90deg, #cfc2a8 0 5px, #3a3127 5px 7px, #cfc2a8 7px); box-shadow: 0 2px 0 #0b0907, 0 0 0 1px #5a4d3b; }
+html[data-stil="analog"] .skyder::-moz-range-thumb { width: 12px; height: 22px; border-radius: 2px; background: #cfc2a8; }
+html[data-stil="analog"] .skyder-tid { --fyld: var(--tid); }
+html[data-stil="analog"] .maaler { height: 20px; border-radius: 3px; background: #0e0b08; box-shadow: inset 0 2px 4px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 240, 210, .08); padding: 0; }
+html[data-stil="analog"] .maaler::before { content: ""; position: absolute; inset: 4px; background: linear-gradient(90deg, #7fd14a 0 62%, #f0c35a 62% 82%, #ff5d3a 82%); opacity: .14; -webkit-mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 9px); mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 9px); }
+html[data-stil="analog"] .maaler-fyld { inset: 4px; transform: none !important; background: linear-gradient(90deg, #8fe055 0 62%, #ffd166 62% 82%, #ff5d3a 82%); clip-path: inset(0 calc(100% - var(--niv, 0) * 100%) 0 0); -webkit-mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 9px); mask: repeating-linear-gradient(90deg, #000 0 6px, transparent 6px 9px); filter: drop-shadow(0 0 5px rgba(240, 195, 90, .6)); }
+html[data-stil="analog"] .maaler-top { top: 4px; bottom: 4px; width: 3px; background: #fff1c9; }
+html[data-stil="analog"] .maaler-tal > div { background: #14100c; border-radius: 4px; padding: 8px 10px 7px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 240, 210, .08); }
+html[data-stil="analog"] .maaler-tal .tal { text-shadow: 0 0 12px rgba(240, 195, 90, .55); }
+html[data-stil="analog"] .tl-oversigt, html[data-stil="analog"] .tl-laerred { border-radius: 4px; background: #0e0b08; box-shadow: inset 0 2px 8px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 240, 210, .08); }
+html[data-stil="analog"] .pl-soeg .tal:first-child { background: #14100c; color: var(--lyd); padding: 5px 10px; border-radius: 4px; box-shadow: inset 0 2px 5px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 240, 210, .08); text-shadow: 0 0 10px rgba(240, 195, 90, .5); }
+html[data-stil="analog"] .pl-titel { font-family: var(--serif); letter-spacing: .02em; }
+html[data-stil="analog"] .log { border-radius: 6px; border: 1px solid #4d4132; }
+html[data-stil="analog"] .slip { border-radius: 8px; background: rgba(17, 14, 11, .92); font-family: var(--serif); }
+html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
 </style>
 </head>
 <body>
@@ -327,9 +481,9 @@ body.slipper .slip { display: grid; }
   <header class="top">
     <div class="brand">
       <svg class="brand-maerke" viewBox="0 0 26 26" aria-hidden="true">
-        <circle cx="13" cy="13" r="9.5" fill="none" stroke="#4fe0c8" stroke-width="2"/>
-        <circle cx="13" cy="13" r="4" fill="#4fe0c8" opacity=".35"/>
-        <path d="M13 1v24" stroke="#ffb85c" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="13" cy="13" r="9.5" fill="none" style="stroke:var(--lyd)" stroke-width="2"/>
+        <circle cx="13" cy="13" r="4" style="fill:var(--lyd)" opacity=".35"/>
+        <path d="M13 1v24" style="stroke:var(--tid)" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <span class="brand-navn">Rytme Studio</span>
       <span class="brand-version" id="version"></span>
@@ -339,6 +493,12 @@ body.slipper .slip { display: grid; }
       <span id="statusTekst" role="status" aria-live="polite"></span>
     </button>
     <div class="top-hoejre">
+      <span class="tl-etiket" id="stilEtiket" data-i18n="stil.titel"></span>
+      <div class="seg" id="stilValg" role="group" aria-labelledby="stilEtiket">
+        <button data-stil="glas" data-i18n="stil.glas"></button>
+        <button data-stil="neon" data-i18n="stil.neon"></button>
+        <button data-stil="analog" data-i18n="stil.analog"></button>
+      </div>
       <div class="seg" id="sprogValg" role="group" data-i18n-aria="sprog.titel">
         <button data-sprog="da" lang="da">Dansk</button>
         <button data-sprog="en" lang="en">English</button>
@@ -514,7 +674,7 @@ body.slipper .slip { display: grid; }
 /* ========== KERNE: RS, RS.util, RS.Events ==========
    RS er det eneste globale navn. Alle moduler hænger på RS. */
 'use strict';
-window.RS = { version: '0.1', run: 1 };
+window.RS = { version: '0.2', run: 1 };
 
 RS.util = {
   klem: (v, a, b) => (v < a ? a : v > b ? b : v),
@@ -570,7 +730,9 @@ RS.Events = (() => {
 RS.I18n = (() => {
   const tekster = {
     da: {
-      'sprog.titel': 'Sprog',
+      'sprog.titel': 'Sprog', 'stil.titel': 'Stil', 'stil.glas': 'Glas', 'stil.neon': 'Neon', 'stil.analog': 'Analog',
+      'preview.note.neon': 'Ringen følger niveauet (RMS); strålerne er de sidste 20 sekunder. Figurer kommer i Run 3.',
+      'preview.note.analog': 'Viseren følger niveauet (RMS). Lampen lyser, når toppen er over −1 dB. Figurer kommer i Run 3.',
       'nav.titel': 'Arbejdsområder', 'nav.afspiller': 'Afspiller', 'nav.analyse': 'Analyse', 'nav.figurer': 'Figurer',
       'nav.regler': 'Regler', 'nav.show': 'Show', 'nav.senere': 'Kommer i Run {n}',
       'fil.titel': 'Lydfil', 'fil.aabn': 'Vælg lydfil', 'fil.demo': 'Prøv demo-lyden',
@@ -630,7 +792,9 @@ RS.I18n = (() => {
       'status.foelgFra': 'Følg afspilning er slået fra, fordi du selv flyttede udsnittet.'
     },
     en: {
-      'sprog.titel': 'Language',
+      'sprog.titel': 'Language', 'stil.titel': 'Style', 'stil.glas': 'Glass', 'stil.neon': 'Neon', 'stil.analog': 'Analog',
+      'preview.note.neon': 'The ring follows the level (RMS); the rays are the last 20 seconds. Figures arrive in run 3.',
+      'preview.note.analog': 'The needle follows the level (RMS). The lamp lights when the peak is above −1 dB. Figures arrive in run 3.',
       'nav.titel': 'Workspaces', 'nav.afspiller': 'Player', 'nav.analyse': 'Analysis', 'nav.figurer': 'Figures',
       'nav.regler': 'Rules', 'nav.show': 'Show', 'nav.senere': 'Coming in run {n}',
       'fil.titel': 'Audio file', 'fil.aabn': 'Choose audio file', 'fil.demo': 'Try the demo sound',
@@ -727,6 +891,7 @@ RS.State = (() => {
   const STANDARD = {
     version: 1,
     sprog: 'da',
+    stil: 'glas',                                  // 'glas' | 'neon' | 'analog'
     lyd: { volumen: 0.8, mute: false },
     tidslinje: { foelg: true, snap: 'fra' },      // snap: 'fra' | 'slag' | 'takt'
     sange: {}
@@ -815,12 +980,57 @@ RS.State = (() => {
   }
   /* Grundlag for presets (Run 4): et øjebliksbillede af indstillingerne, og det modsatte. */
   function snapshot() { const s = klon(data); delete s.sange; return s; }
-  function gendan(s) { for (const k of ['sprog', 'lyd', 'tidslinje']) if (s && s[k] !== undefined) saet(k, klon(s[k])); }
+  function gendan(s) { for (const k of ['sprog', 'stil', 'lyd', 'tidslinje']) if (s && s[k] !== undefined) saet(k, klon(s[k])); }
   function nulstil() { saet('lyd', klon(STANDARD.lyd)); saet('tidslinje', klon(STANDARD.tidslinje)); }
 
   return { hent, saet, lyt, skiftSang, snapshot, gendan, nulstil, gemNu };
 })();
 /* ========== SLUT: STATE ========== */
+</script>
+
+<script data-modul="stil">
+/* ========== STIL: de tre stile ==========
+   Det meste af en stil er CSS (html[data-stil="…"]). Her står det, lærrederne (canvas) skal bruge:
+   farver som tal, bølgeformens form og hvilken figur Live preview tegner.
+   lyd = ikke spillet endnu, spil = det spillede stykke, lys = kernen (RMS). Ind = ved midten, Yd = ved kanten.
+   Besked: 'stil:skiftet' id. */
+'use strict';
+RS.Stil = (() => {
+  const stile = {
+    glas: {
+      form: 'flade', preview: 'kugle',
+      lydInd: [79, 224, 200], lydYd: [79, 224, 200], spilInd: [79, 224, 200], spilYd: [79, 224, 200], lysInd: [200, 250, 240], lysYd: [150, 242, 226],
+      aSvag: 0.2, aSvagRms: 0.21, aSpil: 0.55,
+      tid: '#ffb85c', tidRgb: '255,184,92', lysRgb: '221,229,238', tekst: '#98a6b7', tekstSvag: '#66748a',
+      gitterTakt: 'rgba(221,229,238,0.17)', gitterSlag: 'rgba(221,229,238,0.07)', streg: 'rgba(221,229,238,0.10)',
+      paaTid: '#141a22', musBg: '#2c3848', musTekst: '#dde5ee', haandtagSvag: '#8a6a3c'
+    },
+    neon: {
+      form: 'soejler', soejleB: 3, soejleGab: 2, preview: 'ring',
+      lydInd: [45, 226, 255], lydYd: [255, 95, 168], spilInd: [45, 226, 255], spilYd: [255, 95, 168], lysInd: [170, 244, 255], lysYd: [255, 130, 190],
+      aSvag: 0.26, aSvagRms: 0.1, aSpil: 0.95,
+      tid: '#ffe066', tidRgb: '255,224,102', lysRgb: '241,238,255', tekst: '#a79fd0', tekstSvag: '#6c648f',
+      gitterTakt: 'rgba(190,170,255,0.20)', gitterSlag: 'rgba(190,170,255,0.08)', streg: 'rgba(190,170,255,0.14)',
+      paaTid: '#141128', musBg: '#2b2552', musTekst: '#f1eeff', haandtagSvag: '#8a7a3c'
+    },
+    analog: {
+      form: 'flade', preview: 'vu',
+      lydInd: [240, 231, 214], lydYd: [240, 231, 214], spilInd: [240, 195, 90], spilYd: [240, 170, 70], lysInd: [255, 244, 210], lysYd: [255, 226, 150],
+      aSvag: 0.2, aSvagRms: 0.2, aSpil: 0.6,
+      tid: '#ff5d3a', tidRgb: '255,93,58', lysRgb: '240,231,214', tekst: '#b8aa90', tekstSvag: '#7d715e',
+      gitterTakt: 'rgba(240,231,214,0.17)', gitterSlag: 'rgba(240,231,214,0.07)', streg: 'rgba(240,231,214,0.14)',
+      paaTid: '#1b120c', musBg: '#40372b', musTekst: '#f0e7d6', haandtagSvag: '#8a4a36'
+    }
+  };
+  let id = 'glas';
+  function saet(nyt) {
+    id = stile[nyt] ? nyt : 'glas';
+    document.documentElement.dataset.stil = id;
+    RS.Events.emit('stil:skiftet', id);
+  }
+  return { saet, id: () => id, nu: () => stile[id], liste: () => Object.keys(stile) };
+})();
+/* ========== SLUT: STIL ========== */
 </script>
 
 <script data-modul="kommandoer">
@@ -1336,7 +1546,7 @@ RS.Rendering = (() => {
   let pv = null, pvC = null, pvSnavset = true;
   const n01 = db => (db <= -54 ? 0 : db >= 0 ? 1 : (db + 54) / 54);      // −54 dB … 0 dB → 0 … 1
 
-  function tegnPreview() {
+  function tegnPreview(dt, nu) {
     const L = RS.Analyse.live;
     const aktiv = RS.Audio.tilstand() === 'spiller' || L.glat > 0 || L.hold > 0;
     if (!aktiv && !pvSnavset) return;
@@ -1345,6 +1555,9 @@ RS.Rendering = (() => {
     c.setTransform(m.dpr, 0, 0, m.dpr, 0, 0);
     c.clearRect(0, 0, b, h);
     if (!RS.Audio.harSang()) return;
+    const figur = RS.Stil.nu().preview;
+    if (figur === 'ring') return tegnRing(c, b, h, L);
+    if (figur === 'vu') return tegnVu(c, b, h, L);
 
     const niv = n01(L.rmsDb), top = n01(L.holdDb);
     const cx = b / 2, cy = h * 0.44, R0 = Math.min(b, h) * 0.12, R = R0 * (1 + niv * 0.9);
@@ -1382,10 +1595,105 @@ RS.Rendering = (() => {
     c.closePath(); c.fill();
   }
 
+  /* Stilen Neon: en lysende ring. Strålerne rundt om er niveauet de sidste 20 sekunder (nyest øverst, med uret bagud). */
+  function tegnRing(c, b, h, L) {
+    const niv = n01(L.rmsDb), top = n01(L.holdDb), cx = b / 2, cy = h * 0.5, R0 = Math.min(b, h) * 0.17, R = R0 * (1 + niv * 0.22);
+    const hist = L.historik, N = 120, trin = hist.length / N, maks = Math.min(b, h) * 0.2;
+    const farve = (f, a) => 'rgba(' + Math.round(45 + 210 * f) + ',' + Math.round(226 - 131 * f) + ',' + Math.round(255 - 87 * f) + ',' + a + ')';
+    const g = c.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 3);
+    g.addColorStop(0, 'rgba(122,92,255,' + (0.1 + 0.3 * niv) + ')'); g.addColorStop(0.45, 'rgba(255,95,168,' + 0.12 * niv + ')'); g.addColorStop(1, 'rgba(45,226,255,0)');
+    c.fillStyle = g; c.beginPath(); c.arc(cx, cy, R * 3, 0, TO_PI); c.fill();
+    c.lineCap = 'round';
+    for (let pas = 0; pas < 2; pas++) {
+      c.lineWidth = pas ? Math.max(2, R0 * 0.022) : Math.max(6, R0 * 0.07);
+      for (let i = 0; i < N; i++) {
+        const v = n01(RS.util.dB(hist[(L.histPos - 1 - Math.floor(i * trin) + hist.length * 2) % hist.length]));
+        if (v <= 0.01) continue;
+        const vink = -Math.PI / 2 + (i / N) * TO_PI, f = Math.abs(1 - (2 * i) / N), r1 = R + R0 * 0.14, r2 = r1 + v * maks * (1 - 0.45 * (i / N));
+        c.strokeStyle = farve(1 - f, pas ? 0.95 - 0.6 * (i / N) : 0.14);
+        c.beginPath(); c.moveTo(cx + Math.cos(vink) * r1, cy + Math.sin(vink) * r1); c.lineTo(cx + Math.cos(vink) * r2, cy + Math.sin(vink) * r2); c.stroke();
+      }
+    }
+    const kant = c.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
+    kant.addColorStop(0, '#2de2ff'); kant.addColorStop(0.5, '#7a5cff'); kant.addColorStop(1, '#ff5fa8');
+    c.strokeStyle = kant; c.globalAlpha = 0.25 + 0.3 * niv; c.lineWidth = R0 * 0.16;
+    c.beginPath(); c.arc(cx, cy, R, 0, TO_PI); c.stroke();
+    c.globalAlpha = 1; c.lineWidth = Math.max(3, R0 * 0.045);
+    c.beginPath(); c.arc(cx, cy, R, 0, TO_PI); c.stroke();
+    const k = c.createRadialGradient(cx, cy, 0, cx, cy, R);
+    k.addColorStop(0, 'rgba(241,238,255,' + (0.05 + 0.5 * niv * niv) + ')'); k.addColorStop(0.7, 'rgba(122,92,255,' + (0.05 + 0.2 * niv) + ')'); k.addColorStop(1, 'rgba(20,17,40,0)');
+    c.fillStyle = k; c.beginPath(); c.arc(cx, cy, R, 0, TO_PI); c.fill();
+    if (top > 0) { c.strokeStyle = 'rgba(255,224,102,' + (0.15 + 0.6 * top) + ')'; c.lineWidth = 1.5; c.beginPath(); c.arc(cx, cy, R0 * 1.36 + top * maks, 0, TO_PI); c.stroke(); }
+    c.fillStyle = '#f1eeff'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = '600 ' + Math.round(R0 * 0.36) + 'px ' + skriftTal();
+    c.fillText(isFinite(L.rmsDb) ? RS.util.talTekst(L.rmsDb, 1) : '−∞', cx, cy - R0 * 0.04);
+    c.font = Math.round(Math.max(11, R0 * 0.1)) + 'px ' + skriftTal(); c.fillStyle = '#a79fd0';
+    c.fillText('RMS dB', cx, cy + R0 * 0.26);
+    c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  }
+
+  /* Stilen Analog: et VU-meter (fagudtryk: volume unit meter) med viser. Skalaen er dB fra −40 til 0; rødt felt fra −6. */
+  function tegnVu(c, b, h, L) {
+    const Bm = Math.min(b * 0.62, h * 1.25, 1100), Hm = Bm * 0.56, x0 = (b - Bm) / 2, y0 = (h - Hm) / 2 - h * 0.02, e = Bm / 100;
+    const vinkel = db => (-50 + (Math.max(-40, Math.min(1.5, db)) + 40) / 40 * 100) * Math.PI / 180;   // −40 dB = −50°, 0 dB = +50°
+    /* Kabinet og skive */
+    c.fillStyle = '#0f0c09'; c.beginPath(); c.roundRect(x0 - 2.2 * e, y0 - 2.2 * e + 0.8 * e, Bm + 4.4 * e, Hm + 4.4 * e, 2.4 * e); c.fill();
+    const ramme = c.createLinearGradient(0, y0 - 2 * e, 0, y0 + Hm + 2 * e);
+    ramme.addColorStop(0, '#4a4033'); ramme.addColorStop(1, '#2a241c');
+    c.fillStyle = ramme; c.beginPath(); c.roundRect(x0 - 2.2 * e, y0 - 2.2 * e, Bm + 4.4 * e, Hm + 4.4 * e, 2.4 * e); c.fill();
+    const skive = c.createRadialGradient(b / 2, y0 + Hm * 0.25, Hm * 0.1, b / 2, y0 + Hm * 0.5, Bm * 0.72);
+    skive.addColorStop(0, '#fbf1d6'); skive.addColorStop(0.6, '#f0e2bd'); skive.addColorStop(1, '#cdb98a');
+    c.fillStyle = skive; c.beginPath(); c.roundRect(x0, y0, Bm, Hm, 1.2 * e); c.fill();
+    c.save(); c.beginPath(); c.roundRect(x0, y0, Bm, Hm, 1.2 * e); c.clip();
+    const px = b / 2, py = y0 + Hm * 1.02, Rs = Hm * 0.78;                 // viserens omdrejningspunkt og skalaens radius
+    const pkt = (db, r) => { const a = vinkel(db) - Math.PI / 2; return [px + Math.cos(a) * r, py + Math.sin(a) * r]; };
+    /* Skalaens bue: sort til −6 dB, rød derfra */
+    c.lineWidth = 0.45 * e; c.strokeStyle = '#2a221a';
+    c.beginPath(); c.arc(px, py, Rs, vinkel(-40) - Math.PI / 2, vinkel(-6) - Math.PI / 2); c.stroke();
+    c.strokeStyle = '#c8371c'; c.lineWidth = 1.5 * e;
+    c.beginPath(); c.arc(px, py, Rs + 0.52 * e, vinkel(-6) - Math.PI / 2, vinkel(0) - Math.PI / 2); c.stroke();
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    for (let db = -40; db <= 0; db++) {
+      const stor = db % 10 === 0 || db === -6 || db === -3, mellem = db % 5 === 0;
+      if (!stor && !mellem && db < -20 && db % 2) continue;
+      const p1 = pkt(db, Rs), p2 = pkt(db, Rs + (stor ? 3.4 : mellem ? 2.4 : 1.5) * e);
+      c.strokeStyle = db >= -6 ? '#c8371c' : '#2a221a'; c.lineWidth = (stor ? 0.5 : 0.28) * e;
+      c.beginPath(); c.moveTo(p1[0], p1[1]); c.lineTo(p2[0], p2[1]); c.stroke();
+      if (stor) { const pt = pkt(db, Rs + 6.6 * e); c.fillStyle = db >= -6 ? '#c8371c' : '#2a221a'; c.font = '600 ' + 3.3 * e + 'px ' + skriftTal(); c.fillText(String(db).replace('-', '−'), pt[0], pt[1]); }
+    }
+    c.fillStyle = '#2a221a'; c.font = 'italic ' + 5.2 * e + 'px Georgia, "Times New Roman", serif';
+    c.fillText('RMS', px, y0 + Hm * 0.6);
+    c.font = 2.5 * e + 'px ' + skriftTal(); c.fillStyle = '#6b5c45';
+    c.fillText('dB  ·  Rytme Studio', px, y0 + Hm * 0.7);
+    /* Viseren, med skygge */
+    const a = vinkel(isFinite(L.rmsDb) ? L.rmsDb : -60) - Math.PI / 2, laengde = Rs + 2.2 * e;
+    c.lineCap = 'round';
+    c.strokeStyle = 'rgba(60,40,20,0.22)'; c.lineWidth = 0.7 * e;
+    c.beginPath(); c.moveTo(px + 0.9 * e, py + 0.9 * e); c.lineTo(px + Math.cos(a) * laengde + 0.9 * e, py + Math.sin(a) * laengde + 0.9 * e); c.stroke();
+    c.strokeStyle = '#1c1611'; c.lineWidth = 0.42 * e;
+    c.beginPath(); c.moveTo(px, py); c.lineTo(px + Math.cos(a) * laengde, py + Math.sin(a) * laengde); c.stroke();
+    c.restore();
+    /* Dæksel over omdrejningspunktet og top-lampen */
+    const daek = c.createLinearGradient(0, y0 + Hm * 0.84, 0, y0 + Hm);
+    daek.addColorStop(0, '#3a3127'); daek.addColorStop(1, '#221c15');
+    c.fillStyle = daek; c.beginPath(); c.roundRect(x0, y0 + Hm * 0.84, Bm, Hm * 0.16, [0, 0, 1.2 * e, 1.2 * e]); c.fill();
+    c.fillStyle = '#b8aa90'; c.font = 2.4 * e + 'px ' + skriftTal(); c.textAlign = 'left';
+    c.fillText((isFinite(L.rmsDb) ? RS.util.talTekst(L.rmsDb, 1) : '−∞') + ' dB RMS', x0 + 3 * e, y0 + Hm * 0.92);
+    c.textAlign = 'right';
+    c.fillText('Top ' + (isFinite(L.holdDb) ? RS.util.talTekst(L.holdDb, 1) : '−∞') + ' dB', x0 + Bm - 8 * e, y0 + Hm * 0.92);
+    const taendt = L.holdDb > -1, lx = x0 + Bm - 4.2 * e, ly = y0 + Hm * 0.92;
+    if (taendt) { const gl = c.createRadialGradient(lx, ly, 0, lx, ly, 6 * e); gl.addColorStop(0, 'rgba(255,93,58,0.7)'); gl.addColorStop(1, 'rgba(255,93,58,0)'); c.fillStyle = gl; c.beginPath(); c.arc(lx, ly, 6 * e, 0, TO_PI); c.fill(); }
+    c.fillStyle = taendt ? '#ff7a55' : '#5a2a1e'; c.beginPath(); c.arc(lx, ly, 1.5 * e, 0, TO_PI); c.fill();
+    c.strokeStyle = '#0f0c09'; c.lineWidth = 0.3 * e; c.stroke();
+    c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  }
+  const skriftTal = () => getComputedStyle(document.documentElement).getPropertyValue('--skrift-tal') || 'sans-serif';
+
   function startPreview(laerred) {
     pv = laerred; pvC = pv.getContext('2d');
     new ResizeObserver(() => { pvSnavset = true; }).observe(pv);
     Events.on('audio:indlaest', () => { pvSnavset = true; });
+    Events.on('stil:skiftet', () => { pvSnavset = true; });
     tilfoej('preview', tegnPreview);
   }
 
@@ -1405,10 +1713,7 @@ RS.Rendering = (() => {
 RS.Tidslinje = (() => {
   const { Events, State, util } = RS;
   const MAKS_PPS = 4000, LINEAL = 26, FOELG_PLADS = 0.3;   // stregen holdes 30 % inde i billedet
-  const F = {                                              // farver: turkis = lyd, rav = tid
-    tid: '#ffb85c', tekst: '#98a6b7', tekstSvag: '#66748a',
-    gitterTakt: 'rgba(221,229,238,0.17)', gitterSlag: 'rgba(221,229,238,0.07)', streg: 'rgba(221,229,238,0.10)'
-  };
+  let F = RS.Stil.nu();                                    // farver og form fra den valgte stil
   let laerred, c, oversigt, oc, skrift = 'sans-serif';
   let boelge = null, varighed = 0;
   let start = 0, pps = 100, passerAlt = true;
@@ -1480,11 +1785,23 @@ RS.Tidslinje = (() => {
       yT: new Float32Array(W), yB: new Float32Array(W), rT: new Float32Array(W), rB: new Float32Array(W)
     };
   }
-  function malBillede(bl) {
+  function malBillede(bl, x0) {
     const W = bl.W, Hh = bl.H, k = bl.kol, midt = Hh / 2, amp = Hh / 2 - 3;
     const yT = bl.yT, yB = bl.yB, rT = bl.rT, rB = bl.rB;
+    /* Søjler (stilen Neon): flere billedpunkter samles til én søjle med luft imellem. Søjlerne ligger fast
+       på sangens egen akse (x0), så de ikke flimrer, når udsnittet ruller. */
+    if (F.form === 'soejler') {
+      const sb = Math.max(1, Math.round(F.soejleB * dpr)), per = sb + Math.max(1, Math.round(F.soejleGab * dpr));
+      for (let g0 = -(((x0 % per) + per) % per); g0 < W; g0 += per) {
+        const xa = g0 < 0 ? 0 : g0, xb = g0 + per < W ? g0 + per : W;
+        let m = 0, r = 0;
+        for (let x = xa; x < xb; x++) { if (k.top[x] > m) m = k.top[x]; if (-k.bund[x] > m) m = -k.bund[x]; if (k.rms[x] > r) r = k.rms[x]; }
+        for (let x = xa; x < xb; x++) { if (x - g0 < sb) { k.top[x] = m; k.bund[x] = -m; k.rms[x] = r; } else k.top[x] = NaN; }
+      }
+    }
     let yMin = Hh, yMax = 0;
     for (let x = 0; x < W; x++) {
+      if (k.top[x] !== k.top[x]) { yT[x] = 1e9; yB[x] = -1e9; continue; }   // luft mellem søjler
       let a = midt - k.top[x] * amp, b = midt - k.bund[x] * amp;
       if (a > midt - 0.5) a = midt - 0.5;                  // stilhed tegnes som en tynd streg
       if (b < midt + 0.5) b = midt + 0.5;
@@ -1495,8 +1812,12 @@ RS.Tidslinje = (() => {
     const pS = new Uint32Array(bl.dS.data.buffer), pL = new Uint32Array(bl.dL.data.buffer);
     pS.fill(0); pL.fill(0);
     const y0 = Math.max(0, Math.floor(yMin)), y1 = Math.min(Hh, Math.ceil(yMax));
+    const bl2 = (a, b, d, i) => a[i] + (b[i] - a[i]) * d;
     for (let y = y0; y < y1; y++) {
-      const r0 = y * W;
+      const r0 = y * W, d = Math.min(1, Math.abs(y + 0.5 - midt) / amp);   // 0 ved midten, 1 ved kanten
+      const svag = (bl2(F.lydInd, F.lydYd, d, 2) << 16) | (bl2(F.lydInd, F.lydYd, d, 1) << 8) | bl2(F.lydInd, F.lydYd, d, 0);
+      const sR = bl2(F.spilInd, F.spilYd, d, 0), sG = bl2(F.spilInd, F.spilYd, d, 1), sB = bl2(F.spilInd, F.spilYd, d, 2);
+      const lR = bl2(F.lysInd, F.lysYd, d, 0), lG = bl2(F.lysInd, F.lysYd, d, 1), lB = bl2(F.lysInd, F.lysYd, d, 2);
       for (let x = 0; x < W; x++) {
         const t = yT[x], b = yB[x];
         if (y + 1 <= t || y >= b) continue;
@@ -1504,9 +1825,9 @@ RS.Tidslinje = (() => {
         const dp = (b < y + 1 ? b : y + 1) - (t > y ? t : y);
         let dr = (rB[x] < y + 1 ? rB[x] : y + 1) - (rT[x] > y ? rT[x] : y);
         if (dr < 0) dr = 0;
-        pS[r0 + x] = (((dp * 0.2 + dr * 0.21) * 255) << 24) | 0xc8e04f;                    // turkis (79,224,200), svag
-        const aP = dp * 0.55 * (1 - dr), aUd = dr + aP;
-        pL[r0 + x] = ((aUd * 255) << 24) | (((231 * dr + 200 * aP) / aUd) << 16) | (((245 * dr + 224 * aP) / aUd) << 8) | ((169 * dr + 79 * aP) / aUd);
+        pS[r0 + x] = (((dp * F.aSvag + dr * F.aSvagRms) * 255) << 24) | svag;
+        const aP = dp * F.aSpil * (1 - dr), aUd = dr + aP;
+        pL[r0 + x] = ((aUd * 255) << 24) | (((lB * dr + sB * aP) / aUd) << 16) | (((lG * dr + sG * aP) / aUd) << 8) | ((lR * dr + sR * aP) / aUd);
       }
     }
     bl.cS.putImageData(bl.dS, 0, 0);
@@ -1522,7 +1843,7 @@ RS.Tidslinje = (() => {
     flise.boelge = boelge; flise.enhed = enhed;
     flise.x0 = Math.max(0, vx - ((FW - W) >> 1));
     RS.Analyse.soejler(boelge, flise.x0 / enhed, enhed, FW, flise.bl.kol);
-    malBillede(flise.bl);
+    malBillede(flise.bl, flise.x0);
     return vx;
   }
 
@@ -1568,7 +1889,7 @@ RS.Tidslinje = (() => {
     const loopTaendt = l.tilstand === 'ab';
     if (l.a != null && l.b != null) {
       const xa = tidTilX(l.a) * dpr, xb = tidTilX(l.b) * dpr;
-      c.fillStyle = loopTaendt ? 'rgba(255,184,92,0.11)' : 'rgba(255,184,92,0.04)';
+      c.fillStyle = loopTaendt ? 'rgba(' + F.tidRgb + ',0.11)' : 'rgba(' + F.tidRgb + ',0.04)';
       c.fillRect(xa, yB, xb - xa, hB);
     }
 
@@ -1595,13 +1916,13 @@ RS.Tidslinje = (() => {
       if (l[hvilket] == null) continue;
       const x = Math.round(tidTilX(l[hvilket]) * dpr) + 0.5;
       if (x < -20 * dpr || x > W + 20 * dpr) continue;
-      c.strokeStyle = loopTaendt ? 'rgba(255,184,92,0.85)' : 'rgba(255,184,92,0.4)';
+      c.strokeStyle = loopTaendt ? 'rgba(' + F.tidRgb + ',0.85)' : 'rgba(' + F.tidRgb + ',0.4)';
       c.lineWidth = 1;
       c.beginPath(); c.moveTo(x, 0); c.lineTo(x, Hp); c.stroke();
       const bw = 16 * dpr, bh = 15 * dpr, bx = x - bw;      // til venstre for stregen, så tallet på linealen kan læses
-      c.fillStyle = loopTaendt ? F.tid : '#8a6a3c';
+      c.fillStyle = loopTaendt ? F.tid : F.haandtagSvag;
       c.beginPath(); c.roundRect(bx, 1 * dpr, bw, bh, 3 * dpr); c.fill();
-      c.fillStyle = '#141a22';
+      c.fillStyle = F.paaTid;
       c.font = '600 ' + 11 * dpr + 'px ' + skrift;
       c.fillText(hvilket.toUpperCase(), bx + 4.5 * dpr, 3.5 * dpr);
       c.font = 11 * dpr + 'px ' + skrift;
@@ -1610,13 +1931,13 @@ RS.Tidslinje = (() => {
     /* Musen: en tynd streg og tiden under den */
     if (musX >= 0 && !traek) {
       const x = Math.round(musX * dpr) + 0.5;
-      c.strokeStyle = 'rgba(221,229,238,0.28)'; c.lineWidth = 1;
+      c.strokeStyle = 'rgba(' + F.lysRgb + ',0.28)'; c.lineWidth = 1;
       c.beginPath(); c.moveTo(x, yB); c.lineTo(x, Hp); c.stroke();
       const tekst = util.tidTekst(xTilTid(musX), 2), tb = c.measureText(tekst).width + 10 * dpr;
       const tx = Math.min(W - tb - 2, Math.max(2, x - tb / 2));
-      c.fillStyle = '#2c3848';
+      c.fillStyle = F.musBg;
       c.beginPath(); c.roundRect(tx, Hp - 20 * dpr, tb, 16 * dpr, 4 * dpr); c.fill();
-      c.fillStyle = '#dde5ee';
+      c.fillStyle = F.musTekst;
       c.fillText(tekst, tx + 5 * dpr, Hp - 17 * dpr);
     }
 
@@ -1624,7 +1945,7 @@ RS.Tidslinje = (() => {
     if (px >= -2 && px <= W + 2) {
       if (spiller) {
         const spor = c.createLinearGradient(px - 34 * dpr, 0, px, 0);
-        spor.addColorStop(0, 'rgba(255,184,92,0)'); spor.addColorStop(1, 'rgba(255,184,92,0.20)');
+        spor.addColorStop(0, 'rgba(' + F.tidRgb + ',0)'); spor.addColorStop(1, 'rgba(' + F.tidRgb + ',0.20)');
         c.fillStyle = spor; c.fillRect(px - 34 * dpr, yB, 34 * dpr, hB);
       }
       c.fillStyle = F.tid;
@@ -1641,13 +1962,13 @@ RS.Tidslinje = (() => {
     if (!oBillede || oBillede.W !== W || oBillede.H !== Hp || oBoelge !== boelge) {
       if (!oBillede || oBillede.W !== W || oBillede.H !== Hp) oBillede = nytBillede(W, Hp);
       RS.Analyse.soejler(boelge, 0, W / varighed, W, oBillede.kol);
-      malBillede(oBillede);
+      malBillede(oBillede, 0);
       oBoelge = boelge;
     }
     const tx = t => (t / varighed) * W;
     const l = midlLoop || State.hent('sang.loop');
     if (l.a != null && l.b != null) {
-      oc.fillStyle = l.tilstand === 'ab' ? 'rgba(255,184,92,0.22)' : 'rgba(255,184,92,0.08)';
+      oc.fillStyle = l.tilstand === 'ab' ? 'rgba(' + F.tidRgb + ',0.22)' : 'rgba(' + F.tidRgb + ',0.08)';
       oc.fillRect(tx(l.a), 0, Math.max(1, tx(l.b) - tx(l.a)), Hp);
     }
     const px = tx(pos), spillet = Math.max(0, Math.min(W, Math.round(px)));
@@ -1656,8 +1977,8 @@ RS.Tidslinje = (() => {
     /* Udsnittet, der vises i den store bølgeform */
     if (!passerAlt) {
       const x0 = tx(start), x1 = tx(start + synlig());
-      oc.fillStyle = 'rgba(221,229,238,0.09)';
-      oc.strokeStyle = 'rgba(221,229,238,0.55)'; oc.lineWidth = dpr;
+      oc.fillStyle = 'rgba(' + F.lysRgb + ',0.09)';
+      oc.strokeStyle = 'rgba(' + F.lysRgb + ',0.55)'; oc.lineWidth = dpr;
       oc.beginPath(); oc.roundRect(x0 + 0.5, 0.5, Math.max(4 * dpr, x1 - x0) - 1, Hp - 1, 5 * dpr); oc.fill(); oc.stroke();
     }
     oc.fillStyle = F.tid;
@@ -1802,6 +2123,10 @@ RS.Tidslinje = (() => {
     });
     Events.on('audio:tilstand', () => { snavset = true; });
     Events.on('i18n:sprog', () => { snavset = true; });
+    Events.on('stil:skiftet', () => {
+      F = RS.Stil.nu(); flise = null; oBillede = null; snavset = true;
+      skrift = getComputedStyle(document.body).fontFamily;
+    });
     State.lyt('sang', () => { snavset = true; });
     State.lyt('tidslinje', () => { snavset = true; });
     RS.Rendering.tilfoej('tidslinje', billede);
@@ -1995,6 +2320,12 @@ RS.UI = (() => {
     el.foelgKnap.setAttribute('aria-pressed', String(tl.foelg));
     el.snapHint.hidden = !(RS.Audio.harSang() && tl.snap !== 'fra' && !g.bpm);   // snap er valgt, men der er intet tempo
   }
+  function tegnStil() {
+    for (const b of el.stilValg.children) b.setAttribute('aria-pressed', String(b.dataset.stil === RS.Stil.id()));
+    const n = 'preview.note.' + RS.Stil.id();
+    el.previewNote.dataset.i18n = t(n) === n ? 'preview.note' : n;       // hver stil forklarer sin egen figur
+    saetTekst(el.previewNote, t(el.previewNote.dataset.i18n));
+  }
   function tegnSprog() {
     for (const b of el.sprogValg.children) b.setAttribute('aria-pressed', String(b.dataset.sprog === I18n.sprog()));
   }
@@ -2018,7 +2349,7 @@ RS.UI = (() => {
     }));
   }
   function tegnAlt() {
-    tegnSprog(); tegnKommandoKnapper(); tegnGenveje(); tegnSang(); tegnAfspiller(); tegnLyd(); tegnLoop(); tegnTempo();
+    tegnSprog(); tegnStil(); tegnKommandoKnapper(); tegnGenveje(); tegnSang(); tegnAfspiller(); tegnLyd(); tegnLoop(); tegnTempo();
     tegnTidslinjeValg(); tegnSangliste(); tegnStatus();
   }
 
@@ -2027,6 +2358,7 @@ RS.UI = (() => {
     const L = RS.Analyse.live, n01 = RS.Rendering.n01;
     el.maalerFyld.style.transform = 'scaleX(' + n01(L.rmsDb).toFixed(4) + ')';
     el.maalerTop.style.left = (n01(L.holdDb) * 100).toFixed(2) + '%';
+    el.maalerFyld.parentElement.style.setProperty('--niv', n01(L.rmsDb).toFixed(4));
     if (nu - sidstTik < 80) return;                       // tal og tekst: højst 12 gange i sekundet
     sidstTik = nu;
     const pos = RS.Audio.position(), varighed = RS.Audio.varighed();
@@ -2069,7 +2401,7 @@ RS.UI = (() => {
 
   /* ---------- Start: find elementerne og sæt lyttere på ---------- */
   function start() {
-    for (const id of ['status', 'statusPrik', 'statusTekst', 'log', 'logListe', 'sprogValg', 'version', 'filValg', 'filInfo',
+    for (const id of ['status', 'statusPrik', 'statusTekst', 'log', 'logListe', 'sprogValg', 'stilValg', 'version', 'filValg', 'filInfo',
       'infoLaengde', 'infoKanaler', 'infoRate', 'infoStoerrelse', 'sangBoks', 'sangListe', 'previewTom', 'previewNote', 'fps',
       'tlUdsnit', 'snapHint', 'snapValg', 'foelgKnap', 'zoom', 'maalerFyld', 'maalerTop', 'rmsTal', 'peakTal', 'loopValg',
       'loopATal', 'loopBTal', 'loopRydKnap', 'bpmFelt', 'slagFelt', 'tempoRydKnap', 'tempoInfo', 'genvejListe', 'plTitel',
@@ -2106,6 +2438,11 @@ RS.UI = (() => {
     document.addEventListener('pointerdown', e => { if (!el.log.hidden && !e.target.closest('#log, #status')) visLog(false); });
     Events.on('status', s => status(s.type, s.noegle, s.vars));
     Events.on('fejl', e => status('fejl', 'status.uventet', { besked: (e && e.message) || String(e) }));
+
+    /* Stil */
+    el.stilValg.addEventListener('click', e => { const b = e.target.closest('[data-stil]'); if (b) State.saet('stil', b.dataset.stil); });
+    State.lyt('stil', v => RS.Stil.saet(v));
+    Events.on('stil:skiftet', tegnStil);
 
     /* Sprog */
     el.sprogValg.addEventListener('click', e => { const b = e.target.closest('[data-sprog]'); if (b) State.saet('sprog', b.dataset.sprog); });
@@ -2196,6 +2533,7 @@ RS.UI = (() => {
   window.addEventListener('unhandledrejection', e => Events.emit('fejl', e.reason instanceof Error ? e.reason : new Error(String(e.reason))));
 
   I18n.saetSprog(State.hent('sprog'));
+  RS.Stil.saet(State.hent('stil'));
   RS.UI.start();
   RS.Rendering.startPreview(document.getElementById('previewLaerred'));
   RS.Tidslinje.start({ laerred: document.getElementById('tlLaerred'), oversigt: document.getElementById('tlOversigt') });

@@ -10,7 +10,7 @@ Rytme Studio er et nyt program, bygget fra bunden efter en specifikation (ikke u
 
 | Run | Indhold | Status |
 | --- | --- | --- |
-| **1** | Layout, afspiller, bølgeform-tidslinje, filer, status, niveau-måler | **Færdig** (20. november 2026, version 0.1) |
+| **1** | Layout, afspiller, bølgeform-tidslinje, filer, status, niveau-måler, tre stile | **Færdig** (20. november 2026, version 0.2) |
 | 2 | Hele analysen, vist live i preview og kontrolpanel; baggrunds-tråde | Næste |
 | 3 | Figurer (former, lag, egenskaber, generator) og enkel mapping | |
 | 4 | Node-editor, regler og regel-sæt, opsætninger, scene-grundlag | |
@@ -27,6 +27,18 @@ Rytme Studio er et nyt program, bygget fra bunden efter en specifikation (ikke u
 - **Status:** én linje i topbaren; klik viser de seneste beskeder. Alle fejl ender dér.
 - **Husker:** lydstyrke, sprog, følg og snap; og pr. sang (navn + længde) loop og tempo. Gemt i browseren (localStorage).
 - **Sprog:** dansk og engelsk. **Genveje:** står i kontrolpanelet under Genveje.
+
+## Tre stile (version 0.2; brugeren vælger)
+
+Skiftes i topbaren (Stil) og huskes. Alle tre er rigtige, kørende temaer; de kan alle blive som valg under Tema.
+
+| Stil | Udtryk | Bølgeform | Live preview |
+| --- | --- | --- | --- |
+| **Glas** | roligt blågråt, glas og glød; turkis lyd, rav tid | udfyldt flade | glaskugle |
+| **Neon** | dyb violet, farveforløb fra cyan til pink, runde former; gul tid | søjler | lysende ring med stråler (de sidste 20 sekunder) |
+| **Analog** | varmt udstyr: taster, fadere, skruer, lysdioder; rød tid | udfyldt flade i creme og guld | VU-meter med viser og top-lampe |
+
+En stil er CSS (`html[data-stil="…"]`) plus modulet `stil` (farver og former til lærrederne). **Åbent:** brugeren har ikke valgt endnu.
 
 ## Sådan er koden delt op
 
@@ -54,6 +66,7 @@ Fuld streg = besked (`RS.Events`). Stiplet = værdi, der læses i billed-løkken
 | --- | --- |
 | `kerne` | `RS`, `RS.util`, `RS.Events` (beskeder mellem modulerne) |
 | `i18n` | tekster på dansk og engelsk |
+| `stil` | de tre stile: farver, bølgeformens form og figuren i Live preview |
 | `state` | indstillinger i localStorage; loop og tempo pr. sang; `snapshot` og `gendan` (grundlag for presets) |
 | `kommandoer` | alt, brugeren kan gøre: id, titel, genvej, funktion |
 | `audio` | indlæs, afspil, pause, stop, søg, loop, lydstyrke, demo-lyd |
