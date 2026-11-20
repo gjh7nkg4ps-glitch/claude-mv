@@ -42,6 +42,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 - Skriv et **afsnit i manualen** (`<h3 id="man-v919">` lige over det forrige) og ret linjen **"Nyt i v…"** øverst (testen `2-indhold.js` tjekker den). Byg altid videre på den nyeste fil i repoet.
 
 ### GitHub
+- **Hovedchattens indbakke** (P8.32, dit valg B2): læs `docs/hovedchat/BESLUTNINGER.md` ved start. Beskeder ligger i `docs/hovedchat/P8.x.txt`; "kør P8.x" betyder: læs og byg den besked. Kun hovedchatten skriver dér; nye beslutninger skrives kort ind i planen ved næste version. En beslutning er ikke en ordre. **Træk altid (git pull), før du gemmer.**
 - Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_19.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
 - Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.19: startskærm med demosang`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 5 ændrer sig; skriv én linje pr. version i `docs/arkiv/HISTORIK.md`.
@@ -68,7 +69,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal kunne **ses** (fx *Auto* eller *Manuel*, de tal den har valgt) og have **Tilbage til standard**. Det, *at* noget påvirker, skal altid kunne ses; kun detaljerne må foldes sammen (fagudtryk: progressive disclosure).
 
 ### Analysen er programmets hjerte (P8.16, 19. november)
-> MV er bygget op omkring analysen. Målet er en meget stærk analyse: vi bruger alle de midler, der findes (spor, bedre metoder i browseren, et lokalt modul med AI og AI udenfor), når det kan betale sig. **"Kan betale sig"** betyder, at et lydtræk, der bruges, bliver tydeligt mere sikkert, og at det kan måles (fx med Detektion eller musikgeneratoren som facit). Planen er "Den nye analyse P8.19" (A0–A8); brugerens valg står i P8.24: A0 først, facit er generatoren, spor kun under cirka 15 minutter for nu. Byg ét trin ad gangen, og stop efter hvert.
+> MV er bygget op omkring analysen. Målet er en meget stærk analyse: vi bruger alle de midler, der findes (spor, bedre metoder i browseren, et lokalt modul med AI og AI udenfor), når det kan betale sig. **"Kan betale sig"** betyder, at et lydtræk, der bruges, bliver tydeligt mere sikkert, og at det kan måles (fx med Detektion eller musikgeneratoren som facit). Planen er "Den nye analyse P8.19" (A0–A8); facit er Testlyd (v9.115) og Rigtige trommer (v9.116); spor kun under cirka 15 minutter for nu. Byg ét trin ad gangen, og stop efter hvert.
 
 ### Udseende og vinduer
 - **Docking** (v9.36; fagudtryk som i VS Code og Blender): zoner med faner, der fylder arbejdsfladen uden at overlappe; fire arbejdsområder (1 · Analyse, 2 · Scene, 3 · Regler, 4 · Show); layoutene husker ændringer, ↺ Standard sætter dem tilbage. **Din skærm er en 43" ASUS (3840 × 2160); du prøver selv hver version på den.**
@@ -127,7 +128,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **På scenen:** effekt-rækkerne har ingen ⋯-menu; effekt-regel-sættenes tal er Codes skøn; 6c får adgang til effekterne, når 6c bygges.
 - **Analyse sikkerhed:** fasens sikkerhed (A3, v9.117) er ikke kalibreret (høj, også når takt 1 er forkert). Cirklen mangler på lydtræk-noderne og i Foreslå regler.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
-- **Tags:** sessionen må ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
+- **Tags:** sessionen må ikke lave eller slette tags og grene (grenen `v9_11-med-lydkort` kan slettes).
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
 
 ## 5. Planen: det næste
@@ -135,7 +136,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
-2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0 (v9.110), A1 (v9.113), P8.30 trin 1 testlyd (v9.115), trin 2 MDB Drums (v9.116), trin 3 A3 første del (v9.117–v9.118), testlyd hørbar (v9.119; bag en lille knap fra v9.121), svage slag (v9.120). **STOP.** Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Rækkefølgen (brugerens valg): rest af A3 → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
+2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0, A1, P8.30 trin 1–3 og P8.31 (v9.110–v9.121; `docs/arkiv/HISTORIK.md`). **STOP.** Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Rækkefølgen (brugerens valg): rest af A3 → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 3. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); intet fjernes (`docs/PIGERNES-EGENSKABER.md`).
 4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til. **Feltfarven D7** er ikke valgt.
-5. **Senere:** `.stem.mp4`, målervæg, tema med tekstur, Radial Mesh-værksted med rigtig bloom, ét fælles Fortryd (D4), manualen som sidepanel (D5), nye 2D-figurer på et skelet, 3D-scene, S7 og S8. Kun en idé (røres ikke): stregerne i Node-editoren. Detaljer i `STATUS.md` og planerne.
+5. **Senere:** står i `STATUS.md` (afsnittet Senere) og i planerne.

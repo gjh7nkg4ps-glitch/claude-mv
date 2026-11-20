@@ -39,6 +39,11 @@ S7 og S8 tages op sammen med analysen (P8.14 punkt 6).
 
 ## 10 · Senere (ikke en del af trinene; P8.4 og P8.6)
 
+- **Facit til senere (hovedchatten, P8.30 og P8.32; til planen, ikke nu):**
+  - **Din sang:** brugerens egne tryk (K og S i Detektion) gemt som facit for én af brugerens egne sange, med kolonnen "Din sang" i Analyse sikkerhed.
+  - **Sangstemme med facit fra MedleyDB:** melodiens tonehøjde; kræver ansøgning om adgang; licens kun ikke-kommerciel; filerne aldrig i repoet. Hovedchatten undersøger den åbne prøve (415 MB), når vi når til vokalen.
+  - **Slakh** (MIDI-facit for alle instrumenter; 105 GB) og **sølv-facit** fra en AI-model (Beat This!) på brugerens egne sange hører til det lokale modul (A5–A6).
+
 - **Analysen (P8.6, 19. november):** ventetiden er ikke længere et problem efter v9.70 (baggrunds-tråde); mulighederne for "mindre arbejde" (fx Nøjagtighed: Hurtig) bygges ikke. **Før Lydtidslinjen bygges,** vender brugeren og hovedchatten, hvordan lydene findes mere sikkert. Til den samtale hører Lydanalyse-kort v1.0, Lydanalyse-guide v1.0 og fem veje: **A** ret i hånden · **B** trommerne skilt ad (DrumSep, LarsNet) · **C** AI uden for programmet (ADTOF, Beat This!) · **D** takten som hjælp (fagudtryk: quantization) · **E** lær sangens egne lyde (fagudtryk: template matching). **Husk:** de 4 spor regnes endnu ikke i baggrunds-trådene (`stemBrug` regner i samme tråd); det skal med, før hele analysen køres på hvert spor.
 
 - **Lydtidslinjen** og **Lydanalyse-kort v1.0** fra hovedchatten (https://claude.ai/artifact/DWwBZLPvvZ43gVJbDiYwBA). Første trin derfra: kør hele analysen (tonehøjde, toner, klang) på **hvert spor**, især tonehøjden på Vokal-sporet. Bygges først, når S1 er lavet, fordi det giver cirka fem gange så meget at regne. **Intet fra dette punkt bygges nu.**

@@ -67,7 +67,7 @@ A3 slået til ét skridt ad gangen i P8.31's rækkefølge (Kick · Taktslag · T
 ## P8.31 (v9.119, v9.120)
 
 - **Trin 3 var bygget i v9.117** (rettet i v9.118). Målt skridt for skridt i P8.31's rækkefølge (tabellen ovenfor; også i `STATUS.md`): skridt 3 (ekkoet) sænker Testlyd · Takt 1 i hele lyden 47 → 31, men hæver de rigtige trommer (Takt 1 30 → 40, Kick 72 → 75).
-- **G2 (v9.120):** 21 underklasser; svage = SDG (svagt slag, 790) og SDD (drag, 2); visker (SDB, 332) regnes ikke som svage; pedal = PHH (523). Snare uden svage slag 36 / 57 (hele mixet / trommer; alle slag 34 / 46); Hihat uden pedal 64 / 68 (alle 68 / 72). Regnskabet: de ramte svage slag flytter fra ramt til neutral; de falske er de samme. **Valg C (v9.119):** testlyden kan høres (▶ Lyt) og gemmes som WAV pr. mønster; filens fingeraftryk = rapportens.
+- **G2 (v9.120):** 21 underklasser; svage = SDG (svagt slag, 790) og SDD (drag, 2); visker (SDB, 332) regnes ikke som svage; pedal = PHH (523). Snare uden svage slag 36 / 57 (hele mixet / trommer; alle slag 34 / 46); Hihat uden pedal 64 / 68 (alle 68 / 72). Regnskabet: de ramte svage slag flytter fra ramt til neutral; de falske er de samme. **Valg C (v9.119):** testlyden kan høres (▶ Lyt) og gemmes som WAV pr. mønster; filens fingeraftryk = rapportens. **P8.32:** linjen om indbakken står i CLAUDE.md (afsnit 2, GitHub); MedleyDB og P8.30's tre punkter "til planen" (Din sang, MedleyDB, Slakh og sølv-facit) står i `docs/PLAN-SANG-OG-ANALYSE.md` under Senere; Code trækker før hver gemning.
 
 ## Rækkefølgen for analysen
 
