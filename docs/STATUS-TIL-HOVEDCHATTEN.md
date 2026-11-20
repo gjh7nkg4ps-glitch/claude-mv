@@ -1,13 +1,13 @@
-# Status til hovedchatten · v9.123 · 20. november 2026
+# Status til hovedchatten · v9.124 · 20. november 2026
 
-*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.123** (`claude-mv-v9_123.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C, bag en lille knap fra v9.121), svage slag (G2), autosikring (T1, v9.122), fasens sikkerhed (v9.123)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
+*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.124** (`claude-mv-v9_124.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C, bag en lille knap fra v9.121), svage slag (G2), autosikring (T1, v9.122), fasens sikkerhed (v9.123), taktgitter med 4 spor (v9.124)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
 ## Stand
 
 - **Brugerfladen** (P8.1–P8.23) er bygget: fire arbejdsområder, docking, matrix og Noder, Biblioteket, På scenen (PS1–PS3; PS4 lukket), Gem hele arbejdet, gitteret. v9.111–v9.112: kolonnenavnene står i en fast linje øverst i Node-editoren.
 - **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
 - **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter. **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
-- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. På v9.120 kørte 27: test 15 fejlede på timing (grøn alene på v9.121). **Hele pakken på v9.121: 97 test, 96 grønne;** test 71 fejlede, fordi den ikke kendte rækken *Bedre slag og takt (A3)* (testen er rettet og grøn på v9.122). Test 102 (kilderne) og 103 (autosikring) er grønne på v9.122; på v9.123 er 1, 2, 3, 97, 99, 100, 102 og 104 (fasens sikkerhed) grønne.
+- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. På v9.120 kørte 27: test 15 fejlede på timing (grøn alene på v9.121). **Hele pakken på v9.121: 97 test, 96 grønne;** test 71 fejlede, fordi den ikke kendte rækken *Bedre slag og takt (A3)* (testen er rettet og grøn på v9.122). Test 102 (kilderne) og 103 (autosikring) er grønne på v9.122; på v9.123 er 1, 2, 3, 97, 99, 100, 102 og 104 (fasens sikkerhed) grønne; på v9.124 er 1, 2, 3, 71, 97, 98, 99, 100, 102, 104 og 105 (taktgitter med 4 spor) grønne.
 
 ## P8.30 trin 1 (v9.115): testlyd i ren matematik
 
@@ -63,9 +63,15 @@ A3 slået til ét skridt ad gangen i P8.31's rækkefølge (Kick · Taktslag · T
 - **Fejl i takt 1** (Rigtige trommer, fundet − rigtigt): hele mixet 17 rigtige, 3 × 2 slag (1 og 3 byttet), 1 × 1 slag, 2 × taktslag forkerte (BebopJazz tempo det halve, ModalJazz på modslaget); kun trommerne 10 rigtige, 6 × 2, 3 × 1, 3 × 3, 1 × taktslag forkerte. Uden toner kan 1 og 3 ikke skelnes.
 - **Testlyd:** taktslagene i Hip-hop, Techno og Breakbeat (hele lyden; Breakbeat også kun trommer) ligger præcis en halv slaglængde for sent. Kick + snare til den halve takt blev prøvet (snarens vægt 1–2, faktor 1,0–1,6): Testlyd Taktslag 49 → 16–33, Rigtige trommer kun trommer 85 → 77, så den er ikke med (snaren reagerer på den åbne hihat på modslaget). Fasens sikkerhed ser ikke den fejl (Techno og Breakbeat 0,95). Næste skridt: med 4 spor tages taktgitteret fra Trommer-sporet (Testlyd kun trommer: Taktslag 81, Takt 1 76).
 
+## v9.124 (A3, taktgitter fra Trommer-sporet med 4 spor; P8.30 b)
+
+- Med 4 spor regnes anslagsstyrken, tempoet, taktslagene og den halve takt ud fra Trommer-sporet; takt 1 med Trommer-sporets kick og snare og hele lydens toner. Afsnit, toneart og lydtrækkene kommer stadig fra hele lyden. Valg: Indstillinger for analysen → *Taktgitter med 4 spor* (Trommer-sporet, standard / Hele lyden).
+- **Målt** (Testlyd: hele lyden med trommerne alene som Trommer-spor; Rigtige trommer: MIX med Drum som Trommer-spor), nye rækker i Analyse sikkerhed: Testlyd Taktslag 49 → **78** (pr. mønster 97 0 98 0 0 → 97 98 98 97 0), Takt 1 31 → **73** (88 0 0 94 0 0 → 88 94 94 88 0); Rigtige trommer Taktslag 81 → **85**, Takt 1 69 → **72** (ModalJazz 0 → 100, FunkJazz 96 → 0). Breakbeat er stadig forkert (kicket ligger mest på modslaget, også i trommerne alene). Testlyden genbruger lyd og analyse fra testens første del, så testen tager stadig cirka 16 s.
+- Med 4 spor viser cirklen ved Taktslag og Takt 1 tallet for 4 spor (som Kick, Snare og Hihat viser Trommer-tallet), og boblen siger hvorfor. Dine egne spor bruges aldrig inde i testene.
+
 ## Rækkefølgen for analysen
 
-Resten af A3 (fasens sikkerhed er bygget i v9.123; taktslag i Hip-hop og Techno med bas; med 4 spor ét taktgitter fra Trommer-sporet; tempo det halve i BebopJazz og Gospel; Snare) → A2 sikkerhedsgrænse og enighed i reglerne → A4 Lydtidslinjen → A5–A6 det lokale modul. Brugerens valg: A3 før A2. Mål altid før og efter på Testlyd og Rigtige trommer. Plan: "Den nye analyse P8.19" https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU · kort plan i repoet: `docs/PLAN-SANG-OG-ANALYSE.md`.
+Resten af A3 (fasens sikkerhed v9.123 og taktgitteret med 4 spor v9.124 er bygget; taktslag i Hip-hop og Techno med bas uden spor; tempo det halve i BebopJazz og Gospel; Snare) → A2 sikkerhedsgrænse og enighed i reglerne → A4 Lydtidslinjen → A5–A6 det lokale modul. Brugerens valg: A3 før A2. Mål altid før og efter på Testlyd og Rigtige trommer. Plan: "Den nye analyse P8.19" https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU · kort plan i repoet: `docs/PLAN-SANG-OG-ANALYSE.md`.
 
 ## Åbne spørgsmål
 

@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.123, 20. november 2026)
+## Nu (v9.124, 20. november 2026)
 
+- **v9.124 (A3, taktgitter med 4 spor):** med 4 spor finder MV tempo, taktslag og takt 1 ud fra Trommer-sporet (takt 1 også ud fra hele lydens toner). Valget står i Indstillinger for analysen → *Taktgitter med 4 spor* (Trommer-sporet / Hele lyden). Analyse sikkerhed har rækkerne *Taktslag · 4 spor* og *Takt 1 · 4 spor*; med 4 spor viser cirklen ved Taktslag og Takt 1 de tal.
 - **v9.123 (A3, fasens sikkerhed):** hver takt stemmer for sig; sikkerheden er takternes enighed om takt 1 gennem en rampe målt på Rigtige trommer (med toner 0,20–0,95, uden 0,25–0,65). Rækken *Bedre slag og takt (A3)* og boblen ved Takt 1 siger fx "i 6 af 15 takter peger … på samme takt 1, hvor tilfældigt ville give cirka 4". Rigtige trommer måler nu hele mixet med toner (trin 2), sådan som MV analyserer en rigtig sang: Takt 1 47 → 69. Prøvet og ikke med: snaren til den halve takt (dårligere).
 - **v9.122 (T1, autosikring):** MV lægger selv en kopi af alt i browseren hver dag (IndexedDB, de seneste 7 dage). Opsætninger → *Automatiske kopier*: én række pr. kopi (i dag, i går …) med *Gå tilbage hertil* (spørger to gange, gemmer først det, du har nu, og starter forfra) og *Tag en kopi nu*. Fortryd: rækken "lige før du gik tilbage". Analyse-cachen er ikke med; *Gem hele arbejdet* (en fil på din pc) er stadig den sikreste.
 - **T0 (uden ny version):** koden ligger nu i `src/dele/` (132 filer; én pr. blok i `kode/hoved/`), og `node src/byg.js` bygger programfilen; den giver v9.121 byte for byte (test 102). Fra nu af rettes kun i kilderne.
@@ -34,6 +35,7 @@ A3 slået til ét skridt ad gangen i hovedchattens rækkefølge (Kick · Taktsla
 | 2 · + halve takt | 60 · 49 · 47 | 40 · 81 · 76 | 63 · 81 · 47 | 72 · 84 · 30 |
 | 3 · + kickets ekko | 92 · 49 · 31 | 94 · 81 · 76 | 70 · 81 · 47 | 75 · 85 · 40 |
 | 4 · v9.123: hele mixet målt med toner | 92 · 49 · 31 | 94 · 81 · 76 | 70 · 81 · **69** | 75 · 85 · 40 |
+| 5 · v9.124: 4 spor (Trommer-sporets gitter) | – · **78** · **73** | – | – · **85** · **72** | – |
 
 Skridt 3 sænker Testlyd · Takt 1 i hele lyden (47 → 31), men hæver de rigtige trommer (Takt 1 30 → 40, Kick 72 → 75); de rigtige trommer vejer tungest. Snare og Hihat ændres ikke af A3. Skridt 4 ændrer ikke programmets valg, kun målingen: takt 1 findes med akkordskift, og dem havde målingen ikke før (rigtig takt 1 i 17 af 23 stykker mod 12). **Fasens sikkerhed** (Brier-score, lavere er bedre; altid 0,5 giver 0,25): hele mixet 0,363 → 0,117, kun trommerne 0,323 → 0,229, Testlyd 0,429 → 0,388 (taktslagene på modslaget i Hip-hop, Techno og Breakbeat med bas ses ikke).
 
@@ -43,7 +45,7 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 **Rækkefølgen for analysen (brugerens valg): A3 før A2:** resten af A3 → A2 → A4 → A5–A6.
 
-1. Brugeren prøver v9.122 (Opsætninger → Automatiske kopier; Rigtige trommer: vælg MDB-mappen igen én gang, så underklasserne bliver læst). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Derefter resten af A3: taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet med 4 spor, tempoets halve, Snare.
+1. Brugeren prøver v9.122 (Opsætninger → Automatiske kopier; Rigtige trommer: vælg MDB-mappen igen én gang, så underklasserne bliver læst). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Derefter resten af A3: taktslag i Hip-hop og Techno med bas uden spor, tempoets halve, Snare.
 2. Så A2 sikkerhedsgrænse og enighed (fasens sikkerhed er kalibreret i v9.123), A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
