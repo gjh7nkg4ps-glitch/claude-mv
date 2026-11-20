@@ -1,0 +1,37 @@
+BESKED TIL CODE · P8.24 · fra hovedchatten
+Analysen begynder: trin A0 "Analyse sikkerhed". Bygger på planen "Den nye analyse P8.19" og skemaet P8.22.
+Prøve, som brugeren har godkendt (variant B): https://claude.ai/artifact/2ptQTy9ttSm8XWpnBBskoR
+
+BRUGERENS VALG
+ a) Sikkerhedstesten (A0) bygges først.
+ b) Spor kun på sange under cirka 15 minutter for nu. Over grænsen: en venlig besked, ingen fejl. Bid-for-bid (WebCodecs) kommer senere (A8).
+ c) Facit: generatoren.
+ d) Sikkerheden vises som en farvet cirkel med tal (variant B, se 1).
+ e) Det lokale modul: undersøg kun, hvordan det kan installeres med ét klik (Pinokio som første forsøg, et færdigt installationsprogram som reserve). Skriv svaret kort i docs/; byg intet.
+ Navn: fanen hedder "Analyse sikkerhed" (vores navn; fagudtryk: evaluation).
+
+1. CIRKLEN I MATRIXEN (variant B)
+ - Rækkens hoved: ⏻ · navn · 0 dB · cirkel, inde i rækken (dækker ingen celle). Stregen til venstre (lydtrækkets type) bliver, som den er.
+ - Cirklen viser sikkerheden i procent: 75–100 grøn, 50–74 gul, 0–49 rød, "?" grå = ikke målt endnu.
+ - Peg på cirklen: en boble med "76 % sikker · Rammer 38 af 50 · falske 3 · oversete 12 · målt på Generatoren · dato". Klik: åbner Analyse → Analyse sikkerhed ved den række.
+ - Lydtræk, der er ren matematik (RMS, bånd, stereo, klang), får 99 og teksten "præcis måling" i boblen.
+ - Samme cirkel senere på lydtræk-noderne i Node-editoren og i Foreslå regler (gerne i samme omgang, hvis det er småt; ellers skriv det i planen).
+
+2. FANEN "ANALYSE SIKKERHED" I ANALYSE-VINDUET
+ - Øverst: samlet sikkerhed (gennemsnit af de lydtræk, der bruges i showet) · "Facit: Generatoren · N mønstre · målt dato kl." · knapperne Kun dem i brug · Sortér: usikre først · ▶ Kør testen.
+ - Tabel: Lydtræk (med typestreg) · Sikkerhed (cirkel + bjælke) · Rammer · Falske · Oversete · Målt på.
+ - Byg videre på Detektion (v9.95); den skal ikke fjernes.
+
+3. SÅDAN MÅLES DET
+ - Generatoren spiller mønstre, hvor vi kender svaret: mindst 5 mønstre med forskellige tempi, med og uden andre instrumenter, og ét med støj. Regn dem offline (OfflineAudioContext), så testen tager sekunder og ikke minutter.
+ - Hændelser (kick, snare, hihat, taktslag, takt 1 …): F-mål (fagudtryk: F-measure) med ±50 ms for slag og ±70 ms for taktslag. Vis rammer, falske og oversete.
+ - Kurver, som generatoren kender svaret på (fx basens tone, de 12 toner, tonehøjde på generatorens melodi): % af tiden rigtig (tone rigtig inden for en halv tone).
+ - Det, generatoren ikke kan give facit for (fx Vokal, ord, afsnit): "?".
+ - Gem hvert resultat med programmets versionsnummer, så vi kan se, om en ny version gør analysen bedre eller dårligere.
+ - Mål både på hele lyden og, hvis generatoren kan spille trommerne for sig, på "kun trommer" (så vi får et første tal for, hvad sporene giver).
+
+4. BAGEFTER (rækkefølgen fra P8.19, intet af det bygges nu)
+ A1 hele analysen på sporene i baggrunds-trådene, og sporenes analyse gemmes · A2 sikkerhedsgrænse og enighed i reglerne · A3 bedre slag · A4 Lydtidslinjen · A5–A6 det lokale modul.
+
+5. AFLEVERING
+ Stop efter A0, så brugeren kan prøve. Kør hele testpakken. Svar kort med de første målte tal for de vigtigste lydtræk (fx Kick, Snare, Hihat, Taktslag, Takt 1, Basens tone), så hovedchatten kan sammenligne med skønnene i P8.22.
