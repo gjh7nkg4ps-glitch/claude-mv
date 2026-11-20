@@ -1,0 +1,27 @@
+BESKED TIL CODE · P8.23 · fra hovedchatten
+
+1. RYD OP I .MD-FILERNE FØRST (vigtigst, sparer tokens i hver eneste session)
+   I dag fylder CLAUDE.md 167 KB (cirka 45.000 tokens), og den læses ved hver start. 145 KB af det er historik og lukkede fejl.
+   Mål: CLAUDE.md højst cirka 15 KB (cirka 250 linjer).
+
+   a) CLAUDE.md beholder kun:
+      § 1 Hvad Claude MV er · § 2 Sådan vil jeg arbejde sammen med dig · § 3 Det vigtigste, vi har besluttet (navne, grundregler) · en kort § "Åbne fejl og halvfærdigt" (kun det, der stadig er åbent, én linje hver) · § 6 Planen: det næste (kun de næste 5–10 opgaver, ét punkt hver).
+   b) § 4 "Hvad der er sket fra v8.0 til v9.107" (97 KB) flyttes til docs/arkiv/HISTORIK.md. Fremover får hver version højst ÉN linje dér.
+   c) § 5 "Halvfærdigt og kendte fejl" (48 KB): det, der er lukket, flyttes til docs/arkiv/HISTORIK.md; det åbne står kort i CLAUDE.md.
+   d) De store planer skal kun rumme det, der IKKE er bygget:
+      PLAN-NY-BRUGERFLADE.md (51 KB), docs/KORTLAEGNING.md (47 KB), NODE-EDITOREN.md (28 KB), docs/PLAN-SANG-OG-ANALYSE.md (25 KB), docs/PLAN-NODE-EDITOREN.md (23 KB), docs/node-editoren/FUNKTIONSLISTE-TJEK.md (17 KB). Det byggede flyttes til docs/arkiv/. Kan to filer slås sammen, så gør det.
+   e) tests/README.md (40 KB): kort tabel med én linje pr. test. Detaljer i arkivet.
+   f) Besvarede papirer (docs/SVAR-FASE1.md, SVAR-P8_14.md, SVAR-P8_18.md og fremtidige SVAR-filer) flyttes til docs/arkiv/, når hovedchatten har læst dem. Det, der stadig gælder, skrives kort ind i planen.
+   g) docs/STATUS-TIL-HOVEDCHATTEN.md: højst cirka 60 linjer, kun nuværende stand, åbne spørgsmål og næste skridt.
+   h) Skriv i CLAUDE.md som fast regel: "Læs ikke docs/arkiv/, medmindre du leder efter noget bestemt. Hold CLAUDE.md under 15 KB. Fjern det, der er færdigt, fra planerne, når det er bygget."
+   i) Intet indhold må gå tabt: alt flyttes, intet slettes. Svar med en tabel: fil · KB før · KB efter.
+
+2. DEREFTER: PÅ SCENEN PS2 OG PS3
+   Brugeren prøver v9.107 imens. Kommer der fejl fra brugeren, rettes de først.
+   PS2: hylden Effekter i Biblioteket med regel-sæt navngivet efter effekten (fx "Lys-puls på kick").
+   PS3: Noder og matrixen viser øje og Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne.
+   Stop efter PS3, så brugeren kan prøve.
+   Hele testpakken skal være kørt på den nyeste version, før du stopper.
+
+3. ANALYSEN
+   Hovedchatten har lavet et stort skema over alle lyde og alle metoder: "Alle lyde og alle metoder P8.22" (https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Brugeren har ikke valgt a–e endnu. Byg intet i analysen. Skriv kun én linje i planen om, at skemaet findes.
