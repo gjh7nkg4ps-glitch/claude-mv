@@ -25,10 +25,11 @@ async function kør(arg) {
     }
     T.tjek(mark.every(m => /ingen markering/.test(m)), `træk på kontrolpanelet, kolonnernes overskrifter og værktøjslinjen markerer ikke noderne (${mark.join(', ')})`);
     /* 2 · en markering over noderne stopper ikke længere nodens træk */
+    await side.evaluate(() => { NE.tilpas = false; NE.z = 1; const n = NE2.N.get('f:fin'); NE.x = Math.round(200 - n.x); NE.y = Math.round(160 - n.y); neVis() }); await side.waitForTimeout(300); /* v9.105: gitteret er bredt, så noden zoomes frem */
     const r0 = await side.evaluate(() => { const s = getSelection(); s.removeAllRanges(); const rg = document.createRange(); rg.setStartBefore(document.getElementById('ne-hoveder')); rg.setEndAfter(document.getElementById('ne-kp')); s.addRange(rg); window.__ev = []; const n = NE2.N.get('f:fin'), q = n.el.querySelector('.ne-nh').getBoundingClientRect(); return { x: q.left + 30, y: q.top + q.height / 2, x0: n.x, sel: s.rangeCount && !s.isCollapsed }; });
     await træk(r0, 160, 120);
     const r1 = await side.evaluate(() => ({ x: NE2.N.get('f:fin').x, ev: window.__ev.slice() }));
-    T.tjek(r0.sel && r1.x - r0.x0 > 300 && !r1.ev.length, `med en markering over noderne flytter FFT · fin hele vejen (${r0.x0} → ${r1.x}), uden dragstart og pointercancel`);
+    T.tjek(r0.sel && r1.x - r0.x0 >= 150 /* v9.105: zoom 1, så 160 px træk = 160 */ && !r1.ev.length, `med en markering over noderne flytter FFT · fin hele vejen (${r0.x0} → ${r1.x}), uden dragstart og pointercancel`);
     /* 3 · fanerne kan stadig trækkes (v9.71: vinduerne er låst som standard; testen låser op), og felterne kan stadig skrives i */
     await side.evaluate(() => { set.laast = false; try { laasGem(); laasUI() } catch (e) { } });
     const f = await side.evaluate(() => { const a = document.querySelector('.dk-fane[data-w="w28"]').getBoundingClientRect(), z = document.querySelector('.dk-zone:has(#w33)').getBoundingClientRect(); return { x: a.left + a.width / 2, y: a.top + a.height / 2, tx: z.left + z.width - 40, ty: z.top + z.height / 2 }; });

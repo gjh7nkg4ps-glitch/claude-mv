@@ -28,7 +28,7 @@ async function kør(arg) {
     const vent = ms => side.waitForTimeout(ms);
     await side.evaluate(async () => { brugFor('fuld1', true); lay3Anvend('noder'); await new Promise(r => setTimeout(r, 1000)); });
     /* vælg reglen i Node-editoren og vis den */
-    const vælg = i => side.evaluate(async i => { const n = [...NE2.N.values()].find(n => n.kol === 'regel' && n.i === i); neVaelg(n.key); NE.tilpas = false; NE.z = .8; NE.x = Math.round(30 - NE.kol.find(c => c.k === 'lydtraek').x * NE.z); NE.y = Math.round(96 - n.y * NE.z); neVis(); await new Promise(r => setTimeout(r, 300)); return n.key; }, i);
+    const vælg = i => side.evaluate(async i => { const n = [...NE2.N.values()].find(n => n.kol === 'regel' && n.i === i); neVaelg(n.key); NE.tilpas = false; NE.z = .8; NE.x = Math.round(300 - n.x * NE.z) /* v9.105: gitteret lægger kolonnerne langt fra hinanden, så der centreres på reglen */; NE.y = Math.round(96 - n.y * NE.z); neVis(); await new Promise(r => setTimeout(r, 300)); return n.key; }, i);
     const sætSkyder = (f, v) => side.evaluate(([f, v]) => { const e = document.querySelector('#ne-kp .ne-kp-ret input[data-nf="' + f + '"]'); e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); e.dispatchEvent(new Event('change', { bubbles: true })); }, [f, v]);
 
     /* 1 · De samme tal i Node-editoren og sådan, som Router 2.0 (slettet i v9.35) satte dem, giver den samme forbindelse */

@@ -46,7 +46,8 @@ async function kør(arg) {
     T.tjek(/Knapper/.test(kn) && /Layout: 3 · Regler/.test(kn), `Ctrl+K finder også knapperne i gruppen Knapper (${kn})`);
 
     /* 2 · + Tilføj: Mål og Ryd tomme mål (Søg-paletten skal være lukket, også når testbrowseren er langsom) */
-    await side.evaluate(() => { const k = document.getElementById('kp'); if (k) k.hidden = true; neTilpas(); }); await vent(400); /* Tilpas: kolonnernes overskrifter kan ses (Enter flyttede kortet hen til den nye node) */
+    const visKol = k => side.evaluate(k => { NE.tilpas = false; NE.z = .5; const b = ne61Boks(k); NE.x = Math.round(60 - b.x0 * NE.z); NE.y = Math.round(40 - (b.y0 - NE61.HH) * NE.z); neVis() }, k); /* v9.105: gitteret er bredt, så Tilpas gør overskrifterne bittesmå; der zoomes til kolonnen */
+    await side.evaluate(() => { const k = document.getElementById('kp'); if (k) k.hidden = true; }); await visKol('maal'); await vent(400);
     await side.click('#ne-hoveder .ne-hoved[data-kol="maal"] .ne-tilfoej'); await vent(300);
     const ml = await side.evaluate(() => { const m = document.getElementById('ne-menu'); return { titel: m.querySelector('.ne-menu-t').textContent, g: m.querySelectorAll('.ne-menu-g').length, n: m.querySelectorAll('.ne-menu-i').length, søg: !!m.querySelector('.ne-menu-s') }; });
     await side.screenshot({ path: path.join(UD, 'node-editor-plus-tilfoej.png') });
@@ -60,7 +61,7 @@ async function kør(arg) {
     const ryd = await side.evaluate(id => { const n = neRydTommeMaal(); return { n, væk: !NE2.N.get('m:' + id), lt: !!NE2.N.get('l:ana:pitch') }; }, tomt.id);
     T.tjek(ryd.n === 1 && ryd.væk && ryd.lt, 'Ryd tomme mål fjerner det tomme mål (og kun det)');
     /* + Tilføj: Regel uden kilde → lydtræk på den → figur → mål */
-    await side.click('#ne-hoveder .ne-hoved[data-kol="regel"] .ne-tilfoej'); await vent(300);
+    await visKol('regel'); await vent(300); await side.click('#ne-hoveder .ne-hoved[data-kol="regel"] .ne-tilfoej'); await vent(300);
     const rv = await side.evaluate(() => [...document.querySelectorAll('#ne-menu .ne-menu-i')].map(b => b.textContent).join('|'));
     T.tjek(rv === 'Regel · Handling|Regel · Egenskab', `+ Tilføj i Regel viser kun det, der passer (${rv})`);
     await side.click('#ne-menu .ne-menu-i[data-v="handling"]'); await vent(600);

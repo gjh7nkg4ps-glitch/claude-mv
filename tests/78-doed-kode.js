@@ -9,7 +9,7 @@ const { findFil, tæller } = require('./faelles');
 async function kør(arg) {
   const fil = findFil(arg), T = tæller('Død kode');
   console.log('78 · Død kode fjernet (7c) · ' + path.basename(fil));
-  const st = fs.statSync(fil).size; T.tjek(st < 6428390, `filen er mindre end v9.82 (${st} bytes mod 6 428 390)`, String(st));
+  const st = fs.statSync(fil).size; const html = fs.readFileSync(fil, 'utf8'); T.tjek(!/LYD I 3D ==========/.test(html) && !/IDÉ-GALLERI ==========/.test(html) && !/function enkelTempo\(/.test(html), `den døde kode fra 7c (Lyd i 3D, Idé-galleri, Enkel tilstand) er stadig væk (${st} bytes; v9.83 var 6 391 297, og filen må vokse med nye blokke siden)`, String(st));
   const tekst = fs.readFileSync(fil, 'utf8');
   const rester = ['function d3Vis(', 'function galVis(', 'function enkelSync(', 'function syncRow(', 'function stakHtml(', 'function taktLinje(', 'function stemLinje(', 'function fjernetBanner(', 'function fjernetHvad(', 'const STAK_AABEN', 'id="w9"', 'id="w22"', 'id="enkel"', 'id="enkelbtn"', 'IDÉ-GALLERI ====', 'LYD I 3D ====', '<option value="d3">'].filter(x => tekst.includes(x));
   T.tjek(rester.length === 0, `ingen rester i filen af Lyd i 3D, Idé-galleri, Enkel tilstand og Mappings rækker`, rester.join(', '));
