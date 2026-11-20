@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rytme Studio 0.1 (Run 1: afspiller og tidslinje)</title>
+<!--
+  RYTME STUDIO · én fil, der åbnes direkte i browseren (ingen server, intet internet).
+
+  INDHOLD (hvert script-element med data-modul er ét modul og kan senere flyttes til sin egen fil):
+    kerne        RS (det eneste globale navn), RS.util, RS.Events (beskeder mellem modulerne)
+    i18n         RS.I18n          tekster på dansk og engelsk
+    state        RS.State         indstillinger, gemt i localStorage; husker loop og tempo pr. sang
+    kommandoer   RS.Kommandoer    alt, brugeren kan gøre (knapper, genveje; senere Ctrl+K)
+    audio        RS.Audio         Web Audio: indlæs, afspil, pause, stop, søg, loop, lydstyrke
+    analyse      RS.Analyse       Run 1: bølgeform, niveau (RMS), tempo-gitter og snap. Run 2: resten
+    rendering    RS.Rendering     billed-løkken (requestAnimationFrame med delta-tid) og Live preview
+    tidslinje    RS.Tidslinje     bølgeform-tidslinjen: zoom, snap, følg afspilning, loop A til B
+    ui           RS.UI            topbar, sidebar, kontrolpanel, playerbar, status, slip en fil
+    start        starter modulerne i den rigtige rækkefølge
+  Kommer senere: RS.Mapping (Run 3), RS.Scene (Run 3 og 4).
+
+  REGLER FOR KODEN:
+    Modulerne taler sammen med beskeder (RS.Events) og gennem RS.State. Værdier, der ændrer sig hele
+    tiden (position, niveau), læses i billed-løkken i stedet for at blive sendt som beskeder.
+    Farverne har fast betydning: turkis = målt lyd, rav = tid (afspilningsstreg, loop, snap).
+-->
+<style>
+/* ========== STIL: variabler ========== */
+:root {
+  /* Flader: roligt, mørkt blågråt */
+  --grund: #141a22;
+  --flade: #1a222c;
+  --flade-2: #222c39;
+  --flade-3: #2c3848;
+  --dyb: #10161d;
+  --tekst: #dde5ee;
+  --tekst-2: #98a6b7;
+  --tekst-3: #66748a;
+  /* Signalfarver: lys kun på det, der måler noget */
+  --lyd: #4fe0c8;
+  --lyd-lys: #b6f7ea;
+  --tid: #ffb85c;
+  --fejl: #ff7a7a;
+  --fokus: #cfe3ff;
+  /* Mål */
+  --luft: 14px;
+  --r-stor: 16px;
+  --r: 9px;
+  --side-b: clamp(232px, 15vw, 312px);
+  --panel-b: clamp(296px, 19vw, 400px);
+  --skrift: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --skrift-tal: Bahnschrift, "DIN Alternate", "Avenir Next Condensed", "Segoe UI", system-ui, sans-serif;
+}
+
+/* ========== STIL: grund ========== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font: 14px/1.45 var(--skrift);
+  color: var(--tekst);
+  background:
+    radial-gradient(1400px 620px at 68% -12%, #1d2937 0%, rgba(29, 41, 55, 0) 62%),
+    var(--grund);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+h1, h2, p, dl, dd, ul { margin: 0; padding: 0; }
+ul { list-style: none; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; }
+[hidden] { display: none !important; }
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--fokus); outline-offset: 2px; }
+.tal { font-family: var(--skrift-tal); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+.ikon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ikon-fyldt { fill: currentColor; stroke: none; }
+
+/* ========== STIL: layout (sidebar, preview, kontrolpanel, playerbar) ========== */
+.app {
+  display: grid;
+  height: 100dvh;
+  padding: var(--luft);
+  gap: var(--luft);
+  grid-template-columns: var(--side-b) minmax(0, 1fr) var(--panel-b);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "top    top    top"
+    "side   midte  panel"
+    "player player player";
+}
+.flade {
+  background: var(--flade);
+  border-radius: var(--r-stor);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+/* ========== STIL: topbar ========== */
+.top { grid-area: top; display: flex; align-items: center; gap: 22px; padding: 2px 6px 0; position: relative; min-height: 38px; }
+.brand { display: flex; align-items: center; gap: 10px; width: calc(var(--side-b) - 6px); flex: none; }
+.brand-maerke { width: 26px; height: 26px; flex: none; }
+.brand-navn { font: 600 19px/1 var(--skrift-tal); letter-spacing: .02em; }
+.brand-version { font-size: 12px; color: var(--tekst-3); padding-top: 3px; }
+.status {
+  display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto;
+  background: none; border: 0; padding: 7px 10px; margin-left: -10px; border-radius: var(--r); text-align: left; color: var(--tekst-2);
+}
+.status:hover { background: rgba(255, 255, 255, .04); color: var(--tekst); }
+.status-prik { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--tekst-3); }
+.status-prik[data-type="ok"] { background: var(--tekst); }
+.status-prik[data-type="arbejder"] { background: var(--tid); animation: puls 1s ease-in-out infinite; }
+.status-prik[data-type="fejl"] { background: var(--fejl); }
+.status[data-type="fejl"] { color: var(--fejl); }
+#statusTekst { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@keyframes puls { 50% { opacity: .35; } }
+.top-hoejre { display: flex; align-items: center; gap: 10px; flex: none; }
+.log {
+  position: absolute; z-index: 30; top: calc(100% + 6px); left: calc(var(--side-b) + var(--luft) - 4px);
+  width: min(560px, calc(100vw - 2 * var(--luft))); max-height: 52vh; overflow: auto;
+  background: var(--flade-2); border-radius: 12px; padding: 14px 16px; box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
+}
+.log h2 { margin-bottom: 8px; }
+.log li { display: grid; grid-template-columns: 64px 1fr; gap: 10px; padding: 5px 0; color: var(--tekst-2); }
+.log li[data-type="fejl"] { color: var(--fejl); }
+.log li:last-child { color: var(--tekst); }
+.log time { color: var(--tekst-3); }
+
+/* ========== STIL: knapper, skydere, valg ========== */
+.knap {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--flade-2); border: 0; border-radius: var(--r); padding: 9px 14px; line-height: 1.2;
+}
+.knap:hover:not(:disabled) { background: var(--flade-3); }
+.knap:disabled { opacity: .42; }
+.knap-fyldt { background: var(--tekst); color: #131a22; font-weight: 600; }
+.knap-fyldt:hover:not(:disabled) { background: #fff; }
+.knap-lille { padding: 7px 11px; font-size: 13px; }
+.knap[aria-pressed="true"] { background: rgba(255, 184, 92, .13); color: var(--tid); }
+.knap-tekst { background: none; padding: 6px 2px; color: var(--tekst-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--tekst-3); }
+.knap-tekst:hover:not(:disabled) { background: none; color: var(--tekst); }
+.rund {
+  display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 0; flex: none;
+  background: var(--flade-2); color: var(--tekst);
+}
+.rund:hover:not(:disabled) { background: var(--flade-3); }
+.rund:disabled { opacity: .42; }
+.rund[aria-pressed="true"] { background: rgba(255, 184, 92, .15); color: var(--tid); }
+.rund-stor { width: 52px; height: 52px; background: var(--tekst); color: #131a22; }
+.rund-stor:hover:not(:disabled) { background: #fff; }
+.rund-stor .ikon { width: 22px; height: 22px; }
+.rund-lille { width: 30px; height: 30px; font-size: 17px; line-height: 1; }
+.seg { display: inline-flex; background: var(--flade-2); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg button { background: none; border: 0; border-radius: 7px; padding: 5px 11px; font-size: 13px; color: var(--tekst-2); white-space: nowrap; }
+.seg button:hover:not(:disabled) { color: var(--tekst); }
+.seg button[aria-pressed="true"] { background: var(--flade-3); color: var(--tekst); }
+.seg button:disabled { opacity: .42; }
+.seg-bred { display: flex; }
+.seg-bred button { flex: 1; }
+
+.skyder { -webkit-appearance: none; appearance: none; background: transparent; height: 20px; margin: 0; cursor: pointer; --p: 0%; --fyld: var(--tekst-2); min-width: 0; }
+.skyder:disabled { opacity: .42; cursor: default; }
+.skyder::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--fyld) var(--p), var(--flade-3) var(--p)); }
+.skyder::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: var(--tekst); border: 0; }
+.skyder::-moz-range-track { height: 4px; border-radius: 2px; background: var(--flade-3); }
+.skyder::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--fyld); }
+.skyder::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--tekst); border: 0; }
+.skyder-tid { --fyld: var(--tid); }
+.felt { background: var(--dyb); border: 1px solid var(--flade-3); border-radius: var(--r); padding: 7px 9px; min-width: 0; }
+.felt:hover:not(:disabled) { border-color: var(--tekst-3); }
+.felt:disabled { opacity: .42; }
+.hjaelp { color: var(--tekst-2); font-size: 13px; line-height: 1.5; }
+
+/* ========== STIL: sidebar (navigation og lydfil) ========== */
+.side { grid-area: side; display: flex; flex-direction: column; gap: 26px; padding: 14px; min-height: 0; overflow: auto; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-punkt {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; border-radius: var(--r);
+  background: none; color: var(--tekst-2); text-align: left; font-size: 15px;
+}
+.nav-punkt:hover:not(:disabled) { background: rgba(255, 255, 255, .04); color: var(--tekst); }
+.nav-punkt[aria-current="page"] { background: var(--flade-2); color: var(--tekst); }
+.nav-punkt:disabled { color: var(--tekst-3); }
+.nav-senere { margin-left: auto; font-size: 12px; color: var(--tekst-3); }
+.fil { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.side h2, .panel h2, .tl h2, .log h2 { font-size: 13px; font-weight: 600; color: var(--tekst-2); }
+.info { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 13px; padding: 4px 2px 0; }
+.info dt { color: var(--tekst-3); }
+.info dd { text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sangliste { display: flex; flex-direction: column; gap: 2px; margin: 6px -4px 0; max-height: 22vh; overflow: auto; }
+.sangliste button {
+  display: flex; align-items: center; gap: 9px; width: 100%; padding: 7px 8px; border: 0; border-radius: 7px; background: none;
+  color: var(--tekst-2); text-align: left; font-size: 13px;
+}
+.sangliste button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sangliste button:hover { background: rgba(255, 255, 255, .04); color: var(--tekst); }
+.sangliste button[aria-current="true"] { color: var(--tekst); background: var(--flade-2); }
+.sangliste .ikon { width: 15px; height: 15px; }
+
+/* ========== STIL: midten (Live preview og tidslinje) ========== */
+.midte { grid-area: midte; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--luft); min-width: 0; min-height: 0; }
+.preview {
+  position: relative; overflow: hidden; border-radius: var(--r-stor); min-height: 0;
+  background: radial-gradient(ellipse at 50% 42%, #1e2a38 0%, #161d27 58%, #10151c 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), inset 0 0 120px rgba(0, 0, 0, .25);
+}
+.preview canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.preview-tom { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 16px; padding: 32px; text-align: center; }
+.preview-tom h1 { font: 600 clamp(26px, 2.6vw, 44px)/1.1 var(--skrift-tal); letter-spacing: .01em; }
+.preview-tom p { max-width: 54ch; color: var(--tekst-2); font-size: 15px; }
+.preview-tom .raekke { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.preview-note { position: absolute; left: 18px; bottom: 14px; color: var(--tekst-3); font-size: 13px; }
+.preview-fps { position: absolute; right: 18px; bottom: 14px; color: var(--tekst-3); font-size: 12px; }
+
+.tl { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tl-top { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; min-height: 32px; }
+.tl-udsnit { color: var(--tekst-3); font-size: 13px; }
+.tl-luft { flex: 1 1 0; }
+.tl-etiket { color: var(--tekst-2); font-size: 13px; margin-right: -6px; }
+.tl-hint { color: var(--tekst-3); font-size: 13px; }
+.tl-zoom { display: flex; align-items: center; gap: 8px; }
+.tl-zoom .skyder { width: clamp(90px, 9vw, 220px); }
+.tl-oversigt, .tl-laerred { display: block; width: 100%; border-radius: 10px; background: var(--dyb); touch-action: none; }
+.tl-oversigt { height: 44px; cursor: grab; }
+.tl-laerred { height: clamp(150px, 24vh, 420px); cursor: crosshair; }
+
+/* ========== STIL: kontrolpanel ========== */
+.panel { grid-area: panel; padding: 18px 18px 14px; display: flex; flex-direction: column; gap: 28px; min-height: 0; overflow: auto; }
+.panel section { display: flex; flex-direction: column; gap: 10px; }
+.maaler { position: relative; height: 14px; border-radius: 7px; background: var(--dyb); overflow: hidden; }
+.maaler-fyld { position: absolute; inset: 0; transform-origin: left center; transform: scaleX(0); background: linear-gradient(90deg, #2a8f86 0%, var(--lyd) 70%, #dcfff7 100%); }
+.maaler-top { position: absolute; top: 0; bottom: 0; left: 0; width: 2px; margin-left: -1px; background: var(--lyd-lys); opacity: .9; }
+.maaler-skala { position: relative; height: 16px; font-size: 11px; color: var(--tekst-3); margin-top: -6px; }
+.maaler-skala span { position: absolute; top: 2px; transform: translateX(-50%); }
+.maaler-skala span:last-child { transform: translateX(-100%); }
+.maaler-tal { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.maaler-tal .tal { display: block; font-size: 32px; line-height: 1.05; color: var(--lyd); }
+.maaler-tal div:last-child .tal { color: var(--lyd-lys); }
+.maaler-tal small { font-size: 12px; color: var(--tekst-2); }
+.raekke-ab { display: grid; grid-template-columns: 16px 1fr auto; align-items: center; gap: 10px; }
+.raekke-ab b { font: 600 14px var(--skrift-tal); color: var(--tid); }
+.raekke-ab .tal { font-size: 17px; }
+.raekke-felt { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
+.raekke-felt .gruppe { display: flex; align-items: center; gap: 8px; }
+.raekke-felt input.felt { width: 84px; text-align: right; }
+.raekke-knapper { display: flex; gap: 8px; flex-wrap: wrap; }
+.genveje summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--tekst-2); border-radius: 6px; }
+.genveje summary:hover { color: var(--tekst); }
+.genveje dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin-top: 10px; font-size: 13px; }
+.genveje dt { color: var(--tekst); white-space: nowrap; }
+.genveje dd { color: var(--tekst-2); }
+.panel-bund { margin-top: auto; }
+
+/* ========== STIL: playerbar ========== */
+.player { grid-area: player; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr) minmax(0, 1fr); align-items: center; gap: 24px; padding: 12px 22px; }
+.pl-sang { min-width: 0; }
+.pl-titel { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pl-meta { font-size: 13px; color: var(--tekst-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pl-midt { display: flex; align-items: center; gap: 22px; min-width: 0; }
+.pl-knapper { display: flex; align-items: center; gap: 10px; flex: none; }
+.pl-soeg { display: flex; align-items: center; gap: 14px; flex: 1 1 auto; min-width: 0; }
+.pl-soeg .skyder { flex: 1 1 auto; }
+.pl-soeg .tal { font-size: 20px; min-width: 4.6ch; }
+.pl-soeg .tal:last-child { color: var(--tekst-2); text-align: right; min-width: 3.4ch; }
+.pl-hoejre { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0; }
+.pl-hoejre .skyder { width: clamp(80px, 8vw, 170px); }
+.pl-hoejre .tal { min-width: 4.2ch; text-align: right; color: var(--tekst-2); }
+#muteKnap[aria-pressed="true"] { background: var(--flade-2); color: var(--tekst-3); }
+
+/* ========== STIL: slip en fil ========== */
+.slip {
+  position: fixed; inset: var(--luft); z-index: 50; display: none; place-items: center; pointer-events: none;
+  border: 2px dashed var(--tekst-2); border-radius: 22px; background: rgba(16, 22, 29, .86);
+  font: 600 clamp(22px, 2.2vw, 36px) var(--skrift-tal);
+}
+body.slipper .slip { display: grid; }
+
+/* ========== STIL: smalle skærme ========== */
+@media (max-width: 1180px) {
+  body { overflow: auto; }
+  .app { height: auto; min-height: 100dvh; grid-template-columns: var(--side-b) minmax(0, 1fr); grid-template-rows: auto auto auto auto;
+    grid-template-areas: "top top" "side midte" "side panel" "player player"; }
+  .preview { min-height: 320px; height: 46vh; }
+  .player { position: sticky; bottom: var(--luft); box-shadow: 0 10px 40px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .035); }
+}
+@media (max-width: 760px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-areas: "top" "side" "midte" "panel" "player"; }
+  .brand { width: auto; }
+  .log { left: 0; }
+  .nav { flex-direction: row; overflow-x: auto; }
+  .nav-punkt { width: auto; white-space: nowrap; }
+  .nav-senere { margin-left: 4px; }
+  .fil { margin-top: 0; }
+  .player { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 12px 14px; }
+  .pl-midt { flex-wrap: wrap; gap: 10px; }
+  .pl-hoejre { justify-content: flex-start; }
+  .tl-luft { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .status-prik[data-type="arbejder"] { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Ikoner (tegnet i filen, så de virker uden internet) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-afspil" viewBox="0 0 24 24"><path d="M8 4.8v14.4a.8.8 0 0 0 1.2.7l12-7.2a.8.8 0 0 0 0-1.4l-12-7.2A.8.8 0 0 0 8 4.8z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4.4" height="15" rx="1"/><rect x="13.6" y="4.5" width="4.4" height="15" rx="1"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.6"/></symbol>
+  <symbol id="i-loop" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></symbol>
+  <symbol id="i-lyd" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.6 5.4a9.3 9.3 0 0 1 0 13.2"/></symbol>
+  <symbol id="i-lydfra" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6"/><path d="M16 9l6 6"/></symbol>
+  <symbol id="i-mappe" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-foelg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/></symbol>
+  <symbol id="i-analyse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-figur" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></symbol>
+  <symbol id="i-regler" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M7.5 6C13 6 11 12 16.5 12"/><path d="M7.5 18C13 18 11 12 16.5 12"/></symbol>
+  <symbol id="i-show" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></symbol>
+  <symbol id="i-node" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ========== TOPBAR: brand, status, vigtige knapper ========== -->
+  <header class="top">
+    <div class="brand">
+      <svg class="brand-maerke" viewBox="0 0 26 26" aria-hidden="true">
+        <circle cx="13" cy="13" r="9.5" fill="none" stroke="#4fe0c8" stroke-width="2"/>
+        <circle cx="13" cy="13" r="4" fill="#4fe0c8" opacity=".35"/>
+        <path d="M13 1v24" stroke="#ffb85c" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-navn">Rytme Studio</span>
+      <span class="brand-version" id="version"></span>
+    </div>
+    <button class="status" id="status" aria-haspopup="true" aria-expanded="false" data-i18n-title="status.visLog">
+      <span class="status-prik" id="statusPrik" data-type="klar"></span>
+      <span id="statusTekst" role="status" aria-live="polite"></span>
+    </button>
+    <div class="top-hoejre">
+      <div class="seg" id="sprogValg" role="group" data-i18n-aria="sprog.titel">
+        <button data-sprog="da" lang="da">Dansk</button>
+        <button data-sprog="en" lang="en">English</button>
+      </div>
+    </div>
+    <div class="log" id="log" hidden>
+      <h2 data-i18n="log.titel"></h2>
+      <ul id="logListe"></ul>
+    </div>
+  </header>
+
+  <!-- ========== SIDEBAR: navigation og lydfil ========== -->
+  <aside class="side flade">
+    <nav class="nav" data-i18n-aria="nav.titel">
+      <button class="nav-punkt" aria-current="page"><svg class="ikon ikon-fyldt"><use href="#i-afspil"/></svg><span data-i18n="nav.afspiller"></span></button>
+      <button class="nav-punkt" disabled data-senere="2"><svg class="ikon"><use href="#i-analyse"/></svg><span data-i18n="nav.analyse"></span><span class="nav-senere">Run 2</span></button>
+      <button class="nav-punkt" disabled data-senere="3"><svg class="ikon"><use href="#i-figur"/></svg><span data-i18n="nav.figurer"></span><span class="nav-senere">Run 3</span></button>
+      <button class="nav-punkt" disabled data-senere="4"><svg class="ikon"><use href="#i-regler"/></svg><span data-i18n="nav.regler"></span><span class="nav-senere">Run 4</span></button>
+      <button class="nav-punkt" disabled data-senere="5"><svg class="ikon"><use href="#i-show"/></svg><span data-i18n="nav.show"></span><span class="nav-senere">Run 5</span></button>
+    </nav>
+
+    <section class="fil">
+      <h2 data-i18n="fil.titel"></h2>
+      <button class="knap knap-fyldt" data-kommando="fil.aabn"><svg class="ikon"><use href="#i-mappe"/></svg><span data-i18n="fil.aabn"></span></button>
+      <button class="knap" data-kommando="fil.demo"><span data-i18n="fil.demo"></span></button>
+      <p class="hjaelp" data-i18n="fil.slipHint"></p>
+      <dl class="info" id="filInfo" hidden>
+        <dt data-i18n="fil.laengde"></dt><dd class="tal" id="infoLaengde"></dd>
+        <dt data-i18n="fil.kanaler"></dt><dd id="infoKanaler"></dd>
+        <dt data-i18n="fil.rate"></dt><dd class="tal" id="infoRate"></dd>
+        <dt data-i18n="fil.stoerrelse"></dt><dd class="tal" id="infoStoerrelse"></dd>
+      </dl>
+      <div id="sangBoks" hidden>
+        <h2 data-i18n="fil.session"></h2>
+        <ul class="sangliste" id="sangListe"></ul>
+      </div>
+    </section>
+  </aside>
+
+  <!-- ========== MIDTEN: Live preview og tidslinje ========== -->
+  <main class="midte">
+    <section class="preview" id="preview" data-i18n-aria="preview.titel">
+      <canvas id="previewLaerred"></canvas>
+      <div class="preview-tom" id="previewTom">
+        <h1 data-i18n="tom.titel"></h1>
+        <p data-i18n="tom.tekst"></p>
+        <div class="raekke">
+          <button class="knap knap-fyldt" data-kommando="fil.aabn"><svg class="ikon"><use href="#i-mappe"/></svg><span data-i18n="fil.aabn"></span></button>
+          <button class="knap" data-kommando="fil.demo"><span data-i18n="fil.demo"></span></button>
+        </div>
+      </div>
+      <p class="preview-note" id="previewNote" data-i18n="preview.note" hidden></p>
+      <span class="preview-fps tal" id="fps"></span>
+    </section>
+
+    <section class="tl flade" id="tl">
+      <div class="tl-top">
+        <h2 data-i18n="tl.titel"></h2>
+        <span class="tl-udsnit tal" id="tlUdsnit"></span>
+        <span class="tl-luft"></span>
+        <span class="tl-hint" id="snapHint" data-i18n="tl.snapMangler" hidden></span>
+        <span class="tl-etiket" id="snapEtiket" data-i18n="tl.snap"></span>
+        <div class="seg" id="snapValg" role="group" aria-labelledby="snapEtiket">
+          <button data-snap="fra" data-i18n="tl.snapFra"></button>
+          <button data-snap="slag" data-i18n="tl.snapSlag"></button>
+          <button data-snap="takt" data-i18n="tl.snapTakt"></button>
+        </div>
+        <button class="knap knap-lille" id="foelgKnap" data-kommando="tidslinje.foelg" aria-pressed="true"><svg class="ikon"><use href="#i-foelg"/></svg><span data-i18n="tl.foelg"></span></button>
+        <div class="tl-zoom">
+          <button class="rund rund-lille" data-kommando="tidslinje.zoomUd" data-ikonknap data-kraever-sang>−</button>
+          <input type="range" class="skyder" id="zoom" min="0" max="1000" value="0" data-i18n-aria="tl.zoom" data-kraever-sang>
+          <button class="rund rund-lille" data-kommando="tidslinje.zoomInd" data-ikonknap data-kraever-sang>+</button>
+          <button class="knap knap-lille" data-kommando="tidslinje.visAlt" data-kraever-sang><span data-i18n="tl.visAlt"></span></button>
+        </div>
+      </div>
+      <canvas class="tl-oversigt" id="tlOversigt" data-i18n-aria="tl.oversigt" role="img"></canvas>
+      <canvas class="tl-laerred" id="tlLaerred" data-i18n-aria="tl.boelge" role="img"></canvas>
+    </section>
+  </main>
+
+  <!-- ========== KONTROLPANEL (skifter senere efter valgt figur eller node) ========== -->
+  <aside class="panel flade">
+    <section>
+      <h2 data-i18n="niveau.titel"></h2>
+      <div class="maaler" id="maaler"><div class="maaler-fyld" id="maalerFyld"></div><div class="maaler-top" id="maalerTop"></div></div>
+      <div class="maaler-skala" aria-hidden="true">
+        <span style="left:20%">−48</span><span style="left:40%">−36</span><span style="left:60%">−24</span><span style="left:80%">−12</span><span style="left:100%">0</span>
+      </div>
+      <div class="maaler-tal">
+        <div><span class="tal" id="rmsTal">−∞</span><small data-i18n="niveau.rms"></small></div>
+        <div><span class="tal" id="peakTal">−∞</span><small data-i18n="niveau.top"></small></div>
+      </div>
+      <p class="hjaelp" data-i18n="niveau.hjaelp"></p>
+    </section>
+
+    <section>
+      <h2 data-i18n="loop.titel"></h2>
+      <div class="seg seg-bred" id="loopValg" role="group">
+        <button data-loop="fra" data-i18n="loop.fra" data-kraever-sang></button>
+        <button data-loop="sang" data-i18n="loop.sang" data-kraever-sang></button>
+        <button data-loop="ab" data-i18n="loop.ab" data-kraever-sang></button>
+      </div>
+      <div class="raekke-ab"><b>A</b><span class="tal" id="loopATal">–</span><button class="knap knap-lille" data-kommando="loop.a" data-kraever-sang><span data-i18n="loop.saetA"></span></button></div>
+      <div class="raekke-ab"><b>B</b><span class="tal" id="loopBTal">–</span><button class="knap knap-lille" data-kommando="loop.b" data-kraever-sang><span data-i18n="loop.saetB"></span></button></div>
+      <div class="raekke-knapper"><button class="knap knap-lille" id="loopRydKnap" data-kommando="loop.ryd"><span data-i18n="loop.ryd"></span></button></div>
+      <p class="hjaelp" data-i18n="loop.hjaelp"></p>
+    </section>
+
+    <section>
+      <h2 data-i18n="tempo.titel"></h2>
+      <div class="raekke-felt">
+        <label for="bpmFelt" data-i18n="tempo.bpm"></label>
+        <div class="gruppe">
+          <input class="felt tal" id="bpmFelt" type="number" min="30" max="300" step="0.1" inputmode="decimal" placeholder="–" data-kraever-sang>
+          <span class="hjaelp">BPM</span>
+          <button class="knap knap-lille" data-kommando="tempo.tap" data-kraever-sang><span data-i18n="tempo.tap"></span></button>
+        </div>
+      </div>
+      <div class="raekke-felt">
+        <label for="slagFelt" data-i18n="tempo.slagPrTakt"></label>
+        <select class="felt" id="slagFelt" data-kraever-sang>
+          <option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option>
+        </select>
+      </div>
+      <div class="raekke-knapper">
+        <button class="knap knap-lille" data-kommando="tempo.takt1" data-kraever-sang><span data-i18n="tempo.takt1"></span></button>
+        <button class="knap knap-lille" id="tempoRydKnap" data-kommando="tempo.ryd"><span data-i18n="tempo.ryd"></span></button>
+      </div>
+      <p class="hjaelp" id="tempoInfo"></p>
+      <p class="hjaelp" data-i18n="tempo.senere"></p>
+    </section>
+
+    <details class="genveje">
+      <summary data-i18n="genveje.titel"></summary>
+      <dl id="genvejListe"></dl>
+    </details>
+
+    <div class="panel-bund">
+      <button class="knap knap-tekst" data-kommando="indstillinger.nulstil"><span data-i18n="nulstil"></span></button>
+    </div>
+  </aside>
+
+  <!-- ========== PLAYERBAR ========== -->
+  <footer class="player flade">
+    <div class="pl-sang">
+      <div class="pl-titel" id="plTitel"></div>
+      <div class="pl-meta" id="plMeta"></div>
+    </div>
+    <div class="pl-midt">
+      <div class="pl-knapper">
+        <button class="rund" data-kommando="afspiller.stop" data-ikonknap data-kraever-sang><svg class="ikon ikon-fyldt"><use href="#i-stop"/></svg></button>
+        <button class="rund rund-stor" id="spilKnap" data-kommando="afspiller.skift" data-ikonknap data-kraever-sang><svg class="ikon ikon-fyldt"><use id="spilIkon" href="#i-afspil"/></svg></button>
+        <button class="rund" id="loopKnap" data-kommando="loop.skift" data-ikonknap data-kraever-sang aria-pressed="false"><svg class="ikon"><use href="#i-loop"/></svg></button>
+      </div>
+      <div class="pl-soeg">
+        <span class="tal" id="tidNu">0:00.0</span>
+        <input type="range" class="skyder skyder-tid" id="soeg" min="0" max="1000" step="1" value="0" data-i18n-aria="pl.soeg" data-kraever-sang>
+        <span class="tal" id="tidIalt">0:00</span>
+      </div>
+    </div>
+    <div class="pl-hoejre">
+      <button class="rund" id="muteKnap" data-kommando="lyd.mute" data-ikonknap aria-pressed="false"><svg class="ikon"><use id="muteIkon" href="#i-lyd"/></svg></button>
+      <input type="range" class="skyder" id="volumen" min="0" max="100" step="1" value="80" data-i18n-aria="pl.lydstyrke">
+      <span class="tal" id="volTal">80 %</span>
+    </div>
+  </footer>
+</div>
+
+<div class="slip" aria-hidden="true"><span data-i18n="slip.tekst"></span></div>
+<input type="file" id="filValg" accept="audio/*,video/mp4,video/webm,.mp3,.wav,.ogg,.oga,.flac,.m4a,.aac,.opus,.webm" multiple hidden>
+
+<script data-modul="kerne">
+/* ========== KERNE: RS, RS.util, RS.Events ==========
+   RS er det eneste globale navn. Alle moduler hænger på RS. */
+'use strict';
+window.RS = { version: '0.1', run: 1 };
+
+RS.util = {
+  klem: (v, a, b) => (v < a ? a : v > b ? b : v),
+  /* Sekunder som tekst: 83.46 → "1:23.4" (dec = antal decimaler). Kommaet følger sproget. */
+  tidTekst(s, dec = 0) {
+    if (!isFinite(s) || s < 0) s = 0;
+    const f = Math.pow(10, dec);
+    s = Math.floor(s * f + 1e-6) / f;
+    const m = Math.floor(s / 60), r = s - m * 60;
+    const tekst = m + ':' + (r < 10 ? '0' : '') + r.toFixed(dec);
+    return RS.I18n && RS.I18n.komma() === ',' ? tekst.replace('.', ',') : tekst;
+  },
+  /* Lineær styrke (0 til 1) til decibel (fagudtryk: dBFS, hvor 0 er det højeste, filen kan rumme). */
+  dB: lin => (lin > 1e-7 ? 20 * Math.log10(lin) : -Infinity),
+  /* Et tal med sprogets komma: 3.14 → "3,14" på dansk. */
+  talTekst(v, dec = 1) {
+    const t = v.toFixed(dec).replace('-', '−');
+    return RS.I18n && RS.I18n.komma() === ',' ? t.replace('.', ',') : t;
+  },
+  stoerrelseTekst(bytes) {
+    if (!bytes) return '–';
+    return bytes < 1048576 ? RS.util.talTekst(bytes / 1024, 0) + ' KB' : RS.util.talTekst(bytes / 1048576, 1) + ' MB';
+  }
+};
+
+/* Beskeder mellem modulerne (fagudtryk: event bus eller publish/subscribe).
+   En lytter, der fejler, stopper ikke de andre; fejlen sendes videre som beskeden 'fejl'. */
+RS.Events = (() => {
+  const lyttere = new Map();
+  function on(navn, fn) {
+    if (!lyttere.has(navn)) lyttere.set(navn, new Set());
+    lyttere.get(navn).add(fn);
+    return () => off(navn, fn);
+  }
+  function off(navn, fn) { const s = lyttere.get(navn); if (s) s.delete(fn); }
+  function emit(navn, data) {
+    const s = lyttere.get(navn);
+    if (!s) return;
+    for (const fn of [...s]) {
+      try { fn(data); }
+      catch (e) { console.error('[RS.Events] ' + navn, e); if (navn !== 'fejl') emit('fejl', e); }
+    }
+  }
+  return { on, off, emit };
+})();
+/* ========== SLUT: KERNE ========== */
+</script>
+
+<script data-modul="i18n">
+/* ========== I18N: tekster på dansk og engelsk ==========
+   I HTML: data-i18n="nøgle" (tekst), data-i18n-title (tooltip), data-i18n-aria (navn til skærmlæser). */
+'use strict';
+RS.I18n = (() => {
+  const tekster = {
+    da: {
+      'sprog.titel': 'Sprog',
+      'nav.titel': 'Arbejdsområder', 'nav.afspiller': 'Afspiller', 'nav.analyse': 'Analyse', 'nav.figurer': 'Figurer',
+      'nav.regler': 'Regler', 'nav.show': 'Show', 'nav.senere': 'Kommer i Run {n}',
+      'fil.titel': 'Lydfil', 'fil.aabn': 'Vælg lydfil', 'fil.demo': 'Prøv demo-lyden',
+      'fil.slipHint': 'Du kan også slippe en fil hvor som helst i vinduet.',
+      'fil.laengde': 'Længde', 'fil.kanaler': 'Kanaler', 'fil.rate': 'Afspilles ved', 'fil.stoerrelse': 'Størrelse',
+      'fil.mono': 'Mono', 'fil.stereo': 'Stereo', 'fil.kanalerN': '{n} kanaler',
+      'fil.session': 'Åbnet i denne omgang', 'fil.ingen': 'Ingen lydfil', 'fil.ingenMeta': 'Vælg en lydfil for at begynde',
+      'fil.demoNavn': 'Demo-lyd, 120 BPM', 'fil.genereret': 'Lavet i programmet',
+      'slip.tekst': 'Slip lydfilen for at åbne den',
+      'tom.titel': 'Slip en lydfil her',
+      'tom.tekst': 'Rytme Studio afspiller sangen og tegner den som en bølgeform, du kan zoome i. Har du ikke en fil ved hånden, kan du prøve med en demo-lyd på 120 BPM.',
+      'preview.titel': 'Live preview', 'preview.note': 'Cirklen følger niveauet (RMS). Figurer kommer i Run 3.',
+      'tl.titel': 'Tidslinje', 'tl.snap': 'Snap', 'tl.snapFra': 'Fra', 'tl.snapSlag': 'Slag', 'tl.snapTakt': 'Takt',
+      'tl.snapMangler': 'Snap venter på et tempo', 'tl.foelg': 'Følg afspilning', 'tl.visAlt': 'Hele sangen', 'tl.zoom': 'Zoom',
+      'tl.oversigt': 'Oversigt over hele sangen. Klik eller træk for at flytte udsnittet.',
+      'tl.boelge': 'Bølgeform. Klik for at søge. Shift + træk markerer et loop.',
+      'niveau.titel': 'Niveau', 'niveau.rms': 'RMS, dB', 'niveau.top': 'Top, dB',
+      'niveau.hjaelp': 'Måles før lydstyrken, så tallene ikke ændrer sig, når du skruer ned.',
+      'loop.titel': 'Loop', 'loop.fra': 'Fra', 'loop.sang': 'Hele sangen', 'loop.ab': 'A til B',
+      'loop.saetA': 'Sæt A her', 'loop.saetB': 'Sæt B her', 'loop.ryd': 'Ryd A og B',
+      'loop.hjaelp': 'Shift + træk på tidslinjen markerer et stykke. Håndtagene A og B kan trækkes.',
+      'tempo.titel': 'Tempo-gitter', 'tempo.bpm': 'Tempo', 'tempo.tap': 'Tap', 'tempo.slagPrTakt': 'Slag pr. takt',
+      'tempo.takt1': 'Takt 1 her', 'tempo.ryd': 'Ryd tempo',
+      'tempo.intet': 'Intet tempo endnu. Skriv et tal, eller tryk Tap i takt med musikken; det første tryk bliver takt 1.',
+      'tempo.info': '{bpm} BPM, {n} slag pr. takt. Takt 1 ligger ved {tid}.',
+      'tempo.kilde.manuel': 'Sat manuelt.', 'tempo.kilde.tap': 'Sat med Tap.', 'tempo.kilde.demo': 'Kendt fra demo-lyden.',
+      'tempo.tapFlere': 'Tap {n} gange mere.',
+      'tempo.senere': 'Gitteret er manuelt i denne udgave. I Run 2 måler analysen tempoet selv.',
+      'genveje.titel': 'Genveje', 'genvej.hjul': 'Musehjul på tidslinjen', 'genvej.hjulGoer': 'Zoom ind og ud',
+      'genvej.shiftHjul': 'Shift + musehjul', 'genvej.shiftHjulGoer': 'Rul til siden',
+      'genvej.shiftTraek': 'Shift + træk', 'genvej.shiftTraekGoer': 'Markér loop A til B',
+      'genvej.alt': 'Alt holdt nede', 'genvej.altGoer': 'Søg og markér uden snap',
+      'tast.Space': 'Mellemrum', 'tast.Home': 'Home', 'tast.ArrowLeft': '←', 'tast.ArrowRight': '→', 'tast.Shift': 'Shift',
+      'nulstil': 'Tilbage til standard',
+      'pl.lydstyrke': 'Lydstyrke', 'pl.soeg': 'Position i sangen',
+      'kmd.afspil': 'Afspil eller pause', 'kmd.stop': 'Stop og gå til start', 'kmd.tilStart': 'Gå til start',
+      'kmd.tilbage5': '5 sekunder tilbage', 'kmd.frem5': '5 sekunder frem', 'kmd.tilbage1': '1 sekund tilbage', 'kmd.frem1': '1 sekund frem',
+      'kmd.mute': 'Slå lyden fra eller til', 'kmd.loop': 'Loop til eller fra', 'kmd.loopA': 'Sæt loop-punkt A her',
+      'kmd.loopB': 'Sæt loop-punkt B her', 'kmd.loopRyd': 'Ryd loop-punkterne A og B', 'kmd.foelg': 'Følg afspilning til eller fra',
+      'kmd.zoomInd': 'Zoom ind', 'kmd.zoomUd': 'Zoom ud', 'kmd.visAlt': 'Vis hele sangen', 'kmd.aabn': 'Vælg lydfil',
+      'kmd.demo': 'Prøv demo-lyden', 'kmd.tap': 'Tap tempoet', 'kmd.takt1': 'Læg takt 1 ved afspilningsstregen',
+      'kmd.tempoRyd': 'Ryd tempoet',
+      'kmd.nulstil': 'Sætter lydstyrke, følg og snap tilbage. Loop og tempo for sangen bliver.',
+      'status.visLog': 'Vis de seneste beskeder', 'log.titel': 'Seneste beskeder',
+      'status.klar': 'Klar. Vælg en lydfil, eller prøv demo-lyden.',
+      'status.laeser': 'Læser {navn} …', 'status.afkoder': 'Afkoder {navn} …', 'status.demo': 'Laver demo-lyden …',
+      'status.boelgeform': 'Tegner bølgeformen … {pct} %',
+      'status.sangKlar': '{navn} er klar. Længde {tid}.',
+      'status.sangKlarHusket': '{navn} er klar. Længde {tid}. Loop og tempo er hentet fra sidst.',
+      'status.fejlAfkod': 'Kunne ikke afkode {navn}. Browseren kender ikke formatet. Prøv mp3, wav, ogg, flac eller m4a.',
+      'status.fejlLaes': 'Kunne ikke læse {navn} fra disken.',
+      'status.ingenWebAudio': 'Browseren mangler Web Audio, så programmet kan ikke afspille lyd. Prøv en nyere Chrome, Edge eller Firefox.',
+      'status.uventet': 'Uventet fejl: {besked}',
+      'status.loopForKort': 'A og B ligger for tæt. Et loop skal være mindst 0,05 sekunder.',
+      'status.lagerfejl': 'Indstillingerne kunne ikke gemmes i browseren (localStorage).',
+      'status.nulstillet': 'Lydstyrke, følg og snap er sat tilbage til standard.',
+      'status.foelgFra': 'Følg afspilning er slået fra, fordi du selv flyttede udsnittet.'
+    },
+    en: {
+      'sprog.titel': 'Language',
+      'nav.titel': 'Workspaces', 'nav.afspiller': 'Player', 'nav.analyse': 'Analysis', 'nav.figurer': 'Figures',
+      'nav.regler': 'Rules', 'nav.show': 'Show', 'nav.senere': 'Coming in run {n}',
+      'fil.titel': 'Audio file', 'fil.aabn': 'Choose audio file', 'fil.demo': 'Try the demo sound',
+      'fil.slipHint': 'You can also drop a file anywhere in the window.',
+      'fil.laengde': 'Length', 'fil.kanaler': 'Channels', 'fil.rate': 'Plays at', 'fil.stoerrelse': 'Size',
+      'fil.mono': 'Mono', 'fil.stereo': 'Stereo', 'fil.kanalerN': '{n} channels',
+      'fil.session': 'Opened this session', 'fil.ingen': 'No audio file', 'fil.ingenMeta': 'Choose an audio file to begin',
+      'fil.demoNavn': 'Demo sound, 120 BPM', 'fil.genereret': 'Generated in the app',
+      'slip.tekst': 'Drop the audio file to open it',
+      'tom.titel': 'Drop an audio file here',
+      'tom.tekst': 'Rytme Studio plays the song and draws it as a waveform you can zoom into. No file at hand? Try a 120 BPM demo sound.',
+      'preview.titel': 'Live preview', 'preview.note': 'The circle follows the level (RMS). Figures arrive in run 3.',
+      'tl.titel': 'Timeline', 'tl.snap': 'Snap', 'tl.snapFra': 'Off', 'tl.snapSlag': 'Beat', 'tl.snapTakt': 'Bar',
+      'tl.snapMangler': 'Snap is waiting for a tempo', 'tl.foelg': 'Follow playback', 'tl.visAlt': 'Whole song', 'tl.zoom': 'Zoom',
+      'tl.oversigt': 'Overview of the whole song. Click or drag to move the visible part.',
+      'tl.boelge': 'Waveform. Click to seek. Shift + drag marks a loop.',
+      'niveau.titel': 'Level', 'niveau.rms': 'RMS, dB', 'niveau.top': 'Peak, dB',
+      'niveau.hjaelp': 'Measured before the volume control, so the numbers stay the same when you turn it down.',
+      'loop.titel': 'Loop', 'loop.fra': 'Off', 'loop.sang': 'Whole song', 'loop.ab': 'A to B',
+      'loop.saetA': 'Set A here', 'loop.saetB': 'Set B here', 'loop.ryd': 'Clear A and B',
+      'loop.hjaelp': 'Shift + drag on the timeline marks a section. The A and B handles can be dragged.',
+      'tempo.titel': 'Tempo grid', 'tempo.bpm': 'Tempo', 'tempo.tap': 'Tap', 'tempo.slagPrTakt': 'Beats per bar',
+      'tempo.takt1': 'Bar 1 here', 'tempo.ryd': 'Clear tempo',
+      'tempo.intet': 'No tempo yet. Type a number, or press Tap in time with the music; the first press becomes bar 1.',
+      'tempo.info': '{bpm} BPM, {n} beats per bar. Bar 1 is at {tid}.',
+      'tempo.kilde.manuel': 'Set by hand.', 'tempo.kilde.tap': 'Set with Tap.', 'tempo.kilde.demo': 'Known from the demo sound.',
+      'tempo.tapFlere': 'Tap {n} more times.',
+      'tempo.senere': 'The grid is manual in this build. In run 2 the analysis measures the tempo itself.',
+      'genveje.titel': 'Shortcuts', 'genvej.hjul': 'Mouse wheel on the timeline', 'genvej.hjulGoer': 'Zoom in and out',
+      'genvej.shiftHjul': 'Shift + mouse wheel', 'genvej.shiftHjulGoer': 'Scroll sideways',
+      'genvej.shiftTraek': 'Shift + drag', 'genvej.shiftTraekGoer': 'Mark loop A to B',
+      'genvej.alt': 'Alt held down', 'genvej.altGoer': 'Seek and mark without snap',
+      'tast.Space': 'Space', 'tast.Home': 'Home', 'tast.ArrowLeft': '←', 'tast.ArrowRight': '→', 'tast.Shift': 'Shift',
+      'nulstil': 'Back to defaults',
+      'pl.lydstyrke': 'Volume', 'pl.soeg': 'Position in the song',
+      'kmd.afspil': 'Play or pause', 'kmd.stop': 'Stop and go to start', 'kmd.tilStart': 'Go to start',
+      'kmd.tilbage5': 'Back 5 seconds', 'kmd.frem5': 'Forward 5 seconds', 'kmd.tilbage1': 'Back 1 second', 'kmd.frem1': 'Forward 1 second',
+      'kmd.mute': 'Mute or unmute', 'kmd.loop': 'Loop on or off', 'kmd.loopA': 'Set loop point A here',
+      'kmd.loopB': 'Set loop point B here', 'kmd.loopRyd': 'Clear loop points A and B', 'kmd.foelg': 'Follow playback on or off',
+      'kmd.zoomInd': 'Zoom in', 'kmd.zoomUd': 'Zoom out', 'kmd.visAlt': 'Show the whole song', 'kmd.aabn': 'Choose audio file',
+      'kmd.demo': 'Try the demo sound', 'kmd.tap': 'Tap the tempo', 'kmd.takt1': 'Put bar 1 at the playhead',
+      'kmd.tempoRyd': 'Clear the tempo',
+      'kmd.nulstil': 'Resets volume, follow and snap. The loop and tempo of the song stay.',
+      'status.visLog': 'Show recent messages', 'log.titel': 'Recent messages',
+      'status.klar': 'Ready. Choose an audio file, or try the demo sound.',
+      'status.laeser': 'Reading {navn} …', 'status.afkoder': 'Decoding {navn} …', 'status.demo': 'Making the demo sound …',
+      'status.boelgeform': 'Drawing the waveform … {pct} %',
+      'status.sangKlar': '{navn} is ready. Length {tid}.',
+      'status.sangKlarHusket': '{navn} is ready. Length {tid}. Loop and tempo were restored from last time.',
+      'status.fejlAfkod': 'Could not decode {navn}. The browser does not know the format. Try mp3, wav, ogg, flac or m4a.',
+      'status.fejlLaes': 'Could not read {navn} from disk.',
+      'status.ingenWebAudio': 'This browser has no Web Audio, so the app cannot play sound. Try a recent Chrome, Edge or Firefox.',
+      'status.uventet': 'Unexpected error: {besked}',
+      'status.loopForKort': 'A and B are too close. A loop must be at least 0.05 seconds.',
+      'status.lagerfejl': 'The settings could not be saved in the browser (localStorage).',
+      'status.nulstillet': 'Volume, follow and snap are back to defaults.',
+      'status.foelgFra': 'Follow playback was turned off because you moved the view yourself.'
+    }
+  };
+  let sprog = 'da';
+
+  function t(noegle, vars) {
+    let s = tekster[sprog][noegle];
+    if (s === undefined) s = tekster.da[noegle];
+    if (s === undefined) return noegle;
+    return vars ? s.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m)) : s;
+  }
+  /* Sæt alle tekster i siden (eller i en del af den). */
+  function anvend(rod = document) {
+    rod.querySelectorAll('[data-i18n]').forEach(e => { e.textContent = t(e.dataset.i18n); });
+    rod.querySelectorAll('[data-i18n-title]').forEach(e => { e.title = t(e.dataset.i18nTitle); });
+    rod.querySelectorAll('[data-i18n-aria]').forEach(e => { e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
+  }
+  function saetSprog(nyt) {
+    sprog = tekster[nyt] ? nyt : 'da';
+    document.documentElement.lang = sprog;
+    anvend();
+    RS.Events.emit('i18n:sprog', sprog);
+  }
+  return { t, anvend, saetSprog, sprog: () => sprog, komma: () => (sprog === 'da' ? ',' : '.'), sprogListe: () => Object.keys(tekster) };
+})();
+/* ========== SLUT: I18N ========== */
+</script>
+
+<script data-modul="state">
+/* ========== STATE: indstillinger, gemt i localStorage ==========
+   Ét sted, hvor alt det, der skal huskes, bor. En ændring sender beskeden 'state:aendret' {sti, vaerdi}.
+   "sang" er indstillingerne for den sang, der er åben (loop og tempo-gitter); de gemmes pr. sang
+   (navn + længde) i "sange", så de er der igen, næste gang samme fil åbnes. */
+'use strict';
+RS.State = (() => {
+  const { Events } = RS;
+  const NOEGLE = 'rytme-studio:v1', MAKS_SANGE = 60;
+  const STANDARD = {
+    version: 1,
+    sprog: 'da',
+    lyd: { volumen: 0.8, mute: false },
+    tidslinje: { foelg: true, snap: 'fra' },      // snap: 'fra' | 'slag' | 'takt'
+    sange: {}
+  };
+  const SANG_STANDARD = {
+    gitter: { bpm: null, start: 0, slagPrTakt: 4, kilde: null },   // kilde: 'manuel' | 'tap' | 'demo'
+    loop: { tilstand: 'fra', a: null, b: null }                    // tilstand: 'fra' | 'sang' | 'ab'
+  };
+
+  const klon = o => JSON.parse(JSON.stringify(o));
+  function flet(maal, kilde) {
+    for (const k in kilde) {
+      const v = kilde[k];
+      if (v && typeof v === 'object' && !Array.isArray(v) && maal[k] && typeof maal[k] === 'object') flet(maal[k], v);
+      else maal[k] = v;
+    }
+    return maal;
+  }
+  function laes() {
+    try { const r = localStorage.getItem(NOEGLE); return r ? JSON.parse(r) : {}; }
+    catch (e) { return {}; }
+  }
+
+  const data = flet(klon(STANDARD), laes());
+  data.sang = klon(SANG_STANDARD);
+  let sangNoegle = null, gemTimer = 0, lagerFejlMeldt = false;
+
+  function gem() {
+    gemTimer = 0;
+    try {
+      const ud = klon(data);
+      delete ud.sang;
+      localStorage.setItem(NOEGLE, JSON.stringify(ud));
+    } catch (e) {
+      if (!lagerFejlMeldt) { lagerFejlMeldt = true; Events.emit('status', { type: 'fejl', noegle: 'status.lagerfejl' }); }
+    }
+  }
+  function planlaegGem() { if (!gemTimer) gemTimer = setTimeout(gem, 300); }
+  function gemNu() { if (gemTimer) { clearTimeout(gemTimer); gem(); } }
+  window.addEventListener('pagehide', gemNu);
+
+  function hent(sti) {
+    let o = data;
+    for (const d of sti.split('.')) { if (o == null) return undefined; o = o[d]; }
+    return o;
+  }
+  function huskSang() {
+    if (!sangNoegle) return;
+    data.sange[sangNoegle] = Object.assign(klon(data.sang), { brugt: Date.now() });
+  }
+  /* Sæt en værdi, fx saet('lyd.volumen', 0.5). Giver true, hvis noget ændrede sig. */
+  function saet(sti, vaerdi) {
+    const dele = sti.split('.'), sidste = dele.pop();
+    let o = data;
+    for (const d of dele) { if (o[d] == null || typeof o[d] !== 'object') o[d] = {}; o = o[d]; }
+    if (JSON.stringify(o[sidste]) === JSON.stringify(vaerdi)) return false;
+    o[sidste] = vaerdi;
+    if (sti === 'sang' || sti.startsWith('sang.')) huskSang();
+    planlaegGem();
+    Events.emit('state:aendret', { sti, vaerdi });
+    return true;
+  }
+  /* Lyt på en gren, fx lyt('sang.loop', fn). fn får grenens nye værdi. */
+  function lyt(gren, fn) {
+    return Events.on('state:aendret', e => {
+      if (e.sti === gren || e.sti.startsWith(gren + '.') || gren.startsWith(e.sti + '.')) fn(hent(gren), e);
+    });
+  }
+  /* En ny sang er åbnet: hent dens gemte loop og tempo, eller brug forslaget. Giver true, hvis sangen var husket. */
+  function skiftSang(noegle, forslag) {
+    sangNoegle = noegle;
+    const gemt = noegle ? data.sange[noegle] : null;
+    data.sang = flet(klon(SANG_STANDARD), gemt ? klon(gemt) : (forslag || {}));
+    delete data.sang.brugt;
+    if (noegle) {
+      huskSang();
+      const noegler = Object.keys(data.sange);
+      if (noegler.length > MAKS_SANGE) {
+        noegler.sort((a, b) => (data.sange[a].brugt || 0) - (data.sange[b].brugt || 0));
+        for (const n of noegler.slice(0, noegler.length - MAKS_SANGE)) delete data.sange[n];
+      }
+    }
+    planlaegGem();
+    Events.emit('state:aendret', { sti: 'sang', vaerdi: data.sang });
+    return !!gemt;
+  }
+  /* Grundlag for presets (Run 4): et øjebliksbillede af indstillingerne, og det modsatte. */
+  function snapshot() { const s = klon(data); delete s.sange; return s; }
+  function gendan(s) { for (const k of ['sprog', 'lyd', 'tidslinje']) if (s && s[k] !== undefined) saet(k, klon(s[k])); }
+  function nulstil() { saet('lyd', klon(STANDARD.lyd)); saet('tidslinje', klon(STANDARD.tidslinje)); }
+
+  return { hent, saet, lyt, skiftSang, snapshot, gendan, nulstil, gemNu };
+})();
+/* ========== SLUT: STATE ========== */
+</script>
+
+<script data-modul="kommandoer">
+/* ========== KOMMANDOER: alt, brugeren kan gøre ==========
+   Hver kommando har et id, en titel (i18n-nøgle), måske en genvej, og en funktion.
+   Knapper i HTML peger på en kommando med data-kommando="id". Run 5 bygger Ctrl+K oven på listen. */
+'use strict';
+RS.Kommandoer = (() => {
+  const alle = new Map();
+  function registrer(id, def) { alle.set(id, Object.assign({ id }, def)); }
+  function kan(id) { const k = alle.get(id); return !!k && (!k.kan || k.kan()); }
+  function koer(id, arg) {
+    const k = alle.get(id);
+    if (!k) { console.warn('[RS.Kommandoer] ukendt kommando: ' + id); return false; }
+    if (k.kan && !k.kan()) return false;
+    try {
+      const r = k.koer(arg);
+      if (r && typeof r.catch === 'function') r.catch(e => RS.Events.emit('fejl', e));
+    } catch (e) { RS.Events.emit('fejl', e); }
+    return true;
+  }
+  /* Tastetryk som tekst, fx "Space", "Shift+ArrowLeft", "M", "+". */
+  function tastNavn(e) {
+    let k = e.key;
+    if (e.code === 'Space') k = 'Space';
+    else if (k.length === 1) k = k.toUpperCase();
+    const medShift = e.shiftKey && (k.length > 1 || /^[A-ZÆØÅ]$/.test(k));
+    return (e.ctrlKey || e.metaKey ? 'Ctrl+' : '') + (e.altKey ? 'Alt+' : '') + (medShift ? 'Shift+' : '') + k;
+  }
+  function findGenvej(navn) { for (const k of alle.values()) if (k.genvej === navn) return k; return null; }
+  return { registrer, kan, koer, tastNavn, findGenvej, hent: id => alle.get(id), liste: () => [...alle.values()] };
+})();
+/* ========== SLUT: KOMMANDOER ========== */
+</script>
+
+<script data-modul="audio">
+/* ========== AUDIO: Web Audio-afspilleren ==========
+   Filen afkodes til en AudioBuffer (hele sangen som tal i hukommelsen). Det giver præcis søgning og
+   loop uden hak (AudioBufferSourceNode med loopStart og loopEnd).
+   Signalvej:  kilde ─┬─► lydstyrke (GainNode) ─► højttaler
+                      └─► måler (AnalyserNode), altså før lydstyrken
+   Beskeder: 'audio:indlaest' {buffer, meta}, 'audio:tilstand' tilstand, 'audio:soegt' sekunder, 'status'. */
+'use strict';
+RS.Audio = (() => {
+  const { Events, State, util } = RS;
+  let ctx = null, volNode = null, maaler = null;
+  let buffer = null, meta = null;
+  let kilde = null, kildeId = 0, kildeLoop = null;   // kildeLoop: det loop, den kørende kilde bruger
+  let tilstand = 'tom';                              // 'tom' | 'stoppet' | 'spiller' | 'pause'
+  let startCtxTid = 0, startOffset = 0, pausePos = 0;
+  let indlaesId = 0;
+
+  function sikrCtx() {
+    if (ctx) return ctx;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) {
+      Events.emit('status', { type: 'fejl', noegle: 'status.ingenWebAudio' });
+      throw new Error('Web Audio mangler');
+    }
+    ctx = new AC({ latencyHint: 'interactive' });
+    volNode = ctx.createGain();
+    volNode.connect(ctx.destination);
+    maaler = ctx.createAnalyser();
+    maaler.fftSize = 2048;
+    maaler.smoothingTimeConstant = 0;
+    anvendLydstyrke(true);
+    return ctx;
+  }
+
+  function saetTilstand(ny) {
+    if (ny === tilstand) return;
+    tilstand = ny;
+    Events.emit('audio:tilstand', tilstand);
+  }
+
+  /* Skyderen går fra 0 til 1; forstærkningen er skyderen i anden (det passer bedre til øret). */
+  function anvendLydstyrke(straks) {
+    if (!ctx) return;
+    const l = State.hent('lyd'), maal = l.mute ? 0 : l.volumen * l.volumen;
+    if (straks) volNode.gain.value = maal;
+    else volNode.gain.setTargetAtTime(maal, ctx.currentTime, 0.015);
+  }
+  State.lyt('lyd', () => anvendLydstyrke(false));
+
+  /* Det stykke, der loopes lige nu: {a, b} i sekunder, eller null. */
+  function loopOmraade() {
+    if (!buffer) return null;
+    const l = State.hent('sang.loop');
+    if (l.tilstand === 'sang') return { a: 0, b: buffer.duration };
+    if (l.tilstand === 'ab' && l.a != null && l.b != null && l.b - l.a >= 0.02) {
+      return { a: util.klem(l.a, 0, buffer.duration), b: util.klem(l.b, 0, buffer.duration) };
+    }
+    return null;
+  }
+
+  function stopKilde() {
+    if (!kilde) return;
+    kildeId++;
+    kilde.onended = null;
+    try { kilde.stop(); } catch (e) { /* var ikke startet */ }
+    kilde.disconnect();
+    kilde = null;
+  }
+  function startKilde(fra) {
+    stopKilde();
+    const k = ctx.createBufferSource();
+    k.buffer = buffer;
+    const lo = loopOmraade();
+    kildeLoop = lo && fra < lo.b - 0.001 ? lo : null;      // starter man efter B, spilles der til sangens slutning
+    if (kildeLoop) { k.loop = true; k.loopStart = kildeLoop.a; k.loopEnd = kildeLoop.b; }
+    k.connect(volNode);
+    k.connect(maaler);
+    const id = ++kildeId;
+    k.onended = () => {
+      if (id !== kildeId) return;                          // en ældre kilde; ikke den, der spiller nu
+      kilde = null;
+      pausePos = 0;
+      saetTilstand('stoppet');
+      Events.emit('audio:soegt', 0);
+    };
+    startCtxTid = ctx.currentTime;
+    startOffset = fra;
+    k.start(0, fra);
+    kilde = k;
+  }
+
+  /* Hvor i sangen er vi (sekunder)? Læses i billed-løkken. */
+  function position() {
+    if (!buffer) return 0;
+    if (tilstand !== 'spiller') return pausePos;
+    let p = startOffset + (ctx.currentTime - startCtxTid);
+    const lo = kildeLoop;
+    if (lo && p >= lo.b) p = lo.a + ((p - lo.a) % (lo.b - lo.a));
+    return p > buffer.duration ? buffer.duration : p;
+  }
+
+  async function afspil() {
+    if (!buffer || tilstand === 'spiller') return;
+    sikrCtx();
+    if (ctx.state === 'suspended') await ctx.resume();
+    let fra = pausePos;
+    if (fra >= buffer.duration - 0.01) fra = 0;
+    startKilde(fra);
+    saetTilstand('spiller');
+  }
+  function pause() {
+    if (tilstand !== 'spiller') return;
+    pausePos = position();
+    stopKilde();
+    saetTilstand('pause');
+  }
+  function skift() { return tilstand === 'spiller' ? pause() : afspil(); }
+  function stop() {
+    if (!buffer) return;
+    stopKilde();
+    pausePos = 0;
+    saetTilstand('stoppet');
+    Events.emit('audio:soegt', 0);
+  }
+  function soeg(t) {
+    if (!buffer) return;
+    t = util.klem(t, 0, buffer.duration);
+    if (tilstand === 'spiller') startKilde(Math.min(t, buffer.duration - 0.005));
+    else pausePos = t;
+    Events.emit('audio:soegt', t);
+  }
+  function flyt(dSek) { soeg(position() + dSek); }
+
+  /* Loop'et er ændret, mens der spilles: start kilden igen samme sted med det nye loop. */
+  State.lyt('sang.loop', () => {
+    if (tilstand !== 'spiller') return;
+    let p = position();
+    const lo = loopOmraade();
+    if (lo && p >= lo.b - 0.005) p = lo.a;                 // fx "Sæt B her": hop straks tilbage til A
+    startKilde(p);
+  });
+
+  /* Sæt loop-punkt A eller B. Når begge findes, tændes A til B. */
+  function saetLoopPunkt(hvilket, t) {
+    if (!buffer) return;
+    const l = Object.assign({}, State.hent('sang.loop'));
+    l[hvilket] = util.klem(t, 0, buffer.duration);
+    if (l.a != null && l.b != null) {
+      if (l.a > l.b) { const x = l.a; l.a = l.b; l.b = x; }
+      if (l.b - l.a < 0.05) { Events.emit('status', { type: 'info', noegle: 'status.loopForKort' }); return; }
+      l.tilstand = 'ab';
+    }
+    State.saet('sang.loop', l);
+  }
+  function saetLoopOmraade(a, b) {
+    if (!buffer) return;
+    a = util.klem(a, 0, buffer.duration); b = util.klem(b, 0, buffer.duration);
+    if (a > b) { const x = a; a = b; b = x; }
+    if (b - a < 0.05) { Events.emit('status', { type: 'info', noegle: 'status.loopForKort' }); return; }
+    State.saet('sang.loop', { tilstand: 'ab', a, b });
+  }
+  function rydLoopPunkter() {
+    const l = State.hent('sang.loop');
+    State.saet('sang.loop', { tilstand: l.tilstand === 'ab' ? 'fra' : l.tilstand, a: null, b: null });
+  }
+  /* Loop-knappen: Fra ↔ A til B (hvis punkterne findes), ellers Fra ↔ Hele sangen. */
+  function skiftLoop() {
+    const l = State.hent('sang.loop'), harAB = l.a != null && l.b != null;
+    State.saet('sang.loop.tilstand', l.tilstand === 'fra' ? (harAB ? 'ab' : 'sang') : 'fra');
+  }
+
+  /* Tag en afkodet lyd i brug. */
+  function brugBuffer(nyBuffer, nyMeta) {
+    stopKilde();
+    buffer = nyBuffer;
+    meta = Object.assign({ kanaler: nyBuffer.numberOfChannels, rate: nyBuffer.sampleRate, varighed: nyBuffer.duration }, nyMeta);
+    pausePos = 0;
+    tilstand = 'stoppet';
+    const noegle = meta.navn + '|' + Math.round(meta.varighed * 100);
+    meta.husket = State.skiftSang(noegle, meta.forslag);
+    Events.emit('audio:tilstand', tilstand);
+    Events.emit('audio:indlaest', { buffer, meta });
+  }
+
+  /* Læs og afkod en lydfil. Kaster ikke: fejl vises som status, og den gamle sang bliver. */
+  async function indlaesFil(fil) {
+    const id = ++indlaesId;
+    try { sikrCtx(); } catch (e) { return false; }
+    Events.emit('status', { type: 'arbejder', noegle: 'status.laeser', vars: { navn: fil.name } });
+    let bytes;
+    try { bytes = await fil.arrayBuffer(); }
+    catch (e) { if (id === indlaesId) Events.emit('status', { type: 'fejl', noegle: 'status.fejlLaes', vars: { navn: fil.name } }); return false; }
+    if (id !== indlaesId) return false;                    // en nyere fil er på vej; den vinder
+    Events.emit('status', { type: 'arbejder', noegle: 'status.afkoder', vars: { navn: fil.name } });
+    let afkodet;
+    try { afkodet = await ctx.decodeAudioData(bytes); }
+    catch (e) { if (id === indlaesId) Events.emit('status', { type: 'fejl', noegle: 'status.fejlAfkod', vars: { navn: fil.name } }); return false; }
+    if (id !== indlaesId) return false;
+    brugBuffer(afkodet, { navn: fil.name, stoerrelse: fil.size, type: 'fil' });
+    return true;
+  }
+
+  /* Demo-lyden: 16 takter ved 120 BPM (32 sekunder) med kick, snare, hihat, bas og en lille melodi.
+     Den regnes direkte ud som tal, så den er ens hver gang. Run 2 får en rigtig lydgenerator. */
+  function lavDemoLyd() {
+    try { sikrCtx(); } catch (e) { return false; }
+    indlaesId++;
+    const sr = ctx.sampleRate, bpm = 120, slag = 60 / bpm, takter = 16;
+    const n = Math.round(sr * slag * 4 * takter);
+    const buf = ctx.createBuffer(2, n, sr), L = buf.getChannelData(0), R = buf.getChannelData(1);
+    const TO_PI = Math.PI * 2;
+    let froe = 20261120;
+    const stoej = () => { froe = (froe * 1664525 + 1013904223) >>> 0; return froe / 2147483648 - 1; };
+    /* Læg en lyd ind fra tiden t0. pan: −1 er venstre, 0 midt, 1 højre. */
+    function laeg(t0, laengde, pan, fn) {
+      const i0 = Math.round(t0 * sr), m = Math.min(n - i0, Math.round(laengde * sr));
+      const gl = Math.cos((pan + 1) * Math.PI / 4), gr = Math.sin((pan + 1) * Math.PI / 4);
+      for (let i = 0; i < m; i++) { const v = fn(i / sr); L[i0 + i] += v * gl; R[i0 + i] += v * gr; }
+    }
+    const kick = t => Math.sin(TO_PI * (46 * t + (110 / 30) * (1 - Math.exp(-30 * t)))) * Math.exp(-7 * t) * 0.95;
+    const snare = t => (stoej() * 0.42 + Math.sin(TO_PI * 190 * t) * 0.3) * Math.exp(-17 * t);
+    const hihat = () => { let forrige = 0; return t => { const s = stoej(), v = s - forrige; forrige = s; return v * Math.exp(-75 * t) * 0.16; }; };
+    const bas = f => t => (Math.sin(TO_PI * f * t) + 0.35 * Math.sin(TO_PI * 2 * f * t) + 0.15 * Math.sin(TO_PI * 3 * f * t)) * Math.min(1, t * 200) * Math.exp(-3.2 * t) * 0.34;
+    const tone = f => t => (Math.sin(TO_PI * f * t) + 0.25 * Math.sin(TO_PI * 2 * f * t)) * Math.min(1, t * 400) * Math.exp(-9 * t) * 0.13;
+    const akkorder = [[55, 220, 261.63, 329.63], [43.65, 174.61, 220, 261.63], [65.41, 196, 261.63, 329.63], [49, 196, 246.94, 293.66]];
+    for (let takt = 0; takt < takter; takt++) {
+      const t0 = takt * 4 * slag, del = Math.floor(takt / 4), ak = akkorder[takt % 4];
+      const medKick = del !== 2, medSnare = del === 1 || del === 3, medMelodi = del >= 1;
+      for (let s = 0; s < 4; s++) {
+        const ts = t0 + s * slag;
+        if (medKick) laeg(ts, 0.5, 0, kick);
+        if (medSnare && (s === 1 || s === 3)) laeg(ts, 0.3, 0.1, snare);
+        laeg(ts, 0.1, 0.35, hihat());
+        laeg(ts + slag / 2, 0.1, -0.35, hihat());
+        laeg(ts, slag * 0.9, 0, bas(s === 3 ? ak[0] * 1.5 : ak[0]));
+        if (medMelodi) for (let k = 0; k < 4; k++) laeg(ts + k * slag / 4, 0.4, k % 2 ? 0.7 : -0.7, tone(ak[1 + ((s + k) % 3)] * (k === 3 ? 2 : 1)));
+      }
+    }
+    let top = 0;
+    for (let i = 0; i < n; i++) { const a = Math.max(Math.abs(L[i]), Math.abs(R[i])); if (a > top) top = a; }
+    /* Blød begrænsning (fagudtryk: soft clipping med tanh), så lyden fylder som en færdig sang; top cirka 0,87. */
+    const g = top > 0 ? 1.8 / top : 1, ud = Math.round(sr * 0.02);
+    for (let i = 0; i < n; i++) {
+      const f = (i > n - ud ? (n - i) / ud : 1) * 0.92;
+      L[i] = Math.tanh(L[i] * g) * f; R[i] = Math.tanh(R[i] * g) * f;
+    }
+    brugBuffer(buf, { navn: 'demo', type: 'demo', stoerrelse: 0, forslag: { gitter: { bpm, start: 0, slagPrTakt: 4, kilde: 'demo' } } });
+    return true;
+  }
+
+  return {
+    indlaesFil, lavDemoLyd, afspil, pause, skift, stop, soeg, flyt, position,
+    saetLoopPunkt, saetLoopOmraade, rydLoopPunkter, skiftLoop, loopOmraade,
+    tilstand: () => tilstand,
+    harSang: () => !!buffer,
+    varighed: () => (buffer ? buffer.duration : 0),
+    meta: () => meta,
+    maaler: () => maaler
+  };
+})();
+/* ========== SLUT: AUDIO ========== */
+</script>
+
+<script data-modul="analyse">
+/* ========== ANALYSE (Run 1): bølgeform, niveau og tempo-gitter ==========
+   1) Bølgeformen: sangen måles i små blokke (mindste, højeste og middel-energi), og blokkene lægges
+      sammen i flere lag, så tidslinjen kan tegne hurtigt ved alle zoom (fagudtryk: mipmap eller peak-pyramide).
+   2) Niveauet, mens der spilles: RMS (fagudtryk: root mean square, den gennemsnitlige styrke) og top.
+   3) Tempo-gitteret: slag og takter ud fra et tempo, som i Run 1 sættes i hånden eller med Tap.
+   Run 2 bygger resten af analysen ind her.
+   Beskeder: 'analyse:fremskridt' {del, p}, 'analyse:boelgeform' boelge. */
+'use strict';
+RS.Analyse = (() => {
+  const { Events, State, util } = RS;
+  const BLOK = 64;                       // samples pr. blok i det fineste lag
+
+  /* ---------- 1) Bølgeform ---------- */
+  let boelgeId = 0;
+  async function beregnBoelgeform(buffer) {
+    const id = ++boelgeId;
+    const n = buffer.length, antalKan = buffer.numberOfChannels, kan = [];
+    for (let c = 0; c < antalKan; c++) kan.push(buffer.getChannelData(c));
+    const antal = Math.ceil(n / BLOK);
+    const min = new Float32Array(antal), max = new Float32Array(antal), kv = new Float32Array(antal);
+    const BID = 4096;                    // blokke pr. bid, før vi ser på uret
+    let sidstePause = performance.now(), top = 0;
+    for (let b0 = 0; b0 < antal; b0 += BID) {
+      const b1 = Math.min(antal, b0 + BID);
+      for (let b = b0; b < b1; b++) {
+        const i0 = b * BLOK, i1 = Math.min(n, i0 + BLOK);
+        let mn = 1e9, mx = -1e9, sum = 0;
+        for (let c = 0; c < antalKan; c++) {
+          const d = kan[c];
+          for (let i = i0; i < i1; i++) { const v = d[i]; if (v < mn) mn = v; if (v > mx) mx = v; sum += v * v; }
+        }
+        min[b] = mn; max[b] = mx; kv[b] = sum / ((i1 - i0) * antalKan);
+        if (mx > top) top = mx;
+        if (-mn > top) top = -mn;
+      }
+      /* Giv browseren luft cirka 40 gange i sekundet, så vinduet ikke fryser ved lange sange. */
+      if (performance.now() - sidstePause > 24) {
+        Events.emit('analyse:fremskridt', { del: 'boelgeform', p: b1 / antal });
+        await new Promise(r => setTimeout(r, 0));
+        if (id !== boelgeId) return null;           // en ny sang er åbnet imens
+        sidstePause = performance.now();
+      }
+    }
+    const lag = [{ blok: BLOK, antal, min, max, kv }];
+    while (lag[lag.length - 1].antal > 1024) {
+      const f = lag[lag.length - 1], a2 = Math.ceil(f.antal / 2);
+      const mn2 = new Float32Array(a2), mx2 = new Float32Array(a2), kv2 = new Float32Array(a2);
+      for (let j = 0; j < a2; j++) {
+        const p = 2 * j, q = p + 1 < f.antal ? p + 1 : p;
+        mn2[j] = f.min[p] < f.min[q] ? f.min[p] : f.min[q];
+        mx2[j] = f.max[p] > f.max[q] ? f.max[p] : f.max[q];
+        kv2[j] = (f.kv[p] + f.kv[q]) / 2;
+      }
+      lag.push({ blok: f.blok * 2, antal: a2, min: mn2, max: mx2, kv: kv2 });
+    }
+    return { sr: buffer.sampleRate, n, varighed: buffer.duration, kan, lag, top };
+  }
+
+  /* Én søjle pr. billedpunkt: højeste, laveste og RMS for udsnittet fra "start" med "ppsEnhed" søjler pr. sekund.
+     Resultatet skrives i ud.top, ud.bund og ud.rms (Float32Array med mindst W pladser). */
+  function soejler(boelge, start, ppsEnhed, W, ud) {
+    const spk = boelge.sr / ppsEnhed;                // samples pr. søjle
+    const s0 = start * boelge.sr, n = boelge.n, antalKan = boelge.kan.length;
+    if (spk < BLOK) {                                // zoomet helt ind: læs de rigtige samples
+      for (let x = 0; x < W; x++) {
+        let i0 = Math.floor(s0 + x * spk), i1 = Math.floor(s0 + (x + 1) * spk);
+        if (i1 <= i0) i1 = i0 + 1;
+        if (i1 <= 0 || i0 >= n) { ud.top[x] = ud.bund[x] = ud.rms[x] = 0; continue; }   // før start eller efter slut: stilhed
+        if (i0 < 0) i0 = 0;
+        if (i1 > n) i1 = n;
+        let mn = 1e9, mx = -1e9, sum = 0;
+        for (let c = 0; c < antalKan; c++) {
+          const d = boelge.kan[c];
+          for (let i = i0; i < i1; i++) { const v = d[i]; if (v < mn) mn = v; if (v > mx) mx = v; sum += v * v; }
+        }
+        ud.top[x] = mx; ud.bund[x] = mn; ud.rms[x] = Math.sqrt(sum / ((i1 - i0) * antalKan));
+      }
+      return;
+    }
+    const li = Math.min(boelge.lag.length - 1, Math.floor(Math.log2(spk / BLOK)));
+    const lg = boelge.lag[li], bs = lg.blok;
+    for (let x = 0; x < W; x++) {
+      let j0 = Math.floor((s0 + x * spk) / bs), j1 = Math.floor((s0 + (x + 1) * spk) / bs);
+      if (j1 <= j0) j1 = j0 + 1;
+      if (j1 <= 0 || j0 >= lg.antal) { ud.top[x] = ud.bund[x] = ud.rms[x] = 0; continue; }
+      if (j0 < 0) j0 = 0;
+      if (j1 > lg.antal) j1 = lg.antal;
+      let mn = 1e9, mx = -1e9, sum = 0;
+      for (let j = j0; j < j1; j++) { if (lg.min[j] < mn) mn = lg.min[j]; if (lg.max[j] > mx) mx = lg.max[j]; sum += lg.kv[j]; }
+      ud.top[x] = mx; ud.bund[x] = mn; ud.rms[x] = Math.sqrt(sum / (j1 - j0));
+    }
+  }
+
+  Events.on('audio:indlaest', async ({ buffer }) => {
+    Events.emit('analyse:fremskridt', { del: 'boelgeform', p: 0 });
+    const boelge = await beregnBoelgeform(buffer);
+    if (boelge) Events.emit('analyse:boelgeform', boelge);
+  });
+
+  /* ---------- 2) Niveau, mens der spilles ---------- */
+  const HIST = 600;                       // cirka 20 sekunder ved 30 målinger i sekundet
+  const live = {
+    rms: 0, top: 0,                       // seneste rå måling (0 til 1)
+    glat: 0, hold: 0,                     // udjævnet RMS og top, der holdes lidt
+    rmsDb: -Infinity, holdDb: -Infinity,
+    historik: new Float32Array(HIST), histPos: 0
+  };
+  let maalBuf = null, sidstMaalt = 0, holdTid = 0;
+  /* Kaldes én gang pr. billede. Selve målingen sker højst 33 gange i sekundet (fagudtryk: throttling). */
+  function opdaterLive(dt, nu) {
+    const an = RS.Audio.maaler(), spiller = RS.Audio.tilstand() === 'spiller';
+    if (nu - sidstMaalt >= 30) {
+      sidstMaalt = nu;
+      let rms = 0, top = 0;
+      if (an && spiller) {
+        if (!maalBuf || maalBuf.length !== an.fftSize) maalBuf = new Float32Array(an.fftSize);
+        an.getFloatTimeDomainData(maalBuf);
+        let sum = 0;
+        for (let i = 0; i < maalBuf.length; i++) { const v = maalBuf[i]; sum += v * v; const a = v < 0 ? -v : v; if (a > top) top = a; }
+        rms = Math.sqrt(sum / maalBuf.length);
+      }
+      live.rms = rms; live.top = top;
+      if (spiller || live.glat > 0) { live.historik[live.histPos] = live.glat; live.histPos = (live.histPos + 1) % HIST; }
+    }
+    /* Udjævning: hurtigt op (30 ms), langsommere ned (250 ms). Fagudtryk: envelope follower med attack og release. */
+    const tau = live.rms > live.glat ? 0.03 : 0.25;
+    live.glat += (live.rms - live.glat) * (1 - Math.exp(-dt / tau));
+    if (live.top >= live.hold) { live.hold = live.top; holdTid = 0.8; }
+    else if (holdTid > 0) holdTid -= dt;
+    else live.hold *= Math.exp(-dt * 2.3);            // falder cirka 20 dB i sekundet
+    if (live.glat < 1e-5) live.glat = 0;
+    if (live.hold < 1e-5) live.hold = 0;
+    live.rmsDb = util.dB(live.glat);
+    live.holdDb = util.dB(live.hold);
+  }
+  function nulstilLive() { live.historik.fill(0); live.histPos = 0; live.glat = live.hold = live.rms = live.top = 0; }
+  Events.on('audio:indlaest', nulstilLive);
+
+  /* ---------- 3) Tempo-gitter og snap ---------- */
+  /* Flyt en tid til nærmeste slag eller takt. tilstand: 'slag' eller 'takt'; udeladt = det, der er valgt på tidslinjen. */
+  function snap(t, tilstand) {
+    const m = tilstand || State.hent('tidslinje.snap'), g = State.hent('sang.gitter');
+    if (m === 'fra' || !g.bpm) return t;
+    const enhed = (60 / g.bpm) * (m === 'takt' ? g.slagPrTakt : 1);
+    return g.start + Math.round((t - g.start) / enhed) * enhed;
+  }
+  function saetTempo(bpm, kilde) {
+    const g = Object.assign({}, State.hent('sang.gitter'));
+    g.bpm = bpm == null || !isFinite(bpm) ? null : Math.round(util.klem(bpm, 30, 300) * 10) / 10;
+    g.kilde = g.bpm ? kilde : null;
+    State.saet('sang.gitter', g);
+  }
+  /* Tap: tryk i takt. Fra tredje tryk regnes tempoet som gennemsnittet af afstandene.
+     Spiller sangen, bliver det første tryk til takt 1. Efter 2 sekunders pause begynder man forfra. */
+  let tapTider = [], tapStart = 0;
+  function tap() {
+    const nu = performance.now();
+    if (tapTider.length && nu - tapTider[tapTider.length - 1] > 2000) tapTider = [];
+    if (!tapTider.length) tapStart = RS.Audio.tilstand() === 'spiller' ? RS.Audio.position() : null;
+    tapTider.push(nu);
+    if (tapTider.length > 12) tapTider.shift();
+    if (tapTider.length >= 3) {
+      const afstand = (tapTider[tapTider.length - 1] - tapTider[0]) / (tapTider.length - 1);
+      const g = Object.assign({}, State.hent('sang.gitter'));
+      g.bpm = Math.round(util.klem(60000 / afstand, 30, 300) * 10) / 10;
+      g.kilde = 'tap';
+      if (tapStart != null) g.start = tapStart;
+      State.saet('sang.gitter', g);
+    }
+    Events.emit('analyse:tap', { antal: tapTider.length, mangler: Math.max(0, 3 - tapTider.length) });
+  }
+
+  return { beregnBoelgeform, soejler, live, opdaterLive, snap, saetTempo, tap, BLOK };
+})();
+/* ========== SLUT: ANALYSE ========== */
+</script>
+
+<script data-modul="rendering">
+/* ========== RENDERING: billed-løkken og Live preview ==========
+   Én løkke (requestAnimationFrame) kalder alle tegnere med delta-tid (dt = sekunder siden sidste billede).
+   En tegner tegner kun, når noget har ændret sig. Live preview i Run 1: en cirkel, der følger niveauet. */
+'use strict';
+RS.Rendering = (() => {
+  const { Events } = RS;
+  const tegnere = [], fejlMeldt = new Set();
+  let sidst = 0, fps = 0, koerer = false;
+
+  function tilfoej(navn, fn) { tegnere.push({ navn, fn }); }
+  function loekke(nu) {
+    const dt = sidst ? Math.min(0.1, (nu - sidst) / 1000) : 1 / 60;
+    sidst = nu;
+    if (dt > 0) fps = fps ? fps + (1 / dt - fps) * 0.05 : 1 / dt;
+    RS.Analyse.opdaterLive(dt, nu);
+    for (const t of tegnere) {
+      try { t.fn(dt, nu); }
+      catch (e) { if (!fejlMeldt.has(t.navn)) { fejlMeldt.add(t.navn); console.error('[RS.Rendering] ' + t.navn, e); Events.emit('fejl', e); } }
+    }
+    requestAnimationFrame(loekke);
+  }
+  function start() { if (!koerer) { koerer = true; requestAnimationFrame(loekke); } }
+
+  /* Giv et lærred (canvas) samme antal billedpunkter som skærmen viser. Giver {b, h, dpr, aendret} i CSS-mål. */
+  function tilpasLaerred(l, maksDpr = 2) {
+    const dpr = Math.min(maksDpr, window.devicePixelRatio || 1);
+    const b = l.clientWidth, h = l.clientHeight;
+    const pb = Math.max(1, Math.round(b * dpr)), ph = Math.max(1, Math.round(h * dpr));
+    const aendret = l.width !== pb || l.height !== ph;
+    if (aendret) { l.width = pb; l.height = ph; }
+    return { b, h, dpr, aendret };
+  }
+
+  /* ---------- Live preview ---------- */
+  const TO_PI = Math.PI * 2;
+  let pv = null, pvC = null, pvSnavset = true;
+  const n01 = db => (db <= -54 ? 0 : db >= 0 ? 1 : (db + 54) / 54);      // −54 dB … 0 dB → 0 … 1
+
+  function tegnPreview() {
+    const L = RS.Analyse.live;
+    const aktiv = RS.Audio.tilstand() === 'spiller' || L.glat > 0 || L.hold > 0;
+    if (!aktiv && !pvSnavset) return;
+    pvSnavset = aktiv;                                  // ét billede mere, når lyden er faldet til ro
+    const m = tilpasLaerred(pv), c = pvC, b = m.b, h = m.h;
+    c.setTransform(m.dpr, 0, 0, m.dpr, 0, 0);
+    c.clearRect(0, 0, b, h);
+    if (!RS.Audio.harSang()) return;
+
+    const niv = n01(L.rmsDb), top = n01(L.holdDb);
+    const cx = b / 2, cy = h * 0.44, R0 = Math.min(b, h) * 0.12, R = R0 * (1 + niv * 0.9);
+    /* Glød */
+    const g = c.createRadialGradient(cx, cy, R * 0.6, cx, cy, R * 2.8);
+    g.addColorStop(0, 'rgba(79,224,200,' + (0.04 + 0.4 * niv) + ')');
+    g.addColorStop(1, 'rgba(79,224,200,0)');
+    c.fillStyle = g;
+    c.beginPath(); c.arc(cx, cy, R * 2.8, 0, TO_PI); c.fill();
+    /* Cirklen */
+    const k = c.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.05, cx, cy, R);
+    k.addColorStop(0, 'rgba(220,255,247,' + (0.22 + 0.74 * niv) + ')');
+    k.addColorStop(0.55, 'rgba(79,224,200,' + (0.16 + 0.66 * niv) + ')');
+    k.addColorStop(1, 'rgba(28,98,100,' + (0.24 + 0.5 * niv) + ')');
+    c.fillStyle = k;
+    c.beginPath(); c.arc(cx, cy, R, 0, TO_PI); c.fill();
+    c.lineWidth = 1.5;
+    c.strokeStyle = 'rgba(165,246,230,' + (0.3 + 0.55 * niv) + ')';
+    c.stroke();
+    /* Top-ringen: den højeste top, holdt et øjeblik */
+    if (top > 0) {
+      c.lineWidth = 1;
+      c.strokeStyle = 'rgba(220,255,247,' + (0.12 + 0.5 * top) + ')';
+      c.beginPath(); c.arc(cx, cy, R0 * (1 + top * 0.9) + 12, 0, TO_PI); c.stroke();
+    }
+    /* Niveauet de sidste cirka 20 sekunder (nyest til højre) */
+    const hist = L.historik, N = hist.length, hb = Math.min(h * 0.09, 64) / 2, yc = h - 46 - hb;
+    const farve = c.createLinearGradient(0, 0, b, 0);
+    farve.addColorStop(0, 'rgba(79,224,200,0.02)');
+    farve.addColorStop(1, 'rgba(79,224,200,0.26)');
+    c.fillStyle = farve;
+    c.beginPath();
+    for (let i = 0; i < N; i++) { const v = n01(RS.util.dB(hist[(L.histPos + i) % N])) * hb; const x = (b * i) / (N - 1); if (i) c.lineTo(x, yc - v); else c.moveTo(x, yc - v); }
+    for (let i = N - 1; i >= 0; i--) { const v = n01(RS.util.dB(hist[(L.histPos + i) % N])) * hb; c.lineTo((b * i) / (N - 1), yc + v + 1); }
+    c.closePath(); c.fill();
+  }
+
+  function startPreview(laerred) {
+    pv = laerred; pvC = pv.getContext('2d');
+    new ResizeObserver(() => { pvSnavset = true; }).observe(pv);
+    Events.on('audio:indlaest', () => { pvSnavset = true; });
+    tilfoej('preview', tegnPreview);
+  }
+
+  return { tilfoej, start, tilpasLaerred, startPreview, fps: () => fps, n01 };
+})();
+/* ========== SLUT: RENDERING ========== */
+</script>
+
+<script data-modul="tidslinje">
+/* ========== TIDSLINJE: bølgeform med zoom, snap, følg afspilning og loop ==========
+   Øverst en smal oversigt over hele sangen; under den det udsnit, der er zoomet ind på.
+   Udsnittet er to tal: start (sekunder ved venstre kant) og pps (billedpunkter pr. sekund).
+   Mus: klik eller træk = søg · Shift + træk = markér loop A til B · træk håndtagene A og B ·
+        hjul = zoom ved musen · Shift + hjul = rul til siden · Alt = uden snap.
+   Besked: 'tidslinje:visning' {start, pps, minPps, maksPps, synlig}. */
+'use strict';
+RS.Tidslinje = (() => {
+  const { Events, State, util } = RS;
+  const MAKS_PPS = 4000, LINEAL = 26, FOELG_PLADS = 0.3;   // stregen holdes 30 % inde i billedet
+  const F = {                                              // farver: turkis = lyd, rav = tid
+    tid: '#ffb85c', tekst: '#98a6b7', tekstSvag: '#66748a',
+    gitterTakt: 'rgba(221,229,238,0.17)', gitterSlag: 'rgba(221,229,238,0.07)', streg: 'rgba(221,229,238,0.10)'
+  };
+  let laerred, c, oversigt, oc, skrift = 'sans-serif';
+  let boelge = null, varighed = 0;
+  let start = 0, pps = 100, passerAlt = true;
+  let B = 0, H = 0, dpr = 1;                               // lærredets mål i CSS-punkter
+  let snavset = true, sidstPos = -1, sidstSpiller = false;
+  let flise = null;                                        // bølgeformen malet som billede (bredere end udsnittet)
+  let oBillede = null, oBoelge = null;                     // det samme for oversigten
+  let traek = null;                                        // {type:'soeg'|'marker'|'a'|'b'|'oversigt', …}
+  let midlLoop = null;                                     // loop, mens der trækkes (ikke gemt endnu)
+  let musX = -1, sidsteSoeg = 0;
+
+  const minPps = () => (varighed > 0 && B > 0 ? B / varighed : 1);
+  const synlig = () => B / pps;                            // sekunder i billedet
+  const tidTilX = t => (t - start) * pps;
+  const xTilTid = x => start + x / pps;
+
+  function saetVisning(nyPps, nyStart) {
+    const mn = minPps();
+    pps = util.klem(nyPps, mn, Math.max(mn, MAKS_PPS));
+    passerAlt = pps <= mn * 1.0005;
+    start = util.klem(nyStart, 0, Math.max(0, varighed - B / pps));
+    snavset = true;
+    Events.emit('tidslinje:visning', { start, pps, minPps: mn, maksPps: Math.max(mn, MAKS_PPS), synlig: synlig() });
+  }
+  /* Zoom med en faktor omkring et punkt på skærmen (ankerX i CSS-punkter). */
+  function zoom(faktor, ankerX) {
+    if (!boelge) return;
+    if (ankerX == null) { const px = tidTilX(RS.Audio.position()); ankerX = px >= 0 && px <= B ? px : B / 2; }
+    const t = xTilTid(ankerX), mn = minPps(), ny = util.klem(pps * faktor, mn, Math.max(mn, MAKS_PPS));
+    saetVisning(ny, t - ankerX / ny);
+  }
+  function saetZoom01(v) {                                 // skyderen: 0 = hele sangen, 1 = helt ind (logaritmisk)
+    if (!boelge) return;
+    const mn = minPps(), mx = Math.max(mn, MAKS_PPS), px = tidTilX(RS.Audio.position());
+    const ankerX = px >= 0 && px <= B ? px : B / 2, t = xTilTid(ankerX), ny = mn * Math.pow(mx / mn, util.klem(v, 0, 1));
+    saetVisning(ny, t - ankerX / ny);
+  }
+  const zoom01 = () => { const mn = minPps(), mx = Math.max(mn, MAKS_PPS); return mx > mn ? Math.log(pps / mn) / Math.log(mx / mn) : 0; };
+  function visAlt() { if (boelge) saetVisning(minPps(), 0); }
+  /* Flyt udsnittet. Gør brugeren det selv, mens der spilles, slås Følg afspilning fra (og det siges i status). */
+  function panorer(dSek, afBruger) {
+    if (!boelge || passerAlt) return;
+    saetVisning(pps, start + dSek);
+    if (afBruger) slaaFoelgFra();
+  }
+  function slaaFoelgFra() {
+    if (RS.Audio.tilstand() === 'spiller' && State.hent('tidslinje.foelg')) {
+      State.saet('tidslinje.foelg', false);
+      Events.emit('status', { type: 'info', noegle: 'status.foelgFra' });
+    }
+  }
+
+  function snapTid(t, e) {
+    const s = e && e.altKey ? t : RS.Analyse.snap(t);
+    return util.klem(s, 0, varighed);
+  }
+
+  /* ---------- Bølgeformen som billede ----------
+     Søjlerne males punkt for punkt i to udgaver: dæmpet (ikke spillet endnu) og lys (det spillede stykke).
+     Det sker kun, når udsnittet ændrer sig. Hvert billede i løkken er derefter kun to kopieringer (drawImage);
+     det er langt billigere end at fylde en polygon med tusindvis af hjørner 60 gange i sekundet. */
+  function nytBillede(W, Hh) {
+    const lav = () => { const l = document.createElement('canvas'); l.width = W; l.height = Hh; return l; };
+    const svag = lav(), lys = lav();
+    return {
+      W, H: Hh, svag, lys, cS: svag.getContext('2d'), cL: lys.getContext('2d'),
+      dS: new ImageData(W, Hh), dL: new ImageData(W, Hh),
+      kol: { top: new Float32Array(W), bund: new Float32Array(W), rms: new Float32Array(W) },
+      yT: new Float32Array(W), yB: new Float32Array(W), rT: new Float32Array(W), rB: new Float32Array(W)
+    };
+  }
+  function malBillede(bl) {
+    const W = bl.W, Hh = bl.H, k = bl.kol, midt = Hh / 2, amp = Hh / 2 - 3;
+    const yT = bl.yT, yB = bl.yB, rT = bl.rT, rB = bl.rB;
+    let yMin = Hh, yMax = 0;
+    for (let x = 0; x < W; x++) {
+      let a = midt - k.top[x] * amp, b = midt - k.bund[x] * amp;
+      if (a > midt - 0.5) a = midt - 0.5;                  // stilhed tegnes som en tynd streg
+      if (b < midt + 0.5) b = midt + 0.5;
+      yT[x] = a; yB[x] = b; rT[x] = midt - k.rms[x] * amp; rB[x] = midt + k.rms[x] * amp;
+      if (a < yMin) yMin = a;
+      if (b > yMax) yMax = b;
+    }
+    const pS = new Uint32Array(bl.dS.data.buffer), pL = new Uint32Array(bl.dL.data.buffer);
+    pS.fill(0); pL.fill(0);
+    const y0 = Math.max(0, Math.floor(yMin)), y1 = Math.min(Hh, Math.ceil(yMax));
+    for (let y = y0; y < y1; y++) {
+      const r0 = y * W;
+      for (let x = 0; x < W; x++) {
+        const t = yT[x], b = yB[x];
+        if (y + 1 <= t || y >= b) continue;
+        /* dp og dr: hvor stor en del af punktet toppen og RMS dækker (0 til 1). Det giver bløde kanter. */
+        const dp = (b < y + 1 ? b : y + 1) - (t > y ? t : y);
+        let dr = (rB[x] < y + 1 ? rB[x] : y + 1) - (rT[x] > y ? rT[x] : y);
+        if (dr < 0) dr = 0;
+        pS[r0 + x] = (((dp * 0.2 + dr * 0.21) * 255) << 24) | 0xc8e04f;                    // turkis (79,224,200), svag
+        const aP = dp * 0.55 * (1 - dr), aUd = dr + aP;
+        pL[r0 + x] = ((aUd * 255) << 24) | (((231 * dr + 200 * aP) / aUd) << 16) | (((245 * dr + 224 * aP) / aUd) << 8) | ((169 * dr + 79 * aP) / aUd);
+      }
+    }
+    bl.cS.putImageData(bl.dS, 0, 0);
+    bl.cL.putImageData(bl.dL, 0, 0);
+  }
+  /* Sørg for, at flisen dækker udsnittet. Giver udsnittets venstre kant i billedpunkter (på sangens egen akse). */
+  function sikrFlise(W, hB) {
+    const enhed = pps * dpr, vx = Math.round(start * enhed);
+    const FW = Math.min(8192, Math.max(W, Math.min(2 * W, Math.ceil(varighed * enhed))));
+    if (flise && flise.boelge === boelge && flise.enhed === enhed && flise.bl.W === FW && flise.bl.H === hB &&
+        vx >= flise.x0 && vx + W <= flise.x0 + FW) return vx;
+    if (!flise || flise.bl.W !== FW || flise.bl.H !== hB) flise = { bl: nytBillede(FW, hB) };
+    flise.boelge = boelge; flise.enhed = enhed;
+    flise.x0 = Math.max(0, vx - ((FW - W) >> 1));
+    RS.Analyse.soejler(boelge, flise.x0 / enhed, enhed, FW, flise.bl.kol);
+    malBillede(flise.bl);
+    return vx;
+  }
+
+  function linealTrin() {
+    const trin = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 15, 30, 60, 120, 300, 600, 1800, 3600];
+    for (const s of trin) if (s * pps >= 84) return s;
+    return trin[trin.length - 1];
+  }
+
+  function tegn(pos, spiller) {
+    const W = laerred.width, Hp = laerred.height;
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.clearRect(0, 0, W, Hp);
+    if (!boelge) return;
+    const yB = Math.round(LINEAL * dpr), hB = Hp - yB;     // bølgeformens område i billedpunkter
+
+    /* Tempo-gitter: takter og slag */
+    const g = State.hent('sang.gitter');
+    c.font = 11 * dpr + 'px ' + skrift;
+    c.textBaseline = 'top';
+    if (g.bpm) {
+      const slag = 60 / g.bpm, slagPx = slag * pps, taktPx = slagPx * g.slagPrTakt;
+      const trinSlag = slagPx >= 9 ? 1 : taktPx >= 7 ? g.slagPrTakt : 0;
+      if (trinSlag) {
+        let nr = Math.floor((start - g.start) / slag);
+        nr -= ((nr % trinSlag) + trinSlag) % trinSlag;
+        for (; ; nr += trinSlag) {
+          const t = g.start + nr * slag;
+          if (t > start + synlig()) break;
+          if (t < 0 || t > varighed) continue;
+          const erTakt = ((nr % g.slagPrTakt) + g.slagPrTakt) % g.slagPrTakt === 0;
+          const x = Math.round(tidTilX(t) * dpr) + 0.5;
+          c.strokeStyle = erTakt ? F.gitterTakt : F.gitterSlag;
+          c.lineWidth = 1;
+          c.beginPath(); c.moveTo(x, yB); c.lineTo(x, Hp); c.stroke();
+          if (erTakt && taktPx >= 46 && nr >= 0) { c.fillStyle = F.tekstSvag; c.fillText(String(nr / g.slagPrTakt + 1), x + 4 * dpr, yB + 4 * dpr); }
+        }
+      }
+    }
+
+    /* Loop A til B (rav = tid) */
+    const l = midlLoop || State.hent('sang.loop');
+    const loopTaendt = l.tilstand === 'ab';
+    if (l.a != null && l.b != null) {
+      const xa = tidTilX(l.a) * dpr, xb = tidTilX(l.b) * dpr;
+      c.fillStyle = loopTaendt ? 'rgba(255,184,92,0.11)' : 'rgba(255,184,92,0.04)';
+      c.fillRect(xa, yB, xb - xa, hB);
+    }
+
+    /* Bølgeformen: hele sangen dæmpet, det spillede stykke lyst */
+    const px = tidTilX(pos) * dpr;
+    const sx = sikrFlise(W, hB) - flise.x0, spillet = Math.max(0, Math.min(W, Math.round(px)));
+    c.drawImage(flise.bl.svag, sx, 0, W, hB, 0, yB, W, hB);
+    if (spillet > 0) c.drawImage(flise.bl.lys, sx, 0, spillet, hB, 0, yB, spillet, hB);
+
+    /* Lineal med tid */
+    const trin = linealTrin(), dec = trin < 0.1 ? 2 : trin < 1 ? 1 : 0;
+    c.strokeStyle = F.streg; c.lineWidth = 1;
+    c.beginPath(); c.moveTo(0, yB - 0.5); c.lineTo(W, yB - 0.5); c.stroke();
+    c.fillStyle = F.tekst;
+    for (let t = Math.floor(start / trin) * trin; t <= start + synlig(); t += trin) {
+      if (t < -1e-9 || t > varighed + 1e-9) continue;
+      const x = Math.round(tidTilX(t) * dpr) + 0.5;
+      c.beginPath(); c.moveTo(x, yB - 7 * dpr); c.lineTo(x, yB); c.stroke();
+      c.fillText(util.tidTekst(t + 1e-7, dec), x + 5 * dpr, 6 * dpr);
+    }
+
+    /* Håndtagene A og B */
+    for (const hvilket of ['a', 'b']) {
+      if (l[hvilket] == null) continue;
+      const x = Math.round(tidTilX(l[hvilket]) * dpr) + 0.5;
+      if (x < -20 * dpr || x > W + 20 * dpr) continue;
+      c.strokeStyle = loopTaendt ? 'rgba(255,184,92,0.85)' : 'rgba(255,184,92,0.4)';
+      c.lineWidth = 1;
+      c.beginPath(); c.moveTo(x, 0); c.lineTo(x, Hp); c.stroke();
+      const bw = 16 * dpr, bh = 15 * dpr, bx = x - bw;      // til venstre for stregen, så tallet på linealen kan læses
+      c.fillStyle = loopTaendt ? F.tid : '#8a6a3c';
+      c.beginPath(); c.roundRect(bx, 1 * dpr, bw, bh, 3 * dpr); c.fill();
+      c.fillStyle = '#141a22';
+      c.font = '600 ' + 11 * dpr + 'px ' + skrift;
+      c.fillText(hvilket.toUpperCase(), bx + 4.5 * dpr, 3.5 * dpr);
+      c.font = 11 * dpr + 'px ' + skrift;
+    }
+
+    /* Musen: en tynd streg og tiden under den */
+    if (musX >= 0 && !traek) {
+      const x = Math.round(musX * dpr) + 0.5;
+      c.strokeStyle = 'rgba(221,229,238,0.28)'; c.lineWidth = 1;
+      c.beginPath(); c.moveTo(x, yB); c.lineTo(x, Hp); c.stroke();
+      const tekst = util.tidTekst(xTilTid(musX), 2), tb = c.measureText(tekst).width + 10 * dpr;
+      const tx = Math.min(W - tb - 2, Math.max(2, x - tb / 2));
+      c.fillStyle = '#2c3848';
+      c.beginPath(); c.roundRect(tx, Hp - 20 * dpr, tb, 16 * dpr, 4 * dpr); c.fill();
+      c.fillStyle = '#dde5ee';
+      c.fillText(tekst, tx + 5 * dpr, Hp - 17 * dpr);
+    }
+
+    /* Afspilningsstregen (rav) med et kort lysspor bag sig, når der spilles */
+    if (px >= -2 && px <= W + 2) {
+      if (spiller) {
+        const spor = c.createLinearGradient(px - 34 * dpr, 0, px, 0);
+        spor.addColorStop(0, 'rgba(255,184,92,0)'); spor.addColorStop(1, 'rgba(255,184,92,0.20)');
+        c.fillStyle = spor; c.fillRect(px - 34 * dpr, yB, 34 * dpr, hB);
+      }
+      c.fillStyle = F.tid;
+      c.fillRect(Math.round(px) - dpr, 0, 2 * dpr, Hp);
+      c.beginPath(); c.moveTo(px - 6 * dpr, 0); c.lineTo(px + 6 * dpr, 0); c.lineTo(px, 8 * dpr); c.closePath(); c.fill();
+    }
+  }
+
+  function tegnOversigt(pos) {
+    const W = oversigt.width, Hp = oversigt.height;
+    oc.setTransform(1, 0, 0, 1, 0, 0);
+    oc.clearRect(0, 0, W, Hp);
+    if (!boelge) return;
+    if (!oBillede || oBillede.W !== W || oBillede.H !== Hp || oBoelge !== boelge) {
+      if (!oBillede || oBillede.W !== W || oBillede.H !== Hp) oBillede = nytBillede(W, Hp);
+      RS.Analyse.soejler(boelge, 0, W / varighed, W, oBillede.kol);
+      malBillede(oBillede);
+      oBoelge = boelge;
+    }
+    const tx = t => (t / varighed) * W;
+    const l = midlLoop || State.hent('sang.loop');
+    if (l.a != null && l.b != null) {
+      oc.fillStyle = l.tilstand === 'ab' ? 'rgba(255,184,92,0.22)' : 'rgba(255,184,92,0.08)';
+      oc.fillRect(tx(l.a), 0, Math.max(1, tx(l.b) - tx(l.a)), Hp);
+    }
+    const px = tx(pos), spillet = Math.max(0, Math.min(W, Math.round(px)));
+    oc.drawImage(oBillede.svag, 0, 0);
+    if (spillet > 0) oc.drawImage(oBillede.lys, 0, 0, spillet, Hp, 0, 0, spillet, Hp);
+    /* Udsnittet, der vises i den store bølgeform */
+    if (!passerAlt) {
+      const x0 = tx(start), x1 = tx(start + synlig());
+      oc.fillStyle = 'rgba(221,229,238,0.09)';
+      oc.strokeStyle = 'rgba(221,229,238,0.55)'; oc.lineWidth = dpr;
+      oc.beginPath(); oc.roundRect(x0 + 0.5, 0.5, Math.max(4 * dpr, x1 - x0) - 1, Hp - 1, 5 * dpr); oc.fill(); oc.stroke();
+    }
+    oc.fillStyle = F.tid;
+    oc.fillRect(Math.round(px) - dpr / 2, 0, Math.max(1, dpr), Hp);
+  }
+
+  /* ---------- Ét billede ---------- */
+  function billede() {
+    const m = RS.Rendering.tilpasLaerred(laerred), mo = RS.Rendering.tilpasLaerred(oversigt);
+    if (m.aendret || mo.aendret || m.b !== B) {
+      const varPasserAlt = passerAlt;
+      B = m.b; H = m.h; dpr = m.dpr;
+      if (boelge) saetVisning(varPasserAlt ? minPps() : pps, varPasserAlt ? 0 : start);
+      snavset = true;
+    }
+    const pos = RS.Audio.position(), spiller = RS.Audio.tilstand() === 'spiller';
+    /* Følg afspilning: hold stregen 30 % inde i billedet */
+    if (boelge && spiller && !traek && !passerAlt && State.hent('tidslinje.foelg')) {
+      const maal = util.klem(pos - synlig() * FOELG_PLADS, 0, Math.max(0, varighed - synlig()));
+      if (Math.abs(maal - start) > 1e-7) saetVisning(pps, maal);
+    }
+    if (!snavset && pos === sidstPos && spiller === sidstSpiller) return;
+    snavset = false; sidstPos = pos; sidstSpiller = spiller;
+    tegn(pos, spiller);
+    tegnOversigt(pos);
+  }
+
+  /* ---------- Mus og fingre ---------- */
+  function lokal(e, el) { const r = el.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+  function haandtagVed(x, y) {
+    if (y > LINEAL + 4) return null;
+    const l = State.hent('sang.loop');
+    if (l.b != null) { const xb = tidTilX(l.b); if (x >= xb - 18 && x <= xb + 4) return 'b'; }
+    if (l.a != null) { const xa = tidTilX(l.a); if (x >= xa - 18 && x <= xa + 4) return 'a'; }
+    return null;
+  }
+  function ned(e) {
+    if (!boelge || e.button !== 0) return;
+    const p = lokal(e, laerred), h = haandtagVed(p.x, p.y);
+    laerred.setPointerCapture(e.pointerId);
+    if (h) {
+      traek = { type: h };
+      midlLoop = Object.assign({}, State.hent('sang.loop'));
+    } else if (e.shiftKey) {
+      const t = snapTid(xTilTid(p.x), e);
+      traek = { type: 'marker', anker: t };
+      midlLoop = { tilstand: 'ab', a: t, b: t };
+    } else {
+      traek = { type: 'soeg' };
+      RS.Audio.soeg(snapTid(xTilTid(p.x), e));
+      sidsteSoeg = performance.now();
+    }
+    snavset = true;
+  }
+  function flyt(e) {
+    if (!boelge) return;
+    const p = lokal(e, laerred);
+    musX = p.x; snavset = true;
+    if (!traek) { laerred.style.cursor = haandtagVed(p.x, p.y) ? 'ew-resize' : 'crosshair'; return; }
+    const t = snapTid(xTilTid(util.klem(p.x, 0, B)), e);
+    if (traek.type === 'soeg') {
+      /* Mens der spilles, søges der højst 20 gange i sekundet, så lyden ikke hakker. */
+      const nu = performance.now();
+      if (RS.Audio.tilstand() !== 'spiller' || nu - sidsteSoeg > 50) { RS.Audio.soeg(t); sidsteSoeg = nu; }
+    } else if (traek.type === 'marker') {
+      midlLoop = { tilstand: 'ab', a: Math.min(traek.anker, t), b: Math.max(traek.anker, t) };
+    } else {
+      midlLoop[traek.type] = t;
+    }
+  }
+  function op(e) {
+    if (!traek) return;
+    const type = traek.type;
+    traek = null;
+    if (type === 'soeg') {
+      const p = lokal(e, laerred);
+      RS.Audio.soeg(snapTid(xTilTid(util.klem(p.x, 0, B)), e));
+    } else if (midlLoop) {
+      const l = midlLoop;
+      midlLoop = null;
+      if (type === 'marker') { if (l.b - l.a >= 0.05) RS.Audio.saetLoopOmraade(l.a, l.b); }
+      else if (l.a != null && l.b != null) {
+        /* Et håndtag er flyttet: loop'et beholder sin tilstand (Fra bliver ved med at være Fra). */
+        const a = Math.min(l.a, l.b), b = Math.max(l.a, l.b);
+        if (b - a >= 0.05) State.saet('sang.loop', { tilstand: l.tilstand, a, b });
+        else Events.emit('status', { type: 'info', noegle: 'status.loopForKort' });
+      }
+      else State.saet('sang.loop', l);
+    }
+    midlLoop = null;
+    snavset = true;
+  }
+  function hjul(e) {
+    if (!boelge) return;
+    e.preventDefault();
+    const enhed = e.deltaMode === 1 ? 16 : 1;
+    if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      panorer(((e.deltaX || e.deltaY) * enhed) / pps, true);
+    } else {
+      zoom(Math.exp(-e.deltaY * enhed * 0.0016), lokal(e, laerred).x);
+    }
+  }
+  function oversigtFlyt(e) {
+    const p = lokal(e, oversigt);
+    saetVisning(pps, (p.x / oversigt.clientWidth) * varighed - synlig() / 2);
+    slaaFoelgFra();
+  }
+
+  function start_(el) {
+    laerred = el.laerred; c = laerred.getContext('2d');
+    oversigt = el.oversigt; oc = oversigt.getContext('2d');
+    skrift = getComputedStyle(document.body).fontFamily;
+
+    laerred.addEventListener('pointerdown', ned);
+    laerred.addEventListener('pointermove', flyt);
+    laerred.addEventListener('pointerup', op);
+    laerred.addEventListener('pointercancel', () => { traek = null; midlLoop = null; snavset = true; });
+    laerred.addEventListener('pointerleave', () => { musX = -1; snavset = true; });
+    laerred.addEventListener('wheel', hjul, { passive: false });
+    oversigt.addEventListener('pointerdown', e => {
+      if (!boelge || passerAlt || e.button !== 0) return;
+      oversigt.setPointerCapture(e.pointerId);
+      traek = { type: 'oversigt' };
+      oversigt.style.cursor = 'grabbing';
+      oversigtFlyt(e);
+    });
+    oversigt.addEventListener('pointermove', e => { if (traek && traek.type === 'oversigt') oversigtFlyt(e); });
+    const slip = () => { if (traek && traek.type === 'oversigt') traek = null; oversigt.style.cursor = ''; };
+    oversigt.addEventListener('pointerup', slip);
+    oversigt.addEventListener('pointercancel', slip);
+
+    Events.on('audio:indlaest', () => { boelge = null; varighed = 0; snavset = true; });
+    Events.on('analyse:boelgeform', b => {
+      boelge = b; varighed = b.varighed;
+      passerAlt = true;
+      saetVisning(minPps(), 0);
+    });
+    Events.on('audio:soegt', t => {
+      snavset = true;
+      /* Når der søges uden for billedet, og der ikke spilles: flyt udsnittet, så stregen kan ses. */
+      if (boelge && !traek && !passerAlt && (t < start || t > start + synlig())) saetVisning(pps, t - synlig() * FOELG_PLADS);
+    });
+    Events.on('audio:tilstand', () => { snavset = true; });
+    Events.on('i18n:sprog', () => { snavset = true; });
+    State.lyt('sang', () => { snavset = true; });
+    State.lyt('tidslinje', () => { snavset = true; });
+    RS.Rendering.tilfoej('tidslinje', billede);
+  }
+
+  return {
+    start: start_, zoom, saetZoom01, zoom01, visAlt, panorer, snapTid,
+    visning: () => ({ start, pps, synlig: synlig(), minPps: minPps(), passerAlt }),
+    tidTilX, xTilTid
+  };
+})();
+/* ========== SLUT: TIDSLINJE ========== */
+</script>
+
+<script data-modul="ui">
+/* ========== UI: topbar, sidebar, kontrolpanel, playerbar, status og filer ==========
+   UI skriver brugerens valg i RS.State eller kører en kommando; det tegner sig selv ud fra RS.State
+   og beskederne. UI er det eneste modul, der kender HTML-elementerne (bortset fra de to lærreder). */
+'use strict';
+RS.UI = (() => {
+  const { Events, State, I18n, Kommandoer, util } = RS;
+  const t = I18n.t, $ = id => document.getElementById(id);
+  const el = {};
+  const sange = [];                       // åbnet i denne omgang: {id, type:'fil'|'demo', navn, fil}
+  const log = [];
+  let aktivSang = null, naesteId = 1, statusNu = null;
+  let soegTraekker = false, sidsteSoeg = 0, sidstTik = 0, tapMangler = 0;
+
+  /* ---------- Små hjælpere ---------- */
+  function saetTekst(e, s) { if (e.textContent !== s) e.textContent = s; }
+  function fyldSkyder(e) { e.style.setProperty('--p', ((e.value - e.min) / (e.max - e.min)) * 100 + '%'); }
+  function saetSkyder(e, v) { e.value = v; fyldSkyder(e); }
+  const naesteBillede = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
+  const sangNavn = m => (m.type === 'demo' ? t('fil.demoNavn') : m.navn);
+  function genvejTekst(g) {
+    return g.split('+').map(d => { const n = t('tast.' + d); return n === 'tast.' + d ? d : n; }).join(' + ');
+  }
+
+  /* ---------- Status og beskedliste ---------- */
+  function statusTekst(s) {
+    let vars = s.vars;
+    if (vars && vars.navn === 'demo') vars = Object.assign({}, vars, { navn: t('fil.demoNavn') });
+    return t(s.noegle, vars);
+  }
+  function status(type, noegle, vars) {
+    const s = { type, noegle, vars, tid: new Date() }, sidste = log[log.length - 1];
+    if (sidste && sidste.type === 'arbejder') log[log.length - 1] = s;      // "arbejder" er midlertidigt: resultatet tager linjens plads
+    else log.push(s);
+    if (log.length > 40) log.shift();
+    statusNu = s;
+    tegnStatus();
+  }
+  function tegnStatus() {
+    if (!statusNu) return;
+    el.statusPrik.dataset.type = statusNu.type;
+    el.status.dataset.type = statusNu.type;
+    saetTekst(el.statusTekst, statusTekst(statusNu));
+    if (!el.log.hidden) tegnLog();
+  }
+  function tegnLog() {
+    el.logListe.replaceChildren(...log.map(s => {
+      const li = document.createElement('li'), tid = document.createElement('time'), tekst = document.createElement('span');
+      li.dataset.type = s.type;
+      tid.textContent = s.tid.toLocaleTimeString(I18n.sprog(), { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      tid.className = 'tal';
+      tekst.textContent = statusTekst(s);
+      li.append(tid, tekst);
+      return li;
+    }));
+    el.log.scrollTop = el.log.scrollHeight;
+  }
+  function visLog(vis) {
+    el.log.hidden = !vis;
+    el.status.setAttribute('aria-expanded', String(vis));
+    if (vis) tegnLog();
+  }
+
+  /* ---------- Filer ---------- */
+  function huskFil(fil) {
+    let s = sange.find(x => x.fil && x.fil.name === fil.name && x.fil.size === fil.size);
+    if (!s) { s = { id: naesteId++, type: 'fil', navn: fil.name, fil }; sange.push(s); }
+    return s;
+  }
+  async function indlaesSang(s) {
+    let ok;
+    if (s.type === 'demo') {
+      status('arbejder', 'status.demo');
+      await naesteBillede();                              // så beskeden når at blive vist
+      ok = RS.Audio.lavDemoLyd();
+    } else {
+      ok = await RS.Audio.indlaesFil(s.fil);
+    }
+    if (ok) aktivSang = s.id;
+    else if (s.type === 'fil') { const i = sange.indexOf(s); if (i >= 0) sange.splice(i, 1); }   // kunne ikke læses: ud af listen
+    tegnSangliste();
+  }
+  function aabnFiler(filer) {
+    const nye = filer.map(huskFil);
+    tegnSangliste();
+    if (nye.length) indlaesSang(nye[0]);
+  }
+  function aabnDemo() {
+    let s = sange.find(x => x.type === 'demo');
+    if (!s) { s = { id: naesteId++, type: 'demo', navn: 'demo' }; sange.push(s); }
+    indlaesSang(s);
+  }
+  function tegnSangliste() {
+    el.sangBoks.hidden = sange.length < 2;
+    el.sangListe.replaceChildren(...sange.map(s => {
+      const li = document.createElement('li'), b = document.createElement('button'), navn = document.createElement('span');
+      b.innerHTML = '<svg class="ikon"><use href="#i-node"/></svg>';
+      navn.textContent = sangNavn(s);
+      b.append(navn);
+      b.title = sangNavn(s);
+      b.setAttribute('aria-current', String(s.id === aktivSang));
+      b.addEventListener('click', () => { if (s.id !== aktivSang) indlaesSang(s); });
+      li.append(b);
+      return li;
+    }));
+  }
+
+  /* ---------- Tegn brugerfladen ud fra tilstanden ---------- */
+  function tegnSang() {
+    const m = RS.Audio.meta(), har = RS.Audio.harSang();
+    el.previewTom.hidden = har;
+    el.previewNote.hidden = !har;
+    el.filInfo.hidden = !har;
+    if (!har) {
+      saetTekst(el.plTitel, t('fil.ingen'));
+      saetTekst(el.plMeta, t('fil.ingenMeta'));
+      saetTekst(el.tidIalt, util.tidTekst(0));
+    } else {
+      const kan = m.kanaler === 1 ? t('fil.mono') : m.kanaler === 2 ? t('fil.stereo') : t('fil.kanalerN', { n: m.kanaler });
+      const rate = m.rate.toLocaleString(I18n.sprog()) + ' Hz';
+      saetTekst(el.plTitel, sangNavn(m));
+      saetTekst(el.plMeta, kan + ', ' + rate + (m.type === 'demo' ? ', ' + t('fil.genereret').toLowerCase() : ''));
+      saetTekst(el.tidIalt, util.tidTekst(m.varighed));
+      saetTekst(el.infoLaengde, util.tidTekst(m.varighed, 1));
+      saetTekst(el.infoKanaler, kan);
+      saetTekst(el.infoRate, rate);
+      saetTekst(el.infoStoerrelse, m.type === 'demo' ? t('fil.genereret') : util.stoerrelseTekst(m.stoerrelse));
+    }
+    document.title = (har ? sangNavn(m) + ' · ' : '') + 'Rytme Studio ' + RS.version;
+    opdaterAktiv();
+  }
+  function opdaterAktiv() {
+    const har = RS.Audio.harSang(), l = State.hent('sang.loop'), g = State.hent('sang.gitter');
+    document.querySelectorAll('[data-kraever-sang]').forEach(e => { e.disabled = !har; });
+    el.loopRydKnap.disabled = !har || (l.a == null && l.b == null);
+    el.tempoRydKnap.disabled = !har || !g.bpm;
+    el.loopValg.querySelector('[data-loop="ab"]').disabled = !har || l.a == null || l.b == null;
+  }
+  function tegnAfspiller() {
+    const spiller = RS.Audio.tilstand() === 'spiller';
+    el.spilIkon.setAttribute('href', spiller ? '#i-pause' : '#i-afspil');
+  }
+  function tegnLyd() {
+    const l = State.hent('lyd');
+    saetSkyder(el.volumen, Math.round(l.volumen * 100));
+    saetTekst(el.volTal, Math.round(l.volumen * 100) + ' %');
+    el.muteKnap.setAttribute('aria-pressed', String(l.mute));
+    el.muteIkon.setAttribute('href', l.mute ? '#i-lydfra' : '#i-lyd');
+    el.volumen.style.opacity = el.volTal.style.opacity = l.mute ? '.4' : '';
+  }
+  function tegnLoop() {
+    const l = State.hent('sang.loop');
+    for (const b of el.loopValg.children) b.setAttribute('aria-pressed', String(b.dataset.loop === l.tilstand));
+    saetTekst(el.loopATal, l.a == null ? '–' : util.tidTekst(l.a, 2));
+    saetTekst(el.loopBTal, l.b == null ? '–' : util.tidTekst(l.b, 2));
+    el.loopKnap.setAttribute('aria-pressed', String(l.tilstand !== 'fra'));
+    opdaterAktiv();
+  }
+  function tegnTempo() {
+    const g = State.hent('sang.gitter');
+    if (document.activeElement !== el.bpmFelt) el.bpmFelt.value = g.bpm ? g.bpm : '';
+    el.slagFelt.value = String(g.slagPrTakt);
+    let tekst;
+    if (g.bpm) {
+      tekst = t('tempo.info', { bpm: util.talTekst(g.bpm, g.bpm % 1 ? 1 : 0), n: g.slagPrTakt, tid: util.tidTekst(g.start, 2) });
+      if (g.kilde) tekst += ' ' + t('tempo.kilde.' + g.kilde);
+    } else {
+      tekst = tapMangler ? t('tempo.tapFlere', { n: tapMangler }) : t('tempo.intet');
+    }
+    saetTekst(el.tempoInfo, tekst);
+    tegnTidslinjeValg();
+    opdaterAktiv();
+  }
+  function tegnTidslinjeValg() {
+    const tl = State.hent('tidslinje'), g = State.hent('sang.gitter');
+    for (const b of el.snapValg.children) b.setAttribute('aria-pressed', String(b.dataset.snap === tl.snap));
+    el.foelgKnap.setAttribute('aria-pressed', String(tl.foelg));
+    el.snapHint.hidden = !(RS.Audio.harSang() && tl.snap !== 'fra' && !g.bpm);   // snap er valgt, men der er intet tempo
+  }
+  function tegnSprog() {
+    for (const b of el.sprogValg.children) b.setAttribute('aria-pressed', String(b.dataset.sprog === I18n.sprog()));
+  }
+  /* Tooltips på alle knapper, der kører en kommando: titel og genvej. */
+  function tegnKommandoKnapper() {
+    document.querySelectorAll('[data-kommando]').forEach(b => {
+      const k = Kommandoer.hent(b.dataset.kommando);
+      if (!k) return;
+      b.title = t(k.titel) + (k.genvej ? ' (' + genvejTekst(k.genvej) + ')' : '');
+      if (b.dataset.ikonknap !== undefined) b.setAttribute('aria-label', t(k.titel));
+    });
+    document.querySelectorAll('[data-senere]').forEach(b => { b.title = t('nav.senere', { n: b.dataset.senere }); });
+  }
+  function tegnGenveje() {
+    const raekker = Kommandoer.liste().filter(k => k.genvej).map(k => [genvejTekst(k.genvej), t(k.titel)]);
+    for (const n of ['hjul', 'shiftHjul', 'shiftTraek', 'alt']) raekker.push([t('genvej.' + n), t('genvej.' + n + 'Goer')]);
+    el.genvejListe.replaceChildren(...raekker.flatMap(([tast, hvad]) => {
+      const dt = document.createElement('dt'), dd = document.createElement('dd');
+      dt.textContent = tast; dd.textContent = hvad;
+      return [dt, dd];
+    }));
+  }
+  function tegnAlt() {
+    tegnSprog(); tegnKommandoKnapper(); tegnGenveje(); tegnSang(); tegnAfspiller(); tegnLyd(); tegnLoop(); tegnTempo();
+    tegnTidslinjeValg(); tegnSangliste(); tegnStatus();
+  }
+
+  /* ---------- Det, der ændrer sig hele tiden (læses i billed-løkken) ---------- */
+  function tik(dt, nu) {
+    const L = RS.Analyse.live, n01 = RS.Rendering.n01;
+    el.maalerFyld.style.transform = 'scaleX(' + n01(L.rmsDb).toFixed(4) + ')';
+    el.maalerTop.style.left = (n01(L.holdDb) * 100).toFixed(2) + '%';
+    if (nu - sidstTik < 80) return;                       // tal og tekst: højst 12 gange i sekundet
+    sidstTik = nu;
+    const pos = RS.Audio.position(), varighed = RS.Audio.varighed();
+    saetTekst(el.tidNu, util.tidTekst(pos, 1));
+    if (!soegTraekker) saetSkyder(el.soeg, varighed > 0 ? Math.round((pos / varighed) * 1000) : 0);
+    saetTekst(el.rmsTal, isFinite(L.rmsDb) ? util.talTekst(L.rmsDb, 1) : '−∞');
+    saetTekst(el.peakTal, isFinite(L.holdDb) ? util.talTekst(L.holdDb, 1) : '−∞');
+    saetTekst(el.fps, Math.round(RS.Rendering.fps()) + ' fps');
+    const v = RS.Tidslinje.visning();
+    saetTekst(el.tlUdsnit, RS.Audio.harSang() && !v.passerAlt ? util.tidTekst(v.start, 1) + ' – ' + util.tidTekst(v.start + v.synlig, 1) : '');
+  }
+
+  /* ---------- Kommandoer: alt, brugeren kan gøre ---------- */
+  function registrerKommandoer() {
+    const K = Kommandoer, A = RS.Audio, har = () => A.harSang();
+    const her = () => RS.Tidslinje.snapTid(A.position());
+    K.registrer('afspiller.skift', { titel: 'kmd.afspil', genvej: 'Space', kan: har, koer: () => A.skift() });
+    K.registrer('afspiller.stop', { titel: 'kmd.stop', kan: har, koer: () => A.stop() });
+    K.registrer('afspiller.tilStart', { titel: 'kmd.tilStart', genvej: 'Home', kan: har, koer: () => A.soeg(0) });
+    K.registrer('afspiller.tilbage5', { titel: 'kmd.tilbage5', genvej: 'ArrowLeft', kan: har, koer: () => A.flyt(-5) });
+    K.registrer('afspiller.frem5', { titel: 'kmd.frem5', genvej: 'ArrowRight', kan: har, koer: () => A.flyt(5) });
+    K.registrer('afspiller.tilbage1', { titel: 'kmd.tilbage1', genvej: 'Shift+ArrowLeft', kan: har, koer: () => A.flyt(-1) });
+    K.registrer('afspiller.frem1', { titel: 'kmd.frem1', genvej: 'Shift+ArrowRight', kan: har, koer: () => A.flyt(1) });
+    K.registrer('lyd.mute', { titel: 'kmd.mute', genvej: 'M', koer: () => State.saet('lyd.mute', !State.hent('lyd.mute')) });
+    K.registrer('loop.skift', { titel: 'kmd.loop', genvej: 'L', kan: har, koer: () => A.skiftLoop() });
+    K.registrer('loop.a', { titel: 'kmd.loopA', genvej: 'A', kan: har, koer: () => A.saetLoopPunkt('a', her()) });
+    K.registrer('loop.b', { titel: 'kmd.loopB', genvej: 'B', kan: har, koer: () => A.saetLoopPunkt('b', her()) });
+    K.registrer('loop.ryd', { titel: 'kmd.loopRyd', kan: har, koer: () => A.rydLoopPunkter() });
+    K.registrer('tidslinje.foelg', { titel: 'kmd.foelg', genvej: 'F', koer: () => State.saet('tidslinje.foelg', !State.hent('tidslinje.foelg')) });
+    K.registrer('tidslinje.zoomInd', { titel: 'kmd.zoomInd', genvej: '+', kan: har, koer: () => RS.Tidslinje.zoom(1.6) });
+    K.registrer('tidslinje.zoomUd', { titel: 'kmd.zoomUd', genvej: '-', kan: har, koer: () => RS.Tidslinje.zoom(1 / 1.6) });
+    K.registrer('tidslinje.visAlt', { titel: 'kmd.visAlt', genvej: '0', kan: har, koer: () => RS.Tidslinje.visAlt() });
+    K.registrer('tempo.tap', { titel: 'kmd.tap', genvej: 'T', kan: har, koer: () => RS.Analyse.tap() });
+    K.registrer('tempo.takt1', { titel: 'kmd.takt1', kan: har, koer: () => State.saet('sang.gitter.start', Math.round(A.position() * 1000) / 1000) });
+    K.registrer('tempo.ryd', { titel: 'kmd.tempoRyd', kan: har, koer: () => RS.Analyse.saetTempo(null) });
+    K.registrer('fil.aabn', { titel: 'kmd.aabn', genvej: 'O', koer: () => el.filValg.click() });
+    K.registrer('fil.demo', { titel: 'kmd.demo', koer: aabnDemo });
+    K.registrer('indstillinger.nulstil', { titel: 'kmd.nulstil', koer: () => { State.nulstil(); status('info', 'status.nulstillet'); } });
+  }
+
+  /* ---------- Start: find elementerne og sæt lyttere på ---------- */
+  function start() {
+    for (const id of ['status', 'statusPrik', 'statusTekst', 'log', 'logListe', 'sprogValg', 'version', 'filValg', 'filInfo',
+      'infoLaengde', 'infoKanaler', 'infoRate', 'infoStoerrelse', 'sangBoks', 'sangListe', 'previewTom', 'previewNote', 'fps',
+      'tlUdsnit', 'snapHint', 'snapValg', 'foelgKnap', 'zoom', 'maalerFyld', 'maalerTop', 'rmsTal', 'peakTal', 'loopValg',
+      'loopATal', 'loopBTal', 'loopRydKnap', 'bpmFelt', 'slagFelt', 'tempoRydKnap', 'tempoInfo', 'genvejListe', 'plTitel',
+      'plMeta', 'spilIkon', 'loopKnap', 'tidNu', 'soeg', 'tidIalt', 'muteKnap', 'muteIkon', 'volumen', 'volTal']) el[id] = $(id);
+    saetTekst(el.version, RS.version);
+    registrerKommandoer();
+
+    /* Knapper, der kører en kommando */
+    document.addEventListener('click', e => {
+      const b = e.target.closest('[data-kommando]');
+      if (b && !b.disabled) Kommandoer.koer(b.dataset.kommando);
+    });
+    /* Et museklik på en knap flytter ikke tastatur-fokus. Så virker Mellemrum stadig som afspil og pause bagefter. */
+    document.addEventListener('mousedown', e => {
+      if (!e.target.closest('button')) return;
+      e.preventDefault();
+      const a = document.activeElement;
+      if (a && /^(INPUT|SELECT)$/.test(a.tagName)) a.blur();
+    });
+    /* Genveje */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { visLog(false); return; }
+      const m = e.target, tag = m.tagName;
+      if (m.isContentEditable || tag === 'TEXTAREA' || tag === 'SELECT' || (tag === 'INPUT' && m.type !== 'range')) return;
+      const navn = Kommandoer.tastNavn(e);
+      if (tag === 'INPUT' && /Arrow|Home|End/.test(navn)) return;                 // en skyder beholder piletasterne
+      if ((tag === 'BUTTON' || tag === 'SUMMARY') && (navn === 'Space' || navn === 'Enter')) return;
+      const k = Kommandoer.findGenvej(navn);
+      if (k) { e.preventDefault(); Kommandoer.koer(k.id); }
+    });
+
+    /* Status og beskedliste */
+    el.status.addEventListener('click', () => visLog(el.log.hidden));
+    document.addEventListener('pointerdown', e => { if (!el.log.hidden && !e.target.closest('#log, #status')) visLog(false); });
+    Events.on('status', s => status(s.type, s.noegle, s.vars));
+    Events.on('fejl', e => status('fejl', 'status.uventet', { besked: (e && e.message) || String(e) }));
+
+    /* Sprog */
+    el.sprogValg.addEventListener('click', e => { const b = e.target.closest('[data-sprog]'); if (b) State.saet('sprog', b.dataset.sprog); });
+    State.lyt('sprog', s => I18n.saetSprog(s));
+    Events.on('i18n:sprog', tegnAlt);
+
+    /* Filer: vælg, eller slip i vinduet */
+    el.filValg.addEventListener('change', () => { const f = [...el.filValg.files]; el.filValg.value = ''; if (f.length) aabnFiler(f); });
+    const harFiler = e => !!e.dataTransfer && [...e.dataTransfer.types].includes('Files');
+    let traekTaeller = 0;
+    window.addEventListener('dragenter', e => { if (!harFiler(e)) return; e.preventDefault(); traekTaeller++; document.body.classList.add('slipper'); });
+    window.addEventListener('dragover', e => { if (harFiler(e)) e.preventDefault(); });
+    window.addEventListener('dragleave', e => { if (!harFiler(e)) return; traekTaeller = Math.max(0, traekTaeller - 1); if (!traekTaeller) document.body.classList.remove('slipper'); });
+    window.addEventListener('drop', e => {
+      e.preventDefault();
+      traekTaeller = 0;
+      document.body.classList.remove('slipper');
+      const f = e.dataTransfer ? [...e.dataTransfer.files] : [];
+      if (f.length) aabnFiler(f);
+    });
+
+    /* Sang og afspiller */
+    Events.on('audio:indlaest', () => { tapMangler = 0; tegnSang(); tegnLoop(); tegnTempo(); tegnSangliste(); });
+    Events.on('audio:tilstand', tegnAfspiller);
+    Events.on('analyse:fremskridt', f => status('arbejder', 'status.boelgeform', { pct: Math.round(f.p * 100) }));
+    Events.on('analyse:boelgeform', () => {
+      const m = RS.Audio.meta(), s = State.hent('sang');
+      const noget = s.gitter.bpm || s.loop.a != null || s.loop.b != null || s.loop.tilstand !== 'fra';
+      status('ok', m.husket && noget ? 'status.sangKlarHusket' : 'status.sangKlar', { navn: m.navn, tid: util.tidTekst(m.varighed) });
+    });
+    Events.on('analyse:tap', e => { tapMangler = e.mangler; tegnTempo(); });
+
+    /* Søgning i playerbaren */
+    const soegTid = () => (el.soeg.value / 1000) * RS.Audio.varighed();
+    el.soeg.addEventListener('pointerdown', () => { soegTraekker = true; });
+    window.addEventListener('pointerup', () => { soegTraekker = false; });
+    window.addEventListener('pointercancel', () => { soegTraekker = false; });
+    el.soeg.addEventListener('input', () => {
+      fyldSkyder(el.soeg);
+      const nu = performance.now();
+      if (RS.Audio.tilstand() !== 'spiller' || nu - sidsteSoeg > 50) { RS.Audio.soeg(soegTid()); sidsteSoeg = nu; }
+    });
+    el.soeg.addEventListener('change', () => { RS.Audio.soeg(soegTid()); soegTraekker = false; });
+
+    /* Lydstyrke */
+    el.volumen.addEventListener('input', () => {
+      fyldSkyder(el.volumen);
+      State.saet('lyd.volumen', el.volumen.value / 100);
+      if (State.hent('lyd.mute')) State.saet('lyd.mute', false);             // at skrue på lydstyrken slår lyden til igen
+    });
+    State.lyt('lyd', tegnLyd);
+
+    /* Loop */
+    el.loopValg.addEventListener('click', e => { const b = e.target.closest('[data-loop]'); if (b && !b.disabled) State.saet('sang.loop.tilstand', b.dataset.loop); });
+    State.lyt('sang.loop', tegnLoop);
+
+    /* Tempo-gitter */
+    el.bpmFelt.addEventListener('change', () => { const v = parseFloat(el.bpmFelt.value); RS.Analyse.saetTempo(isFinite(v) ? v : null, 'manuel'); tegnTempo(); });
+    el.bpmFelt.addEventListener('keydown', e => { if (e.key === 'Enter') el.bpmFelt.blur(); });
+    el.slagFelt.addEventListener('change', () => { State.saet('sang.gitter.slagPrTakt', parseInt(el.slagFelt.value, 10)); el.slagFelt.blur(); });
+    State.lyt('sang.gitter', tegnTempo);
+
+    /* Tidslinjens knapper */
+    el.snapValg.addEventListener('click', e => { const b = e.target.closest('[data-snap]'); if (b) State.saet('tidslinje.snap', b.dataset.snap); });
+    State.lyt('tidslinje', tegnTidslinjeValg);
+    el.zoom.addEventListener('input', () => { fyldSkyder(el.zoom); RS.Tidslinje.saetZoom01(el.zoom.value / 1000); });
+    Events.on('tidslinje:visning', () => { if (document.activeElement !== el.zoom) saetSkyder(el.zoom, Math.round(RS.Tidslinje.zoom01() * 1000)); });
+    /* Efter et træk med musen slipper skyderne fokus, så genvejene virker igen. */
+    for (const s of [el.soeg, el.volumen, el.zoom]) s.addEventListener('pointerup', () => s.blur());
+
+    RS.Rendering.tilfoej('ui', tik);
+    tegnAlt();
+    status('klar', 'status.klar');
+  }
+
+  return { start, status };
+})();
+/* ========== SLUT: UI ========== */
+</script>
+
+<script data-modul="start">
+/* ========== START: sæt modulerne i gang i den rigtige rækkefølge ========== */
+'use strict';
+(() => {
+  const { Events, State, I18n } = RS;
+  /* Ingen fejl må forsvinde i stilhed: alt, der går galt, ender som en rød besked i topbaren. */
+  window.addEventListener('error', e => Events.emit('fejl', e.error || new Error(e.message)));
+  window.addEventListener('unhandledrejection', e => Events.emit('fejl', e.reason instanceof Error ? e.reason : new Error(String(e.reason))));
+
+  I18n.saetSprog(State.hent('sprog'));
+  RS.UI.start();
+  RS.Rendering.startPreview(document.getElementById('previewLaerred'));
+  RS.Tidslinje.start({ laerred: document.getElementById('tlLaerred'), oversigt: document.getElementById('tlOversigt') });
+  RS.Rendering.start();
+})();
+/* ========== SLUT: START ========== */
+</script>
+</body>
+</html>
