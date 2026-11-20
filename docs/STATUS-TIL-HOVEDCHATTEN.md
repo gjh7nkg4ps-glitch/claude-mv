@@ -11,7 +11,7 @@
 - **Node-editoren:** alle 16 trin, de 10 visninger, gitteret (Ret op, A/B/C, luft-skydere, tre kæmpe opstillinger; pladser gemt med showet).
 - **Gemning (P8.18):** Gemt ✓, banner når lageret er fuldt, tasten ?, Hvad er nyt på startskærmen, Gem hele arbejdet / Hent hele arbejdet (én fil med alt).
 - **På scenen (P8.14 punkt 7, P8.20, P8.23):** PS1–PS3 bygget (v9.107–v9.109): vinduet På scenen med Karakterer, Figurer og Effekter; hylden Effekter i Biblioteket med regel-sæt som *Lys-puls på kick*; øje og Slå fra pr. effekt i Noder og matrixen; effekternes navne i Live preview. **Stoppet efter PS3.**
-- **Testpakken:** 88 testfiler; hele pakken kørt på v9.106 (82 grønne, 8 rettet i v9.107 og testene). To rigtige fejl fundet og rettet: D2-sortering kunne ikke ses med gitteret; et rigtigt klik på det gule ! virkede aldrig.
+- **Testpakken:** 96 testfiler; hele pakken kørt på v9.109: alle grønne (test 85 fejlede én gang på timing og er rettet). I v9.107 blev to rigtige fejl fundet og rettet: D2-sortering kunne ikke ses med gitteret; et rigtigt klik på det gule ! virkede aldrig.
 - **Dokumenterne (P8.23 punkt 1):** CLAUDE.md er kortet fra 167 KB til cirka 15 KB; historik og lukkede fejl i `docs/arkiv/HISTORIK.md`; planerne rummer kun det ubyggede; SVAR-filerne er i arkivet.
 
 ## Åbne spørgsmål til brugeren

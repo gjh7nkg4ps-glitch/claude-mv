@@ -131,7 +131,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
-1. **På scenen PS2 og PS3 er bygget (v9.108, v9.109); STOP** (P8.23): brugeren prøver v9.109. Fejl fra prøven rettes først.
+1. **På scenen PS2 og PS3 er bygget (v9.108, v9.109); STOP** (P8.23): brugeren prøver v9.109. Hele testpakken er kørt på v9.109 (96 testfiler, alle grønne; test 85 fejlede én gang på timing og er rettet). Fejl fra prøven rettes først.
 2. **PS4** oprydning (gruppernes øje og Slå fra i Noder, hvis de er i vejen; brugerens valg).
 3. **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
 4. **Pigernes egenskaber:** brugeren vælger senere ud fra `docs/PIGERNES-EGENSKABER.md`; intet fjernes før da.

@@ -27,8 +27,9 @@ async function kør(arg) {
       /* Brug "På vokalen" på en danser (rigtigt klik) */
       await side.evaluate(async () => { const vent = ms => new Promise(r => setTimeout(r, ms)); opDanser(true); await vent(300); bibVaelg('g:danser'); await vent(500); const s = [...document.querySelectorAll('#bib .bib-s')].find(s => s.querySelector('b').textContent === 'På vokalen'); s.querySelector('[data-biba="saetbrug"]').scrollIntoView({ block: 'center' }) });
       const kn = await side.evaluate(() => { const s = [...document.querySelectorAll('#bib .bib-s')].find(s => s.querySelector('b').textContent === 'På vokalen'); const q = s.querySelector('[data-biba="saetbrug"]').getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 } });
+      await side.waitForTimeout(1500); /* v9.109: den nye danser skal være sit eget Fortryd-skridt, før Brug trykkes (ellers tager Ctrl+Z begge dele) */
       const n0 = await side.evaluate(() => maps.length);
-      await side.mouse.click(kn.x, kn.y); await side.waitForTimeout(1300);
+      await side.mouse.click(kn.x, kn.y); await side.waitForTimeout(1500);
       const c = await side.evaluate(() => { const o = fase2.objekter.find(x => x.lag[0].form === 'danser'); const R = maps.filter(m => m.effect.startsWith('obj:' + o.id + ':')); const e = o.lag[0].egenskaber; return { n: R.length, vokal: R.every(m => m.band === 'vokal'), udsving: R.every(m => { const p = m.effect.split(':')[3]; return e[p] && e[p].fra !== e[p].til }), hvem: !!document.getElementById('bib-hvem') } });
       await side.keyboard.press('Control+z'); await side.waitForTimeout(900);
       const c2 = await side.evaluate(() => maps.length);
