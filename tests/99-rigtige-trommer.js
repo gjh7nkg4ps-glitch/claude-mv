@@ -1,0 +1,69 @@
+/* Trin 4 · Det nye i v9.116 (P8.30 trin 2): Rigtige trommer med facit fra en mappe (MDB Drums). MDB Drums må ikke ligge i repoet, så testen laver selv en lille
+   mappe med samme navne og formater (to stykker på 8 s: kick på 1 og 3, snare på 2 og 4, hihat på hver ottendedel, ét bækken; facit med tabulator og mellemrum som
+   i MDB; en subclass-fil og en multi-track, der skal springes over). Tjekker: et rigtigt klik på "Vælg facit-mappe" åbner mappe-vælgeren; stykkerne findes efter
+   navn; tallene hænger sammen (ramte + oversete = alle slag, F-mål, neutrale); anden gang kommer alt fra cachen; Testlyd (AS.data, det samlede tal, cirklerne) røres
+   ikke; blokken står under Testlyd-tabellen, rækken foldes ud med et rigtigt klik; rapporten; efter genindlæsning står tallene der stadig; ingen MDB-filer i repoet.
+   Findes MDB Drums på maskinen (miljøvariablen MDB_MAPPE = stien til mappen "MDB Drums"), måles den også, og tallene skrives ud. */
+const fs = require('fs'), os = require('os'), path = require('path'), { execFileSync } = require('child_process');
+const { chromium } = require('playwright');
+const { findFil, tæller, ROD } = require('./faelles');
+function wav(fil, sek, haendelser) { const sr = 44100, n = sek * sr, x = new Float32Array(n); let s = 7; const r = () => ((s = (s * 16807) % 2147483647) / 2147483647) * 2 - 1;
+  for (const [t, k] of haendelser) { const i0 = Math.round(t * sr);
+    if (k === 'KD') for (let i = 0; i < .3 * sr && i0 + i < n; i++) { const u = i / sr; x[i0 + i] += .9 * Math.sin(2 * Math.PI * (50 + 110 * Math.exp(-u * 30)) * u) * Math.exp(-u * 10) }
+    if (k === 'SD') { let lp = 0; for (let i = 0; i < .18 * sr && i0 + i < n; i++) { const u = i / sr, v = r(); lp += (v - lp) * .5; x[i0 + i] += (.5 * lp + .25 * Math.sin(2 * Math.PI * 190 * u)) * Math.exp(-u * 22) } }
+    if (k === 'HH') { let p = 0; for (let i = 0; i < .05 * sr && i0 + i < n; i++) { const v = r(), h = v - p; p = v; x[i0 + i] += .3 * h * Math.exp(-i / sr * 80) } }
+    if (k === 'CY') { let p = 0; for (let i = 0; i < 1.2 * sr && i0 + i < n; i++) { const v = r(), h = v - p; p = v; x[i0 + i] += .25 * h * Math.exp(-i / sr * 3) } } }
+  const b = Buffer.alloc(44 + n * 4); b.write('RIFF', 0); b.writeUInt32LE(36 + n * 4, 4); b.write('WAVEfmt ', 8); b.writeUInt32LE(16, 16); b.writeUInt16LE(1, 20); b.writeUInt16LE(2, 22); b.writeUInt32LE(sr, 24); b.writeUInt32LE(sr * 4, 28); b.writeUInt16LE(4, 32); b.writeUInt16LE(16, 34); b.write('data', 36); b.writeUInt32LE(n * 4, 40);
+  for (let i = 0; i < n; i++) { const v = Math.max(-32768, Math.min(32767, Math.round(x[i] * 26000))); b.writeInt16LE(v, 44 + i * 4); b.writeInt16LE(v, 46 + i * 4) } fs.writeFileSync(fil, b) }
+function lavMappe(rod) { const M = path.join(rod, 'MDB Drums'); ['audio/full_mix', 'audio/drum_only', 'audio/multi-tracks', 'annotations/class', 'annotations/beats', 'annotations/subclass'].forEach(d => fs.mkdirSync(path.join(M, d), { recursive: true })); const tal = {};
+  for (const [navn, bpm] of [['Test_Rock', 120], ['Test_Pop', 100]]) { const sl = 60 / bpm, H = [], B = []; for (let b = 0; b * sl < 7.5; b++) { const t = .25 + b * sl; B.push([t, (b % 4) + 1]); H.push([t, b % 2 ? 'SD' : 'KD']); H.push([t, 'HH']); H.push([t + sl / 2, 'HH']) } H.push([.25 + 4 * sl + sl / 4, 'CY']);
+    H.sort((a, c) => a[0] - c[0]); tal[navn] = { KD: H.filter(h => h[1] === 'KD').length, SD: H.filter(h => h[1] === 'SD').length, HH: H.filter(h => h[1] === 'HH').length, beats: B.length, takt: B.filter(b => b[1] === 1).length };
+    wav(path.join(M, 'audio/full_mix', navn + '_MIX.wav'), 8, H); wav(path.join(M, 'audio/drum_only', navn + '_Drum.wav'), 8, H); wav(path.join(M, 'audio/multi-tracks', navn + '_STEM_01.wav'), 1, []);
+    fs.writeFileSync(path.join(M, 'annotations/class', navn + '_class.txt'), H.map(h => h[0].toFixed(6) + ' \t ' + h[1] + ' ').join('\n') + '\n');
+    fs.writeFileSync(path.join(M, 'annotations/subclass', navn + '_subclass.txt'), H.map(h => h[0].toFixed(6) + '\tXX').join('\n'));
+    fs.writeFileSync(path.join(M, 'annotations/beats', navn + '_MIX.beats'), B.map(b => b[0].toFixed(3) + '\t' + b[1]).join('\n') + '\n') }
+  return { M, tal } }
+async function kør(arg) {
+  const fil = findFil(arg), T = tæller('Rigtige trommer'), UD = path.join(__dirname, 'ud'); fs.mkdirSync(UD, { recursive: true });
+  console.log('99 · Rigtige trommer med facit (MDB Drums, P8.30 trin 2) · ' + path.basename(fil));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mv-mdb-')), { M, tal } = lavMappe(tmp);
+  const browser = await chromium.launch(); const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 } }); const side = await ctx.newPage(); const fejl = [];
+  side.on('pageerror', e => fejl.push('pageerror: ' + e.message)); side.on('console', m => { if (m.type() === 'error') fejl.push('konsol: ' + m.text().slice(0, 200)) });
+  try {
+    await side.goto('file://' + fil); await side.waitForTimeout(4500);
+    await side.evaluate(() => { asAaben('kick') }); await side.waitForTimeout(1200);
+    await side.evaluate(() => { window.__klik = []; const gl = HTMLInputElement.prototype.click; HTMLInputElement.prototype.click = function () { __klik.push(this.id); if (this.id !== 'as-mdb-fil') return gl.call(this) } });
+    const b0 = await side.evaluate(() => { const b = document.querySelector('#as-rude [data-mdbx="vaelg"]'); b.scrollIntoView({ block: 'center' }); const q = b.getBoundingClientRect(), tab = document.querySelector('#as-rude .as-tab').getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2, tekst: b.textContent, under: q.top > tab.bottom, foer: JSON.stringify(AS.data), samlet: document.getElementById('as-samlet').textContent, cirkel: asCirkel('kick') } });
+    await side.mouse.click(b0.x, b0.y); await side.waitForTimeout(300);
+    const k0 = await side.evaluate(() => ({ klik: __klik.slice(), wd: document.getElementById('as-mdb-fil').hasAttribute('webkitdirectory') }));
+    T.tjek(b0.tekst === 'Vælg facit-mappe' && b0.under && k0.klik.includes('as-mdb-fil') && k0.wd, 'knappen "Vælg facit-mappe" står under Testlyd-tabellen, og et rigtigt klik åbner mappe-vælgeren (input med webkitdirectory)', JSON.stringify({ b0: { tekst: b0.tekst, under: b0.under }, k0 }));
+    const t1 = Date.now(); await side.setInputFiles('#as-mdb-fil', M); await side.waitForFunction(() => !MDB.koerer && MDB.data && MDB.data.res, null, { timeout: 300000 }); await side.waitForTimeout(400); const s1 = Date.now() - t1;
+    const r = await side.evaluate(() => { const D = MDB.data, F1 = o => { const d = 2 * o.hit + o.fa + o.ov; return d ? Math.round(200 * o.hit / d) : 0 }; return { n: D.n, lyd: D.lyd, hentet: D.hentet, v: D.v, res: D.res, ok: ['mix', 'trom'].every(v => ['kick', 'snare', 'hihat', 'taktslag', 'takt'].every(k => { const o = D.res[v][k]; return o && o.hit + o.ov === o.n && o.s === F1(o) && o.pm.length === 2 && o.fa >= 0 && o.neu >= 0 })), ls: !!JSON.parse(localStorage.getItem('rytme-asik-mdb') || '{}').res } });
+    const N = k => tal.Test_Rock[k] + tal.Test_Pop[k];
+    console.log('  ' + ['mix', 'trom'].map(v => v + ': ' + ['kick', 'snare', 'hihat', 'taktslag', 'takt'].map(k => k + ' ' + r.res[v][k].s + ' (' + r.res[v][k].hit + '/' + r.res[v][k].n + ', falske ' + r.res[v][k].fa + ', neutrale ' + r.res[v][k].neu + ')').join(' · ')).join(' | '));
+    T.tjek(r.n === 2 && r.lyd === 4 && r.hentet === 0 && r.ls, `stykkerne findes efter navn: 2 stykker, 4 lydfiler (subclass-filen og multi-tracks springes over); første gang regnes alle på ${(s1 / 1000).toFixed(1)} s; resultatet er gemt`, JSON.stringify({ n: r.n, lyd: r.lyd, hentet: r.hentet }));
+    T.tjek(r.ok && r.res.mix.kick.n === N('KD') && r.res.mix.snare.n === N('SD') && r.res.mix.hihat.n === N('HH') && r.res.trom.taktslag.n === N('beats') && r.res.trom.takt.n === N('takt'), `tallene hænger sammen i begge kolonner: Kick ${N('KD')}, Snare ${N('SD')}, Hihat ${N('HH')}, Taktslag ${N('beats')}, Takt 1 ${N('takt')} slag i facit; ramte + oversete = alle; F-mål; bækkenet er ikke et Hihat-slag`, JSON.stringify(r.res.mix.hihat));
+    T.tjek(r.res.trom.kick.ov === 0 && r.res.trom.kick.bedst && r.res.trom.kick.bedst[1] >= 95 && r.res.mix.hihat.neu >= 1, `på de rene testtrommer findes alle kick (standard-reglen giver ${r.res.trom.kick.s} med ${r.res.trom.kick.fa} falske på snaren; den bedste tærskel ${r.res.trom.kick.bedst && r.res.trom.kick.bedst[0]} giver ${r.res.trom.kick.bedst && r.res.trom.kick.bedst[1]}); slag på bækkenet tæller som neutrale`, JSON.stringify(r.res.trom.kick));
+    const u = await side.evaluate(() => ({ efter: JSON.stringify(AS.data), samlet: document.getElementById('as-samlet').textContent, cirkel: asCirkel('kick') }));
+    T.tjek(u.efter === b0.foer && u.samlet === b0.samlet && u.cirkel === b0.cirkel, 'Testlyd røres ikke: AS.data, det samlede tal og cirklen ved Kick er de samme som før', JSON.stringify({ samlet: [b0.samlet, u.samlet] }));
+    const rp = await side.evaluate(() => { const r = [...document.querySelectorAll('#as-mdb tr[data-mdbr]')].find(x => x.dataset.mdbr === 'kick'); r.scrollIntoView({ block: 'center' }); const q = r.querySelector('td').getBoundingClientRect(); return { x: q.x + 20, y: q.y + q.height / 2, th: [...document.querySelectorAll('#as-mdb th')].map(x => x.textContent) } });
+    await side.mouse.click(rp.x, rp.y); await side.waitForTimeout(500);
+    const ud = await side.evaluate(() => { const d = document.querySelector('#as-mdb tr.as-det'), p = document.getElementById('as-rude'); return { d: d ? d.textContent : '', rul: p.scrollWidth <= p.clientWidth + 1, rap: asRapport() } });
+    T.tjek(JSON.stringify(rp.th) === JSON.stringify(['Lydtræk', 'Rigtige trommer · hele mixet', 'Rigtige trommer · kun trommerne']) && /Test_Rock \d+/.test(ud.d) && /Bedste tærskel/.test(ud.d) && ud.rul, 'blokken har kolonnerne "hele mixet" og "kun trommerne"; et rigtigt klik på rækken Kick viser tallet for hvert stykke og den bedste tærskel; ingen vandret rulning', JSON.stringify({ th: rp.th, d: ud.d.slice(0, 160) }));
+    T.tjek(/Rigtige trommer \(MDB Drums, 2 stykker/.test(ud.rap) && /Rigtige trommer · kun trommerne: Kick \(KD\) \d+/.test(ud.rap) && /Tempo, hele mixet/.test(ud.rap), 'rapporten har Rigtige trommer for begge kolonner og tempoet pr. stykke', ud.rap.split('\n').slice(-4).join(' | ').slice(0, 300));
+    await side.screenshot({ path: path.join(UD, 'rigtige-trommer.png') });
+    const t2 = Date.now(); await side.evaluate(() => { MDB.data.dato = 0 }); await side.setInputFiles('#as-mdb-fil', M); await side.waitForFunction(() => !MDB.koerer && MDB.data && MDB.data.dato > 0, null, { timeout: 120000 }); const s2 = Date.now() - t2;
+    const r2 = await side.evaluate(() => ({ hentet: MDB.data.hentet, kick: MDB.data.res.trom.kick.s, hist: MDB.data.hist.length }));
+    T.tjek(r2.hentet === 4 && r2.kick === r.res.trom.kick.s && r2.hist === 2, `anden gang hentes alle 4 lydfiler fra cachen (${(s2 / 1000).toFixed(1)} s mod ${(s1 / 1000).toFixed(1)} s), samme tal, to linjer i historikken`, JSON.stringify(r2));
+    await side.reload(); await side.waitForTimeout(4500); await side.evaluate(() => asAaben('kick')); await side.waitForTimeout(1200);
+    const g = await side.evaluate(() => ({ data: !!(MDB.data && MDB.data.res), tekst: (document.querySelector('#as-mdb .as-mdb-tab') || {}).textContent || '' }));
+    T.tjek(g.data && /Kick \(KD\)/.test(g.tekst), 'efter genindlæsning står tallene for Rigtige trommer der stadig (mappen skal kun vælges igen for at måle forfra)', JSON.stringify({ data: g.data }));
+    const repo = execFileSync('git', ['ls-files'], { cwd: ROD }).toString().split('\n').filter(f => /MusicDelta|_class\.txt$|_MIX\.beats$|MDB Drums/i.test(f));
+    T.tjek(repo.length === 0, 'ingen MDB Drums-filer i repoet (licens CC BY-NC-SA 4.0)', repo.join(', '));
+    if (process.env.MDB_MAPPE && fs.existsSync(process.env.MDB_MAPPE)) { await side.setInputFiles('#as-mdb-fil', process.env.MDB_MAPPE); await side.waitForFunction(() => !MDB.koerer && MDB.data && MDB.data.n > 2, null, { timeout: 1800000 }); console.log('  MDB Drums: ' + (await side.evaluate(() => asRapport().split('\n').filter(l => /Rigtige trommer ·/.test(l)).join(' | ')))) }
+    T.tjek(fejl.length === 0, 'ingen fejl i konsollen', fejl.slice(0, 5).join('\n'));
+  } finally { await browser.close(); try { fs.rmSync(tmp, { recursive: true, force: true }) } catch (e) { } }
+  return T.slut();
+}
+module.exports = kør;
+if (require.main === module) kør(process.argv[2]).then(ok => process.exit(ok ? 0 : 1));
