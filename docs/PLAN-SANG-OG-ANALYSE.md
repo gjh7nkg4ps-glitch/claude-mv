@@ -4,6 +4,18 @@
 
 **Grundreglen (P8.16):** analysen er programmets hjerte. **Brugerens valg (P8.24, 20. november):** a) A0 først · b) spor kun under cirka 15 minutter for nu · c) facit er generatoren · d) cirkel med tal · e) installation med ét klik undersøges (`docs/LOKALT-MODUL-INSTALLATION.md`). **A0 Analyse sikkerhed (v9.110) og A1 hele analysen på sporene (v9.113) er bygget.** Rækkefølgen derefter, ét trin ad gangen: **A2** sikkerhedsgrænse og enighed i reglerne · **A3** bedre slag; **øverst i A3 (P8.26): taktslagets halve takt** (Hip-hop og Techno 0: tempoet er rigtigt, slagene ligger på modslaget) **og kickets ekko** (ekkoet udløser reglen, og spærretiden blokerer det rigtige kick) · **A4** Lydtidslinjen · **A5–A6** det lokale modul · **A8** spor bid for bid (WebCodecs) på lange sange. **Rest fra A0:** samme cirkel på lydtræk-noderne i Node-editoren og i Foreslå regler; takturet "mens det spiller", akkorder og afsnit har intet facit endnu; mål også med brugerens egne regler og Adaptiv tærskel. Planen er hovedchattens "Den nye analyse P8.19" (A0–A8). Hovedchatten har også skemaet **"Alle lyde og alle metoder P8.22"** (https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU), som samtalen bygger på.
 
+## Flere slags facit til Analyse sikkerhed (til planen, brugeren 20. november; ikke bygget)
+
+Brugerens rapport fra v9.113 (Chrome 157, Windows) viste: tempoet findes ens på brugerens pc og i testbrowseren, tonerne er ens, men fasen (hvilket slag der er nr. 1) og Kick er forskellige, fordi browseren regner generatorens lyd lidt forskelligt, og analysen ligger tæt på vippepunktet. Tal fra samme pc kan sammenlignes; tal fra to pc'er kan ikke. Brugeren er enig i denne rækkefølge. **Hver slags facit får sin egen side med egne tal og egen historik, så intet blandes.**
+
+| Nr. | Facit | Stand |
+| --- | --- | --- |
+| 1 | **Generatoren** (browserens lydmotor) | bygget (v9.110); bliver |
+| 2 | **Ren matematik:** samme mønstre, lyden regnes af vores egen kode, så den er ens på alle pc'er og hurtigere | **næste, når brugeren skriver kør** |
+| 3 | **Lydfil + MIDI-fil** (MIDI er facit for slag og toner) | efter 2 |
+| 4 | **Udgivne sæt med facit** (brugeren og hovedchatten leder nu): Groove MIDI Dataset (trommer med MIDI), Slakh2100 (toner og slag pr. instrument, med spor), MUSDB18 (4 spor), Harmonix Set (taktslag, takt 1, afsnit; kun facit). Licens og download skal tjekkes | venter på det, de finder; bruger 3 |
+| 5 | **Dine egne tryk** (Detektion, K og S) | bygget (v9.95); bliver |
+
 ## Det, der stadig gælder fra svarene (docs/arkiv/SVAR-P8_14.md a–g)
 
 - Hvert af de 4 spor får kun de 14 lydtræk fra trin 1, regnet i hovedtråden (siden fryser imens); trin 2 (31 bånd, toner, klang, stereo, taktslag, afsnit) findes kun for den samlede lyd. Sporene gemmes ikke i cachen.

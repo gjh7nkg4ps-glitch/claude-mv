@@ -19,7 +19,7 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. Brugeren prøver v9.113: ▶ Brug de 4 spor (fryser den?), ▶ Kør testen, og **Kopiér rapport** sendes til hovedchatten (så kan vi se, hvorfor tallene er anderledes end i testbrowseren).
+1. v9.113 er prøvet af brugeren med rigtige spor (20. november); rapporten viste, at tal kun kan sammenlignes på samme pc. **Næste, når brugeren skriver kør:** facit i ren matematik som en ekstra side i Analyse sikkerhed; derefter lydfil + MIDI (`docs/PLAN-SANG-OG-ANALYSE.md`). Brugeren og hovedchatten leder efter udgivne sæt med facit.
 2. Analysen videre, ét trin ad gangen, når brugeren siger til: **A2** sikkerhedsgrænse og enighed i reglerne · **A3** bedre slag (først taktslagets halve takt og kickets ekko) · **A4** Lydtidslinjen · **A5–A6** det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 

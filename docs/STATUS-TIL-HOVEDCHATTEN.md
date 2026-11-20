@@ -35,8 +35,8 @@ Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbea
 Brugeren målte på v9.110: Kick 79, Snare 32, Hihat 74, Taktslag 25, Takt 1 0 af 48, Kick · Trommer 55 (to kørsler, samme tal). Testbrowseren: 67, 29, 72, 43, 34, 42.
 - **Udelukket ved forsøg:** generatorens indstillinger (genre, tempo, swing, ekko, rum, lydstyrker, mute), EQ, Normalisering Fast, Adaptiv tærskel, flueben for analysens dele, en indlæst sang der spiller, generatoren startet og stoppet. Alle gav præcis de samme tal. OfflineAudioContext er altid 44,1 kHz.
 - **Fundet:** browseren regner ikke generatorens lyd bit for bit ens fra kørsel til kørsel (melodi og trommer afviger, bassen ikke; også uden rum-klang). I testbrowseren flytter det højst ét slag. Brugerens Chrome (Windows) kan regne lyden mere anderledes; hvor et slag ligger lige ved tærsklen, eller taktslaget lige mellem to faser, tipper tallet.
-- **Næste skridt:** brugeren trykker *Kopiér rapport* i v9.113 og sender teksten. Det fundne tempo og fasen pr. mønster viser, om Takt 1 = 0 skyldes fasen (sandsynligt) eller en fejl.
-- **Forslag (ikke bygget, brugeren vælger):** A) behold generatoren som facit og sammenlign kun tal fra samme pc; B) lad testen lave sin lyd i ren matematik (samme mønstre, egne lyde) i stedet for browserens lydmotor: ens på alle pc'er og hurtigere, men ikke længere præcis generatorens lyd. Code anbefaler B, hvis tallene skal kunne sammenlignes mellem pc'er.
+- **Brugerens rapport (v9.113, Chrome 157, Windows, 26,6 s; to kørsler ens):** tempoet er det samme som i testbrowseren (123,3 · 123,3 · 90 · 86,3 · 132,5 · 112,3), tonerne er ens (12 · 47 · 79), men fasen i House er 3 og 1 (testbrowseren 0 og 0), så Takt 1 = 0 af 48, og Kick er 79 (bedste tærskel 0,50 giver 87; Kick · Trommer 55, 0,55 giver 81). Ingen fejl i testen: lyden regnes forskelligt, og fasen og kicket ligger på vippepunktet (A3).
+- **Til planen (brugeren er enig):** hver slags facit på sin egen side: 1 Generatoren (bliver) · 2 ren matematik (næste, når brugeren skriver kør) · 3 lydfil + MIDI · 4 udgivne sæt med facit (brugeren og hovedchatten leder: Groove MIDI Dataset, Slakh2100, MUSDB18, Harmonix Set; licens skal tjekkes) · 5 Detektion. Se `docs/PLAN-SANG-OG-ANALYSE.md`.
 
 ## Rækkefølgen for analysen
 
@@ -47,5 +47,4 @@ A2 sikkerhedsgrænse og enighed i reglerne → A3 bedre slag (**først** taktsla
 1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille.
 2. Feltfarven D7: ikke valgt.
 3. Det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`): Pinokio først; om en fil-side kan nå `127.0.0.1` (CORS, Local Network Access) skal prøves i brugerens Chrome.
-4. Valg A eller B for testens lyd (ovenfor).
 5. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter.

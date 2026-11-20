@@ -124,10 +124,10 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Warm Analog** (v9.72) er en første gennemgang; den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes.
 - **På scenen:** effekt-rækkerne har ingen ⋯-menu; effekt-regel-sættenes tal er Codes skøn; 6c får adgang til effekterne, når 6c bygges.
-- **Analyse sikkerhed:** brugerens pc giver andre tal end testbrowseren (Kick 79 mod 67, Takt 1 0 mod 34); årsagen er ikke fundet (indstillinger, EQ og indlæst sang er udelukket); *Kopiér rapport* giver det, der skal sammenlignes. Cirklen mangler på lydtræk-noderne og i Foreslå regler.
+- **Analyse sikkerhed:** tal kan kun sammenlignes på samme pc (browseren regner generatorens lyd forskelligt; brugerens rapport 20. november: fasen og Kick afviger, tempo og toner er ens). Til planen: facit i ren matematik, så lydfil + MIDI (`docs/PLAN-SANG-OG-ANALYSE.md`). Cirklen mangler på lydtræk-noderne og i Foreslå regler.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags:** sessionen må ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
-- **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
+- **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D. (A1 er prøvet af brugeren med rigtige spor fra Ultimate Vocal Remover.)
 
 ## 5. Planen: det næste
 
