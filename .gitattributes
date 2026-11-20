@@ -1,0 +1,3 @@
+# Kildefilerne og den byggede fil skal være byte for byte ens på alle maskiner (T0): git må ikke ændre linjeskift.
+src/** -text
+claude-mv-*.html -text

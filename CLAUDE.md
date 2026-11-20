@@ -53,12 +53,13 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 - **Test, før du afleverer**, og vis mig skærmbilleder af det nye.
 - **Vær ærlig** om, hvad der ikke er testet, eller hvad der ikke kan lade sig gøre.
 - **Testpakken ligger i `tests/`** og kører alle trin med `node tests/koer-alle.js` (se `tests/README.md`). Trin 4 (det nye) får sin egen testfil pr. version, fx `tests/4-lydmotor.js`, som bliver i pakken.
-- Den faste rækkefølge: **1. Syntaks** (`node --check` på hvert `<script>`); **2. Opstart** i testbrowseren (Playwright, fagudtryk) uden `pageerror` og konsolfejl, altid med det rigtige filnavn; **3. Fast testpakke** (hver Scene-fane, gemte indstillinger fra ældre versioner, alle opsætninger, alle layouts uden overlap, Mesh 3D og Øjet, gem og hent en plads, tilføj og fjern en regel); **4. Det nye** med skærmbillede, i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
-- **Faldgruber i testbrowseren:** intet grafikkort (SwiftShader), så 3D er langsomt og WebGPU kan ikke prøves; fuld skærm kan ikke fotograferes; kør aldrig to testkørsler samtidig (hukommelsen løber tør); hele pakken tager cirka 2 timer. Testpakken laver selv testlyd (`tests/testlyd.js`, mono og stereo). Knapper testes med rigtige museklik.
+- Den faste rækkefølge: **1. Syntaks** (`node --check` på hvert `<script>`); **2. Opstart** i testbrowseren (Playwright) uden `pageerror` og konsolfejl, med det rigtige filnavn; **3. Fast testpakke**; **4. Det nye** med skærmbillede i 1920 × 1080, 2560 × 1440 og 3840 × 2160.
+- **Faldgruber i testbrowseren:** intet grafikkort (SwiftShader): 3D er langsomt, WebGPU kan ikke prøves; fuld skærm kan ikke fotograferes; kør aldrig to testkørsler samtidig (hukommelsen løber tør); hele pakken tager cirka 2 timer. Knapper testes med rigtige museklik.
 
-### Sådan har vi rettet i koden
-- Små, præcise tekst-erstatninger, hvor den gamle tekst skal passe **præcis ét sted**; ellers stop.
-- Nye funktioner lægges i en blok med en start- og slutmarkering: `/* ========== v9.4: NAVN ========== */` … `/* ========== SLUT: NAVN ========== */`, med en kort dansk kommentar øverst om, hvad blokken gør og hvorfor.
+### Sådan retter vi i koden (fra T0, 20. november)
+- **Kilderne ligger i `src/dele/`** (én fil pr. blok i `kode/hoved/`; three.js i `vendor/`; CSS i `stil/`; manualen i `html/`); `src/dele.txt` er rækkefølgen. **Ret aldrig den byggede fil.** Byg med `node src/byg.js`; `--tjek <fil>` sammenligner byte for byte (test 102). Se `src/LÆSMIG.md`.
+- Små, præcise tekst-erstatninger, hvor den gamle tekst skal passe **præcis ét sted** i alle kilderne; ellers stop.
+- En ny funktion er en ny fil i `kode/hoved/` med start- og slutmarkering: `/* ========== v9.4: NAVN ========== */` … `/* ========== SLUT: NAVN ========== */` og en kort dansk kommentar øverst.
 - Pas på **rækkefølgen**: topbaren og nogle samlinger bygges sent (i `setTimeout`); kode, der bruger dem, skal vente. Nye blokke pakker gerne gamle funktioner ind (`{const gl=f;window.f=function(){…gl()…}}`) i stedet for at ændre dem.
 
 ## 3. Det vigtigste, vi har besluttet
@@ -110,7 +111,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ### Fjernet, og hvordan gamle opsætninger overlever
 - **Lydkort** (`lk:`, v9.12), **Morph Pad** (`pad:`, v9.43) og **lydlag-målene** (`lyd:`, v9.81) er fjernet; en gammel regel med dem bliver stående, slås fra og får en gul besked (`fjernetTjek`). Tilføj dem ikke igen uden at spørge. Sidste version med Lydkort: v9.11 (tagget `milepael-med-lydkort`).
 - **Dobbelte målinger** (v9.13): intet fjernes; de 31 smalle bånd står foldet under de fire brede. **Taktslag og Spor: Auto-valg** = fil → fra filen, Lyd ind eller generator → mens det spiller, med grunden vist. **Stereobredde** = 1 minus korrelationen mellem venstre og højre (Panorering måler placeringen).
-- **4 spor (stems, v9.15):** Trommer, Bas, Vokal og Resten lægges sammen til én lyd; hvert spor måles for sig (14 lydtræk, `stem:SPOR:LYDTRÆK`); Auto-valg læser kick, snare og hihat fra Trommer. Delingen laves uden for MV med **Ultimate Vocal Remover**; *Vælg en mappe …* fordeler filerne efter navn (v9.101).
+- **4 spor (stems, v9.15):** Trommer, Bas, Vokal og Resten lægges sammen til én lyd; hvert spor måles for sig (`stem:SPOR:LYDTRÆK`); Auto-valg læser kick, snare og hihat fra Trommer. Delingen laves med **Ultimate Vocal Remover**; *Vælg en mappe …* fordeler filerne efter navn.
 
 ## 4. Åbne fejl og halvfærdigt (kun det, der stadig er åbent; én linje hver)
 

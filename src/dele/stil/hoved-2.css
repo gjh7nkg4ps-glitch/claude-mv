@@ -1,0 +1,2 @@
+.lk-auto{display:inline-flex;align-items:center;gap:6px;margin-left:auto;margin-right:8px}.lk-auto button{font-size:12px;padding:3px 10px;line-height:1.3}
+/* v9.17: Lydkildes indhold ruller inde i vinduet i stedet for at blive skåret af ved bundbaren */#w31>.wb{overflow-y:auto;min-height:0;overscroll-behavior:contain}/* v9.18: Router (W32) havde samme fejl */#w32>.wb{overflow-y:auto;min-height:0;overscroll-behavior:contain}

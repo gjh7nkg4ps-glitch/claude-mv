@@ -4,6 +4,8 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Nu (v9.121, 20. november 2026)
 
+- **T0 (uden ny version):** koden ligger nu i `src/dele/` (132 filer; én pr. blok i `kode/hoved/`), og `node src/byg.js` bygger programfilen; den giver v9.121 byte for byte (test 102). Fra nu af rettes kun i kilderne.
+
 - **v9.121:** *Testlyden: lyt og gem* ligger foldet sammen bag den lille knap **Testlyden ▸** (efter Kopiér rapport), fordi den næsten aldrig bruges (brugerens ønske).
 
 - **v9.120 (G2, P8.31):** Rigtige trommer viser *Snare · uden svage slag* (SDG og SDD neutrale) og *Hihat · uden pedal* (PHH neutral); alle 21 underklasser står i "Sådan måles rigtige trommer".

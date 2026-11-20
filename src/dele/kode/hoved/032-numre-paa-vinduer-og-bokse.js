@@ -1,0 +1,19 @@
+/* ========== NUMRE PÅ VINDUER OG BOKSE ========== */
+/* Så vi kan tale om dem: vinduer W1 til W9 (de samme som vinduernes id), dialoger D1 til D5, panelerne på siden P1, P2 … (overskrifterne i hovedområdet) og bokse med en overskrift (en sammenfoldelig boks eller en række, der begynder med en fed etiket) som W6.3, D5.2 eller P1.2 (numret på beholderen, punktum, løbenummer i rækkefølge). Numrene er altid de nuværende (de regnes ud ved start), så kortet i manualen (Numre på vinduer og bokse) kan ikke afvige. Kommer der nye bokse, kan løbenumrene efter dem skifte. */
+const NR_KORT=[],DLG_NAVN={hj:'Hjælp: hvad ordene betyder',gd:'Brugermanual',bd:'Bekræftelse (generel dialog)',recdlg:'Optagelsen er færdig',sd:'Indstillinger'},nrEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function nrBadge(el,nr,foer){const b=document.createElement('span');b.className='nr';b.setAttribute('aria-hidden','true');b.title='Nummer '+nr+': brug det, når vi taler om denne boks';b.textContent=nr;el.insertBefore(b,foer||el.firstChild);return b}
+function nummerer(){document.querySelectorAll('.nr').forEach(b=>b.remove());NR_KORT.length=0;
+ const navn=e=>(e.textContent||'').replace(/\s+/g,' ').replace(/^[A-Z]\d+(\.\d+)*\s+/,'').replace(/\s*\(\d+\)\s*$/,'').replace(/:\s*$/,'').trim().slice(0,64);
+ const spids=e=>e.tagName==='DETAILS'?e.querySelector(':scope > summary'):(e.matches('.ab')&&e.firstElementChild&&e.firstElementChild.tagName==='B'&&!e.firstElementChild.id?e.firstElementChild:null);
+ const kasser=(rod,pre)=>{let n=0;rod.querySelectorAll('details,.ab').forEach(e=>{const s=spids(e);if(!s||!navn(s))return;const nr=pre+'.'+(++n);nrBadge(e.tagName==='DETAILS'?s:e,nr,e.tagName==='DETAILS'?s.firstChild:s);NR_KORT.push([nr,navn(s).replace(/^[A-Z]\d+(\.\d+)*\s*/,'')])})};
+ [...document.querySelectorAll('.win')].map(w=>[w,'W'+w.id.slice(1)]).sort((a,b)=>+a[1].slice(1)-+b[1].slice(1)).forEach(([w,nr])=>{const h=w.querySelector('.wh'),t=h&&h.querySelector('span');if(!h)return;nrBadge(h,nr,h.firstChild);NR_KORT.push([nr,navn(t||h).replace(/\s*\(.*$/,'')]);kasser(w,nr)});
+ const hov=document.querySelector('main');if(hov){let p=0,k=0,aktiv=null;hov.querySelectorAll('h2,h3,details,.ab').forEach(e=>{if(e.matches('h2,h3')){if(e.closest('details')||e.closest('dialog'))return;if(e.matches('h2')){aktiv='P'+(++p);k=0;nrBadge(e,aktiv,e.firstChild);NR_KORT.push([aktiv,navn(e).replace(/^P\d+\s*/,'')]);return}if(!aktiv||!navn(e))return;const nr3=aktiv+'.'+(++k);nrBadge(e,nr3,e.firstChild);NR_KORT.push([nr3,navn(e)]);return}const s=spids(e);if(!s||!aktiv||!navn(s))return;const nr=aktiv+'.'+(++k);nrBadge(e.tagName==='DETAILS'?s:e,nr,e.tagName==='DETAILS'?s.firstChild:s);NR_KORT.push([nr,navn(s).replace(/^[A-Z]\d+(\.\d+)*\s*/,'')])})}
+ [...document.querySelectorAll('dialog')].forEach((dl,i)=>{const nr='D'+(i+1),rod=dl.firstElementChild||dl;nrBadge(rod,nr,rod.firstChild);const t=dl.querySelector('h2,h3');NR_KORT.push([nr,DLG_NAVN[dl.id]||(t&&navn(t))||dl.id]);if(!['hj','gd'].includes(dl.id))kasser(dl,nr)});
+ const kort=$('nr-kort');if(kort)kort.innerHTML=NR_KORT.map(([nr,n])=>`<li><b>${nrEsc(nr)}</b> ${nrEsc(n)}</li>`).join('')}
+function numreVis(til,gem){document.body.classList.toggle('numre-fra',!til);const c=$('numre-til');if(c)c.checked=til;if(gem)try{lsGem('rytme-numre',til?'1':'0')}catch(e){}}
+$('numre-til').onchange=e=>{numreVis(e.target.checked,true);msg('Numre på vinduer og bokse er '+(e.target.checked?'vist':'skjult')+'.')};
+{let til=true;try{til=localStorage.getItem('rytme-numre')!=='0'}catch(e){}nummerer();numreVis(til,false)}
+/* en del af siden bygges først af programmet efter start (fx Musik-generatoren og Mine opsætninger), så numrene regnes igen, når alt er bygget */
+addEventListener('load',nummerer);setTimeout(nummerer,50);
+/* ========== SLUT: NUMRE ========== */
+

@@ -1,0 +1,51 @@
+/* ========== v4.9: FLERE MÅDER AT FØDES PÅ ==========
+   Ud over Slag (en Fødsel-kobling går over tærsklen) og Tone (hver fundet tone) kan en levende figur fødes af:
+   Taktslag (hvert slag, hvert 2., hver takt eller hver 2. takt; kun analyserede lydfiler), Akkordskift (de 12 toneklasser sammenlignes med 24 dur- og molakkorder; en kopi fødes, når den bedste akkord skifter og har holdt i 0,15 s, ved akkordens grundtone), Klangtype (ved hvert anslag i flux: støj, hvis flatness er over 0,45, tone, hvis tonesikkerheden er over 0,6, ellers slag), Drop eller løft (kort energi over lang energi med en faktor 2,2, 1,7 eller 1,35 efter følsomhed, højst hvert 1,5 sekund), Pause (når musikken stopper eller starter igen), Sektionsskift (sangens afsnit fra analysen; kun lydfiler), MIDI-keyboard (hver tangent, ved sin tone; Chrome og Edge), Tast (en tast, du vælger, B som standard, eller knappen Fød nu) og Master Morph Pad (når master rammer en cirkel).
+   livEvNu() regnes én gang pr. billede og giver en liste med hændelser pr. figur, som tegnemotoren føder kopier ud fra. */
+function livMetodeOpts(v){const ok=FE_METODER[feNiv()],g=(t,n)=>'<optgroup label="'+n+'">'+LIV_M.filter(x=>x[2]===t&&(!ok||ok.includes(x[0])||x[0]===v)).map(([k,n2])=>'<option value="'+k+'"'+(k===v?' selected':'')+'>'+n2+'</option>').join('')+'</optgroup>';const L2=g('live','Du spiller selv');return g('lyd','Lytter til musikken')+(L2.indexOf('<option')>=0?L2:'')}
+function livMetodeTekst(L){return LIV_TEKST[L.fodtAf]||''}
+function livOptRow(L){const O=L.fodtOpt||{},sel=(k,ops)=>'<select data-lvo="'+k+'">'+ops.map(([v,n])=>'<option value="'+v+'"'+(O[k]===v?' selected':'')+'>'+n+'</option>').join('')+'</select>';
+ switch(L.fodtAf){case 'takt':return '<div class="ab"><label class="small">Fødes på '+sel('hver',[['slag','hvert slag'],['2','hvert 2. slag'],['takt','hver takt (4 slag)'],['2takt','hver 2. takt']])+'</label>'+(SHOWPROFIL&&SHOWPROFIL.beats&&SHOWPROFIL.beats.length?'<span class="small">'+SHOWPROFIL.beats.length+' slag fundet i sangen</span>':'<span class="small">Ingen taktslag endnu: vælg og analysér en lydfil.</span>')+'</div>';
+  case 'klang':return '<div class="ab"><label class="small">Kun '+sel('klang',[['slag','slag (trommer)'],['tone','tone (melodi)'],['stoej','støj (fx bækkener)']])+'</label></div>';
+  case 'drop':return '<div class="ab"><label class="small">Følsomhed '+sel('foel',[['lav','lav (kun store drop)'],['mellem','mellem'],['hoej','høj (også små løft)']])+'</label></div>';
+  case 'pause':return '<div class="ab"><label class="small">Fødes '+sel('pause',[['stop','når musikken stopper'],['start','når musikken starter igen']])+'</label></div>';
+  case 'sektion':return '<div class="ab"><span class="small">'+(SHOWPROFIL&&SHOWPROFIL.sektioner?SHOWPROFIL.sektioner.length+' afsnit fundet i sangen: '+SHOWPROFIL.sektioner.map(x=>Math.floor(x.t0/60)+':'+String(Math.floor(x.t0%60)).padStart(2,'0')).join(', '):'Ingen afsnit endnu: vælg og analysér en lydfil.')+'</span></div>';
+  case 'midi':return '<div class="ab"><button class="ghost" data-lvmidi>Tilslut MIDI</button><span class="small" id="lv-midist">'+esc((typeof LEV!=='undefined'&&LEV.midi.status)||(navigator.requestMIDIAccess?'Ikke tilsluttet endnu.':'Denne browser kan ikke bruge MIDI. Prøv Chrome eller Edge.'))+'</span></div>';
+  case 'tast':return '<div class="ab"><label class="small">Tast <input type="text" data-lvo="tast" maxlength="1" value="'+esc(O.tast||'b')+'" style="width:34px;text-align:center" aria-label="Tasten, der føder en kopi"></label><button class="ghost" data-lvfod>Fød nu</button></div>';
+  default:return ''}}
+var LEV={tPrev:null,koe:{},midi:{acc:null,status:''},ch:{navn:null,kand:null,kt:0},flux:0,klT:-1e9,dr:{langs:0,kort:0,prev:{},t:{}},pa:{lyd:false,lydMs:0,stilMs:0,sidst:-1e9}};
+function levKoe(id,ev){const q=LEV.koe[id]=LEV.koe[id]||[];if(q.length<16)q.push(ev)}
+const HND_METODE=k=>k.startsWith('hnd:takt')?'takt':k.startsWith('hnd:akkord')?'akkord':k.startsWith('hnd:klang')?'klang':k.startsWith('hnd:pause')?'pause':k==='hnd:drop'?'drop':k==='hnd:sektion'?'sektion':null;
+function livEvNu(){if(live)lbtTik();else if(LBT.nye.length)LBT.nye.length=0;const ud={},obj=fase2.objekter.filter(o=>o.liv&&o.liv.til&&o.synlig&&o.liv.fodtAf&&o.liv.fodtAf!=='anslag'&&o.liv.fodtAf!=='tone'),tFil=(typeof buf!=='undefined'&&buf)?now():null,hndBrug=new Set(maps.filter(m=>typeof m.band==='string'&&m.band.startsWith('hnd:')).map(m=>HND_METODE(m.band)).filter(Boolean));
+ if(!obj.length&&!hndBrug.size){LEV.tPrev=tFil;LEV.koe={};return ud}
+ const need=new Set([...obj.map(o=>o.liv.fodtAf),...hndBrug]),ev={},v=k=>{try{const x=+bandV(k);return Number.isFinite(x)?x:0}catch(e){return 0}},nu=performance.now(),a=LEV.tPrev,b=tFil,spring=a==null||b==null||!(b>a)||b-a>.5;
+ if(need.has('takt')&&SHOWPROFIL&&SHOWPROFIL.beats&&playing&&!spring&&!live){const P=SHOWPROFIL;ev.takt=[];P.beats.forEach((k,i)=>{const tt=k*P.dtf;if(tt>a&&tt<=b)ev.takt.push(i-(P.fase||0))})}
+ if(live&&LBT.nye.length){ev.takt=LBT.nye.map(i=>i-LBT.ned);LBT.nye.length=0}
+ if(need.has('sektion')&&SHOWPROFIL&&SHOWPROFIL.sektioner&&playing&&!spring){ev.sektion=SHOWPROFIL.sektioner.filter((x,i)=>i>0&&x.t0>a&&x.t0<=b).length}
+ if(need.has('akkord')){const c=[];for(let i=0;i<12;i++)c.push(Math.max(0,v('ana:c'+i)));const sum=c.reduce((x,y)=>x+y,0);if(sum>.15&&v('rms')>.03){let best=-1,bi=-1;for(let r=0;r<12;r++)[[0,[0,4,7]],[1,[0,3,7]]].forEach(([mol,iv])=>{let sc=0;iv.forEach(x=>sc+=c[(r+x)%12]);sc/=sum;if(sc>best){best=sc;bi=r*2+mol}});const navn=best>.45?bi:null;
+   if(navn!==null&&navn!==LEV.ch.kand){LEV.ch.kand=navn;LEV.ch.kt=nu}if(navn!==null&&navn===LEV.ch.kand&&navn!==LEV.ch.navn&&nu-LEV.ch.kt>150){LEV.ch.navn=navn;ev.akkord={pc:navn>>1,midi:48+(navn>>1)}}}}
+ if(need.has('klang')){/* hvert anslag findes som en stigende kant i flux eller kick (hver for sig; snare og hihat reagerer også på melodiens anslag og er derfor ikke med). Typen bestemmes af lyden selv: støj, hvis flatness er over 0,45, tone, hvis tonesikkerheden er over 0,6, ellers slag. */const K=['flux','kick'],kant={};LEV.kp=LEV.kp||{};K.forEach(k=>{const x=v(k);kant[k]=x>.35&&(LEV.kp[k]||0)<=.35;LEV.kp[k]=x});
+  if((kant.flux||kant.kick)&&nu-LEV.klT>90){LEV.klT=nu;const flat=v('flat'),sik=v('ana:pitchsik'),type=flat>.45?'stoej':sik>.6?'tone':'slag',pc=Math.round(Math.max(0,Math.min(1,v('ana:toneklasse')))*11);ev.klang={type,ev:type==='tone'?{pc,midi:48+pc}:null}}}
+ if(need.has('drop')){const r=v('rms');LEV.dr.langs+=(r-LEV.dr.langs)*.01;LEV.dr.kort+=(r-LEV.dr.kort)*.25;ev.drop={f:LEV.dr.kort/(LEV.dr.langs+.02),k:LEV.dr.kort}}
+ if(need.has('pause')){const P=LEV.pa,dt=Math.min(100,Math.max(0,nu-(P.tSidst||nu)));P.tSidst=nu;P.glat=(P.glat||0)+(v('rms')-(P.glat||0))*.15;const r=P.glat;/* en pause er mindst 0,6 s næsten stilhed efter mindst 0,8 s lyd, så hullerne mellem trommeslag ikke tæller */if(r>.05){P.lydMs+=dt;P.stilMs=0;if(!P.lyd&&P.lydMs>150){P.lyd=true;if(P.harVaeretStille){ev.start=true;P.harVaeretStille=false}}}else if(r<.02){P.stilMs+=dt;if(P.lyd&&P.stilMs>600&&P.lydMs>800){P.lyd=false;P.lydMs=0;P.harVaeretStille=true;ev.stop=true}}else{P.stilMs=0}}
+ if(ev.takt)ev.takt.forEach(i=>{hndFyr('hnd:takt');if(((i%2)+2)%2===0)hndFyr('hnd:takt2');if(((i%4)+4)%4===0)hndFyr('hnd:takt4');if(((i%8)+8)%8===0)hndFyr('hnd:takt8')});
+ if(ev.akkord){hndFyr('hnd:akkord');HND.v['hnd:akkordrod']=ev.akkord.pc/11;HND.v['hnd:akkordmol']=LEV.ch.navn&1}
+ if(ev.klang)hndFyr('hnd:klang:'+ev.klang.type);if(ev.stop)hndFyr('hnd:pause:stop');if(ev.start)hndFyr('hnd:pause:start');if(ev.sektion)hndFyr('hnd:sektion');
+ if(ev.drop){const over=ev.drop.f>1.7&&ev.drop.k>.15,pv=LEV.dr.prev._hnd;LEV.dr.prev._hnd=over;if(over&&!pv&&nu-(LEV.dr.t._hnd||-1e9)>1500){LEV.dr.t._hnd=nu;hndFyr('hnd:drop')}}
+ obj.forEach(o=>{const L=livKopi(o.liv),O=L.fodtOpt||{},m=L.fodtAf,out=[];
+  if(m==='takt'&&ev.takt){const N={slag:1,'2':2,takt:4,'2takt':8}[O.hver]||1;ev.takt.forEach(i=>{if(((i%N)+N)%N===0)out.push(null)})}
+  else if(m==='sektion'&&ev.sektion){for(let i=0;i<ev.sektion;i++)out.push(null)}
+  else if(m==='akkord'&&ev.akkord)out.push(ev.akkord);
+  else if(m==='klang'&&ev.klang&&ev.klang.type===(O.klang||'slag'))out.push(ev.klang.ev);
+  else if(m==='drop'&&ev.drop){const g={lav:2.2,mellem:1.7,hoej:1.35}[O.foel]||1.7,over=ev.drop.f>g&&ev.drop.k>.15,pv=LEV.dr.prev[o.id];LEV.dr.prev[o.id]=over;if(over&&!pv&&nu-(LEV.dr.t[o.id]||-1e9)>1500){LEV.dr.t[o.id]=nu;out.push(null)}}
+  else if(m==='pause'&&(O.pause==='start'?ev.start:ev.stop))out.push(null);
+  const q=LEV.koe[o.id];if(q&&q.length){out.push(...q);q.length=0}
+  if(out.length)ud[o.id]=out});
+ LEV.tPrev=tFil;return ud}
+function levMidi(){const st=t=>{LEV.midi.status=t;const e=$('lv-midist');if(e)e.textContent=t;msg(t)};
+ if(!navigator.requestMIDIAccess){st('Denne browser kan ikke bruge MIDI. Prøv Chrome eller Edge.');return}
+ if(LEV.midi.acc){st('MIDI er allerede tilsluttet: '+LEV.midi.acc.inputs.size+' indgang'+(LEV.midi.acc.inputs.size===1?'':'e')+'.');return}
+ navigator.requestMIDIAccess().then(acc=>{LEV.midi.acc=acc;const bind=()=>{acc.inputs.forEach(inp=>{inp.onmidimessage=e=>{const d=e.data;if(!d||d.length<3)return;if((d[0]&0xf0)===0x90&&d[2]>0){const n=d[1];hndFyr('hnd:midi');HND.v['hnd:midinote']=Math.max(0,Math.min(1,(n-21)/87));fase2.objekter.forEach(o=>{if(o.liv&&o.liv.til&&o.liv.fodtAf==='midi')levKoe(o.id,{pc:n%12,midi:n})})}}});const n=acc.inputs.size;st(n?'MIDI tilsluttet: '+[...acc.inputs.values()].map(x=>x.name||'keyboard').join(', ')+'.':'MIDI er klar, men der er intet keyboard sluttet til. Sæt det i, så findes det af sig selv.')};bind();acc.onstatechange=bind}).catch(()=>st('MIDI blev afvist af browseren. I et udgivet artifact kan MIDI være blokeret; åbn filen direkte i Chrome eller Edge.'))}
+document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;const a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.tagName==='SELECT'||a.isContentEditable))return;const k=(e.key||'').toLowerCase();if(k.length!==1)return;if(k==='b')hndFyr('hnd:tast');let n=0;fase2.objekter.forEach(o=>{if(o.liv&&o.liv.til&&o.liv.fodtAf==='tast'&&((o.liv.fodtOpt&&o.liv.fodtOpt.tast)||'b').toLowerCase()===k){levKoe(o.id,null);n++}})});
+/* ========== SLUT: FLERE MÅDER AT FØDES PÅ ========== */
+

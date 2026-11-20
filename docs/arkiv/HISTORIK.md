@@ -143,6 +143,7 @@ Flyttet fra `CLAUDE.md` den 20. november 2026 (P8.23 punkt 1b og 1c). **Læs ikk
 | v9.119 | **Testlyden kan høres og gemmes (brugerens valg C):** afsnittet "Testlyden: lyt og gem" i Analyse sikkerhed: pr. mønster Hele lyden / Kun trommerne / Kun bassen / Kun melodien, ▶ Lyt / ■ Stop (sætter en sang på pause), Gem som WAV (44,1 kHz mono 16 bit, samme fingeraftryk som rapporten). Test 101. |
 | v9.120 | **Svage slag (brugerens valg G2, P8.31):** Rigtige trommer læser NAVN_subclass.txt; rækkerne *Snare · uden svage slag* (SDG og SDD neutrale) og *Hihat · uden pedal* (PHH neutral), med bedste tærskel; alle 21 underklasser i "Sådan måles"; test 99 udvidet. |
 | v9.121 | **Testlyden bag en lille knap** (brugerens ønske: bruges næsten aldrig): afsnittet er foldet sammen; knappen "Testlyden ▸" efter Kopiér rapport folder det ud og sammen og standser lyden (`ASL.aaben`). Test 101 udvidet. |
+| T0 | **Kilderne** (uden ny version): `src/dele/` (132 dele, 101 blokke i `kode/hoved/`), `src/dele.txt`, `src/byg.js` (bygger og `--tjek` byte for byte), `src/LÆSMIG.md`, `.gitattributes`; test 102. Blokken LIVE PREVIEW mangler sit slutmærke (opdelingen tager højde for det). |
 
 ## 2 · Noter og lukkede fejl pr. version (flyttet uændret fra CLAUDE.md § 5 "Halvfærdigt og kendte fejl")
 

@@ -1,0 +1,70 @@
+/* ========== v9.116: RIGTIGE TROMMER MED FACIT (MDB DRUMS) ==========
+   P8.30 trin 2 (V4). Analyse sikkerhed får en blok "Rigtige trommer" ved siden af Testlyd: brugeren vælger mappen "MDB Drums" (github.com/CarlSouthall/MDBDrums,
+   licens CC BY-NC-SA 4.0; filerne må aldrig ligge i repoet). mdbFind finder stykkerne efter filnavn: NAVN_MIX.wav (hele mixet), NAVN_Drum.wav (kun trommerne),
+   NAVN_class.txt (sekunder, tabulator, klasse) og NAVN_MIX.beats (sekunder, tabulator, taktslagets nummer 1–4; 1 er takt 1).
+   - Lyden afkodes ved 44,1 kHz i en OfflineAudioContext (filerne er 44,1 kHz, så intet regnes om, og tallene er ens på alle pc'er) og analyseres med trin 1 i
+     baggrunds-trådene (atKoer). Trin 1 gemmes i cachen (nøgle mdb1|filnavn|størrelse); taktslaget (showAnalyser) og reglerne regnes hver gang, så ændringer i A3
+     kan måles uden at regne lyden igen.
+   - Samme regler og tolerancer som testlyden: standard-reglen (AS.REGEL) gennem slagtider, ±50 ms for slag, ±70 ms for taktslag, F-mål.
+   - Klasser: Kick = KD, Snare = SD, Hihat = HH. Bækken (CY) og tammer (TT, OT) er neutrale: et fundet slag, der ikke passer til sin egen klasse, men ligger
+     højst 50 ms fra et bækken- eller tam-slag, tæller hverken som rigtigt eller falsk; tallet står som "neutrale". Et kick fundet på en snare er falsk.
+   - Resultatet gemmes i localStorage (rytme-asik-mdb) med versionsnummer og historik. Det blandes aldrig med Testlyd: ikke i det samlede tal og ikke i cirklerne. */
+const MDB={VER:'1',data:null,koerer:false,frem:'',aaben:{},NEU:['CY','TT','OT'],
+ K:[['kick','KD','Kick (KD)'],['snare','SD','Snare (SD)'],['hihat','HH','Hihat (HH)']],V:[['mix','Rigtige trommer · hele mixet','MIX'],['trom','Rigtige trommer · kun trommerne','Drum']],
+ R:[['kick','Kick (KD)'],['snare','Snare (SD)'],['snare0','Snare (SD) · uden svage slag'],['hihat','Hihat (HH)'],['hihat0','Hihat (HH) · uden pedal'],['taktslag','Taktslag'],['takt','Takt 1']],
+ /* v9.120 (G2): underklasserne fra NAVN_subclass.txt. Svage slag (SDG svagt slag, SDD drag) og hihat med foden (PHH) tæller som neutrale i de to ekstra rækker */
+ SVAG:['SDG','SDD'],PEDAL:['PHH'],SD:['SD','SDB','SDD','SDF','SDG','SDNS'],HH:['CHH','OHH','PHH']};
+try{MDB.data=JSON.parse(localStorage.getItem('rytme-asik-mdb')||'null')}catch(e){MDB.data=null}
+function mdbFind(files){const S={},s=k=>S[k]||(S[k]={});for(const f of files){let m;const n=f.name;
+  if((m=/^(.+)_class\.txt$/i.exec(n)))s(m[1]).klass=f;else if((m=/^(.+)_subclass\.txt$/i.exec(n)))s(m[1]).sub=f;else if((m=/^(.+)_MIX\.beats$/i.exec(n)))s(m[1]).beats=f;else if((m=/^(.+)_MIX\.wav$/i.exec(n)))s(m[1]).mix=f;else if((m=/^(.+)_Drum\.wav$/i.exec(n)))s(m[1]).trom=f}
+ return Object.keys(S).sort().filter(k=>S[k].klass&&(S[k].mix||S[k].trom)).map(k=>Object.assign({navn:k},S[k]))}
+function mdbLinjer(t){return String(t).split(/\r?\n/).map(l=>l.split('\t').map(x=>x.trim())).filter(x=>x.length>=2&&x[0]!==''&&Number.isFinite(+x[0]))}
+function mdbMatch(sand,fund,tol,neu){const u=new Set();let hit=0;sand.forEach(t=>{let bj=-1,bd=tol;fund.forEach((e,j)=>{if(u.has(j))return;const d=Math.abs(e-t);if(d<=bd){bd=d;bj=j}});if(bj>=0){u.add(bj);hit++}});
+ let n0=0;if(neu&&neu.length)fund.forEach((e,j)=>{if(!u.has(j)&&neu.some(x=>Math.abs(x-e)<=tol))n0++});return{hit,n:sand.length,fa:fund.length-hit-n0,ov:sand.length-hit,neu:n0}}
+async function mdbLyd(f){const key='mdb'+MDB.VER+'|'+f.name+'|'+f.size,c=await cacheGet(key);if(c&&c.R&&c.R.kick&&c.sr)return Object.assign({hentet:true},c);
+ const oc=new OfflineAudioContext(1,1,44100),b=await oc.decodeAudioData(await f.arrayBuffer()),sr0=sr;let R;
+ try{R=await atKoer(b,1,atDele())}catch(e){if(e&&e.message==='ANA_STOP')throw e;R=await analyze(b)}finally{sr=sr0}
+ const o={R,sr:b.sampleRate,dur:b.duration};cachePut(key,o);return o}
+async function mdbKoer(files){if(MDB.koerer)return null;const L=mdbFind(files);if(!L.length){msg('Fandt ingen stykker med facit i mappen. Vælg mappen "MDB Drums" (den med audio og annotations).');return null}
+ MDB.koerer=true;const t00=performance.now(),glFrem=anaFrem,res={mix:{},trom:{}},tempo={},thr={mix:{},trom:{}};let nLyd=0,hentet=0;const alle=L.reduce((a,x)=>a+(x.mix?1:0)+(x.trom?1:0),0);
+ const led=(v,k,navn,o)=>{const r=res[v][k]||(res[v][k]={hit:0,n:0,fa:0,ov:0,neu:0,pm:[]});['hit','n','fa','ov','neu'].forEach(x=>r[x]+=o[x]||0);r.pm.push([navn,asF(o)])};
+ try{anaFrem=function(){};
+  for(const st of L){const sub=st.sub?mdbLinjer(await st.sub.text()).map(x=>[+x[0],x[1].toUpperCase()]):null,kl=mdbLinjer(await st.klass.text()).map(x=>[+x[0],x[1].toUpperCase()]),bt=st.beats?mdbLinjer(await st.beats.text()).map(x=>[+x[0],+x[1]]):null,neu=kl.filter(x=>MDB.NEU.includes(x[1])).map(x=>x[0]);
+   for(const[v,,suf]of MDB.V){const f=st[v];if(!f)continue;nLyd++;MDB.frem='Rigtige trommer: '+nLyd+' af '+alle+' lydfiler · '+tidTxt((performance.now()-t00)/1000);asTegn();await new Promise(r=>setTimeout(r,0));
+    const o=await mdbLyd(f);if(o.hentet)hentet++;const N=asNorm(o.R,null,o.sr,o.dur),S={t0:0,slut:o.dur};
+    MDB.K.forEach(([k,KL])=>{const sand=kl.filter(x=>x[1]===KL).map(x=>x[0]);led(v,k,st.navn,mdbMatch(sand,Rytme.slagtider(AS.REGEL[k],N.F[k],N.dtf,1,false),AS.TOL,neu));
+     for(let q=2;q<=18;q++){const z=(thr[v][k]=thr[v][k]||{})[q]||(thr[v][k][q]={hit:0,fa:0,ov:0}),m=mdbMatch(sand,Rytme.slagtider(Object.assign({},AS.REGEL[k],{thr:q*.05}),N.F[k],N.dtf,1,false),AS.TOL,neu);z.hit+=m.hit;z.fa+=m.fa;z.ov+=m.ov}});
+    /* v9.120 (G2): de samme fundne slag, men svage slag (Snare) og hihat med foden (Hihat) er neutrale */
+    if(sub&&sub.length)[['snare0','snare',MDB.SD,MDB.SVAG],['hihat0','hihat',MDB.HH,MDB.PEDAL]].forEach(([rk,k,grp,ud])=>{const sand=sub.filter(x=>grp.includes(x[1])&&!ud.includes(x[1])).map(x=>x[0]),nu=neu.concat(sub.filter(x=>ud.includes(x[1])).map(x=>x[0]));
+     led(v,rk,st.navn,mdbMatch(sand,Rytme.slagtider(AS.REGEL[k],N.F[k],N.dtf,1,false),AS.TOL,nu));for(let q=2;q<=18;q++){const z=(thr[v][rk]=thr[v][rk]||{})[q]||(thr[v][rk][q]={hit:0,fa:0,ov:0}),m=mdbMatch(sand,Rytme.slagtider(Object.assign({},AS.REGEL[k],{thr:q*.05}),N.F[k],N.dtf,1,false),AS.TOL,nu);z.hit+=m.hit;z.fa+=m.fa;z.ov+=m.ov}});
+    if(bt&&bt.length){led(v,'taktslag',st.navn,mdbMatch(bt.map(x=>x[0]),asSpring(N.A&&N.A['ana:taktslag'],N.dtf,S),AS.TOLT));led(v,'takt',st.navn,mdbMatch(bt.filter(x=>x[1]===1).map(x=>x[0]),asSpring(N.A&&N.A['ana:takt'],N.dtf,S),AS.TOLT));
+     const d=[];for(let i=1;i<bt.length;i++)d.push(bt[i][0]-bt[i-1][0]);d.sort((a,b)=>a-b);(tempo[st.navn]=tempo[st.navn]||{})[v]=[N.bpm,d.length?Math.round(600/d[d.length>>1])/10:0,N.faseKonf]}}}
+  for(const[v]of MDB.V)for(const k in res[v]){const r=res[v][k];r.s=asF(r);const T=thr[v][k];if(T){let bq=0,bs=-1;for(const q in T){const s=asF(T[q]);if(s>bs){bs=s;bq=+q}}r.bedst=[Math.round(bq*5)/100,bs]}}
+  const kort={};MDB.V.forEach(([v])=>MDB.R.forEach(([k])=>{if(res[v][k])kort[v+':'+k]=res[v][k].s}));const hist=((MDB.data&&MDB.data.hist)||[]).slice(-19);
+  MDB.data={v:asVersion(),dato:Date.now(),ms:Math.round(performance.now()-t00),n:L.length,lyd:alle,hentet,res,tempo,hist:hist.concat([{v:asVersion(),dato:Date.now(),s:kort}])};
+  try{lsGem('rytme-asik-mdb',JSON.stringify(MDB.data))}catch(e){}
+  try{$('status').textContent='Rigtige trommer er målt: '+L.length+' stykker, '+alle+' lydfiler ('+(hentet?hentet+' fra cachen, ':'')+tidTxt(MDB.data.ms/1000)+').'}catch(e){}
+ }catch(e){console.error(e);try{$('status').textContent=e&&e.message==='ANA_STOP'?'Målingen blev annulleret.':'Rigtige trommer kunne ikke måles: '+(e&&e.message||e)}catch(x){}}
+ finally{anaFrem=glFrem;try{anaSkjul()}catch(e){}MDB.koerer=false;MDB.frem=''}
+ asTegn();return MDB.data}
+function mdbCelle(r){if(!r)return'<td>–</td>';const kl=asKl(r.s);return '<td><span class="as-c as-k-'+kl+' as-mdb-c">'+r.s+'</span> <span class="small">'+r.hit+' af '+r.n+' · falske '+r.fa+' · oversete '+r.ov+(r.neu?' · neutrale '+r.neu:'')+'</span></td>'}
+function mdbHtml(){const D=MDB.data,h=neHtml;let t='<div id="as-mdb" class="as-mdb"><h4 class="as-h">Rigtige trommer · MDB Drums</h4><p class="small">Rigtige trommeslagere i 23 stykker (MedleyDB) med facit for hvert slag og hvert taktslag. Tallene blandes aldrig med testlyden. Filerne ligger kun på din pc; vælg mappen <b>MDB Drums</b>.</p>'
+ +'<div class="as-top"><button class="as-prim" data-mdbx="vaelg"'+(MDB.koerer?' disabled':'')+' title="Vælg mappen MDB Drums (den med audio og annotations). Programmet finder lyd og facit efter filnavn.">'+(MDB.koerer?h(MDB.frem||'Måler …'):'Vælg facit-mappe')+'</button><span class="small">'+(D?'målt '+asDato(D.dato)+' · v'+h(D.v)+' · '+D.n+' stykker, '+D.lyd+' lydfiler · '+tidTxt(D.ms/1000)+(D.hentet?' ('+D.hentet+' fra cachen)':''):'ikke målt endnu')+'</span></div>';
+ if(D&&D.res){t+='<table class="as-tab as-mdb-tab"><thead><tr><th>Lydtræk</th>'+MDB.V.map(v=>'<th>'+v[1]+'</th>').join('')+'</tr></thead><tbody>';
+  MDB.R.forEach(([k,nv])=>{t+='<tr class="as-r'+(/0$/.test(k)?' as-mdb-u':'')+'" data-mdbr="'+k+'" tabindex="0" title="Klik for at se tallene for hvert stykke"><td class="as-nv">'+h(nv)+'</td>'+MDB.V.map(([v])=>mdbCelle(D.res[v][k])).join('')+'</tr>';
+   if(MDB.aaben[k])t+='<tr class="as-det"><td colspan="3" class="small">'+MDB.V.map(([v,nv2])=>{const r=D.res[v][k];return r?'<b>'+h(nv2)+'</b>: '+r.pm.map(([n,s])=>h(n.replace(/^MusicDelta_/,''))+' <b>'+s+'</b>').join(' · ')+(r.bedst?'<br>Bedste tærskel: <b>'+String(r.bedst[0].toFixed(2)).replace('.',',')+'</b> giver <b>'+r.bedst[1]+'</b> (standard-reglen giver '+r.s+').':''):''}).join('<br>')+'</td></tr>'});
+  t+='</tbody></table>'}
+ t+='<details class="as-hvordan"><summary>Sådan måles rigtige trommer</summary><p class="small">Samme regler og tolerancer som testlyden: standard-reglen (tærskel 0,30, Hihat 0,35), ±50 ms for slag og ±70 ms for taktslag, F-mål. <b>Kick</b> = KD, <b>Snare</b> = SD, <b>Hihat</b> = HH. <b>Bækken</b> (CY) og <b>tammer</b> (TT, OT) er neutrale: et fundet slag, der ligger højst 50 ms fra et bækken- eller tam-slag og ikke passer til sin egen klasse, tæller hverken som rigtigt eller falsk (står som neutrale). Et kick, der findes på en snare, er falsk. <b>Svage slag</b> (underklasserne i subclass-filerne): Snare har SD (almindeligt slag), SDB (visker), SDF (flam), SDNS (uden seiderne), <b>SDG (svagt slag, fagudtryk: ghost note)</b> og <b>SDD (drag: to små forslag)</b>; Hihat har CHH (lukket), OHH (åben) og <b>PHH (med foden, pedal)</b>; Bækken: RDC, RDB, CRC, CHC, SPC; Tammer: HIT, MHT, HFT, LFT; Andet: SST (kantslag), TMB (tamburin). I rækken <i>Snare · uden svage slag</i> er SDG og SDD neutrale; i <i>Hihat · uden pedal</i> er PHH neutral. Visker (SDB) regnes ikke som svage: de er en måde at spille på. <b>Taktslag</b> og <b>Takt 1</b> måles mod beats-filerne (nummer 1 er takt 1); hvordan de er lavet, står ikke i datasættets README. <b>Kun trommerne</b> svarer til Trommer-sporet. Lyden regnes første gang og gemmes i cachen; derefter tager det sekunder.</p></details>'
+  +'<details class="as-hvordan"><summary>Sådan henter du mappen</summary><p class="small">1. Åbn github.com/CarlSouthall/MDBDrums, og tryk den grønne knap <b>Code</b> → <b>Download ZIP</b>.<br>2. Pak zip-filen ud et sted på din pc. Mappen fylder cirka 2,2 GB; undermappen audio/multi-tracks (cirka 1,6 GB) bruges ikke og kan slettes.<br>3. I MV: 1 · Analyse → Analyse sikkerhed → <b>Vælg facit-mappe</b> → vælg mappen <b>MDB Drums</b>.<br>4. Første gang regnes 46 lydfiler (cirka et par minutter); bagefter hentes de fra cachen.<br>Licens: CC BY-NC-SA 4.0 (ikke-kommerciel brug).</p></details></div>';
+ return t}
+function mdbTegn(){const p=asRude();if(!p||p.hidden)return;const gl=p.querySelector('#as-mdb');if(gl)gl.remove();const d=document.createElement('div');d.innerHTML=mdbHtml();const el=d.firstChild,hist=[...p.querySelectorAll('h4.as-h')].find(x=>/Tidligere/.test(x.textContent));if(hist)p.insertBefore(el,hist);else p.appendChild(el)}
+{const gl=asTegn;asTegn=function(){gl();try{mdbTegn()}catch(e){console.error(e)}}}
+{const gl=asRapport;asRapport=function(){let t=gl();const D=MDB.data;if(!D||!D.res)return t+'\nRigtige trommer (MDB Drums): ikke målt.';
+ const L=['Rigtige trommer (MDB Drums, '+D.n+' stykker, målt '+asDato(D.dato)+', v'+D.v+', '+tidTxt(D.ms/1000)+'):'];MDB.V.forEach(([v,nv])=>L.push(nv+': '+MDB.R.map(([k,n])=>{const r=D.res[v][k];return r?n+' '+r.s+' (rammer '+r.hit+' af '+r.n+', falske '+r.fa+', oversete '+r.ov+(r.neu?', neutrale '+r.neu:'')+(r.bedst?', bedste tærskel '+r.bedst[0]+' → '+r.bedst[1]:'')+')':n+' –'}).join(' · ')));
+ L.push('Tempo, hele mixet (fundet → rigtigt fra beats-filen, fase-sikkerhed): '+Object.keys(D.tempo||{}).map(n=>{const x=D.tempo[n].mix;return n.replace(/^MusicDelta_/,'')+' '+(x?x[0]+' → '+x[1]+' ('+x[2]+')':'–')}).join(' · '));return t+'\n'+L.join('\n')}}
+function mdbByg(){const p=asRude();if(!p||p.dataset.mdb)return;p.dataset.mdb='1';let inp=$('as-mdb-fil');if(!inp){inp=document.createElement('input');inp.type='file';inp.id='as-mdb-fil';inp.multiple=true;inp.setAttribute('webkitdirectory','');inp.hidden=true;document.body.appendChild(inp);inp.addEventListener('change',()=>{const F=[...inp.files];inp.value='';if(F.length)mdbKoer(F)})}
+ p.addEventListener('click',e=>{const b=e.target.closest('[data-mdbx="vaelg"]');if(b){e.stopPropagation();MDB.klik=(MDB.klik||0)+1;$('as-mdb-fil').click();return}const r=e.target.closest('tr[data-mdbr]');if(r){e.stopPropagation();MDB.aaben[r.dataset.mdbr]=!MDB.aaben[r.dataset.mdbr];asTegn()}},true)}
+try{mdbByg()}catch(e){console.error(e)}
+/* ========== SLUT: RIGTIGE TROMMER MED FACIT (MDB DRUMS) ========== */
+
+

@@ -75,6 +75,6 @@ Resten af A3 (fasens sikkerhed; taktslag i Hip-hop og Techno med bas; med 4 spor
 
 ## Åbne spørgsmål
 
-1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille. Feltfarven D7: ikke valgt. **Teknik** (brugerens "til planen" efter Groks vurdering): `docs/PLAN-TEKNIK.md` med fakta (to tredjedele af filen er three.js; Groks 2 `debugger` og 56 TODO'er står alle i three.js) og T0–T6; Codes forslag: T1 autosikring → T0 del op (byte for byte ens) → resten af A3; brugeren vælger.
+1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille. Feltfarven D7: ikke valgt. **Teknik** (`docs/PLAN-TEKNIK.md`): brugeren valgte 20. november T1, T0, så A3–A4 (og T2–T3, hvis det går uden problemer). **T0 er bygget:** koden ligger i `src/dele/` og bygges med `node src/byg.js` (byte for byte ens; test 102).
 2. Det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`): Pinokio først; om en fil-side kan nå `127.0.0.1` (CORS, Local Network Access) skal prøves i brugerens Chrome.
 3. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter. MDB-mappen skal i dag vælges igen for hver ny måling (browseren giver kun adgang til mappen, til siden lukkes); forslag til brugeren: A facit gemmes i cachen, så Mål igen virker uden mappen, eller B MV husker mappen (File System Access).

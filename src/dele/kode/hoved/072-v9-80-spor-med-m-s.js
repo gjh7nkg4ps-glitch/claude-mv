@@ -1,0 +1,26 @@
+/* ========== v9.80: SPOR MED M/S ==========
+   Planen docs/PLAN-SANG-OG-ANALYSE.md, trin S6 og afsnit 4 (valg A + B): fanen Spor tegner én række pr. spor i STEM_SPOR (stemKort):
+   filen, bølgeformen (konturen regnes i bidder, STEM.env), niveauet lige nu (stem:SPOR:rms fra analysen) og M/S. M og S ændrer kun det,
+   man hører: sporene lægges sammen igen uden de fjernede (stemMixAf, cachen STEM.mixCache), og buf skiftes, mens afspilningen fortsætter
+   samme sted (stemLytSkift). Analysen (F, STEM.F), Niveau og Lyd over tid bruger stadig den fulde blanding (maalBuf = STEM.mixAlle).
+   Når der lyttes til et udvalg, står det i det gule felt #stem-lyt og i mærket #sg-lyt ved fanerne. */
+function maalBuf(){return (typeof STEM!=='undefined'&&STEM.klar&&STEM.mixAlle)?STEM.mixAlle:buf}
+function stemHoerbare(){const L=STEM_SPOR.map(([s])=>s);if(STEM.solo&&STEM.buf[STEM.solo])return[STEM.solo];return L.filter(s=>!(STEM.mute&&STEM.mute[s]))}
+function stemMixAf(liste){const alle=STEM_SPOR.map(([s])=>s);if(liste.length===alle.length&&STEM.mixAlle)return STEM.mixAlle;const key=liste.join('+');STEM.mixCache=STEM.mixCache||{};if(STEM.mixCache[key])return STEM.mixCache[key];
+ const B=liste.map(s=>STEM.buf[s]).filter(Boolean),ref=STEM.mixAlle||B[0];if(!ref)return null;const n=ref.length,ch=ref.numberOfChannels,rate=ref.sampleRate,m=actx.createBuffer(ch,n,rate);
+ for(let c=0;c<ch;c++){const d=m.getChannelData(c);for(const b of B){const x=b.getChannelData(Math.min(c,b.numberOfChannels-1)),L=Math.min(n,x.length);for(let i=0;i<L;i++)d[i]+=x[i]}}STEM.mixCache[key]=m;return m}
+function stemLytSkift(){if(!STEM.klar||!STEM.mixAlle)return;const ny=stemMixAf(stemHoerbare());if(!ny||ny===buf)return;const t=typeof now==='function'?now():offset,was=playing;if(was)stop();buf=ny;offset=Math.max(0,Math.min(dur||0,t));if(was)play()}
+function stemLytTekst(){const h=stemHoerbare(),alle=STEM_SPOR.map(([s])=>s),navn=s=>(STEM_SPOR.find(x=>x[0]===s)||[s,s])[1];if(h.length===alle.length)return'';if(STEM.solo)return'Du lytter kun til '+navn(STEM.solo)+' (solo).';const vaek=alle.filter(s=>!h.includes(s)).map(navn);return h.length?'Du lytter uden '+vaek.join(' og ')+' (mute).':'Alle spor er slået fra (mute): du hører ingenting.'}
+function stemLytUI(){const tx=stemLytTekst();STEM_SPOR.forEach(([s])=>{const m=document.querySelector('[data-stemm="'+s+'"]'),so=document.querySelector('[data-stems="'+s+'"]');const mu=!!(STEM.mute&&STEM.mute[s]),sl=STEM.solo===s;if(m){m.classList.toggle('on',mu);m.setAttribute('aria-pressed',String(mu))}if(so){so.classList.toggle('on',sl);so.setAttribute('aria-pressed',String(sl))}const r=document.querySelector('[data-stemr="'+s+'"]');if(r)r.classList.toggle('stem-tavs',STEM.klar&&!stemHoerbare().includes(s))});
+ const f=$('stem-lyt');if(f){f.hidden=!tx;f.textContent=tx?tx+' Analysen og reglerne bruger stadig alle spor.':''}const b=$('sg-lyt');if(b){b.hidden=!tx;b.textContent=tx?'🎧 '+tx.replace(/\.$/,''):''}}
+document.addEventListener('click',e=>{const m=e.target.closest('[data-stemm]'),so=e.target.closest('[data-stems]');if(!m&&!so)return;STEM.mute=STEM.mute||{};
+ if(m){const s=m.dataset.stemm;STEM.mute[s]=!STEM.mute[s];if(STEM.solo===s&&STEM.mute[s])STEM.solo=null}else{const s=so.dataset.stems;STEM.solo=STEM.solo===s?null:s}
+ stemLytUI();stemLytSkift();const tx=stemLytTekst();msg(tx?tx+' Analysen og reglerne bruger stadig alle spor.':'Du hører alle spor igen.')});
+/* bølgeformens kontur pr. spor, regnet i bidder */
+function stemEnvStart(s){const b=STEM.buf[s];if(!b)return;STEM.env=STEM.env||{};const E=STEM.env[s];if(E&&E.buf===b)return;const N=1000,o={buf:b,N,a:new Float32Array(N),klar:false};STEM.env[s]=o;const d=b.getChannelData(0),d2=b.numberOfChannels>1?b.getChannelData(1):d,len=b.length,per=len/N;let x=0;
+ const trin=()=>{if(STEM.env[s]!==o)return;const t0=performance.now();while(x<N&&performance.now()-t0<8){const i0=Math.floor(x*per),i1=Math.min(len,Math.floor((x+1)*per));let m=0;const st=Math.max(1,Math.floor((i1-i0)/600));for(let i=i0;i<i1;i+=st){const v=Math.abs(d[i]),v2=Math.abs(d2[i]);if(v>m)m=v;if(v2>m)m=v2}o.a[x]=m;x++}if(x<N)setTimeout(trin,0);else o.klar=true};setTimeout(trin,0)}
+function stemTik(){const rk=document.querySelector('.stem-rk');if(!rk||rk.offsetParent===null)return;const t=typeof now==='function'?now():0,spil=(typeof playing!=='undefined'&&playing)||offset>0;
+ STEM_SPOR.forEach(([s])=>{const b=STEM.buf[s];const c=rk.querySelector('[data-stembf="'+s+'"]');if(c){const g=c.getContext('2d'),W=c.width,H=c.height;g.clearRect(0,0,W,H);if(b){stemEnvStart(s);const E=STEM.env&&STEM.env[s];if(E&&E.klar){const hb=stemHoerbare().includes(s);g.fillStyle=hb?'hsl(32 70% 55% / .85)':'rgba(200,168,152,.35)';for(let x=0;x<W;x++){const v=E.a[Math.floor(x/W*E.N)]||0;g.fillRect(x,H/2-v*(H/2-2),1,Math.max(1,v*(H-4)))}}else{g.fillStyle='rgba(200,168,152,.5)';g.fillText('regner …',6,H/2+4)}if(STEM.klar&&dur>0){const px=t/dur*W;g.fillStyle='#ffb000';g.fillRect(px-1,0,2,H)}}else{g.fillStyle='rgba(200,168,152,.35)';g.fillText('ingen fil',6,H/2+4)}}
+  const u=rk.querySelector('[data-stemniv="'+s+'"]');if(u){let v=0;try{v=STEM.klar&&spil?stemV('stem:'+s+':rms',t):0}catch(e){}const w=(Math.max(0,Math.min(1,v))*100).toFixed(1)+'%';if(u.style.width!==w)u.style.width=w}})}
+/* ========== SLUT: SPOR MED M/S ========== */
+
