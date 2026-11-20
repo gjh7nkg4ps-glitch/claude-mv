@@ -91,6 +91,7 @@ kode/hoved/078-v9-85-opsaetningerne-ryddet-op-forindst-ops-test-nulstil.js
 kode/hoved/079-v9-86-startskaerm-og-indlaest.js
 kode/hoved/080-v9-104-gemning-der-siger-til-og-nyt-paa-startskaermen.js
 kode/hoved/081-v9-106-gem-hele-arbejdet-d6.js
+kode/hoved/081a-v9-122-autosikring-t1.js
 kode/hoved/082-v9-87-biblioteket.js
 kode/hoved/083-v9-108-paa-scenen-ps2-hylden-effekter-i-biblioteket.js
 kode/hoved/084-v9-109-paa-scenen-ps3-oeje-og-slaa-fra-pr-effekt-i-noder-og-.js

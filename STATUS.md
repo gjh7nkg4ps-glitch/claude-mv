@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.121, 20. november 2026)
+## Nu (v9.122, 20. november 2026)
 
+- **v9.122 (T1, autosikring):** MV lægger selv en kopi af alt i browseren hver dag (IndexedDB, de seneste 7 dage). Opsætninger → *Automatiske kopier*: én række pr. kopi (i dag, i går …) med *Gå tilbage hertil* (spørger to gange, gemmer først det, du har nu, og starter forfra) og *Tag en kopi nu*. Fortryd: rækken "lige før du gik tilbage". Analyse-cachen er ikke med; *Gem hele arbejdet* (en fil på din pc) er stadig den sikreste.
 - **T0 (uden ny version):** koden ligger nu i `src/dele/` (132 filer; én pr. blok i `kode/hoved/`), og `node src/byg.js` bygger programfilen; den giver v9.121 byte for byte (test 102). Fra nu af rettes kun i kilderne.
 
 - **v9.121:** *Testlyden: lyt og gem* ligger foldet sammen bag den lille knap **Testlyden ▸** (efter Kopiér rapport), fordi den næsten aldrig bruges (brugerens ønske).
@@ -20,15 +21,6 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 - **A1 (v9.113, P8.26 og P8.28):** hele analysen på de 4 spor (80 lydtræk pr. spor) i baggrunds-trådene, gemt i cachen; Analyse sikkerhed måler ét instrument alene, viser bedste tærskel også for sporene, har *Brug den bedste tærskel* (Ctrl+Z) og *Kopiér rapport*. **STOP efter A1.**
 - **Kolonnenavnene står fast øverst i Node-editoren (v9.111):** en fast linje, samme størrelse uanset zoom, ingen overlap (brugerens ønske 20. november). v9.112: efter Tilpas står noderne under linjen (hele testpakken fandt, at klik på en node kunne ramme et kolonnenavn).
 - **Analyse sikkerhed (A0, v9.110, P8.24):** fanen Analyse sikkerhed i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker (grøn 75–100, gul 50–74, rød 0–49, ? ikke målt; 99 = ren matematik); resultatet gemmes med versionsnummer. 4 spor kun under cirka 15 minutter (besked). Notat om installation med ét klik: `docs/LOKALT-MODUL-INSTALLATION.md`. **STOP efter A0.** De første tal står i `docs/STATUS-TIL-HOVEDCHATTEN.md`.
-- **P8.14 punkt 1 og 3 er bygget:** Detektion som kort under Analyse → Avanceret (v9.95, 2B); hele generatoren under Mere … i kortet Generator (v9.96, 3B); Lyt til sangen og EQ-knappen Opret forbindelse er væk (v9.97, 3e og 3c); Sang hedder Analyse (v9.98, 3b); værktøjslinjen ruller ikke mere (⋯ Mere), og Radial Mesh er helt i fuld skærm (v9.99, 3f); Navne: Til · Fra i Live preview (v9.100, P8.15 1); hent 4 spor på én gang, filer eller mappe (v9.101, 3a); en CSS-rettelse (v9.102).
-- **Svarene på P8.14 punkt 5** står i `docs/arkiv/SVAR-P8_14.md`; **planen for punkt 7 ("På scenen")** i `docs/PLAN-PAA-SCENEN.md`; **listen over pigernes egenskaber** (punkt 9) i `docs/PIGERNES-EGENSKABER.md`.
-- **Dokumenterne er kortet ned (P8.23 punkt 1):** CLAUDE.md cirka 15 KB; historik i `docs/arkiv/HISTORIK.md`; planerne rummer kun det ubyggede; SVAR-filerne, KORTLAEGNING, NODE-EDITOREN (papiret), PLAN-NODE-EDITOREN og FUNKTIONSLISTE-TJEK er i `docs/arkiv/`.
-- **På scenen, PS3 (v9.109):** øje og Slå fra pr. effekt i Noder (mål-noden og kontrolpanelet) og matrixen (overskriften); Navne: Til skriver effekternes navne i hjørnet. **STOP efter PS3** (P8.23).
-- **På scenen, PS2 (v9.108):** hylden Effekter i Biblioteket med regel-sæt som *Lys-puls på kick*; klik på effektens navn i På scenen åbner kortet.
-- **På scenen, PS1 (v9.107):** vinduet Figurer hedder På scenen med Karakterer, Figurer og Effekter (19, hele billedet); øje, ⏻ og styrke pr. række, også pr. effekt (`scene.ne.eff`); Ctrl+Z. **STOP efter PS1** (P8.20).
-- **Gem hele arbejdet / Hent hele arbejdet (v9.106, D6):** én fil med alt under rytme-*; Opsætninger, 💾 Gem ▾ og banneret.
-- **Gitter i Node-editoren (v9.105, P8.12):** faste kolonner, Ret op, A/B/C, Del, skyderne Lodret og Vandret, tre kæmpe opstillinger; pladser og skydere gemmes med showet; Ctrl+Z.
-- **P8.18 D1–D3 er bygget (v9.104):** Gemt ✓ og banner, når gemningen fejler; tasten ?; Hvad er nyt på startskærmen. Svar på D6 i `docs/arkiv/SVAR-P8_18.md`.
 
 ## Tal: Testlyd og Rigtige trommer (P8.31; F-mål)
 
@@ -49,14 +41,13 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 **Rækkefølgen for analysen (brugerens valg): A3 før A2:** resten af A3 → A2 → A4 → A5–A6.
 
-1. Brugeren prøver v9.121 (Rigtige trommer: vælg MDB-mappen igen én gang, så underklasserne bliver læst). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Derefter resten af A3: fasens sikkerhed (kalibreres først), taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet med 4 spor, tempoets halve, Snare.
+1. Brugeren prøver v9.122 (Opsætninger → Automatiske kopier; Rigtige trommer: vælg MDB-mappen igen én gang, så underklasserne bliver læst). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Derefter resten af A3: fasens sikkerhed (kalibreres først), taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet med 4 spor, tempoets halve, Snare.
 2. Så A2 sikkerhedsgrænse og enighed (kræver en kalibreret fase-sikkerhed), A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
 ## Venter på brugeren
 
 - Rigtige trommer uden at vælge mappen igen: A facit gemmes i cachen (Codes anbefaling), B MV husker mappen, C som nu.
-- Teknik: rækkefølgen i `docs/PLAN-TEKNIK.md` (Codes forslag: T1 autosikring → T0 del op → resten af A3).
 
 - Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
@@ -69,7 +60,7 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 ## Senere (kort; detaljer i planerne)
 
-- **Teknik og vedligeholdelse** (`docs/PLAN-TEKNIK.md`, brugerens "til planen" 20. november efter Groks vurdering): T1 autosikring (daglig kopi, *Gå tilbage til i går*), T0 del filen op i kilder og byg den ene fil (først byte for byte ens), T2 ryd op, T3 central tilstand med lyttere, T4 SVG-ikoner, T5 tung tegning til WebGL/WebGPU, T6 moderne moduler. Groks 2 `debugger` og 56 TODO'er står i three.js, ikke i vores kode.
+- **Teknik og vedligeholdelse** (`docs/PLAN-TEKNIK.md`, brugerens "til planen" 20. november efter Groks vurdering): T0 (kilderne) og T1 (autosikring, v9.122) er bygget; tilbage: T2 ryd op, T3 central tilstand med lyttere, T4 SVG-ikoner, T5 tung tegning til WebGL/WebGPU, T6 moderne moduler. Groks 2 `debugger` og 56 TODO'er står i three.js, ikke i vores kode.
 
 - **Indbygget spor-deling** som lokalt modul (P8.14 punkt 6; `docs/arkiv/SVAR-P8_14.md` f). **.stem.mp4** læses og fordeles af sig selv; Native Instruments' gratis **Stem Creator Tool** kan samle 4 spor til én .stem.mp4 (P8.15 2, P8.16 1). Indtil da: `ffmpeg -i sang.stem.mp4 -map 0:a:1 trommer.wav -map 0:a:2 bas.wav -map 0:a:3 resten.wav -map 0:a:4 vokal.wav`.
 - **Målervæg** (vores navn; fagudtryk: meter bridge): et stort vindue eller fuld skærm med mange målere.

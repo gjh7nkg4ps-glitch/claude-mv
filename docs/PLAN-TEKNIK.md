@@ -23,7 +23,7 @@
 
 | Nr. | Idé | Codes vurdering | Størrelse |
 | --- | --- | --- | --- |
-| **T1** | **Autosikring:** en kopi af alt (alle `rytme-*`) hver dag i IndexedDB, de seneste 7 dage, og knappen *Gå tilbage til i går* (eller en anden dag) i Opsætninger, med en tydelig forklaring og Fortryd | **Anbefalet først**: lille, og den beskytter dit arbejde mod en fejl eller et forkert klik | 1 version |
+| ~~T1~~ | **Bygget i v9.122:** en kopi af alt (alle `rytme-*`) hver dag i IndexedDB, de seneste 7 dage, plus 2 kopier "lige før du gik tilbage"; Opsætninger → *Automatiske kopier* med *Gå tilbage hertil* (spørger to gange) og Fortryd; test 103 | – | – |
 | ~~T0~~ | **Bygget 20. november (uden ny version):** `src/` med 132 kildefiler (101 blokke i `kode/hoved/`), `src/byg.js` og `src/LÆSMIG.md`; bygger v9.121 byte for byte; test 102 | – | – |
 | T0b | Byggeværktøj (esbuild eller Vite) | Først ved T6 (rigtige moduler med `import`); til T0 er et lille Node-script nok, uden nye værktøjer og uden internet | – |
 | T2 | **Ryd op:** den døde kode (listen i CLAUDE.md § 4: Generator (fuld), Lydlag, `OPS_TEST`, `nivAnvend`, side- og bundbjælken, gamle layouts) og saml indpakningerne i ét område ad gangen | Efter T0, løbende, med testene som kontrol | løbende |

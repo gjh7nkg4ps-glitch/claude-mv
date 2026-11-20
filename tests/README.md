@@ -10,7 +10,7 @@ node tests/koer-alle.js
 
 En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node tests/92-gitter.js claude-mv-v9_107.html`. Testene bruger Node og Playwright (testbrowser uden grafikkort); test 11 bruger Python med numpy. Hele pakken tager cirka 2 timer; kør aldrig to kørsler samtidig (hukommelsen løber tør). Hver version får sin egen test (trin 4), som bliver i pakken.
 
-## Testene (102)
+## Testene (103)
 
 | Fil | Trin | Hvad |
 | --- | --- | --- |
@@ -35,6 +35,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `93-hele-arbejdet.js` | 4 · Det nye i v9.106 | Gem hele arbejdet (rigtigt klik i Opsætninger) … |
 | `94-paa-scenen.js` | 4 · Det nye i v9.107 | På scenen ved 1920 × 1080 og 2560 × 1440 med Pigernes show … |
 | `95-hylden-effekter.js` | 4 · Det nye i v9.108 | Hylden Effekter: 19 kort, kortet Lys-puls med regel-sæt der passer, Brug lægger reglen på, Ctrl+Z, Skjul på scenen, Lav en kopi, Gem som regel-sæt, valg C hos danseren, klik fra På scenen |
+| `103-autosikring.js` | 4 · Det nye i v9.122 (T1) | Automatiske kopier ved 1920 × 1080: dagens kopi lægges af sig selv; 9 tidligere dage giver højst 7; rækkerne i Opsætninger (i dag, i går …); rigtige klik på Gå tilbage hertil (Annuller ændrer intet; to gange Ja går tilbage til i går og starter forfra); Fortryd via "lige før du gik tilbage"; Tag en kopi nu; ingen konsolfejl |
 | `102-byg-fra-kilder.js` | 1 · Kilderne (T0) | `src/dele.txt` er hel; `node src/byg.js --tjek` bygger præcis den testede fil, byte for byte; `.gitattributes` beskytter linjeskiftene. Ingen browser |
 | `101-testlyd-lyt-og-gem.js` | 4 · Det nye i v9.119 og v9.121 | Foldet sammen bag den lille knap "Testlyden ▸" (rigtige klik ud og ind, lyden standser); afsnittet "Testlyden: lyt og gem" (6 rækker); rigtige klik på ▶ Lyt og ■ Stop; Gem som WAV: header og fingeraftryk = rapportens (ac579ca0, a375df80); filen kan åbnes som sang; ▶ Lyt sætter sangen på pause |
 | `100-bedre-slag-og-takt.js` | 4 · Det nye i v9.117 | A3-rækken i Indstillinger for analysen; Testlyd med A3 til (Kick 92, Taktslag · Trommer 81, Takt · Trommer 76); rigtigt klik på Fra giver præcis tallene fra før; Til igen; med en sang: "Denne sang" og boblen ved Takt 1 |

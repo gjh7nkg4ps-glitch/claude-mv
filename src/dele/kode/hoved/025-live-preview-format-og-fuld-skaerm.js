@@ -13,3 +13,4 @@ function pvFuld(){const w2=$('w2');if(document.fullscreenElement===w2){if(docume
  if(w2.classList.contains('min'))miniSaet(w2,false);try{const p=w2.requestFullscreen();if(p&&p.catch)p.catch(()=>msg('Fuld skærm blev afvist af browseren. Prøv igen med et klik på knappen.'))}catch(e){msg('Fuld skærm blev afvist af browseren.')}}
 $('pv-fuld').onclick=pvFuld;
 document.addEventListener('fullscreenchange',()=>{const w2=$('w2'),til=document.fullscreenElement===w2;$('pv-fuld').textContent=til?'Afslut fuld skærm':'Fuld skærm';$('pv-fuld').setAttribute('aria-pressed',til?'true':'false');if(typeof pvResize==='function')pvResize()});
+/* ========== SLUT: LIVE PREVIEW ========== */
