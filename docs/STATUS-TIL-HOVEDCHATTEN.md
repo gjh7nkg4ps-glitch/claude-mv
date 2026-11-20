@@ -1,8 +1,8 @@
-# Status til hovedchatten · v9.111 · 20. november 2026
+# Status til hovedchatten · v9.112 · 20. november 2026
 
 *Fra Claude Code. Højst 60 linjer (P8.23 punkt 1g). Den gamle udgave (Node-editoren v9.19–v9.42) ligger i `docs/arkiv/STATUS-TIL-HOVEDCHATTEN-v9_42.md`.*
 
-**Nyeste version i repoet: v9.111** (`claude-mv-v9_111.html`; v9.110 = A0, v9.111 = kolonnenavnene fast øverst i Node-editoren). En ny version fra hovedchatten skal bygge på den fil og hedde v9.112 eller højere.
+**Nyeste version i repoet: v9.112** (`claude-mv-v9_112.html`; v9.110 = A0, v9.111–v9.112 = kolonnenavnene fast øverst i Node-editoren). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer.
 
 ## Nuværende stand
 

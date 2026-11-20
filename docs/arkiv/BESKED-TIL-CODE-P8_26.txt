@@ -1,0 +1,25 @@
+BESKED TIL CODE · P8.26 · fra hovedchatten
+
+1. SVAR PÅ A0
+ v9.110 virker hos brugeren. ▶ Kør testen tog 28,6 s på brugerens pc (15 lydtræk i showet, 5 ikke målt).
+ Hovedchatten har lagt jeres målte tal ind i skemaet "Alle lyde og alle metoder P8.25" (https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU).
+
+2. BYG A1 (brugerens valg)
+ Hele analysen på de 4 spor:
+ - Hvert spor går gennem baggrunds-trådene (anaAlt) i stedet for hovedtråden, så programmet ikke fryser.
+ - Hvert spor får alle 98 rækker (trin 1 og 2), fx stem:trommer:ana:..., og Node-editoren, matrixen, D2 og Analyse sikkerhed kender de nye kilder.
+ - Sporenes analyse gemmes i cachen med en nøgle pr. filnavn og længde, så sporene ikke skal regnes igen efter genstart.
+ - Spor kun på sange under cirka 15 minutter (som i v9.110).
+ - Analyse sikkerhed: mål også på generatorens "ét instrument alene", så vi kan se, hvad A1 giver (især Tonehøjde på vokal-sporet og Basens tone på bas-sporet).
+ Bagefter, ikke nu: taktslagets halve takt (Hip-hop og Techno 0) og kickets ekko bør tages tidligt i A3; skriv det øverst under A3 i planen.
+
+3. OPDATER TIL HANDOVER
+ Hovedchatten skifter til en ny chat nu. Sørg for, at CLAUDE.md og docs/STATUS-TIL-HOVEDCHATTEN.md er opdaterede med:
+ - stand efter v9.110 (A0 bygget, tallene, at A1 er i gang)
+ - rækkefølgen for analysen: A1 → A2 → A3 (taktslag-fase og kick-ekko først) → A4 → A5–A6
+ - linket til skemaet P8.25 og til planen "Den nye analyse P8.19" (https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs)
+ - åbne spørgsmål: pigernes egenskaber (ligger stille), feltfarven D7 (ikke valgt), det lokale modul (Pinokio; CORS fra file:// skal prøves i brugerens Chrome)
+ Hold dem korte (CLAUDE.md under 15 KB, STATUS under 60 linjer).
+
+4. AFLEVERING
+ Stop efter A1, kør hele testpakken, og svar med de nye målte tal.

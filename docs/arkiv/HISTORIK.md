@@ -133,6 +133,7 @@ Flyttet fra `CLAUDE.md` den 20. november 2026 (P8.23 punkt 1b og 1c). **Læs ikk
 | v9.109 | **På scenen PS3:** mål-noder for effekter viser øje og Slå fra (klasser og tekst), kontrolpanelet har Synlig/Skjult og Slå fra/til (`data-ps3`); matrixens overskrift for en effekt har øje og ⏻ (`data-mxpo`/`data-mxpf`, egne lyttere uden om kolonnens træk) og bliver svag/gennemstreget; Navne: Til skriver effekter, der slår til, i øverste venstre hjørne (`PS3.sidst`). Test 96 |
 | v9.110 | **Analyse sikkerhed (A0, P8.24):** generatoren som facit (6 mønstre, offline), fanen Analyse sikkerhed i Analyse, cirkel med tal i matrixens rækkehoved (grøn, gul, rød, ?), boble og klik til rækken; 99 for ren matematik; resultat gemt med versionsnummer (`rytme-asik`); 4 spor kun under cirka 15 minutter (besked); notat om installation med ét klik (`docs/LOKALT-MODUL-INSTALLATION.md`). Test 97. |
 | v9.111 | **Kolonnenavnene fast øverst i Node-editoren:** en fast linje i kolonnernes rækkefølge, samme størrelse uanset zoom, ingen overlap (`ne61Hoveder` erstattet); test 56 skrevet om. |
+| v9.112 | **Rettelse til v9.111:** efter Tilpas står den øverste node 92 px nede, under linjen med kolonnenavne (test 15, 16 og 17 fandt, at klik ramte et kolonnenavn). |
 
 ## 2 · Noter og lukkede fejl pr. version (flyttet uændret fra CLAUDE.md § 5 "Halvfærdigt og kendte fejl")
 
