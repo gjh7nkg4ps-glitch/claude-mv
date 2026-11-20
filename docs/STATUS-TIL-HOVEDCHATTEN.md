@@ -1,16 +1,13 @@
-# Status til hovedchatten · v9.118 · 20. november 2026
+# Status til hovedchatten · v9.120 · 20. november 2026
 
-*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).*
-
-**Nyeste version i repoet: v9.118** (`claude-mv-v9_118.html`; P8.30 trin 1–3 og en rettelse). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
+*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.120** (`claude-mv-v9_120.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C), svage slag (G2)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
 ## Stand
 
 - **Brugerfladen** (P8.1–P8.23) er bygget: fire arbejdsområder, docking, matrix og Noder, Biblioteket, På scenen (PS1–PS3; PS4 lukket), Gem hele arbejdet, gitteret. v9.111–v9.112: kolonnenavnene står i en fast linje øverst i Node-editoren.
 - **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
-- **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter.
-- **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
-- **Testpakken:** 100 testfiler; på v9.117: 55 grønne, test 57 fejlede (rettet i v9.118); hele pakken køres på v9.118, og resultatet skrives her (TESTPAKKE_LINJE).
+- **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter. **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
+- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. Hele pakken kører på v9.120 (20. november); resultatet skrives her, når den er færdig.
 
 ## P8.30 trin 1 (v9.115): testlyd i ren matematik
 
@@ -46,18 +43,19 @@ Næsten alle stykker er cirka 110 BPM (fundet 110); BebopJazz og Gospel er 222 (
 
 ## P8.30 trin 3 (v9.117): A3 første del, før → efter
 
-| | Testlyd hele | Testlyd trommer | Rigtige hele mixet | Rigtige trommer |
+A3 slået til ét skridt ad gangen i P8.31's rækkefølge (Kick · Taktslag · Takt 1; skridt 3 = programmet med A3 til; Snare og Hihat ændres ikke):
+
+| Skridt | Testlyd hele | Testlyd trommer | Rigtige hele mixet | Rigtige trommer |
 | --- | --- | --- | --- | --- |
-| Kick | 60 → **92** | 40 → **94** | 63 → **70** | 72 → **75** |
-| Taktslag | 33 → **49** | 33 → **81** | 81 → 81 | 77 → **85** |
-| Takt 1 | 33 → 31 | 0 → **76** | 17 → **47** | 6 → **40** |
-| Snare · Hihat | 33 · 80 (uændret) | 35 · 76 | 34 · 68 | 46 · 72 |
+| 0 · før | 60 · 33 · 33 | 40 · 33 · 0 | 63 · 81 · 17 | 72 · 77 · 6 |
+| 1 · + Takt 1 | 60 · 33 · 33 | 40 · 33 · 33 | 63 · 81 · 42 | 72 · 77 · 25 |
+| 2 · + halve takt | 60 · 49 · 47 | 40 · 81 · 76 | 63 · 81 · 47 | 72 · 84 · 30 |
+| 3 · + kickets ekko | 92 · 49 · 31 | 94 · 81 · 76 | 70 · 81 · 47 | 75 · 85 · 40 |
 
 - **d) Kick:** stigningen i basbåndet måles i lineær skala, ikke logaritmisk (et ekko i næsten stilhed blev målt som 1,00, det rigtige kick i ekkoets hale som 0,69). Regnes ud fra det gemte basbånd, så cachen virker. En maske efter kraftige slag (hovedchattens forslag: tærskel, der følger niveauet) blev prøvet og gjorde Kick dårligere alle steder (Rigtige 63 → 55–58).
 - **b) Taktslag:** flyttes en halv slaglængde, når kicket mellem de fundne slag er 1,6 gange større end på dem. Andre vægte i anslagsstyrken blev prøvet; de hjalp testlyden, men skadede de rigtige trommer lidt.
 - **a) Takt 1:** kick − ½ × snare (sum over fire rammer, fordi et slag mellem to rammer ellers taber) + skift i klang og toner (12 toner, når de findes; ellers 4 bånd). Hovedchattens læsning passede: accenten alene er næsten ens i House; snare-målingen peger forkert (den reagerer på kickets klik, og klappet ligger i mid).
-- **c) Tempo:** Testlyden finder nu alle 6 tempi; BebopJazz og Gospel (222) findes som 110 (det halve). Står i planen.
-- Kan slås fra: Indstillinger for analysen → *Bedre slag og takt (A3)*; med Fra er alle tal præcis som før (test 100).
+- **c) Tempo:** Testlyden finder nu alle 6 tempi; BebopJazz og Gospel (222) findes som 110 (det halve). Står i planen. Kan slås fra: Indstillinger for analysen → *Bedre slag og takt (A3)*; med Fra er alle tal præcis som før (test 100).
 
 ## Brugerens rapport fra v9.117 (Chrome 157, Windows, 20. november kl. 20.09)
 
@@ -66,14 +64,17 @@ Næsten alle stykker er cirka 110 BPM (fundet 110); BebopJazz og Gospel er 222 (
 - **v9.118 (rettelse, fundet af testpakken, test 57):** kick i lineær skala nåede ikke tærsklen i stille stykker af sange over 10 minutter (*Lange sange* måtte højst skrue 4 gange op); for kick nu 16 gange. Korte sange er uændrede.
 - **Ikke målt:** korte sange med et meget stille afsnit (fx en stille intro med svage kick); den lineære kick kan overse dem, fordi hele sangen normaliseres samlet. *Adaptiv tærskel* hjælper.
 
+## P8.31 (v9.119, v9.120)
+
+- **Trin 3 var bygget i v9.117** (rettet i v9.118). Målt skridt for skridt i P8.31's rækkefølge (tabellen ovenfor; også i `STATUS.md`): skridt 3 (ekkoet) sænker Testlyd · Takt 1 i hele lyden 47 → 31, men hæver de rigtige trommer (Takt 1 30 → 40, Kick 72 → 75).
+- **G2 (v9.120):** 21 underklasser; svage = SDG (svagt slag, 790) og SDD (drag, 2); visker (SDB, 332) regnes ikke som svage; pedal = PHH (523). Snare uden svage slag 36 / 57 (hele mixet / trommer; alle slag 34 / 46); Hihat uden pedal 64 / 68 (alle 68 / 72). Regnskabet: de ramte svage slag flytter fra ramt til neutral; de falske er de samme. **Valg C (v9.119):** testlyden kan høres (▶ Lyt) og gemmes som WAV pr. mønster; filens fingeraftryk = rapportens.
+
 ## Rækkefølgen for analysen
 
 Resten af A3 (fasens sikkerhed; taktslag i Hip-hop og Techno med bas; med 4 spor ét taktgitter fra Trommer-sporet; tempo det halve i BebopJazz og Gospel; Snare) → A2 sikkerhedsgrænse og enighed i reglerne → A4 Lydtidslinjen → A5–A6 det lokale modul. Brugerens valg: A3 før A2. Mål altid før og efter på Testlyd og Rigtige trommer. Plan: "Den nye analyse P8.19" https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU · kort plan i repoet: `docs/PLAN-SANG-OG-ANALYSE.md`.
 
 ## Åbne spørgsmål
 
-1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille.
-2. Feltfarven D7: ikke valgt.
-3. Det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`): Pinokio først; om en fil-side kan nå `127.0.0.1` (CORS, Local Network Access) skal prøves i brugerens Chrome.
-4. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter.
-5. Testlyden findes kun i hukommelsen, mens testen kører; brugeren spurgte, hvor den er. Forslag til brugeren: knapper til at lytte til den og gemme den som WAV (ikke bygget).
+1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille. Feltfarven D7: ikke valgt.
+2. Det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`): Pinokio først; om en fil-side kan nå `127.0.0.1` (CORS, Local Network Access) skal prøves i brugerens Chrome.
+3. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter.

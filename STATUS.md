@@ -2,7 +2,10 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.118, 20. november 2026)
+## Nu (v9.120, 20. november 2026)
+
+- **v9.120 (G2, P8.31):** Rigtige trommer viser *Snare · uden svage slag* (SDG og SDD neutrale) og *Hihat · uden pedal* (PHH neutral); alle 21 underklasser står i "Sådan måles rigtige trommer".
+- **v9.119 (valg C):** Analyse sikkerhed → *Testlyden: lyt og gem*: ▶ Lyt / ■ Stop og Gem som WAV pr. mønster (Hele lyden, Kun trommerne, Kun bassen, Kun melodien); samme fingeraftryk som rapporten.
 
 - **v9.118:** rettelse til v9.117 (test 57): kick i stille stykker af sange over 10 minutter (Lange sange må nu skrue kick 16 gange op). Brugeren har prøvet v9.117: Testlyd og Rigtige trommer giver præcis de samme tal som hos Code. Fund: fasens sikkerhed er ikke kalibreret.
 - **P8.30 trin 3 (v9.117, A3 første del):** kick i lineær skala (ekkoet), taktslaget flyttes en halv slaglængde, når kicket ligger mellem slagene, takt 1 ud fra kick, ½ × snare og skift i klang; Til/Fra i Indstillinger for analysen (med "Denne sang: …"). Før → efter står i `docs/STATUS-TIL-HOVEDCHATTEN.md`. **STOP efter trin 3.**
@@ -23,10 +26,27 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 - **Gitter i Node-editoren (v9.105, P8.12):** faste kolonner, Ret op, A/B/C, Del, skyderne Lodret og Vandret, tre kæmpe opstillinger; pladser og skydere gemmes med showet; Ctrl+Z.
 - **P8.18 D1–D3 er bygget (v9.104):** Gemt ✓ og banner, når gemningen fejler; tasten ?; Hvad er nyt på startskærmen. Svar på D6 i `docs/arkiv/SVAR-P8_18.md`.
 
+## Tal: Testlyd og Rigtige trommer (P8.31; F-mål)
+
+A3 slået til ét skridt ad gangen i hovedchattens rækkefølge (Kick · Taktslag · Takt 1). Skridt 3 = programmet med A3 til.
+
+| Skridt | Testlyd hele | Testlyd trommer | Rigtige hele mixet | Rigtige trommer |
+| --- | --- | --- | --- | --- |
+| 0 · før | 60 · 33 · 33 | 40 · 33 · 0 | 63 · 81 · 17 | 72 · 77 · 6 |
+| 1 · + Takt 1 | 60 · 33 · 33 | 40 · 33 · 33 | 63 · 81 · 42 | 72 · 77 · 25 |
+| 2 · + halve takt | 60 · 49 · 47 | 40 · 81 · 76 | 63 · 81 · 47 | 72 · 84 · 30 |
+| 3 · + kickets ekko | 92 · 49 · 31 | 94 · 81 · 76 | 70 · 81 · 47 | 75 · 85 · 40 |
+
+Skridt 3 sænker Testlyd · Takt 1 i hele lyden (47 → 31), men hæver de rigtige trommer (Takt 1 30 → 40, Kick 72 → 75); de rigtige trommer vejer tungest. Snare og Hihat ændres ikke af A3.
+
+Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / trommer) → uden svage slag 36 / 57; Hihat alle slag 68 / 72 → uden pedal 64 / 68 (pedal-hihat blev mest fundet, 415 af 523). Med visker også som svage: 34 / 56.
+
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. Brugeren prøver v9.117 (A3 til og fra på egne sange). Derefter, når brugeren siger til: resten af A3 (snare, tempoets halve og dobbelte, taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet), så A2, A4, A5–A6.
-2. Derefter A2 sikkerhedsgrænse og enighed, A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
+**Rækkefølgen for analysen (brugerens valg): A3 før A2:** resten af A3 → A2 → A4 → A5–A6.
+
+1. Brugeren prøver v9.120 (Testlyden: lyt og gem; Rigtige trommer med svage slag). Derefter resten af A3: fasens sikkerhed (kalibreres først), taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet med 4 spor, tempoets halve, Snare.
+2. Så A2 sikkerhedsgrænse og enighed (kræver en kalibreret fase-sikkerhed), A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
 ## Venter på brugeren

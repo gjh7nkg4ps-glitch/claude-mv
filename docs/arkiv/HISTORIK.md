@@ -141,6 +141,7 @@ Flyttet fra `CLAUDE.md` den 20. november 2026 (P8.23 punkt 1b og 1c). **Læs ikk
 | v9.117 | **P8.30 trin 3, A3 første del:** kick som lineær stigning af RAW.bas (i applyNorm, også for cachen); `Rytme.taktslag` flyttes ½ slag, når kicket mellem slagene er 1,6 gange større; `Rytme.taktFase` = kick − ½ snare (sum over 4 rammer) + skift i 12 toner eller 4 bånd; `set.a3` Til/Fra med "Denne sang"; boblen ved Takt 1 viser fasens sikkerhed. Test 100. |
 | v9.118 | **Rettelse til v9.117 (test 57):** `normLokalF` med A3: kick normaliseres i stykker med gulvet i anden potens (0,0625), så kick i stille stykker af lange sange når tærsklen. |
 | v9.119 | **Testlyden kan høres og gemmes (brugerens valg C):** afsnittet "Testlyden: lyt og gem" i Analyse sikkerhed: pr. mønster Hele lyden / Kun trommerne / Kun bassen / Kun melodien, ▶ Lyt / ■ Stop (sætter en sang på pause), Gem som WAV (44,1 kHz mono 16 bit, samme fingeraftryk som rapporten). Test 101. |
+| v9.120 | **Svage slag (brugerens valg G2, P8.31):** Rigtige trommer læser NAVN_subclass.txt; rækkerne *Snare · uden svage slag* (SDG og SDD neutrale) og *Hihat · uden pedal* (PHH neutral), med bedste tærskel; alle 21 underklasser i "Sådan måles"; test 99 udvidet. |
 
 ## 2 · Noter og lukkede fejl pr. version (flyttet uændret fra CLAUDE.md § 5 "Halvfærdigt og kendte fejl")
 
