@@ -2,7 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.120, 20. november 2026)
+## Nu (v9.121, 20. november 2026)
+
+- **v9.121:** *Testlyden: lyt og gem* ligger foldet sammen bag den lille knap **Testlyden ▸** (efter Kopiér rapport), fordi den næsten aldrig bruges (brugerens ønske).
 
 - **v9.120 (G2, P8.31):** Rigtige trommer viser *Snare · uden svage slag* (SDG og SDD neutrale) og *Hihat · uden pedal* (PHH neutral); alle 21 underklasser står i "Sådan måles rigtige trommer".
 - **v9.119 (valg C):** Analyse sikkerhed → *Testlyden: lyt og gem*: ▶ Lyt / ■ Stop og Gem som WAV pr. mønster (Hele lyden, Kun trommerne, Kun bassen, Kun melodien); samme fingeraftryk som rapporten.
@@ -45,7 +47,7 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 **Rækkefølgen for analysen (brugerens valg): A3 før A2:** resten af A3 → A2 → A4 → A5–A6.
 
-1. Brugeren prøver v9.120 (Testlyden: lyt og gem; Rigtige trommer med svage slag). Derefter resten af A3: fasens sikkerhed (kalibreres først), taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet med 4 spor, tempoets halve, Snare.
+1. Brugeren prøver v9.121 (Rigtige trommer: vælg MDB-mappen igen én gang, så underklasserne bliver læst). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Derefter resten af A3: fasens sikkerhed (kalibreres først), taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet med 4 spor, tempoets halve, Snare.
 2. Så A2 sikkerhedsgrænse og enighed (kræver en kalibreret fase-sikkerhed), A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 

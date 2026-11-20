@@ -1,4 +1,5 @@
-/* Trin 4 · Det nye i v9.119 (brugerens valg C): testlyden kan høres og gemmes. Ved 1920 × 1080: afsnittet "Testlyden: lyt og gem" har én række pr. mønster
+/* v9.121: afsnittet er foldet sammen bag den lille knap "Testlyden ▸" ved Kopiér rapport (brugerens ønske: bruges næsten aldrig); den folder ud og sammen med rigtige klik og standser lyden.
+   Trin 4 · Det nye i v9.119 (brugerens valg C): testlyden kan høres og gemmes. Ved 1920 × 1080: afsnittet "Testlyden: lyt og gem" har én række pr. mønster
    (6) mellem Testlyd-tabellen og Rigtige trommer; et rigtigt klik på ▶ Lyt spiller lyden (knappen hedder ■ Stop), et nyt klik standser den; vælg Kun trommerne
    og Gem som WAV: filen er en WAV på 44,1 kHz, mono, 16 bit, og dens fingeraftryk er præcis rapportens (House · kun trommer ac579ca0, House · hele lyden
    a375df80); filen kan åbnes som en almindelig lydfil (tempo cirka 124); spiller sangen, sætter ▶ Lyt den på pause. Ved 2560 × 1440: ingen vandret rulning. */
@@ -17,8 +18,11 @@ async function kør(arg) {
       await side.goto('file://' + fil); await side.waitForTimeout(4500); await side.evaluate(() => asAaben('kick')); await side.waitForTimeout(1200);
       const midt = sel => side.evaluate(sel => { const el = document.querySelector(sel); el.scrollIntoView({ block: 'center' }); const q = el.getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 } }, sel);
       const klik = async sel => { const p = await midt(sel); await side.mouse.click(p.x, p.y); await side.waitForTimeout(400) };
+      const k0 = await side.evaluate(() => { const b = document.querySelector('#as-rude [data-aslx="vis"]'), r = document.querySelector('#as-rude [data-asx="rapport"]'); return { lyd: !!document.getElementById('as-lyd'), b: !!b, tekst: b && b.textContent, exp: b && b.getAttribute('aria-expanded'), lille: !!(b && r && parseFloat(getComputedStyle(b).fontSize) < parseFloat(getComputedStyle(r).fontSize) && b.getBoundingClientRect().height <= r.getBoundingClientRect().height), naboer: !!(b && b.previousElementSibling === r) } });
+      T.tjek(!k0.lyd && k0.b && k0.tekst === 'Testlyden ▸' && k0.exp === 'false' && k0.lille && k0.naboer, `${w} × ${h}: afsnittet er foldet sammen; der er kun en lille knap "Testlyden ▸" lige efter Kopiér rapport`, JSON.stringify(k0));
+      await klik('#as-rude [data-aslx="vis"]');
       const a = await side.evaluate(() => { const L = document.getElementById('as-lyd'), tab = document.querySelector('#as-rude .as-tab').getBoundingClientRect(), m = document.getElementById('as-mdb'), q = L.getBoundingClientRect(); return { rk: L.querySelectorAll('tr[data-asl]').length, v: [...L.querySelectorAll('[data-asl="house"] option')].map(o => o.textContent), v0: [...L.querySelectorAll('[data-asl="house-t"] option')].map(o => o.textContent), under: q.top > tab.bottom, foerMdb: !m || q.bottom <= m.getBoundingClientRect().top + 1, rul: document.getElementById('as-rude').scrollWidth <= document.getElementById('as-rude').clientWidth + 1 } });
-      T.tjek(a.rk === 6 && a.v.join() === 'Hele lyden,Kun trommerne,Kun bassen,Kun melodien' && a.v0.length === 1 && a.under && a.foerMdb && a.rul, `${w} × ${h}: afsnittet "Testlyden: lyt og gem" har 6 rækker (House kun trommer har kun hele lyden) og står mellem Testlyd-tabellen og Rigtige trommer; ingen vandret rulning`, JSON.stringify(a));
+      T.tjek(a.rk === 6 && a.v.join() === 'Hele lyden,Kun trommerne,Kun bassen,Kun melodien' && a.v0.length === 1 && a.under && a.foerMdb && a.rul, `${w} × ${h}: et rigtigt klik på den lille knap folder afsnittet "Testlyden: lyt og gem" ud: 6 rækker (House kun trommer har kun hele lyden) og står mellem Testlyd-tabellen og Rigtige trommer; ingen vandret rulning`, JSON.stringify(a));
       if (w === 1920) {
         await klik('#as-lyd [data-aslx="lyt"][data-id="house"]'); await side.waitForFunction(() => ASL.spiller && ASL.spiller.id === 'house', null, { timeout: 30000 }); await side.waitForTimeout(300);
         const l1 = await side.evaluate(() => ({ sp: ASL.spiller && ASL.spiller.id, v: ASL.spiller && ASL.spiller.v, dur: ASL.spiller && Math.round(ASL.spiller.dur), knap: document.querySelector('#as-lyd [data-aslx="lyt"][data-id="house"]').textContent, status: document.getElementById('status').textContent, ctx: actx && actx.state }));
@@ -41,6 +45,10 @@ async function kør(arg) {
         const s0 = await side.evaluate(() => playing); await klik('#as-lyd [data-aslx="lyt"][data-id="dnb"]'); await side.waitForFunction(() => ASL.spiller && ASL.spiller.id === 'dnb', null, { timeout: 30000 });
         const s1 = await side.evaluate(() => ({ playing, sp: ASL.spiller.id })); await klik('#as-lyd [data-aslx="lyt"][data-id="dnb"]');
         T.tjek(Math.abs(s.bpm - 124) <= 2 && /testlyd_house_hele-lyden\.wav/.test(s.navn) && s0 === true && s1.playing === false && s1.sp === 'dnb', `den gemte fil kan åbnes som en almindelig lydfil (${s.bpm} BPM); spiller sangen, sætter ▶ Lyt den på pause`, JSON.stringify({ s, s0, s1 }));
+        await klik('#as-lyd [data-aslx="lyt"][data-id="hip"]'); await side.waitForFunction(() => ASL.spiller && ASL.spiller.id === 'hip', null, { timeout: 30000 });
+        await klik('#as-rude [data-aslx="vis"]');
+        const lu = await side.evaluate(() => { const b = document.querySelector('#as-rude [data-aslx="vis"]'); return { lyd: !!document.getElementById('as-lyd'), sp: ASL.spiller, tekst: b.textContent, exp: b.getAttribute('aria-expanded') } });
+        T.tjek(!lu.lyd && lu.sp === null && lu.tekst === 'Testlyden ▸' && lu.exp === 'false', 'et nyt rigtigt klik på den lille knap folder afsnittet sammen og standser lyden', JSON.stringify(lu));
       }
       T.tjek(fejl.length === 0, `${w} × ${h}: ingen fejl i konsollen`, fejl.slice(0, 5).join('\n'));
       await ctx.close();

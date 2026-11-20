@@ -1,13 +1,13 @@
-# Status til hovedchatten · v9.120 · 20. november 2026
+# Status til hovedchatten · v9.121 · 20. november 2026
 
-*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.120** (`claude-mv-v9_120.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C), svage slag (G2)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
+*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.121** (`claude-mv-v9_121.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C, bag en lille knap fra v9.121), svage slag (G2)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
 ## Stand
 
 - **Brugerfladen** (P8.1–P8.23) er bygget: fire arbejdsområder, docking, matrix og Noder, Biblioteket, På scenen (PS1–PS3; PS4 lukket), Gem hele arbejdet, gitteret. v9.111–v9.112: kolonnenavnene står i en fast linje øverst i Node-editoren.
 - **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
 - **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter. **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
-- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. Hele pakken kører på v9.120 (20. november); resultatet skrives her, når den er færdig.
+- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. På v9.120 kørte 27: test 15 fejlede på timing (grøn alene på v9.121). Hele pakken kører på v9.121; resultatet skrives her, når den er færdig.
 
 ## P8.30 trin 1 (v9.115): testlyd i ren matematik
 
@@ -77,4 +77,4 @@ Resten af A3 (fasens sikkerhed; taktslag i Hip-hop og Techno med bas; med 4 spor
 
 1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille. Feltfarven D7: ikke valgt.
 2. Det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`): Pinokio først; om en fil-side kan nå `127.0.0.1` (CORS, Local Network Access) skal prøves i brugerens Chrome.
-3. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter.
+3. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter. MDB-mappen skal i dag vælges igen for hver ny måling (browseren giver kun adgang til mappen, til siden lukkes); forslag til brugeren: A facit gemmes i cachen, så Mål igen virker uden mappen, eller B MV husker mappen (File System Access).
