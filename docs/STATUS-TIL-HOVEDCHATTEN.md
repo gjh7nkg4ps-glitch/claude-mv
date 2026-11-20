@@ -1,15 +1,15 @@
-# Status til hovedchatten · v9.110 · 20. november 2026
+# Status til hovedchatten · v9.111 · 20. november 2026
 
 *Fra Claude Code. Højst 60 linjer (P8.23 punkt 1g). Den gamle udgave (Node-editoren v9.19–v9.42) ligger i `docs/arkiv/STATUS-TIL-HOVEDCHATTEN-v9_42.md`.*
 
-**Nyeste version i repoet: v9.110** (`claude-mv-v9_110.html`). Laver hovedchatten en ny version, skal den bygge videre på den fil og hedde v9.111 eller højere.
+**Nyeste version i repoet: v9.111** (`claude-mv-v9_111.html`; v9.110 = A0, v9.111 = kolonnenavnene fast øverst i Node-editoren). En ny version fra hovedchatten skal bygge på den fil og hedde v9.112 eller højere.
 
 ## Nuværende stand
 
 - **Brugerfladen (P8.1–P8.9):** fase 0–7 og pakke 1–7 er bygget: én linje øverst, fire arbejdsområder, docking, matrixen og Noder på samme vilkår, Foreslå regler i stedet for Auto, panelet Automatik, Figurer → På scenen, Biblioteket (shows, figurer, regel-sæt, Mine shows uden loft), fem regel-sæt pr. figur, startskærm, Indlæst, ét tema (Warm Analog), Størrelse, Indstillinger.
 - **Sang og analyse (P8.4):** S0–S6 er bygget: vinduet Analyse (Sang · Spor · Avanceret), analysen i baggrunds-tråde, Lyd over tid, Niveau (LUFS), Stereo, Spor med M/S, Detektion med hit-rate, 4 spor fra en mappe.
 - **På scenen (P8.14 punkt 7, P8.20, P8.23):** PS1–PS3 bygget (v9.107–v9.109): vinduet På scenen med Karakterer, Figurer og Effekter; hylden Effekter i Biblioteket med regel-sæt som *Lys-puls på kick*; øje og Slå fra pr. effekt i Noder og matrixen; effekternes navne i Live preview. **Stoppet efter PS3.**
-- **Testpakken:** 97 testfiler; test 97 (Analyse sikkerhed) er grøn; hele pakken køres på v9.110, og resultatet skrives her.
+- **Testpakken:** 97 testfiler; test 97 (Analyse sikkerhed) er grøn; hele pakken køres på v9.111, og resultatet skrives her.
 
 ## A0 · Analyse sikkerhed (v9.110, P8.24): de første målte tal
 
@@ -47,7 +47,7 @@ Facit: generatoren, 6 mønstre på 8 takter med generatorens standard-lyd (ekko 
 
 ## Næste skridt (P8.24 punkt 4)
 
-1. Brugeren prøver v9.110; fejl rettes først.
+1. Brugeren prøver v9.111; fejl rettes først.
 2. A1 hele analysen på sporene i baggrunds-trådene (sporenes analyse gemmes) · A2 sikkerhedsgrænse og enighed i reglerne · A3 bedre slag · A4 Lydtidslinjen · A5–A6 det lokale modul. Ét trin ad gangen, når brugeren siger til.
 3. 6c Figur-generatoren (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til.
 

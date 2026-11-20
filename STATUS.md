@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.110, 20. november 2026)
+## Nu (v9.111, 20. november 2026)
 
+- **Kolonnenavnene står fast øverst i Node-editoren (v9.111):** en fast linje, samme størrelse uanset zoom, ingen overlap (brugerens ønske 20. november).
 - **Analyse sikkerhed (A0, v9.110, P8.24):** fanen Analyse sikkerhed i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker (grøn 75–100, gul 50–74, rød 0–49, ? ikke målt; 99 = ren matematik); resultatet gemmes med versionsnummer. 4 spor kun under cirka 15 minutter (besked). Notat om installation med ét klik: `docs/LOKALT-MODUL-INSTALLATION.md`. **STOP efter A0.** De første tal står i `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 - **P8.14 punkt 1 og 3 er bygget:** Detektion som kort under Analyse → Avanceret (v9.95, 2B); hele generatoren under Mere … i kortet Generator (v9.96, 3B); Lyt til sangen og EQ-knappen Opret forbindelse er væk (v9.97, 3e og 3c); Sang hedder Analyse (v9.98, 3b); værktøjslinjen ruller ikke mere (⋯ Mere), og Radial Mesh er helt i fuld skærm (v9.99, 3f); Navne: Til · Fra i Live preview (v9.100, P8.15 1); hent 4 spor på én gang, filer eller mappe (v9.101, 3a); en CSS-rettelse (v9.102).
 - **Svarene på P8.14 punkt 5** står i `docs/arkiv/SVAR-P8_14.md`; **planen for punkt 7 ("På scenen")** i `docs/PLAN-PAA-SCENEN.md`; **listen over pigernes egenskaber** (punkt 9) i `docs/PIGERNES-EGENSKABER.md`.
@@ -17,13 +18,13 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. Brugeren prøver v9.110 (Analyse sikkerhed); fejl rettes først.
+1. Brugeren prøver v9.111 (Analyse sikkerhed og de faste kolonnenavne); fejl rettes først.
 2. Analysen videre, ét trin ad gangen, når brugeren siger til: **A1** hele analysen på sporene i baggrunds-trådene (og sporenes analyse gemmes) · **A2** sikkerhedsgrænse og enighed i reglerne · **A3** bedre slag · **A4** Lydtidslinjen · **A5–A6** det lokale modul. Til A0 hører stadig: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
 ## Venter på brugeren
 
-- Prøv v9.110: 1 · Analyse → fanen **Analyse sikkerhed** → ▶ Kør testen (sig, hvor mange sekunder den tager hos dig; 42 s i testbrowseren); se cirklerne i matrixen (3 · Regler → Matrix), peg på en cirkel, og klik på den.
+- Prøv v9.111: 1 · Analyse → fanen **Analyse sikkerhed** → ▶ Kør testen (sig, hvor mange sekunder den tager hos dig; 42 s i testbrowseren); se cirklerne i matrixen (3 · Regler → Matrix), peg på en cirkel, og klik på den.
 - Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
 
