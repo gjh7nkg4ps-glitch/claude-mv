@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.117, 20. november 2026)
+## Nu (v9.118, 20. november 2026)
 
+- **v9.118:** rettelse til v9.117 (test 57): kick i stille stykker af sange over 10 minutter (Lange sange må nu skrue kick 16 gange op). Brugeren har prøvet v9.117: Testlyd og Rigtige trommer giver præcis de samme tal som hos Code. Fund: fasens sikkerhed er ikke kalibreret.
 - **P8.30 trin 3 (v9.117, A3 første del):** kick i lineær skala (ekkoet), taktslaget flyttes en halv slaglængde, når kicket ligger mellem slagene, takt 1 ud fra kick, ½ × snare og skift i klang; Til/Fra i Indstillinger for analysen (med "Denne sang: …"). Før → efter står i `docs/STATUS-TIL-HOVEDCHATTEN.md`. **STOP efter trin 3.**
 - **P8.30 trin 2 (v9.116):** Analyse sikkerhed har blokken **Rigtige trommer** (MDB Drums): *Vælg facit-mappe*, kolonnerne *hele mixet* og *kun trommerne*, Kick, Snare, Hihat, Taktslag, Takt 1; bækken og tammer er neutrale; cachen; aldrig blandet med Testlyd. 23 stykker på 16 s, 2 s fra cachen. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 - **Vejledning (MDB Drums):** github.com/CarlSouthall/MDBDrums → **Code** → **Download ZIP** · pak ud (cirka 2,2 GB; audio/multi-tracks, cirka 1,6 GB, kan slettes) · MV: 1 · Analyse → Analyse sikkerhed → **Vælg facit-mappe** → mappen **MDB Drums** · første gang cirka 20 s, derefter 2 s · licens CC BY-NC-SA 4.0.

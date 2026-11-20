@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.117 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
+Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.118 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, hvad der er åbent, og hvad der er det næste. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -45,7 +45,7 @@ Claude MV er et personligt værksted, der gør musik til levende billeder. En ly
 - Hver ny version gemmes som en **ny fil med nyt navn** (fx `claude-mv-v9_19.html`), og **den forrige fil slettes i samme gem** (commit, fagudtryk). Så ligger der altid kun den nyeste i repoet, og de gamle findes i historikken.
 - Skriv gemmebeskeden på dansk med versionsnummeret først, fx `Claude MV v9.19: startskærm med demosang`.
 - Opdater denne fil (CLAUDE.md), når noget i afsnit 3 til 5 ændrer sig; skriv én linje pr. version i `docs/arkiv/HISTORIK.md`.
-- **`STATUS.md` skal være kort** (P8.14 punkt 3d): højst cirka 80 linjer med afsnittene *Nu (version)*, *Næste*, *Venter på brugeren*, *Åbne spørgsmål* og *Senere*. `docs/STATUS-TIL-HOVEDCHATTEN.md` højst cirka 60 linjer: nuværende stand, åbne spørgsmål og næste skridt.
+- **`STATUS.md` skal være kort** (P8.14 punkt 3d): højst cirka 80 linjer med afsnittene *Nu (version)*, *Næste*, *Venter på brugeren*, *Åbne spørgsmål* og *Senere*. `docs/STATUS-TIL-HOVEDCHATTEN.md` højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst; skær ikke tal og fund væk).
 - **Dokumenterne** (P8.23): planerne rummer kun det, der ikke er bygget; besvarede SVAR-filer flyttes til `docs/arkiv/`, når hovedchatten har læst dem, og det, der stadig gælder, skrives kort ind i planen; `tests/README.md` er én linje pr. test.
 
 ### Test før aflevering
@@ -120,12 +120,12 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Hysterese, Hold med tid og Slew** virker ikke på klods-spor; forudsagte klodser bruger ikke trim, Taktslag Auto og Spor Auto.
 - **three.js:** r128 til Mesh 3D og Øjet, 0.186.1 til Node-editorens linjer (valg A); B (én three.js), når Mesh 3D og Øjet flyttes. WebGPU kan ikke prøves i testbrowseren.
 - **Kort over forbindelserne** kræver internet første gang (Mermaid).
-- **Oprydning, der stadig mangler:** Generator (fuld, w4) og Lydlag (w15) som skjult kode, `OPS_TEST` (40 test bruger den), `nivAnvend`, sidebjælkens og bundbjælkens kode, de gamle layouts i `lay3Anvend`, de gamle "Nyt i"-afsnit i manualen.
+- **Oprydning, der mangler:** Generator (fuld, w4), Lydlag (w15), `OPS_TEST`, `nivAnvend`, side- og bundbjælkens kode, gamle layouts i `lay3Anvend`, gamle "Nyt i"-afsnit.
 - **Regel-sættene** (B6, v9.90) og de seks skabeloner er Codes skøn; ikke prøvet på musik af et menneske.
 - **Warm Analog** (v9.72) er en første gennemgang; den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes.
 - **På scenen:** effekt-rækkerne har ingen ⋯-menu; effekt-regel-sættenes tal er Codes skøn; 6c får adgang til effekterne, når 6c bygges.
-- **Analyse sikkerhed:** testlyd i ren matematik (v9.115), ikke prøvet på brugerens Windows endnu. Cirklen mangler på lydtræk-noderne og i Foreslå regler.
+- **Analyse sikkerhed:** fasens sikkerhed (A3, v9.117) er ikke kalibreret (høj, også når takt 1 er forkert). Cirklen mangler på lydtræk-noderne og i Foreslå regler.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags:** sessionen må ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
@@ -135,7 +135,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
-2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0 (v9.110), A1 (v9.113), P8.30 trin 1 testlyd (v9.115), trin 2 MDB Drums (v9.116), trin 3 A3 første del (v9.117). **STOP:** brugeren prøver. Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Næste: resten af A3 (`docs/PLAN-SANG-OG-ANALYSE.md`) → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
+2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0 (v9.110), A1 (v9.113), P8.30 trin 1 testlyd (v9.115), trin 2 MDB Drums (v9.116), trin 3 A3 første del (v9.117, rettet i v9.118); brugeren har prøvet v9.117 (tal ens). **STOP.** Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Næste: resten af A3 (`docs/PLAN-SANG-OG-ANALYSE.md`) → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 3. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); intet fjernes (`docs/PIGERNES-EGENSKABER.md`).
 4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til. **Feltfarven D7** er ikke valgt.
 5. **Senere:** `.stem.mp4`, målervæg, tema med tekstur, Radial Mesh-værksted med rigtig bloom, ét fælles Fortryd (D4), manualen som sidepanel (D5), nye 2D-figurer på et skelet, 3D-scene, S7 og S8. Kun en idé (røres ikke): stregerne i Node-editoren. Detaljer i `STATUS.md` og planerne.
