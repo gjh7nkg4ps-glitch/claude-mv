@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.126, 20. november 2026)
+## Nu (v9.127, 20. november 2026)
 
+- **v9.127 (A4, anden del):** dine rettelser i Hændelser bruges nu af reglerne (et slettet kick sætter ikke en regel i gang, et tilføjet slag gør). Knappen *Rettelser i reglerne: Til/Fra* i hovedet af Lyd over tid. Analysen og Analyse sikkerhed røres ikke.
 - **v9.126 (A4, Lydtidslinjen, første del):** Lyd over tid har rækken *Hændelser* (Kick, Snare, Hihat og Takt 1); hver streg er et slag, jo kraftigere, jo mere sikkert. Klik vælger; Slet, træk eller ← → flytter; dobbeltklik tilføjer; rettelserne gemmes pr. sang. *Hør analysen* klikker på hvert slag, mens sangen spiller. *Gem tidslinje* og *Hent tidslinje* (JSON).
 - **v9.125 (A2, Kræv sikkerhed):** hver regel har skyderen *Kræv sikkerhed* i Node-editorens kontrolpanel (over Gate). Reglen virker kun, når lydtrækket er sikkert nok lige nu: pr. øjeblik for Tonehøjde og Toneklasse (Tonesikkerhed) og Takt 1 (fasens sikkerhed takt for takt), ellers tallet fra Analyse sikkerhed. Regel-noden får mærket "≥ 80 %" (rødt, når spærret). Gate er enighed (to kilder). Foreslå regler hæver tærsklen 0,1 for lydtræk under 75 %; Lyd over tid skraverer Taktslag, hvor takt 1 er usikker.
 - **v9.124 (A3, taktgitter med 4 spor):** med 4 spor finder MV tempo, taktslag og takt 1 ud fra Trommer-sporet (takt 1 også ud fra hele lydens toner). Valget står i Indstillinger for analysen → *Taktgitter med 4 spor* (Trommer-sporet / Hele lyden). Analyse sikkerhed har rækkerne *Taktslag · 4 spor* og *Takt 1 · 4 spor*; med 4 spor viser cirklen ved Taktslag og Takt 1 de tal.
@@ -48,7 +49,7 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 **Rækkefølgen for analysen (brugerens valg): A3 før A2:** resten af A3 → A2 → A4 → A5–A6.
 
 1. Brugeren prøver v9.122–v9.125 (Opsætninger → Automatiske kopier; Analyse sikkerhed → ▶ Kør testen og Vælg facit-mappe (nye rækker for 4 spor); Indstillinger for analysen → Taktgitter med 4 spor; en regel → Kræv sikkerhed; Lyd over tid → Hændelser og ▶ Hør analysen). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Rest af A3 (i planen): taktslag i Hip-hop og Techno med bas uden spor, tempoets halve, Snare.
-2. A2 (v9.125) og A4 første del (v9.126) er bygget. Næste: A4 anden del (hændelserne som kilder til reglerne, hændelser fra en fil), så A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
+2. A2 (v9.125) og A4 første del (v9.126) er bygget. Næste: hændelser fra en fil (det lokale modul skriver formatet lydtidslinje), så A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
 ## Venter på brugeren
