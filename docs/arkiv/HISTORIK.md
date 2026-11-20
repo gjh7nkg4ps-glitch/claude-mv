@@ -130,6 +130,7 @@ Flyttet fra `CLAUDE.md` den 20. november 2026 (P8.23 punkt 1b og 1c). **Læs ikk
 | Version | Hvad |
 | --- | --- |
 | v9.108 | **På scenen PS2:** hylden Effekter i Biblioteket (19 kort med levende tegn; Brug = øjet, Slå fra, Vis i matrix, Gem som regel-sæt) og 25 indbyggede regel-sæt navngivet efter effekten (`PS_SAET`, fx *Lys-puls på kick*; egne i `set.ne.effSaet`); valg C; klik på effektens navn i På scenen åbner kortet. Test 95 |
+| v9.109 | **På scenen PS3:** mål-noder for effekter viser øje og Slå fra (klasser og tekst), kontrolpanelet har Synlig/Skjult og Slå fra/til (`data-ps3`); matrixens overskrift for en effekt har øje og ⏻ (`data-mxpo`/`data-mxpf`, egne lyttere uden om kolonnens træk) og bliver svag/gennemstreget; Navne: Til skriver effekter, der slår til, i øverste venstre hjørne (`PS3.sidst`). Test 96 |
 
 ## 2 · Noter og lukkede fejl pr. version (flyttet uændret fra CLAUDE.md § 5 "Halvfærdigt og kendte fejl")
 

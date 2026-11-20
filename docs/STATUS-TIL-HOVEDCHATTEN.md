@@ -1,8 +1,8 @@
-# Status til hovedchatten · v9.107 · 20. november 2026
+# Status til hovedchatten · v9.109 · 20. november 2026
 
 *Fra Claude Code. Højst 60 linjer (P8.23 punkt 1g). Den gamle udgave (Node-editoren v9.19–v9.42) ligger i `docs/arkiv/STATUS-TIL-HOVEDCHATTEN-v9_42.md`.*
 
-**Nyeste version i repoet: v9.107** (`claude-mv-v9_107.html`). Laver hovedchatten en ny version, skal den bygge videre på den fil og hedde v9.108 eller højere.
+**Nyeste version i repoet: v9.109** (`claude-mv-v9_109.html`). Laver hovedchatten en ny version, skal den bygge videre på den fil og hedde v9.110 eller højere.
 
 ## Nuværende stand
 
@@ -10,7 +10,7 @@
 - **Sang og analyse (P8.4):** S0–S6 er bygget: vinduet Analyse (Sang · Spor · Avanceret), analysen i baggrunds-tråde, Lyd over tid, Niveau (LUFS), Stereo, Spor med M/S, Detektion med hit-rate, 4 spor fra en mappe.
 - **Node-editoren:** alle 16 trin, de 10 visninger, gitteret (Ret op, A/B/C, luft-skydere, tre kæmpe opstillinger; pladser gemt med showet).
 - **Gemning (P8.18):** Gemt ✓, banner når lageret er fuldt, tasten ?, Hvad er nyt på startskærmen, Gem hele arbejdet / Hent hele arbejdet (én fil med alt).
-- **På scenen (P8.14 punkt 7, P8.20):** PS1 bygget (v9.107): Karakterer, Figurer og Effekter med øje, Slå fra og styrke pr. effekt.
+- **På scenen (P8.14 punkt 7, P8.20, P8.23):** PS1–PS3 bygget (v9.107–v9.109): vinduet På scenen med Karakterer, Figurer og Effekter; hylden Effekter i Biblioteket med regel-sæt som *Lys-puls på kick*; øje og Slå fra pr. effekt i Noder og matrixen; effekternes navne i Live preview. **Stoppet efter PS3.**
 - **Testpakken:** 88 testfiler; hele pakken kørt på v9.106 (82 grønne, 8 rettet i v9.107 og testene). To rigtige fejl fundet og rettet: D2-sortering kunne ikke ses med gitteret; et rigtigt klik på det gule ! virkede aldrig.
 - **Dokumenterne (P8.23 punkt 1):** CLAUDE.md er kortet fra 167 KB til cirka 15 KB; historik og lukkede fejl i `docs/arkiv/HISTORIK.md`; planerne rummer kun det ubyggede; SVAR-filerne er i arkivet.
 
@@ -23,10 +23,9 @@
 
 ## Næste skridt (P8.23)
 
-1. **PS2:** hylden Effekter i Biblioteket med regel-sæt navngivet efter effekten (fx *Lys-puls på kick*); valg C gælder.
-2. **PS3:** Noder og matrixen viser øje og Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne. **Stop efter PS3**; hele testpakken på den nyeste version først.
-3. **PS4** oprydning, så **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
-4. Analysen, når brugeren har valgt.
+1. Brugeren prøver v9.109; fejl rettes først.
+2. **PS4** oprydning (gruppernes øje og Slå fra i Noder; brugerens valg), så **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
+3. Analysen, når brugeren har valgt a–e.
 
 ## Åbne fejl (kort; listen står i `CLAUDE.md` § 4)
 
