@@ -53,6 +53,9 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 ## Venter på brugeren
 
+- Rigtige trommer uden at vælge mappen igen: A facit gemmes i cachen (Codes anbefaling), B MV husker mappen, C som nu.
+- Teknik: rækkefølgen i `docs/PLAN-TEKNIK.md` (Codes forslag: T1 autosikring → T0 del op → resten af A3).
+
 - Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
 
@@ -63,6 +66,8 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 - three.js: valg A står (ny three.js ved siden af r128); B (esbuild, én three.js), når Mesh 3D og Øjet flyttes.
 
 ## Senere (kort; detaljer i planerne)
+
+- **Teknik og vedligeholdelse** (`docs/PLAN-TEKNIK.md`, brugerens "til planen" 20. november efter Groks vurdering): T1 autosikring (daglig kopi, *Gå tilbage til i går*), T0 del filen op i kilder og byg den ene fil (først byte for byte ens), T2 ryd op, T3 central tilstand med lyttere, T4 SVG-ikoner, T5 tung tegning til WebGL/WebGPU, T6 moderne moduler. Groks 2 `debugger` og 56 TODO'er står i three.js, ikke i vores kode.
 
 - **Indbygget spor-deling** som lokalt modul (P8.14 punkt 6; `docs/arkiv/SVAR-P8_14.md` f). **.stem.mp4** læses og fordeles af sig selv; Native Instruments' gratis **Stem Creator Tool** kan samle 4 spor til én .stem.mp4 (P8.15 2, P8.16 1). Indtil da: `ffmpeg -i sang.stem.mp4 -map 0:a:1 trommer.wav -map 0:a:2 bas.wav -map 0:a:3 resten.wav -map 0:a:4 vokal.wav`.
 - **Målervæg** (vores navn; fagudtryk: meter bridge): et stort vindue eller fuld skærm med mange målere.

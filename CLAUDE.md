@@ -133,7 +133,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 
 ## 5. Planen: det næste
 
-Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
+Rækkefølgen er brugerens. Planerne: `PLAN-NY-BRUGERFLADE.md`, `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`, `docs/PLAN-TEKNIK.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
 2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0, A1, P8.30 trin 1–3 og P8.31 (v9.110–v9.121; `docs/arkiv/HISTORIK.md`). **STOP.** Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Rækkefølgen (brugerens valg): rest af A3 → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
