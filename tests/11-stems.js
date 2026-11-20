@@ -72,8 +72,9 @@ async function kør(arg) {
     b = await brugt(); tx = await side.evaluate(() => stemGrund(maps[0]).replace(/<[^>]+>/g, ''));
     T.tjek(b[0] === 'kick' && /Manuel: fra den samlede lyd \(du har valgt det\)\. Auto-valg ville bruge fra sporet Trommer/.test(tx), 'Manuel: "' + tx + '"; motoren læser ' + b[0]);
     await side.evaluate(() => { delete maps[0].spor; save(); renderMaps(); });
-    await side.evaluate(() => document.getElementById('play').click()); await side.waitForTimeout(2500);
-    const lev = await side.evaluate(() => ({ ud: Math.max(R2M.ud[0] || 0, R2M.ud[3] || 0), v: R2M.v[0] }));
+    await side.evaluate(() => document.getElementById('play').click()); await side.waitForTimeout(1500);
+    /* v9.128: det største udslag over 1 s (før: ét øjeblik efter 2,5 s, som kunne ramme mellem to slag; testen fejlede derfor af og til, også på v9.126) */
+    const lev = await side.evaluate(async () => { let ud = 0, v = 0; for (let k = 0; k < 50; k++) { ud = Math.max(ud, R2M.ud[0] || 0, R2M.ud[3] || 0); v = Math.max(v, R2M.v[0] || 0); await new Promise(r => setTimeout(r, 20)) } return { ud, v } });
     await side.locator('.dk-zone:has(#w33)').screenshot({ path: path.join(UD, 'stems-noder.png') });
     await side.evaluate(() => document.getElementById('pause').click());
     T.tjek(lev.ud > 0, `afspilning: forbindelserne fra sporet Trommer giver udslag (${lev.ud.toFixed(2)})`);

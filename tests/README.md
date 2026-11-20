@@ -23,7 +23,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `8-lydkort-fjernet.js` | 4 · Det nye i v9.12 | Lydkort er fjernet: ingen lk:-kilder, intet kort i Lydkilde, ingen knap, ingen funktioner, intet afsnit i manu … |
 | `9-kilder-og-stereo.js` | 4 · Det nye i v9.13 | kildelisterne pr. Niveau (smalle bånd foldet sammen under de brede bånd … |
 | `10-stereobredde.js` | 4 · Det nye i v9.14 | Stereobredde = 1 minus korrelationen, højst 1 … |
-| `11-stems.js` | 4 · Det nye i v9.15 | 4 spor (stems): kortet i Lydkilde, de 4 filer og deres længder, den samlede lyd … |
+| `11-stems.js` | 4 · Det nye i v9.15 | 4 spor (stems): kortet i Lydkilde, de 4 filer og deres længder, den samlede lyd … (v9.128: udslaget under afspilning er det største over 1 s) |
 | `lav-stems.py` | hjælp | laver 4 test-spor med **numpy** (trommer 0–20 s, bas 5–25 s, vokal 10–30 s, resten 15–30 s) … |
 | `12-gamle-indstillinger.js` | **fast del** (fra v9.18) | starter programmet med gemte indstillinger fra syv ældre versioner (`gamle-indstillinger/`) … |
 | `13-rul-i-arbejdsfelt.js` | 4 · Det nye i v9.18 | alle faner i Arbejdsfeltet ruller, når indholdet er højere end fanen (Niveau 2 og 4) … |
@@ -65,7 +65,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `75-spor-ms.js` | 4 · Det nye i v9.80 | Ved 1920 × 1080 og 2560 × 1440 med de fire test-spor … |
 | `74-stereo.js` | 4 · Det nye i v9.79 | Ved tre skærmstørrelser med stereo-testlyden … |
 | `73-niveau.js` | 4 · Det nye i v9.78 | Ved tre skærmstørrelser med stereo-testlyden … |
-| `72-lyd-over-tid.js` | 4 · Det nye i v9.77 | Ved tre skærmstørrelser med stereo-testlyden … |
+| `72-lyd-over-tid.js` | 4 · Det nye i v9.77 | Ved tre skærmstørrelser med stereo-testlyden … (v9.128: 8 rækker med Hændelser) |
 | `71-sang-vinduet.js` | 4 · Det nye i v9.76 | Ved tre skærmstørrelser … |
 | `70-vis-i-matrix.js` | 4 · Det nye i v9.75 | (Fra v9.91: pigerne får danserens standardregler direkte i testen, fordi + Ny figur ikke giver regler mere.) V … |
 | `69-figurer-og-egenskaber.js` | 4 · Det nye i v9.74 | (Fra v9.91: Morgenstjernen lægges på uden regler, nyt fingeraftryk for addMorgenstjerne.) Ved tre skærmstørrel … |

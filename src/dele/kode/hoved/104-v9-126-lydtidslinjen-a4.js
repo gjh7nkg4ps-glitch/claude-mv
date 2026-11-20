@@ -94,5 +94,5 @@ async function tlHent(f){let J=null;try{J=JSON.parse(await f.text())}catch(e){}i
  const r=J.rettelser,n=(r.slet||[]).length+(r.flyt||[]).length+(r.ny||[]).length,ok=await spoerg({titel:'Hent rettelserne fra filen?',tekst:'Filen har '+n+' rettelser til '+(S.navn||'sangen')+'. Dine nuværende rettelser bliver erstattet (Fortryd rettelse kan hente dem igen).',ok:'Ja, hent'});
  if(!ok||!ok.ok){msg('Annulleret. Intet er ændret.');return false}return tlRetGem({slet:r.slet||[],flyt:r.flyt||[],ny:r.ny||[]},'Rettelserne er hentet fra filen ('+n+').')}
 /* knapperne og klikkene sættes på med det samme (Lyd over tid er bygget, før denne blok er læst) og igen, hvis hovedet bygges om */
-setTimeout(()=>{try{tlKoble();lotHoved()}catch(e){}},0);setInterval(()=>{try{const h=document.querySelector('#sg [data-sgh="lot"]');if(h&&!h.querySelector('.tl-bar'))lotHoved();tlKoble()}catch(e){}},1000);
+/* v9.128: højden regnes om, nu hvor rækken Hændelser er kommet til (før blev den sidste række skåret af) */setTimeout(()=>{try{tlKoble();lotHoved();lotHoejde()}catch(e){}},0);setInterval(()=>{try{const h=document.querySelector('#sg [data-sgh="lot"]');if(h&&!h.querySelector('.tl-bar'))lotHoved();tlKoble()}catch(e){}},1000);
 /* ========== SLUT: LYDTIDSLINJEN (A4, FØRSTE DEL) ========== */

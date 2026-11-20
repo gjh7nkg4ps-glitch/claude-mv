@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.127, 20. november 2026)
+## Nu (v9.128, 20. november 2026)
 
+- **v9.128 (rettelser efter hele testpakken på v9.127, 101 af 104 grønne):** Lyd over tid viser igen alle rækker (den nederste blev skåret af efter rækken Hændelser); Node-editorens mærke for en spærret regel bruger temaets farver; test 11 og 72 rettet.
 - **v9.127 (A4, anden del):** dine rettelser i Hændelser bruges nu af reglerne (et slettet kick sætter ikke en regel i gang, et tilføjet slag gør). Knappen *Rettelser i reglerne: Til/Fra* i hovedet af Lyd over tid. Analysen og Analyse sikkerhed røres ikke.
 - **v9.126 (A4, Lydtidslinjen, første del):** Lyd over tid har rækken *Hændelser* (Kick, Snare, Hihat og Takt 1); hver streg er et slag, jo kraftigere, jo mere sikkert. Klik vælger; Slet, træk eller ← → flytter; dobbeltklik tilføjer; rettelserne gemmes pr. sang. *Hør analysen* klikker på hvert slag, mens sangen spiller. *Gem tidslinje* og *Hent tidslinje* (JSON).
 - **v9.125 (A2, Kræv sikkerhed):** hver regel har skyderen *Kræv sikkerhed* i Node-editorens kontrolpanel (over Gate). Reglen virker kun, når lydtrækket er sikkert nok lige nu: pr. øjeblik for Tonehøjde og Toneklasse (Tonesikkerhed) og Takt 1 (fasens sikkerhed takt for takt), ellers tallet fra Analyse sikkerhed. Regel-noden får mærket "≥ 80 %" (rødt, når spærret). Gate er enighed (to kilder). Foreslå regler hæver tærsklen 0,1 for lydtræk under 75 %; Lyd over tid skraverer Taktslag, hvor takt 1 er usikker.
