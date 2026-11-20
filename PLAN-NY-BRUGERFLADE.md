@@ -2,7 +2,7 @@
 
 *Kortet ned 20. november 2026 (P8.23). Den fulde plan med alle faser, gennemgangen af v9.42, valgene, fjerne-listen og pakkerne ligger uændret i `docs/arkiv/PLAN-NY-BRUGERFLADE-fuld-P8_20.md`. Fase 0–7, pakke 1–7, oprydningstrinnet, P8.14 punkt 1 og 3, gitteret, D1–D3, D6 og PS1 er bygget (v9.43–v9.107; én linje pr. version i `docs/arkiv/HISTORIK.md`).*
 
-**Det, der mangler fra planen:** PS2–PS4 (`docs/PLAN-PAA-SCENEN.md`), 6c Figur-generatoren (§ 4.2), pigernes egenskaber (brugerens valg), det under *Senere*.
+**Det, der mangler fra planen:** 6c Figur-generatoren (§ 4.2), pigernes egenskaber (brugerens valg), det under *Senere*.
 
 ---
 

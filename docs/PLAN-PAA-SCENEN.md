@@ -46,7 +46,7 @@ Udkast 1 · 19. november 2026 · skrevet af Claude Code. **Bygges først, når b
 | PS1 | Listen På scenen (w34) med de tre afsnit; effekternes øje, Slå fra og styrke i `scene.ne.eff`; motoren og tegningen spørger pr. effekt; Ctrl+Z dækker det. **Bygget i v9.107** (test 94) | intet; tal: 19 nye rækker |
 | PS2 | Biblioteket: hylden Effekter med kort og regel-sæt til effekter; Brug = øjet til; valg C. **Bygget i v9.108** (sættene ligger i `PS_SAET`, ikke i `NE11_STD`; test 95) | intet |
 | PS3 | Noder og matrixen viser øje/Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne. **Bygget i v9.109** (test 96). Figur-generatoren (6c) får adgang til effekterne, når 6c bygges | gruppernes knapper i Noder bliver genveje |
-| PS4 | Oprydning: det, der er blevet dobbelt (dit valg: gruppe-knapperne) | tal før og efter |
+| PS4 | Lukket 20. november: brugeren valgte, at gruppernes øje og Slå fra i Noder bliver ("alle i gruppen"). Intet bygges. | ingen |
 
 ## 7. Spørgsmål til brugeren · **besvaret i P8.20 (19. november): ja til alle tre**
 

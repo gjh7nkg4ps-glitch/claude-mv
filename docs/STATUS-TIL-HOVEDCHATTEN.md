@@ -16,15 +16,15 @@
 
 ## Åbne spørgsmål til brugeren
 
-1. **Analysen:** valg a–e i "Den nye analyse P8.19" (A0–A8); skemaet "Alle lyde og alle metoder P8.22" findes. Intet bygges før valget.
-2. **Pigernes egenskaber** (`docs/PIGERNES-EGENSKABER.md`): hvad må fjernes? Hovedchattens forslag: fjern de fem, der intet viser, og fold de "lidt"-synlige sammen under *Finere detaljer*.
+1. **Analysen:** (brugeren ser på det med hovedchatten nu, 20. november) valg a–e i "Den nye analyse P8.19" (A0–A8); skemaet "Alle lyde og alle metoder P8.22" findes. Intet bygges før valget.
+2. **Pigernes egenskaber** (`docs/PIGERNES-EGENSKABER.md`): ligger stille til engang i fremtiden (brugeren 20. november). Hovedchattens forslag: fjern de fem, der intet viser, og fold de "lidt"-synlige sammen under *Finere detaljer*.
 3. **4 spor på lange sange:** skal de virke på 74 minutter (kræver WebCodecs og mindre hukommelse) eller kun under cirka 15 minutter?
-4. Prøven af v9.107 (På scenen, gitteret, Gem hele arbejdet): fejl fra brugeren rettes før PS2.
+4. v9.109 er prøvet af brugeren og er ok.
 
 ## Næste skridt (P8.23)
 
 1. Brugeren prøver v9.109; fejl rettes først.
-2. **PS4** oprydning (gruppernes øje og Slå fra i Noder; brugerens valg), så **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
+2. **PS4 er lukket** (brugeren 20. november: gruppernes øje og Slå fra i Noder bliver; v9.109 er prøvet og ok). Næste byggeskridt: **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
 3. Analysen, når brugeren har valgt a–e.
 
 ## Åbne fejl (kort; listen står i `CLAUDE.md` § 4)

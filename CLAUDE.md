@@ -122,7 +122,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Regel-sættene** (B6, v9.90) og de seks skabeloner er Codes skøn; ikke prøvet på musik af et menneske. B6-navnene er ikke sagt god for udtrykkeligt.
 - **Warm Analog** (v9.72) er en første gennemgang; faste farver i enkelte vinduer er ikke gået efter. Den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes. Et langsomt træk i en skyder kan give flere Fortryd-skridt.
-- **På scenen (PS1–PS3):** effekt-rækkerne har ingen ⋯-menu (kortet i Biblioteket har knapperne); effekt-regel-sættenes tal er Codes skøn ud fra Standard; gruppernes øje og Slå fra i Noder er stadig "alle i gruppen" (PS4 afgør, om de fjernes); 6c får adgang til effekterne, når 6c bygges.
+- **På scenen (PS1–PS3):** effekt-rækkerne har ingen ⋯-menu (kortet i Biblioteket har knapperne); effekt-regel-sættenes tal er Codes skøn ud fra Standard; 6c får adgang til effekterne, når 6c bygges.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags fra Claude Code:** sessionen må sende gem op, men ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
@@ -131,9 +131,9 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
-1. **På scenen PS2 og PS3 er bygget (v9.108, v9.109); STOP** (P8.23): brugeren prøver v9.109. Hele testpakken er kørt på v9.109 (96 testfiler, alle grønne; test 85 fejlede én gang på timing og er rettet). Fejl fra prøven rettes først.
-2. **PS4** oprydning (gruppernes øje og Slå fra i Noder, hvis de er i vejen; brugerens valg).
+1. **På scenen er færdig (PS1–PS3; v9.109 er prøvet af brugeren og er ok, 20. november).** Hele testpakken er grøn på v9.109 (96 testfiler).
+2. **PS4 er lukket:** gruppernes øje og Slå fra i Noder bliver (brugerens valg). Intet at bygge.
 3. **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
-4. **Pigernes egenskaber:** brugeren vælger senere ud fra `docs/PIGERNES-EGENSKABER.md`; intet fjernes før da.
-5. **Analysen:** planen "Den nye analyse P8.19" (A0–A8) og skemaet "Alle lyde og alle metoder P8.22" venter på brugerens valg a–e. Byg intet i analysen før det (grundreglen i § 3).
+4. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); ordnes engang i fremtiden ud fra `docs/PIGERNES-EGENSKABER.md`; intet fjernes før da.
+5. **Analysen:** planen "Den nye analyse P8.19" (A0–A8) og skemaet "Alle lyde og alle metoder P8.22" venter på brugerens valg a–e (brugeren ser på dem med hovedchatten nu). Byg intet i analysen før det (grundreglen i § 3).
 6. **Senere:** spor-deling som lokalt modul, `.stem.mp4`, målervæg, tema med tekstur, Radial Mesh-værksted med rigtig bloom, stregerne i Node-editoren, ét fælles Fortryd (D4), manualen som sidepanel (D5), nye 2D-figurer på et skelet, 3D-scene, S7 og S8. Detaljer i `STATUS.md` og planerne.

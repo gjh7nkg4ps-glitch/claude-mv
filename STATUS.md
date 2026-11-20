@@ -19,14 +19,14 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. Brugeren prøver v9.109 (PS1–PS3); fejl rettes først. Så **PS4** (oprydning: gruppernes øje og Slå fra i Noder, hvis de er i vejen; brugerens valg).
+1. v9.109 er prøvet af brugeren og er ok (20. november). **PS4 er lukket:** gruppernes øje og Slå fra i Noder bliver. Næste byggeskridt: **6c Figur-generatoren**, når brugeren skriver *kør*.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 4. Analysen: planen "Den nye analyse P8.19" (A0–A8) venter på brugerens valg a–e; byg intet.
 
 ## Venter på brugeren
 
 - Prøv v9.109 med musik: På scenen i 2 · Scene (fold Effekter ud, skjul Lys-puls med øjet, slå Glød fra med ⏻, træk i styrken; klik på et effekt-navn åbner Biblioteket); hylden Effekter i Biblioteket (Brug et regel-sæt, Gem som regel-sæt); matrixens øje og ⏻ på effekt-kolonnerne; Navne: Til; Gem hele arbejdet (Opsætninger) og Hent den igen; gitteret i Node-editoren (Ret op, A/B/C, skyderne, Gitter · Kæmpe), Biblioteket og de fem regel-sæt (B6-navnene er ikke sagt god for udtrykkeligt), Detektion med K og S på egen musik, Mere … i Generator, ⋯ Mere i værktøjslinjen, Navne: Til.
-- Valg i `docs/PIGERNES-EGENSKABER.md` senere (P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
+- Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Valg a–e i "Den nye analyse P8.19"; skemaet "Alle lyde og alle metoder P8.22" findes (P8.23 punkt 3).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
 
