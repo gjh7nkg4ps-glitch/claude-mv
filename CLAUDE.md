@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 3.0 · 20. november 2026 · gælder fra Claude MV v9.107 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
+Version 3.1 · 20. november 2026 · gælder fra Claude MV v9.108 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, hvad der er åbent, og hvad der er det næste. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -122,7 +122,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Regel-sættene** (B6, v9.90) og de seks skabeloner er Codes skøn; ikke prøvet på musik af et menneske. B6-navnene er ikke sagt god for udtrykkeligt.
 - **Warm Analog** (v9.72) er en første gennemgang; faste farver i enkelte vinduer er ikke gået efter. Den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes. Et langsomt træk i en skyder kan give flere Fortryd-skridt.
-- **På scenen (PS1):** Biblioteket har ingen hylde Effekter (PS2); Noder og matrixen viser ikke øje og Slå fra pr. effekt (PS3); effekt-rækkerne har ingen ⋯-menu.
+- **På scenen (PS1–PS2):** Noder og matrixen viser ikke øje og Slå fra pr. effekt (PS3); effekt-rækkerne har ingen ⋯-menu (kortet i Biblioteket har knapperne). Effekt-regel-sættenes tal er Codes skøn ud fra Standard.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags fra Claude Code:** sessionen må sende gem op, men ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
@@ -131,7 +131,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
-1. **På scenen PS2** (hylden Effekter i Biblioteket med regel-sæt navngivet efter effekten, fx *Lys-puls på kick*) og **PS3** (Noder og matrixen viser øje og Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne). Stop efter PS3; hele testpakken på den nyeste version først. Kommer der fejl fra brugerens prøve af v9.107, rettes de først.
+1. **På scenen PS2** er bygget (v9.108). **PS3** (Noder og matrixen viser øje og Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne). Stop efter PS3; hele testpakken på den nyeste version først. Kommer der fejl fra brugerens prøve af v9.107, rettes de først.
 2. **PS4** oprydning (gruppernes øje og Slå fra i Noder, hvis de er i vejen; brugerens valg).
 3. **6c Figur-generatoren** (beslutningerne i `PLAN-NY-BRUGERFLADE.md` § 4.2).
 4. **Pigernes egenskaber:** brugeren vælger senere ud fra `docs/PIGERNES-EGENSKABER.md`; intet fjernes før da.

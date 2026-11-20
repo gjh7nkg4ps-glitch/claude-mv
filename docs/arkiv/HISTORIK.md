@@ -129,6 +129,7 @@ Flyttet fra `CLAUDE.md` den 20. november 2026 (P8.23 punkt 1b og 1c). **Læs ikk
 
 | Version | Hvad |
 | --- | --- |
+| v9.108 | **På scenen PS2:** hylden Effekter i Biblioteket (19 kort med levende tegn; Brug = øjet, Slå fra, Vis i matrix, Gem som regel-sæt) og 25 indbyggede regel-sæt navngivet efter effekten (`PS_SAET`, fx *Lys-puls på kick*; egne i `set.ne.effSaet`); valg C; klik på effektens navn i På scenen åbner kortet. Test 95 |
 
 ## 2 · Noter og lukkede fejl pr. version (flyttet uændret fra CLAUDE.md § 5 "Halvfærdigt og kendte fejl")
 

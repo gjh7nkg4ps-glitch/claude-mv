@@ -44,7 +44,7 @@ Udkast 1 · 19. november 2026 · skrevet af Claude Code. **Bygges først, når b
 | Trin | Hvad | Fjerner |
 | --- | --- | --- |
 | PS1 | Listen På scenen (w34) med de tre afsnit; effekternes øje, Slå fra og styrke i `scene.ne.eff`; motoren og tegningen spørger pr. effekt; Ctrl+Z dækker det. **Bygget i v9.107** (test 94) | intet; tal: 19 nye rækker |
-| PS2 | Biblioteket: hylden Effekter med kort og regel-sæt til effekter (`NE11_STD` med `til:'eff:puls'` …); Brug = øjet til; valg C | intet |
+| PS2 | Biblioteket: hylden Effekter med kort og regel-sæt til effekter; Brug = øjet til; valg C. **Bygget i v9.108** (sættene ligger i `PS_SAET`, ikke i `NE11_STD`; test 95) | intet |
 | PS3 | Noder og matrixen viser øje/Slå fra pr. effekt; Navne: Til skriver effekternes navne i et hjørne; Figur-generatoren (6c) får adgang til effekterne | gruppernes knapper i Noder bliver genveje |
 | PS4 | Oprydning: det, der er blevet dobbelt (dit valg: gruppe-knapperne) | tal før og efter |
 
