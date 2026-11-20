@@ -1,0 +1,13 @@
+BESKED TIL CODE · P8.32 · 20. november 2026 · ny arbejdsgang (brugerens valg B2)
+
+Brugeren vil ikke længere kopiere tekst mellem hovedchatten og dig. Fra nu af lægger hovedchatten beslutninger og beskeder i mappen docs/hovedchat/.
+
+1. Tilføj én linje øverst i CLAUDE.md (afsnit 2, under GitHub), fx:
+   "Hovedchattens indbakke: læs docs/hovedchat/BESLUTNINGER.md ved start. Beskeder ligger i docs/hovedchat/P8.x.txt; 'kør P8.x' betyder: læs og byg den besked."
+2. Ejerskab: kun hovedchatten skriver i docs/hovedchat/. Du retter ikke filerne dér. Hovedchatten retter aldrig dine filer (CLAUDE.md, STATUS-filerne, planerne, programmet).
+3. Når BESLUTNINGER.md har en ny beslutning: skriv den kort ind i din egen plan ved næste version. Hovedchatten sletter den så fra indbakken.
+4. En beslutning er ikke en ordre. Byg kun, når brugeren skriver "kør" eller "kør P8.x".
+5. Lige nu står der én ny beslutning: MedleyDB til planen (sangstemme med facit). Skriv den ind under "Senere" i docs/PLAN-SANG-OG-ANALYSE.md.
+6. Træk altid (git pull) før du gemmer, så du ikke skriver oven i hovedchattens filer.
+
+Ingen ny programversion er nødvendig for dette. Skriv bare ændringen i CLAUDE.md og planen ved din næste gemning.
