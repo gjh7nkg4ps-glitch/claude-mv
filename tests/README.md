@@ -10,7 +10,7 @@ node tests/koer-alle.js
 
 En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node tests/92-gitter.js claude-mv-v9_107.html`. Testene bruger Node og Playwright (testbrowser uden grafikkort); test 11 bruger Python med numpy. Hele pakken tager cirka 2 timer; kør aldrig to kørsler samtidig (hukommelsen løber tør). Hver version får sin egen test (trin 4), som bliver i pakken.
 
-## Testene (99)
+## Testene (100)
 
 | Fil | Trin | Hvad |
 | --- | --- | --- |
@@ -35,6 +35,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `93-hele-arbejdet.js` | 4 · Det nye i v9.106 | Gem hele arbejdet (rigtigt klik i Opsætninger) … |
 | `94-paa-scenen.js` | 4 · Det nye i v9.107 | På scenen ved 1920 × 1080 og 2560 × 1440 med Pigernes show … |
 | `95-hylden-effekter.js` | 4 · Det nye i v9.108 | Hylden Effekter: 19 kort, kortet Lys-puls med regel-sæt der passer, Brug lægger reglen på, Ctrl+Z, Skjul på scenen, Lav en kopi, Gem som regel-sæt, valg C hos danseren, klik fra På scenen |
+| `100-bedre-slag-og-takt.js` | 4 · Det nye i v9.117 | A3-rækken i Indstillinger for analysen; Testlyd med A3 til (Kick 92, Taktslag · Trommer 81, Takt · Trommer 76); rigtigt klik på Fra giver præcis tallene fra før; Til igen; med en sang: "Denne sang" og boblen ved Takt 1 |
 | `99-rigtige-trommer.js` | 4 · Det nye i v9.116 | Laver selv en lille facit-mappe med MDB-navne; rigtigt klik på Vælg facit-mappe; stykker efter navn; tallene hænger sammen; bækken neutralt; cachen; Testlyd røres ikke; rækken foldes ud; rapporten; ingen MDB-filer i repoet (MDB_MAPPE måler den rigtige mappe) |
 | `98-spor-hele-analysen.js` | 4 · Det nye i v9.113 | 4 spor: 80 lydtræk pr. spor, siden fryser ikke (ur i siden), navne/type/D2, en regel på Tonehøjde · Vokal i matrixen og Noder; cachen anden gang og efter genstart; Analyse sikkerhed på ét instrument alene; Brug den bedste tærskel (rigtigt klik, Ctrl+Z); rapporten |
 | `97-analyse-sikkerhed.js` | 4 · Det nye i v9.110 og v9.115 | Testlydens 17 fingeraftryk er præcis som referencen; gamle tal fra generatoren bliver ikke brugt, men står i historikken med en streg; "Testlyd" ved tallene; samlet tal uden 99; Cirklen i matrixens rækker (plads, farve, boble, rigtigt klik åbner fanen); ▶ Kør testen måler mod generatoren (tallene hænger sammen, gemt med version, intet røres); tabellen, Kun dem i brug, Sortér; 4 spor over 15 minutter giver en besked; tre skærmstørrelser |

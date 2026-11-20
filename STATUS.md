@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.116, 20. november 2026)
+## Nu (v9.117, 20. november 2026)
 
+- **P8.30 trin 3 (v9.117, A3 første del):** kick i lineær skala (ekkoet), taktslaget flyttes en halv slaglængde, når kicket ligger mellem slagene, takt 1 ud fra kick, ½ × snare og skift i klang; Til/Fra i Indstillinger for analysen (med "Denne sang: …"). Før → efter står i `docs/STATUS-TIL-HOVEDCHATTEN.md`. **STOP efter trin 3.**
 - **P8.30 trin 2 (v9.116):** Analyse sikkerhed har blokken **Rigtige trommer** (MDB Drums): *Vælg facit-mappe*, kolonnerne *hele mixet* og *kun trommerne*, Kick, Snare, Hihat, Taktslag, Takt 1; bækken og tammer er neutrale; cachen; aldrig blandet med Testlyd. 23 stykker på 16 s, 2 s fra cachen. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 - **Vejledning (MDB Drums):** github.com/CarlSouthall/MDBDrums → **Code** → **Download ZIP** · pak ud (cirka 2,2 GB; audio/multi-tracks, cirka 1,6 GB, kan slettes) · MV: 1 · Analyse → Analyse sikkerhed → **Vælg facit-mappe** → mappen **MDB Drums** · første gang cirka 20 s, derefter 2 s · licens CC BY-NC-SA 4.0.
 - **P8.30 trin 1 (v9.115, prøvet af brugeren 20. november: alle fingeraftryk og tal ens):** testlyden regnes i ren matematik (samme 6 mønstre, ekko, rum, åben hihat, bas; ens på alle pc'er; 15–18 s); "Testlyd" ved alle tal; det samlede tal uden 99; med 4 spor viser cirklen Trommer-tallet og siger det; gamle tal (generatoren) står svagt i historikken med en streg; rapporten har tempoets og fasens sikkerhed og den rigtige fase. **STOP efter trin 1.**
@@ -23,7 +24,7 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. **P8.30:** trin 1 er bygget (v9.115); brugeren kører testen og sender rapporten (fingeraftrykkene skal være de samme som Codes). Næste, når brugeren siger til: **trin 2** MDB Drums som facit-mappe (V4) → **trin 3** A3 (takt 1, taktslagets halve takt, kickets ekko). A3 før A2.
+1. Brugeren prøver v9.117 (A3 til og fra på egne sange). Derefter, når brugeren siger til: resten af A3 (snare, tempoets halve og dobbelte, taktslag i Hip-hop og Techno med bas, taktgitter fra Trommer-sporet), så A2, A4, A5–A6.
 2. Derefter A2 sikkerhedsgrænse og enighed, A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 

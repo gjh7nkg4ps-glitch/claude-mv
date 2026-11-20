@@ -1,8 +1,8 @@
-# Status til hovedchatten · v9.116 · 20. november 2026
+# Status til hovedchatten · v9.117 · 20. november 2026
 
 *Fra Claude Code. Højst 60 linjer. Skrevet til handover (P8.26 punkt 3).*
 
-**Nyeste version i repoet: v9.116** (`claude-mv-v9_116.html`; P8.30 trin 2). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
+**Nyeste version i repoet: v9.117** (`claude-mv-v9_117.html`; P8.30 trin 1–3). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
 ## Stand
 
@@ -10,41 +10,27 @@
 - **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
 - **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter.
 - **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
-- **Testpakken:** 98 testfiler; hele pakken på v9.113: 95 grønne, 3 rettet i v9.114; TESTPAKKE_LINJE
+- **Testpakken:** 100 testfiler; TESTPAKKE_LINJE
 
-## P8.30 trin 1 (v9.115): testlyd i ren matematik
+## P8.30 trin 1 og 2 (v9.115, v9.116)
 
-- **V8:** testlyden regnes af programmets egen kode (ikke browserens lydmotor). Samme 6 mønstre, tempi, toner og frø; kickets ekko, rum, åben hihat, bas mellem slagene og støj i Breakbeat er med. Bit for bit ens: to kørsler giver de samme 17 fingeraftryk, og Node 22 (en anden udgave af V8) giver det samme som Chrome 153. **Prøvet af brugeren (Chrome 157, Windows, 14,8 s): alle 17 fingeraftryk og alle tal er de samme som Codes.** Testen tager 15–18 s i testbrowseren (før 40 s).
-- **V1:** "Testlyd" ved det samlede tal, i tabellen og i boblen ("Målt på testlyd, ikke på din sang"); det samlede tal er uden de præcise målinger (99) og uden ?; med 4 spor viser cirklen ved Kick, Snare og Hihat tallet for Trommer, og boblen siger det. Tal fra generatoren (v9.110–v9.114) bruges ikke; de står svagt i *Tidligere målinger* under stregen "Ny testlyd fra v9.115".
-- **1c:** rapporten har pr. mønster tempoets sikkerhed, fasens sikkerhed og den rigtige fase, for hele lyden og for trommerne alene.
+- **Testlyd (v9.115):** testlyden regnes i ren matematik; brugerens rapport (Chrome 157, Windows) gav præcis Codes 17 fingeraftryk og tal. "Testlyd" ved alle tal; samlet tal uden 99; med 4 spor viser cirklen Trommer-tallet; gamle generator-tal står kun i historikken.
+- **Rigtige trommer (v9.116):** MDB Drums (23 stykker, 46 lydfiler) fra en mappe hos brugeren; 16 s første gang, 2 s fra cachen; bækken og tammer neutrale. Næsten alle stykker er cirka 110 BPM; BebopJazz og Gospel 222 (findes som det halve). Snare overser de fleste slag (1700–1940 af 2654), også jazzens svage slag.
 
-| Lydtræk (testlyd, v9.115) | Hele lyden | Kun trommerne / ét instrument |
-| --- | --- | --- |
-| Kick | 60 (bedste tærskel 0,35 → 61) | 40 (0,35 → 41) |
-| Snare | 33 | 35 |
-| Hihat | 80 | 76 |
-| Taktslag | 33 | 33 |
-| Takt 1 | 33 | 0 |
-| Tonehøjde | 12 | melodien alene 87 |
-| Basens tone | 44 | Tonehøjde · Bas 85 |
+## P8.30 trin 3 (v9.117): A3 første del, før → efter
 
-Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbeat): Kick 17 79 73 100 43 73 · Taktslag 0 0 0 98 0 98 · Takt 1 0 0 0 94 0 94. Fundet tempo: 123 · 123 · 90 · 172,3 · 132,5 · 139,8 (DnB og Breakbeat er nu rigtige). Fase-sikkerhed 0,08–0,24 overalt (lav).
+| | Testlyd hele | Testlyd trommer | Rigtige hele mixet | Rigtige trommer |
+| --- | --- | --- | --- | --- |
+| Kick | 60 → **92** | 40 → **94** | 63 → **70** | 72 → **75** |
+| Taktslag | 33 → **49** | 33 → **81** | 81 → 81 | 77 → **85** |
+| Takt 1 | 33 → 31 | 0 → **76** | 17 → **47** | 6 → **40** |
+| Snare · Hihat | 33 · 80 (uændret) | 35 · 76 | 34 · 68 | 46 · 72 |
 
-**Codes læsning:** testlyden er lidt hårdere end generatorens lyd i House: taktslagene lægges en halv taktslag-længde for sent (0,743 s mod 0,500 s), dvs. på den åbne hihat, også uden bas; kickets falske slag ligger, hvor ekkoet er (0,859 s). Det er A3 punkt a, b og d. Hovedchattens læsning af takt 1 (fasen vælges på næsten ens pladser) passer med den lave fase-sikkerhed.
-
-## P8.30 trin 2 (v9.116): Rigtige trommer (MDB Drums) · udgangspunktet for A3
-
-23 stykker, 46 lydfiler, 16 s første gang, 2 s fra cachen. Standard-reglen, ±50 ms (slag), ±70 ms (taktslag). Bækken (CY) og tammer (TT, OT) er neutrale.
-
-| Lydtræk | Hele mixet | Kun trommerne | Bedste faste tærskel (mix / trom) |
-| --- | --- | --- | --- |
-| Kick (KD, 1539) | 63 (falske 783, oversete 474) | 72 (falske 911, oversete 164) | 0,15 → 64 / 0,40 → 73 |
-| Snare (SD, 2654) | 34 (falske 831, oversete 1940) | 46 (falske 496, oversete 1700) | 0,10 → 38 / 0,10 → 51 |
-| Hihat (HH, 2639) | 68 | 72 | 0,50 → 69 / 0,25 → 72 |
-| Taktslag (2694) | 81 | 77 | – |
-| Takt 1 (680) | 17 | 6 | – |
-
-Næsten alle stykker er cirka 110 BPM (fundet 110); BebopJazz og Gospel er 222 (fundet 110, det halve). Fase-sikkerheden er 0,05–0,50. **Codes læsning:** Taktslag er godt på rigtig musik, men Takt 1 er dårlig (samme fejl som i testlyden). Kick har mange falske slag, især på trommerne alene (911); Snare overser de fleste (1700–1940): de svage slag (ghost notes) i jazz trækker ned.
+- **d) Kick:** stigningen i basbåndet måles i lineær skala, ikke logaritmisk (et ekko i næsten stilhed blev målt som 1,00, det rigtige kick i ekkoets hale som 0,69). Regnes ud fra det gemte basbånd, så cachen virker. En maske efter kraftige slag (hovedchattens forslag: tærskel, der følger niveauet) blev prøvet og gjorde Kick dårligere alle steder (Rigtige 63 → 55–58).
+- **b) Taktslag:** flyttes en halv slaglængde, når kicket mellem de fundne slag er 1,6 gange større end på dem. Andre vægte i anslagsstyrken blev prøvet; de hjalp testlyden, men skadede de rigtige trommer lidt.
+- **a) Takt 1:** kick − ½ × snare (sum over fire rammer, fordi et slag mellem to rammer ellers taber) + skift i klang og toner (12 toner, når de findes; ellers 4 bånd). Hovedchattens læsning passede: accenten alene er næsten ens i House; snare-målingen peger forkert (den reagerer på kickets klik, og klappet ligger i mid).
+- **c) Tempo:** Testlyden finder nu alle 6 tempi; BebopJazz og Gospel (222) findes som 110 (det halve). Står i planen.
+- Kan slås fra: Indstillinger for analysen → *Bedre slag og takt (A3)*; med Fra er alle tal præcis som før (test 100).
 
 ## Rækkefølgen for analysen
 
