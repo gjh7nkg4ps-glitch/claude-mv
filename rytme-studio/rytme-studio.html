@@ -289,6 +289,10 @@ body.slipper .slip { display: grid; }
 @media (max-width: 760px) {
   .app { grid-template-columns: minmax(0, 1fr); grid-template-areas: "top" "side" "midte" "panel" "player"; }
   .brand { width: auto; }
+  .top { flex-wrap: wrap; gap: 8px 14px; }
+  .top-hoejre { flex-wrap: wrap; margin-left: auto; }
+  .top-hoejre .tl-etiket { display: none; }
+  .status { order: 3; flex-basis: 100%; margin-left: 0; }
   .log { left: 0; }
   .nav { flex-direction: row; overflow-x: auto; }
   .nav-punkt { width: auto; white-space: nowrap; }

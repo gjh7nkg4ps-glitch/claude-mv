@@ -47,8 +47,11 @@ module.exports = async function stile() {
     }
   }
   await page.evaluate(() => RS.State.gemNu());
+  const gemt = await page.evaluate(() => JSON.parse(localStorage.getItem('rytme-studio:v1')).stil);
   await page.reload();
-  T.tjek((await page.evaluate(() => document.documentElement.dataset.stil)) === 'analog', 'stilen er husket efter genindlæsning');
+  await page.waitForFunction(() => window.RS && RS.Stil && document.getElementById('statusTekst').textContent !== '', null, { timeout: 10000 });
+  const efter = await page.evaluate(() => document.documentElement.dataset.stil);
+  T.tjek(gemt === 'analog' && efter === 'analog', 'stilen er gemt og husket efter genindlæsning', [gemt, efter]);
   T.tjek(fejl.length === 0, 'ingen fejl i konsollen', fejl);
   await browser.close();
   return T.slut();
