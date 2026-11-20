@@ -36,7 +36,7 @@ Rettet samtidig: startskærmens *Start et show* sagde "de 10 indbyggede shows" (
 
 Det er cirka **314 KB**, cirka **6 %** af Chromes loft på cirka 5 MB pr. side. Hvert Mit show fylder cirka 40 KB, så loftet nås ved cirka **100 gemte shows af Perfect 2-størrelse** (eller flere mindre). Med D1 får du besked, før noget går tabt.
 
-**Forslag (byg efter ja):** én knap **Gem hele arbejdet** (i Opsætninger ved siden af *Gem alle på computeren*, og i banneret) laver **én fil** `claude-mv-alt_<dato>.json` med alle `rytme-*`-nøgler (Mine shows, Opsætning 1–20, det aktive arbejde, indstillinger, lys, generatorens sange), og **Hent hele arbejdet** læser den ind igen og genstarter (som Nulstil alt gør). Analyse-cachen (IndexedDB, fx 56 MB for 74 minutter) kommer ikke med; den regnes igen. *Gem alle på computeren* bliver, som den er.
+**Bygget i v9.106 (brugerens ja 19. november):** knapperne *Gem hele arbejdet* og *Hent hele arbejdet* under Opsætninger → *Hele arbejdet i én fil*, i 💾 Gem ▾ og i banneret. Forslaget, som det blev stillet: én knap **Gem hele arbejdet** (i Opsætninger ved siden af *Gem alle på computeren*, og i banneret) laver **én fil** `claude-mv-alt_<dato>.json` med alle `rytme-*`-nøgler (Mine shows, Opsætning 1–20, det aktive arbejde, indstillinger, lys, generatorens sange), og **Hent hele arbejdet** læser den ind igen og genstarter (som Nulstil alt gør). Analyse-cachen (IndexedDB, fx 56 MB for 74 minutter) kommer ikke med; den regnes igen. *Gem alle på computeren* bliver, som den er.
 
 ## Til planen (SENERE)
 
