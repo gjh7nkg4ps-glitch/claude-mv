@@ -10,7 +10,6 @@
 
 ## Nye beslutninger
 
-- 2026-11-20 · Til planen (ikke nu): sangstemme med facit fra **MedleyDB** (melodiens tonehøjde; kræver ansøgning om adgang; licens kun ikke-kommerciel, filerne aldrig i repoet). Hovedchatten undersøger den åbne prøve (415 MB), når vi når til vokalen.
-- 2026-11-20 · Arbejdsgangen: hovedchatten lægger beslutninger og beskeder i `docs/hovedchat/` (brugerens valg B2).
+*(Ingen lige nu.)*
 
-*Ændret 2026-11-20: filen oprettet.*
+*Ændret 2026-11-20: MedleyDB og arbejdsgangen slettet herfra; de står nu i Codes plan og CLAUDE.md.*
