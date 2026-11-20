@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.113, 20. november 2026)
+## Nu (v9.114, 20. november 2026)
 
+- **v9.114:** rettelser efter hele testpakken på v9.113 (95 af 98 grønne): Analyse sikkerhed gemmer kun gennem lsGem; cirklen i matrixen ændrer ikke rækkens tekst; Tilpas tegner fladen én gang. Brugeren 20. november: v9.112 er fin; "Lav show hakker" og "tom Node-editor" sker ikke mere (lukket).
 - **A1 (v9.113, P8.26 og P8.28):** hele analysen på de 4 spor (80 lydtræk pr. spor) i baggrunds-trådene, gemt i cachen; Analyse sikkerhed måler ét instrument alene, viser bedste tærskel også for sporene, har *Brug den bedste tærskel* (Ctrl+Z) og *Kopiér rapport*. **STOP efter A1.**
 - **Kolonnenavnene står fast øverst i Node-editoren (v9.111):** en fast linje, samme størrelse uanset zoom, ingen overlap (brugerens ønske 20. november). v9.112: efter Tilpas står noderne under linjen (hele testpakken fandt, at klik på en node kunne ramme et kolonnenavn).
 - **Analyse sikkerhed (A0, v9.110, P8.24):** fanen Analyse sikkerhed i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker (grøn 75–100, gul 50–74, rød 0–49, ? ikke målt; 99 = ren matematik); resultatet gemmes med versionsnummer. 4 spor kun under cirka 15 minutter (besked). Notat om installation med ét klik: `docs/LOKALT-MODUL-INSTALLATION.md`. **STOP efter A0.** De første tal står i `docs/STATUS-TIL-HOVEDCHATTEN.md`.
@@ -19,8 +20,8 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. v9.113 er prøvet af brugeren med rigtige spor (20. november); rapporten viste, at tal kun kan sammenlignes på samme pc. **Næste, når brugeren skriver kør:** facit i ren matematik som en ekstra side i Analyse sikkerhed; derefter lydfil + MIDI (`docs/PLAN-SANG-OG-ANALYSE.md`). Brugeren og hovedchatten leder efter udgivne sæt med facit.
-2. Analysen videre, ét trin ad gangen, når brugeren siger til: **A2** sikkerhedsgrænse og enighed i reglerne · **A3** bedre slag (først taktslagets halve takt og kickets ekko) · **A4** Lydtidslinjen · **A5–A6** det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
+1. **P8.30, ét trin pr. version, STOP efter hvert:** trin 1 ærlig og ens test (V8 testlyd i ren matematik + V1 "Testlyd" ved alle tal + fasens sikkerhed i rapporten) → trin 2 MDB Drums som facit-mappe (V4) → trin 3 A3 (takt 1, taktslagets halve takt, kickets ekko). A3 før A2 (brugerens valg).
+2. Derefter A2 sikkerhedsgrænse og enighed, A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
 ## Venter på brugeren
@@ -40,7 +41,7 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 - **Målervæg** (vores navn; fagudtryk: meter bridge): et stort vindue eller fuld skærm med mange målere.
 - **Et ekstra tema** med tekstur, glans, kanter og former (ikke kun farver).
 - **Radial Mesh-værksted** med rigtig bloom i WebGL, sort baggrund med stjerner og galakser, uden at røre originalen (`docs/arkiv/SVAR-P8_14.md` e).
-- **Stregerne i Node-editoren** (farve pr. lyd, lys der rejser) lige efter analysen; S7 HPSS og S8 spilleliste sammen med analysen.
+- S7 HPSS og S8 spilleliste sammen med analysen. Kun en idé (brugeren 20. november: røres ikke): stregerne i Node-editoren.
 - **Nye 2D-figurer** (fugle, fønix, sanger, ny trommeslager, guitarist, mandlig danser) på et skelet med led (fagudtryk: rig), Cascadeur som inspiration; ragdollen kan bruge samme skelet (P8.15 3).
 - **D4** ét fælles Fortryd (lyset i Mesh 3D og Øjet, EQ+, Form-editoren) og **D5** manualen som sidepanel (P8.18). **D7** feltfarven røres ikke.
 - 3D-scene, Unity-udgaven af Mesh 3D (aldrig testet i Unity).

@@ -1,0 +1,66 @@
+BESKED TIL CODE · P8.30 · 20. november 2026 · svar på v9.113 og næste skridt
+
+Brugerens svar
+- v9.112 er fin (kolonnenavnene står fast, noderne ligger under linjen).
+- "Lav show hakker" og "tom Node-editor" sker ikke mere. Luk dem i listen over åbne fejl.
+- Testen tog 27,2 s hos brugeren (12 kerner, Chrome 157, Windows).
+- Stregerne i Node-editoren ligger stille og røres ikke. Tag dem ud af "Næste" og "Senere: lige efter analysen"; lad dem kun stå som en idé.
+- Brugeren har valgt: A3 før A2. Og til testen: V1 + V4 + V8 (forklaret nedenfor). V8 er dit forslag B.
+- Brugerens rapport fra v9.113 står nederst.
+
+Grundregel for denne besked: målestokken først. Byg trin 1 og 2, før du ændrer noget i slag og takt (trin 3), så vi kan måle før og efter på de samme lyde. Ét trin pr. version, STOP efter hvert trin.
+
+TRIN 1 · Ærlig og ens test (V8 + V1)
+1a. V8: testen laver sin lyd i ren matematik (dit forslag B). Samme 6 mønstre, tempi og frø.
+ - Krav: fingeraftrykkene i rapporten er ens hos dig og hos brugeren. Det er prøven på, at det virker.
+ - Gør ikke testen lettere: behold kickets ekko, rum, den åbne hihat og bassen mellem slagene. Det er dem, der narrer analysen i dag.
+ - De gamle tal kan ikke sammenlignes med de nye. Mærk det i "Tidligere målinger" (fx en streg og teksten "ny testlyd fra v9.x").
+1b. V1: ærlige navne. Brugeren troede, at tallene handlede om hendes egen sang og hendes egne 4 spor (80 uden spor, 78 med spor). Det gør de ikke.
+ - Skriv "Testlyd" ved alle tal, der kommer fra testen: det samlede tal, tabellen og boblen på cirklerne i matrixen ("Målt på testlyd, ikke på din sang").
+ - Det samlede tal: tag "99 · ren matematik" ud af gennemsnittet (vis antallet ved siden af). I dag trækker de tallet op.
+ - Når 4 spor er hentet, bytter programmet Kick/Snare/Hihat ud med "kun trommer"-tallene. Sig det i boblen, så et fald ikke ligner en fejl.
+1c. Rapporten: tilføj pr. mønster fasens sikkerhed (faseKonf), tempoets sikkerhed og den rigtige fase.
+
+TRIN 2 · Rigtig musik med facit (V4): MDB Drums som facit-mappe
+ Kilde: github.com/CarlSouthall/MDBDrums · licens CC BY-NC-SA 4.0. Filerne må IKKE ligge i repoet (heller ikke i tests/). Brugeren henter mappen selv. Du kan klone den til en midlertidig mappe uden for repoet til dine egne test.
+ Indhold (hovedchatten har læst fil-listen og ét sæt facit-filer, ikke hentet lyden):
+ - "MDB Drums/audio/full_mix/*_MIX.wav" og "MDB Drums/audio/drum_only/*_Drum.wav": 23 stykker (cirka 35–100 s), rigtige trommeslagere.
+ - "MDB Drums/annotations/class/*_class.txt": én linje pr. slag: sekunder, tabulator, klasse. Set i 80sRock: KD (kick), SD (snare), CY (bækken). Tjek selv, hvad hihat hedder, og hvilke 6 klasser der findes i alle 23 filer.
+ - "MDB Drums/annotations/beats/*_MIX.beats": sekunder, tabulator, taktslagets nummer 1–4. Nummer 1 er takt 1. Altså også facit for Taktslag og Takt 1. Hovedchatten ved ikke, hvordan beats-filerne er lavet (hånd eller maskine); se README.
+ Byg:
+ - I Analyse sikkerhed: knappen "Vælg facit-mappe" (som 4 spor fra en mappe). Programmet finder lyd og facit efter filnavn.
+ - To nye kolonner eller en ny blok, tydeligt adskilt fra Testlyd: "Rigtige trommer · hele mixet" og "Rigtige trommer · kun trommerne" (svarer til Trommer-sporet). Lydtræk: Kick, Snare, Hihat, Taktslag, Takt 1. Samme regler og tolerancer som testen. Bland aldrig Testlyd og Rigtige trommer i ét tal.
+ - Foreslå selv, hvordan slag fra andre klasser (bækken, tammer) tælles, og skriv valget i "Sådan måles det".
+ - Analysen gemmes i cachen som for sporene. Vis fremdrift. Sig, hvor lang tid det tager.
+ - Skriv en vejledning til brugeren på højst 5 linjer: hvor hun trykker for at hente mappen, hvor meget den fylder, og hvor hun vælger den i MV.
+ - Skriv de første tal i STATUS (det er udgangspunktet for A3).
+
+TRIN 3 · A3, den lille del: taktslagets halve takt, takt 1 og kickets ekko
+ Hovedchattens læsning af brugerens rapport (du kender koden bedst; ret mig, hvis det er forkert):
+ a) Takt 1 = 0 er næppe en fejl i testen. Taktslag · Trommer er 98 på begge House-mønstre, men Takt · Trommer er 0. taktFase vælger den plads af fire, der har det højeste gennemsnit af accent. I House er der kick på alle fire slag, så de fire pladser er næsten ens, og en lillebitte forskel i lyden vælter valget (du fik 94, brugeren 0). Fasen skal findes på noget, der skifter pr. takt: snare/klap på 2 og 4, basens tone, akkord- eller klangskift, gentagelse over 4 og 8 takter. Og når faseKonf er lav, skal sikkerheden for Takt 1 vise det.
+ b) Taktslaget lægges på modslaget, når bas og melodi er med: hele lyden 98 0 0 24 0 28, kun trommerne 98 98 98 45 98 31 (25 mod 81). onsetStyrke bruger flux fra hele lyden, så bassen mellem slagene trækker. Forslag: når der er 4 spor, kommer sangens taktslag og takt fra Trommer-sporet (ét fælles taktgitter til hele showet). Uden spor: vælg mellem gitteret og gitteret en halv takt forskudt efter, hvor kick-energien i bassen ligger.
+ c) Tempo: Drum and bass 172 → 86,3 (det halve) og Breakbeat 140 → 112,3 (forkert). Se på det, hvis det er lille; ellers i planen.
+ d) Kick: ekkoet. Bedste faste tærskel hos brugeren er 0,50 (87) på hele lyden og 0,55 (81) på trommerne; Techno · trommer giver 9 med 0,30. En tærskel, der følger niveauet pr. spor, som planen siger.
+ e) Snare (32, og bedste tærskel giver kun 33): det er ikke tærsklen, men at høj-mid-båndet ikke kan kende snare fra hihat og kick. Den kommer efter a, b og d, som planen siger.
+ Mål før og efter på både Testlyd og Rigtige trommer, og skriv begge sæt tal i STATUS. En ændring, der hjælper testlyden, men skader de rigtige trommer, skal ikke med.
+
+Til planen (ikke nu)
+ - Brugerens egne tryk (K og S i Detektion) gemt som facit for én af hendes egne sange, med kolonnen "Din sang".
+ - Sangstemme med facit (MedleyDB: melodiens tonehøjde, kræver ansøgning om adgang). Hovedchatten undersøger den åbne prøve, når vi når til vokalen.
+ - Slakh (MIDI-facit for alle instrumenter; 105 GB) og sølv-facit fra en AI-model på brugerens egne sange (Beat This!) hører til det lokale modul, A5–A6.
+
+Brugerens rapport (v9.113, 20. nov. kl. 17.50, 27,2 s, Chrome 157 Windows, 12 kerner)
+Fundet tempo: House 124 → 123,3 fase 3 · House 124 → 123,3 fase 1 · Hip-hop 90 → 90 fase 2 · Drum and bass 172 → 86,3 fase 3 · Techno 132 → 132,5 fase 3 · Breakbeat 140 → 112,3 fase 2
+Kick 79 (134 af 160, falske 47, oversete 26) · pr. mønster 45 100 77 100 83 78 · bedste tærskel 0,5 → 87
+Kick · Trommer 55 (95 af 160, falske 90, oversete 65) · 45 58 77 84 9 73 · bedste 0,55 → 81
+Snare 32 (52 af 152, falske 125, oversete 100) · 25 19 34 41 0 53 · bedste 0,4 → 33
+Snare · Trommer 36 (62 af 152, falske 126, oversete 90) · 25 25 50 62 0 39 · bedste 0,1 → 37
+Hihat 74 (320 af 528, falske 16, oversete 208) · 59 58 92 87 78 83 · bedste 0,5 → 76
+Hihat · Trommer 70 (305 af 528, falske 37, oversete 223) · 59 57 86 88 74 64 · bedste 0,5 → 72
+Taktslag 25 (46 af 192, falske 126, oversete 146) · 98 0 0 24 0 28
+Taktslag · Trommer 81 (148 af 192, falske 27, oversete 44) · 98 98 98 45 98 31
+Takt 1: 0 (0 af 48, falske 43, oversete 48) · 0 0 0 0 0 0
+Takt · Trommer 43 (20 af 48, falske 26, oversete 28) · 0 0 94 46 94 13
+Tonehøjde 12 · Basens tone, hele lyden 47 · Toneklasse 79 · De 12 toner 87
+Tonehøjde · Bas 87 (68 93 92) · Toneklasse · Bas 99 · Tonehøjde · Vokal (melodien alene) 89 (93 88 86) · Toneklasse · Vokal 80
+Fingeraftryk: house-t/alt=7f229bda house/alt=5cc71263 house/trommer=43932693 hip/alt=e80690e9 hip/trommer=0c65f680 dnb/alt=9f795359 dnb/trommer=36e0799b techno/alt=3e19a030 techno/trommer=09cda66e brk/alt=c6e81c26 brk/trommer=5adaf783 house/bas=696bf434 house/lead=f13d424c hip/bas=1f03cc81 hip/lead=35f3997a dnb/bas=af2ec255 dnb/lead=f11abee8

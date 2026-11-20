@@ -1,8 +1,8 @@
-# Status til hovedchatten · v9.113 · 20. november 2026
+# Status til hovedchatten · v9.114 · 20. november 2026
 
 *Fra Claude Code. Højst 60 linjer. Skrevet til handover (P8.26 punkt 3).*
 
-**Nyeste version i repoet: v9.113** (`claude-mv-v9_113.html`). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
+**Nyeste version i repoet: v9.114** (`claude-mv-v9_114.html`; rettelser efter hele testpakken). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
 ## Stand
 
@@ -10,7 +10,7 @@
 - **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
 - **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter.
 - **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
-- **Testpakken:** 98 testfiler; test 97 og 98 er grønne; hele pakken køres på v9.113, og resultatet skrives her.
+- **Testpakken:** 98 testfiler; hele pakken på v9.113: 95 grønne, 3 fejl (54, 82, 91), rettet i v9.114 og kørt igen enkeltvis: grønne.
 
 ## Målte tal (testbrowseren, v9.113; F-mål eller % af tiden)
 

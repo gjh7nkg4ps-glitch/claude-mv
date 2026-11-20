@@ -20,7 +20,7 @@ async function kør(arg) {
       const klik = async sel => { const p = await midt(sel); if (!p) throw new Error('findes ikke: ' + sel); await side.mouse.click(p.x, p.y); await side.waitForTimeout(500) };
       const KICK = '#ne-mx th.mx-lt[data-b="kick"] .as-c';
       await side.evaluate(() => { lay3Anvend('noder'); mxSaet(true) }); await side.waitForTimeout(2500);
-      const m0 = await side.evaluate(() => { const R = [...document.querySelectorAll('#ne-mx th.mx-lt')], c = b => { const e = document.querySelector('#ne-mx th.mx-lt[data-b="' + b + '"] .as-c'); return e ? { t: e.textContent, kl: e.className } : null };
+      const m0 = await side.evaluate(() => { const R = [...document.querySelectorAll('#ne-mx th.mx-lt')], c = b => { const e = document.querySelector('#ne-mx th.mx-lt[data-b="' + b + '"] .as-c'); return e ? { t: e.dataset.t, kl: e.className } : null };
         const th = document.querySelector('#ne-mx th.mx-lt[data-b="kick"]'), q = th.getBoundingClientRect(), k = th.querySelector('.as-c').getBoundingClientRect(), kt = th.querySelector('.mx-kt').getBoundingClientRect(), lf = th.querySelector('.mx-ltfra').getBoundingClientRect();
         return { n: R.length, c: R.filter(t => t.querySelectorAll('.as-c').length === 1).length, kick: c('kick'), bas: c('bas'), vokal: c('vokal'), inde: k.right <= q.right + .5 && k.left >= q.left && k.top >= q.top && k.bottom <= q.bottom, orden: lf.right <= kt.left && kt.right <= k.left + .5, hoejde: Math.round(q.height) } });
       if (!gemt) {
@@ -77,7 +77,7 @@ async function kør(arg) {
         await side.evaluate(() => { lay3Anvend('noder'); mxSaet(true) }); await side.waitForTimeout(2000);
       }
       /* matrixen med tal (alle tre størrelser) */
-      const m1 = await side.evaluate(() => { const e = document.querySelector('#ne-mx th.mx-lt[data-b="kick"] .as-c'); return { t: e.textContent, kl: e.className, s: AS.data.res.kick.s } });
+      const m1 = await side.evaluate(() => { const e = document.querySelector('#ne-mx th.mx-lt[data-b="kick"] .as-c'); return { t: e.dataset.t, kl: e.className, s: AS.data.res.kick.s } });
       const p1 = await midt(KICK); await side.mouse.move(p1.x, p1.y); await side.waitForTimeout(400);
       const b1 = await side.evaluate(() => { const b = document.getElementById('as-boble'), q = b.getBoundingClientRect(); return { t: b.hidden ? '' : b.textContent, inde: q.right <= innerWidth && q.bottom <= innerHeight && q.left >= 0 && q.top >= 0 } });
       T.tjek(m1.t === String(m1.s) && new RegExp('as-k-' + (m1.s >= 75 ? 'g' : m1.s >= 50 ? 'y' : 'r')).test(m1.kl) && new RegExp(m1.s + ' %').test(b1.t) && /Rammer \d+ af 160 · falske \d+ · oversete \d+/.test(b1.t) && /Målt på Generatoren/.test(b1.t) && b1.inde, `${w} × ${h}: cirklen ved Kick viser ${m1.t} i den rigtige farve, og boblen har Rammer, falske, oversete, Målt på og dato`, JSON.stringify({ m1, b1 }));
