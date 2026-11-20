@@ -10,9 +10,10 @@ Brugerens rapport fra v9.113 (Chrome 157, Windows) viste: tempoet findes ens på
 
 | Nr. | Facit | Stand |
 | --- | --- | --- |
-| 1 | **Generatoren** (browserens lydmotor) | bygget (v9.110); bliver |
-| 2 | **Ren matematik:** samme mønstre, lyden regnes af vores egen kode, så den er ens på alle pc'er og hurtigere | **næste, når brugeren skriver kør** |
+| 1 | **Generatoren** (browserens lydmotor) | v9.110–v9.114; tallene står kun i historikken |
+| 2 | **Ren matematik (Testlyd):** samme mønstre, lyden regnes af vores egen kode, så den er ens på alle pc'er og hurtigere | **bygget (v9.115)**; erstatter 1 i tabellen |
 | 3 | **Lydfil + MIDI-fil** (MIDI er facit for slag og toner) | efter 2 |
+| 3b | **MDB Drums** (P8.30 trin 2, V4): 23 stykker med rigtige trommer, facit for slag og taktslag; CC BY-NC-SA 4.0, må aldrig ligge i repoet; brugeren henter mappen | **næste trin (trin 2)** |
 | 4 | **Udgivne sæt med facit** (brugeren og hovedchatten leder nu): Groove MIDI Dataset (trommer med MIDI), Slakh2100 (toner og slag pr. instrument, med spor), MUSDB18 (4 spor), Harmonix Set (taktslag, takt 1, afsnit; kun facit). Licens og download skal tjekkes | venter på det, de finder; bruger 3 |
 | 5 | **Dine egne tryk** (Detektion, K og S) | bygget (v9.95); bliver |
 

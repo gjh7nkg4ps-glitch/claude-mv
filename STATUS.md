@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.114, 20. november 2026)
+## Nu (v9.115, 20. november 2026)
 
+- **P8.30 trin 1 (v9.115):** testlyden regnes i ren matematik (samme 6 mønstre, ekko, rum, åben hihat, bas; ens på alle pc'er; 15–18 s); "Testlyd" ved alle tal; det samlede tal uden 99; med 4 spor viser cirklen Trommer-tallet og siger det; gamle tal (generatoren) står svagt i historikken med en streg; rapporten har tempoets og fasens sikkerhed og den rigtige fase. **STOP efter trin 1.**
 - **v9.114:** rettelser efter hele testpakken på v9.113 (95 af 98 grønne): Analyse sikkerhed gemmer kun gennem lsGem; cirklen i matrixen ændrer ikke rækkens tekst; Tilpas tegner fladen én gang. Brugeren 20. november: v9.112 er fin; "Lav show hakker" og "tom Node-editor" sker ikke mere (lukket).
 - **A1 (v9.113, P8.26 og P8.28):** hele analysen på de 4 spor (80 lydtræk pr. spor) i baggrunds-trådene, gemt i cachen; Analyse sikkerhed måler ét instrument alene, viser bedste tærskel også for sporene, har *Brug den bedste tærskel* (Ctrl+Z) og *Kopiér rapport*. **STOP efter A1.**
 - **Kolonnenavnene står fast øverst i Node-editoren (v9.111):** en fast linje, samme størrelse uanset zoom, ingen overlap (brugerens ønske 20. november). v9.112: efter Tilpas står noderne under linjen (hele testpakken fandt, at klik på en node kunne ramme et kolonnenavn).
@@ -20,7 +21,7 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 
 ## Næste (rækkefølgen fra P8.14 punkt 8 og P8.23)
 
-1. **P8.30, ét trin pr. version, STOP efter hvert:** trin 1 ærlig og ens test (V8 testlyd i ren matematik + V1 "Testlyd" ved alle tal + fasens sikkerhed i rapporten) → trin 2 MDB Drums som facit-mappe (V4) → trin 3 A3 (takt 1, taktslagets halve takt, kickets ekko). A3 før A2 (brugerens valg).
+1. **P8.30:** trin 1 er bygget (v9.115); brugeren kører testen og sender rapporten (fingeraftrykkene skal være de samme som Codes). Næste, når brugeren siger til: **trin 2** MDB Drums som facit-mappe (V4) → **trin 3** A3 (takt 1, taktslagets halve takt, kickets ekko). A3 før A2.
 2. Derefter A2 sikkerhedsgrænse og enighed, A4 Lydtidslinjen, A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 

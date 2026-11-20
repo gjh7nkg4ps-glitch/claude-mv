@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.114 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
+Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.115 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, hvad der er åbent, og hvad der er det næste. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -98,6 +98,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 | 1 · Sang, vinduet Sang (S2) | **1 · Analyse, vinduet Analyse** (v9.98); fanerne inde i vinduet hedder Sang · Spor · Avanceret |
 | vinduet Figurer (v9.74) | **På scenen** (v9.107): Karakterer, Figurer og Effekter |
 | sikkerhed pr. lydtræk (● ▲ !) | **Analyse sikkerhed** (v9.110; fagudtryk: evaluation): fanen i Analyse og cirklen med tal i matrixen |
+| generatoren som facit i Analyse sikkerhed | **Testlyd** (v9.115): regnes i ren matematik |
 | opstillinger af noder | **Gitter** (v9.105): Ret op, model A/B/C, skyderne Lodret og Vandret |
 
 ### Analyse og mapping
@@ -123,7 +124,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Warm Analog** (v9.72) er en første gennemgang; den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes.
 - **På scenen:** effekt-rækkerne har ingen ⋯-menu; effekt-regel-sættenes tal er Codes skøn; 6c får adgang til effekterne, når 6c bygges.
-- **Analyse sikkerhed:** tal fra generatoren kan kun sammenlignes på samme pc; trin 1 i P8.30 laver en testlyd, der er ens overalt. Cirklen mangler på lydtræk-noderne og i Foreslå regler.
+- **Analyse sikkerhed:** testlyd i ren matematik (v9.115), ikke prøvet på brugerens Windows endnu. Cirklen mangler på lydtræk-noderne og i Foreslå regler.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags:** sessionen må ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
@@ -133,7 +134,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
-2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). A0 (v9.110) og A1 (v9.113) er bygget. **Nu P8.30, ét trin pr. version, STOP efter hvert:** trin 1 ærlig og ens test (testlyd i ren matematik, "Testlyd" ved alle tal) → trin 2 MDB Drums som facit-mappe (filerne må aldrig i repoet) → trin 3 A3 (takt 1, taktslagets halve takt, kickets ekko; mål før og efter på begge). Brugerens valg: **A3 før A2**; derefter A2, A4, A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
+2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). A0 (v9.110) og A1 (v9.113) er bygget. **Nu P8.30, ét trin pr. version, STOP efter hvert:** trin 1 ærlig og ens test er bygget (v9.115) → trin 2 MDB Drums som facit-mappe (filerne må aldrig i repoet) → trin 3 A3 (takt 1, taktslagets halve takt, kickets ekko; mål før og efter på begge). Brugerens valg: **A3 før A2**; derefter A2, A4, A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 3. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); intet fjernes (`docs/PIGERNES-EGENSKABER.md`).
 4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til. **Feltfarven D7** er ikke valgt.
 5. **Senere:** `.stem.mp4`, målervæg, tema med tekstur, Radial Mesh-værksted med rigtig bloom, ét fælles Fortryd (D4), manualen som sidepanel (D5), nye 2D-figurer på et skelet, 3D-scene, S7 og S8. Kun en idé (røres ikke): stregerne i Node-editoren. Detaljer i `STATUS.md` og planerne.
