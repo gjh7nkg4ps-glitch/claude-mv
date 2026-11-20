@@ -10,7 +10,7 @@ node tests/koer-alle.js
 
 En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node tests/92-gitter.js claude-mv-v9_107.html`. Testene bruger Node og Playwright (testbrowser uden grafikkort); test 11 bruger Python med numpy. Hele pakken tager cirka 2 timer; kør aldrig to kørsler samtidig (hukommelsen løber tør). Hver version får sin egen test (trin 4), som bliver i pakken.
 
-## Testene (103)
+## Testene (104)
 
 | Fil | Trin | Hvad |
 | --- | --- | --- |
@@ -35,6 +35,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `93-hele-arbejdet.js` | 4 · Det nye i v9.106 | Gem hele arbejdet (rigtigt klik i Opsætninger) … |
 | `94-paa-scenen.js` | 4 · Det nye i v9.107 | På scenen ved 1920 × 1080 og 2560 × 1440 med Pigernes show … |
 | `95-hylden-effekter.js` | 4 · Det nye i v9.108 | Hylden Effekter: 19 kort, kortet Lys-puls med regel-sæt der passer, Brug lægger reglen på, Ctrl+Z, Skjul på scenen, Lav en kopi, Gem som regel-sæt, valg C hos danseren, klik fra På scenen |
+| `104-fasens-sikkerhed.js` | 4 · Det nye i v9.123 (A3, anden del) | Rampen fra enighed til sikkerhed; Testlyd: sikkerheden 0,20–0,95 (Drum and bass 0,95, Hip-hop med bas 0,20); med en sang: "i N af M takter peger … på samme takt 1" i rækken og boblen; rigtige klik på Fra og Til; Rigtige trommer (testmappen fra test 99, som nu også giver `lavMappe`): hele mixet med trin 2, rapporten og "Sådan måles", cachen anden gang; ingen konsolfejl |
 | `103-autosikring.js` | 4 · Det nye i v9.122 (T1) | Automatiske kopier ved 1920 × 1080: dagens kopi lægges af sig selv; 9 tidligere dage giver højst 7; rækkerne i Opsætninger (i dag, i går …); rigtige klik på Gå tilbage hertil (Annuller ændrer intet; to gange Ja går tilbage til i går og starter forfra); Fortryd via "lige før du gik tilbage"; Tag en kopi nu; ingen konsolfejl |
 | `102-byg-fra-kilder.js` | 1 · Kilderne (T0) | `src/dele.txt` er hel; `node src/byg.js --tjek` bygger præcis den testede fil, byte for byte; `.gitattributes` beskytter linjeskiftene. Ingen browser |
 | `101-testlyd-lyt-og-gem.js` | 4 · Det nye i v9.119 og v9.121 | Foldet sammen bag den lille knap "Testlyden ▸" (rigtige klik ud og ind, lyden standser); afsnittet "Testlyden: lyt og gem" (6 rækker); rigtige klik på ▶ Lyt og ■ Stop; Gem som WAV: header og fingeraftryk = rapportens (ac579ca0, a375df80); filen kan åbnes som sang; ▶ Lyt sætter sangen på pause |

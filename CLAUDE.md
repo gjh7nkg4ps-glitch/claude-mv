@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.122 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
+Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.123 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, hvad der er åbent, og hvad der er det næste. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -127,7 +127,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 - **Warm Analog** (v9.72) er en første gennemgang; den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes.
 - **På scenen:** effekt-rækkerne har ingen ⋯-menu; effekt-regel-sættenes tal er Codes skøn; 6c får adgang til effekterne, når 6c bygges.
-- **Analyse sikkerhed:** fasens sikkerhed (A3, v9.117) er ikke kalibreret (høj, også når takt 1 er forkert). Cirklen mangler på lydtræk-noderne og i Foreslå regler.
+- **Analyse sikkerhed:** fasens sikkerhed (v9.123) ser ikke, om taktslagene ligger på modslaget. Cirklen mangler på lydtræk-noderne og i Foreslå regler.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags:** sessionen må ikke lave eller slette tags og grene (grenen `v9_11-med-lydkort` kan slettes).
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
@@ -137,7 +137,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 Rækkefølgen er brugerens. Planerne: `PLAN-NY-BRUGERFLADE.md`, `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`, `docs/PLAN-TEKNIK.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
-2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0, A1, P8.30 trin 1–3 og P8.31 (v9.110–v9.121; `docs/arkiv/HISTORIK.md`). **STOP.** Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Rækkefølgen (brugerens valg): rest af A3 → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
+2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget: A0, A1, P8.30 trin 1–3, P8.31 og fasens sikkerhed (v9.110–v9.123; `docs/arkiv/HISTORIK.md`). **STOP.** Mål altid før og efter på Testlyd og Rigtige trommer; en ændring, der skader de rigtige trommer, kommer ikke med. Rækkefølgen (brugerens valg): rest af A3 → A2 → A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 3. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); intet fjernes (`docs/PIGERNES-EGENSKABER.md`).
 4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til. **Feltfarven D7** er ikke valgt.
 5. **Senere:** står i `STATUS.md` (afsnittet Senere) og i planerne.

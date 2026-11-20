@@ -111,6 +111,7 @@ kode/hoved/097-v9-116-rigtige-trommer-med-facit-mdb-drums.js
 kode/hoved/098-v9-117-bedre-slag-og-takt-a3-foerste-del.js
 kode/hoved/099-v9-118-a3-kick-i-lange-sange.js
 kode/hoved/100-v9-119-testlyden-kan-hoeres-og-gemmes.js
+kode/hoved/101-v9-123-fasens-sikkerhed-a3.js
 html/side-04.html
 kode/script-1-v9-16-foreslaa-regler-i-lydkilde-foer-auto-mapping.js
 html/side-05.html

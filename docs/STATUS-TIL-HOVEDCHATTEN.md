@@ -1,31 +1,17 @@
-# Status til hovedchatten · v9.122 · 20. november 2026
+# Status til hovedchatten · v9.123 · 20. november 2026
 
-*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.122** (`claude-mv-v9_122.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C, bag en lille knap fra v9.121), svage slag (G2), autosikring (T1, v9.122)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
+*Fra Claude Code. Højst cirka 80 linjer (brugeren 20. november: hellere lidt længere end at miste kontekst). Skrevet til handover (P8.26 punkt 3).* **Nyeste version i repoet: v9.123** (`claude-mv-v9_123.html`; P8.30 trin 1–3, rettelse, testlyden hørbar (C, bag en lille knap fra v9.121), svage slag (G2), autosikring (T1, v9.122), fasens sikkerhed (v9.123)). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
 ## Stand
 
 - **Brugerfladen** (P8.1–P8.23) er bygget: fire arbejdsområder, docking, matrix og Noder, Biblioteket, På scenen (PS1–PS3; PS4 lukket), Gem hele arbejdet, gitteret. v9.111–v9.112: kolonnenavnene står i en fast linje øverst i Node-editoren.
 - **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
 - **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter. **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
-- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. På v9.120 kørte 27: test 15 fejlede på timing (grøn alene på v9.121). **Hele pakken på v9.121: 97 test, 96 grønne;** test 71 fejlede, fordi den ikke kendte rækken *Bedre slag og takt (A3)* (testen er rettet og grøn på v9.122). Test 102 (kilderne) og 103 (autosikring) er grønne på v9.122.
+- **Testpakken:** 101 testfiler. På v9.117 kørte 56 af dem: 55 grønne, test 57 fejlede (rettet i v9.118). Test 57, 99, 100 og 101 er grønne på v9.120. På v9.120 kørte 27: test 15 fejlede på timing (grøn alene på v9.121). **Hele pakken på v9.121: 97 test, 96 grønne;** test 71 fejlede, fordi den ikke kendte rækken *Bedre slag og takt (A3)* (testen er rettet og grøn på v9.122). Test 102 (kilderne) og 103 (autosikring) er grønne på v9.122; på v9.123 er 1, 2, 3, 97, 99, 100, 102 og 104 (fasens sikkerhed) grønne.
 
 ## P8.30 trin 1 (v9.115): testlyd i ren matematik
 
-- **V8:** testlyden regnes af programmets egen kode (ikke browserens lydmotor). Samme 6 mønstre, tempi, toner og frø; kickets ekko, rum, åben hihat, bas mellem slagene og støj i Breakbeat er med. Bit for bit ens: to kørsler giver de samme 17 fingeraftryk, og Node 22 (en anden udgave af V8) giver det samme som Chrome 153. **Prøvet af brugeren (Chrome 157, Windows, 14,8 s): alle 17 fingeraftryk og alle tal er de samme som Codes.** Testen tager 15–18 s i testbrowseren (før 40 s).
-- **V1:** "Testlyd" ved det samlede tal, i tabellen og i boblen ("Målt på testlyd, ikke på din sang"); det samlede tal er uden de præcise målinger (99) og uden ?; med 4 spor viser cirklen ved Kick, Snare og Hihat tallet for Trommer, og boblen siger det. Tal fra generatoren (v9.110–v9.114) bruges ikke; de står svagt i *Tidligere målinger* under stregen "Ny testlyd fra v9.115".
-- **1c:** rapporten har pr. mønster tempoets sikkerhed, fasens sikkerhed og den rigtige fase, for hele lyden og for trommerne alene.
-
-| Lydtræk (testlyd, v9.115) | Hele lyden | Kun trommerne / ét instrument |
-| --- | --- | --- |
-| Kick | 60 (bedste tærskel 0,35 → 61) | 40 (0,35 → 41) |
-| Snare | 33 | 35 |
-| Hihat | 80 | 76 |
-| Taktslag | 33 | 33 |
-| Takt 1 | 33 | 0 |
-| Tonehøjde | 12 | melodien alene 87 |
-| Basens tone | 44 | Tonehøjde · Bas 85 |
-
-Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbeat): Kick 17 79 73 100 43 73 · Taktslag 0 0 0 98 0 98 · Takt 1 0 0 0 94 0 94. Fundet tempo: 123 · 123 · 90 · 172,3 · 132,5 · 139,8 (DnB og Breakbeat er nu rigtige). Fase-sikkerhed 0,08–0,24 overalt (lav). **Codes læsning:** testlyden er lidt hårdere end generatorens lyd i House: taktslagene lægges en halv taktslag-længde for sent (0,743 s mod 0,500 s), dvs. på den åbne hihat, også uden bas; kickets falske slag ligger, hvor ekkoet er (0,859 s). Det er A3 punkt a, b og d. Hovedchattens læsning af takt 1 (fasen vælges på næsten ens pladser) passer med den lave fase-sikkerhed.
+Testlyden regnes af programmets egen kode, bit for bit ens på alle pc'er (brugeren fik de samme 17 fingeraftryk og tal); "Testlyd" ved alle tal; rapporten har tempoets og fasens sikkerhed og den rigtige fase. Det fulde afsnit med tabellen (Kick 60/40, Snare 33/35, Hihat 80/76, Taktslag 33/33, Takt 1 33/0, Tonehøjde 12 / melodien alene 87, Basens tone 44 / Bas 85) står i `docs/arkiv/STATUS-TIL-HOVEDCHATTEN-v9_115.md`.
 
 ## P8.30 trin 2 (v9.116): Rigtige trommer (MDB Drums) · udgangspunktet for A3
 
@@ -69,9 +55,17 @@ A3 slået til ét skridt ad gangen i P8.31's rækkefølge (Kick · Taktslag · T
 - **Trin 3 var bygget i v9.117** (rettet i v9.118). Målt skridt for skridt i P8.31's rækkefølge (tabellen ovenfor; også i `STATUS.md`): skridt 3 (ekkoet) sænker Testlyd · Takt 1 i hele lyden 47 → 31, men hæver de rigtige trommer (Takt 1 30 → 40, Kick 72 → 75).
 - **G2 (v9.120):** 21 underklasser; svage = SDG (svagt slag, 790) og SDD (drag, 2); visker (SDB, 332) regnes ikke som svage; pedal = PHH (523). Snare uden svage slag 36 / 57 (hele mixet / trommer; alle slag 34 / 46); Hihat uden pedal 64 / 68 (alle 68 / 72). Regnskabet: de ramte svage slag flytter fra ramt til neutral; de falske er de samme. **Valg C (v9.119):** testlyden kan høres (▶ Lyt) og gemmes som WAV pr. mønster; filens fingeraftryk = rapportens. **P8.32:** linjen om indbakken står i CLAUDE.md (afsnit 2, GitHub); MedleyDB og P8.30's tre punkter "til planen" (Din sang, MedleyDB, Slakh og sølv-facit) står i `docs/PLAN-SANG-OG-ANALYSE.md` under Senere; Code trækker før hver gemning.
 
+## v9.123 (A3, fasens sikkerhed): før → efter
+
+- **Hvordan:** hver takt stemmer for sig (den af fire pladser, hvor kick − ½ × snare + skift i klang og toner er størst). Enigheden er, hvor mange takter der peger på den valgte takt 1, over det tilfældige (0 = 1 af 4, 1 = alle). Sikkerheden er en rampe målt på Rigtige trommer: med toner 0,20 + 0,75 × enighed / 0,25 (højst 0,95); uden toner 0,25 + 0,40 × enighed / 0,5 (højst 0,65). Rækken og boblen siger fx "i 6 af 15 takter peger … på samme takt 1, hvor tilfældigt ville give cirka 4". Stemmerne pr. takt gemmes til A2 (`SHOWPROFIL.faseInfo`).
+- **Målt** (de samme stykker, som rampen er valgt på; kan være overtilpasset): hele mixet med enighed 0,2 eller mere → takt 1 rigtig i 14 af 15, under 0,2 → 3 af 8. Brier-score (lavere er bedre; altid 0,5 giver 0,25): hele mixet 0,363 → 0,117 · kun trommerne 0,323 → 0,229 · Testlyd 0,429 → 0,388. Andre bud blev målt og var dårligere (AUC hele mixet: enighed 0,74; t-tal 0,56; tempoets sikkerhed 0,53; kick på/mellem slagene 0,39).
+- **Fund: målingen af Rigtige trommer gav hele mixet kun trin 1.** En rigtig sang i MV får altid trin 2 (toner), og takt 1 bruger akkordskift. Med trin 2 er takt 1 rigtig i 17 af 23 stykker (før 12): Takt 1 · hele mixet 47 → 69. Programmets valg er uændret; målingen er rettet (cache `mdb1t|…`, cirka 25 s ekstra første gang i testbrowseren).
+- **Fejl i takt 1** (Rigtige trommer, fundet − rigtigt): hele mixet 17 rigtige, 3 × 2 slag (1 og 3 byttet), 1 × 1 slag, 2 × taktslag forkerte (BebopJazz tempo det halve, ModalJazz på modslaget); kun trommerne 10 rigtige, 6 × 2, 3 × 1, 3 × 3, 1 × taktslag forkerte. Uden toner kan 1 og 3 ikke skelnes.
+- **Testlyd:** taktslagene i Hip-hop, Techno og Breakbeat (hele lyden; Breakbeat også kun trommer) ligger præcis en halv slaglængde for sent. Kick + snare til den halve takt blev prøvet (snarens vægt 1–2, faktor 1,0–1,6): Testlyd Taktslag 49 → 16–33, Rigtige trommer kun trommer 85 → 77, så den er ikke med (snaren reagerer på den åbne hihat på modslaget). Fasens sikkerhed ser ikke den fejl (Techno og Breakbeat 0,95). Næste skridt: med 4 spor tages taktgitteret fra Trommer-sporet (Testlyd kun trommer: Taktslag 81, Takt 1 76).
+
 ## Rækkefølgen for analysen
 
-Resten af A3 (fasens sikkerhed; taktslag i Hip-hop og Techno med bas; med 4 spor ét taktgitter fra Trommer-sporet; tempo det halve i BebopJazz og Gospel; Snare) → A2 sikkerhedsgrænse og enighed i reglerne → A4 Lydtidslinjen → A5–A6 det lokale modul. Brugerens valg: A3 før A2. Mål altid før og efter på Testlyd og Rigtige trommer. Plan: "Den nye analyse P8.19" https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU · kort plan i repoet: `docs/PLAN-SANG-OG-ANALYSE.md`.
+Resten af A3 (fasens sikkerhed er bygget i v9.123; taktslag i Hip-hop og Techno med bas; med 4 spor ét taktgitter fra Trommer-sporet; tempo det halve i BebopJazz og Gospel; Snare) → A2 sikkerhedsgrænse og enighed i reglerne → A4 Lydtidslinjen → A5–A6 det lokale modul. Brugerens valg: A3 før A2. Mål altid før og efter på Testlyd og Rigtige trommer. Plan: "Den nye analyse P8.19" https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU · kort plan i repoet: `docs/PLAN-SANG-OG-ANALYSE.md`.
 
 ## Åbne spørgsmål
 

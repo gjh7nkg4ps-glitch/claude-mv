@@ -68,4 +68,5 @@ async function kør(arg) {
   return T.slut();
 }
 module.exports = kør;
+module.exports.lavMappe = lavMappe; /* bruges også af test 104 */
 if (require.main === module) kør(process.argv[2]).then(ok => process.exit(ok ? 0 : 1));
