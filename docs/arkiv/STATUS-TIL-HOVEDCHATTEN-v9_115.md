@@ -31,3 +31,21 @@ Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbea
 - **v9.118 (rettelse, fundet af testpakken, test 57):** kick i lineær skala nåede ikke tærsklen i stille stykker af sange over 10 minutter (*Lange sange* måtte højst skrue 4 gange op); for kick nu 16 gange. Korte sange er uændrede.
 - **Ikke målt:** korte sange med et meget stille afsnit (fx en stille intro med svage kick); den lineære kick kan overse dem, fordi hele sangen normaliseres samlet. *Adaptiv tærskel* hjælper.
 
+---
+
+*Flyttet 20. november 2026 (v9.126):*
+
+## P8.30 trin 2 (v9.116): Rigtige trommer (MDB Drums) · udgangspunktet for A3
+
+23 stykker, 46 lydfiler, 16 s første gang, 2 s fra cachen. Standard-reglen, ±50 ms (slag), ±70 ms (taktslag). Bækken (CY) og tammer (TT, OT) er neutrale.
+
+| Lydtræk | Hele mixet | Kun trommerne | Bedste faste tærskel (mix / trom) |
+| --- | --- | --- | --- |
+| Kick (KD, 1539) | 63 (falske 783, oversete 474) | 72 (falske 911, oversete 164) | 0,15 → 64 / 0,40 → 73 |
+| Snare (SD, 2654) | 34 (falske 831, oversete 1940) | 46 (falske 496, oversete 1700) | 0,10 → 38 / 0,10 → 51 |
+| Hihat (HH, 2639) | 68 | 72 | 0,50 → 69 / 0,25 → 72 |
+| Taktslag (2694) | 81 | 77 | – |
+| Takt 1 (680) | 17 | 6 | – |
+
+Næsten alle stykker er cirka 110 BPM (fundet 110); BebopJazz og Gospel er 222 (fundet 110, det halve). Fase-sikkerheden er 0,05–0,50. **Codes læsning:** Taktslag er godt på rigtig musik, men Takt 1 er dårlig (samme fejl som i testlyden). Kick har mange falske slag, især på trommerne alene (911); Snare overser de fleste (1700–1940): de svage slag (ghost notes) i jazz trækker ned.
+

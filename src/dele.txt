@@ -114,6 +114,7 @@ kode/hoved/100-v9-119-testlyden-kan-hoeres-og-gemmes.js
 kode/hoved/101-v9-123-fasens-sikkerhed-a3.js
 kode/hoved/102-v9-124-taktgitter-fra-trommer-sporet.js
 kode/hoved/103-v9-125-sikkerhedsgraense-og-enighed-a2.js
+kode/hoved/104-v9-126-lydtidslinjen-a4.js
 html/side-04.html
 kode/script-1-v9-16-foreslaa-regler-i-lydkilde-foer-auto-mapping.js
 html/side-05.html
