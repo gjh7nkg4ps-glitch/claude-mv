@@ -1,0 +1,14 @@
+BESKED TIL CODE · P8.28 · tillæg til P8.26 (tag det med i A1)
+
+Brugerens Analyse sikkerhed på v9.110 (to kørsler, 16.31 og 16.38, samme tal):
+ Kick 79 · Snare 32 · Hihat 74 · Taktslag 25 · Takt 1 0 af 48 · Tonehøjde 12 · Basens tone 47 · Kick · Trommer 55 (Snare · Trommer 37, Hihat · Trommer 70).
+
+1. TESTEN GIVER ANDRE TAL HOS BRUGEREN END HOS DIG
+ Du målte Kick 67, Taktslag 43, Takt 1 34. Testen skulle give det samme hver gang (fast frø).
+ Find ud af, hvad testen afhænger af på brugerens pc: fx AudioContextens samplerate (44,1 eller 48 kHz), generatorens indstillinger i panelet (genre, tempo, tæthed), den indlæste sang (tempo, Auto-valg for taktslag) eller andet. Testen skal være uafhængig af alt det.
+ Takt 1 = 0 af 48 og Hændelse · hver takt = 0 er et tydeligt tegn på en fejl; undersøg det først.
+
+2. BEDSTE TÆRSKEL OGSÅ FOR SPORENE
+ "Kick · Trommer" (55) er dårligere end Kick på hele lyden (79), fordi standard-reglen (tærskel 0,30, spærretid 120 ms) er indstillet til hele lyden: på trommerne alene når ekkoet over tærsklen og spærretiden blokerer det rigtige kick.
+ - Vis "Bedste tærskel: X giver Y" for alle slag-rækker, også sporenes (i dag kun for hele lyden).
+ - Tilføj en knap "Brug den bedste tærskel" pr. række, der sætter tærsklen i brugerens regler for det lydtræk (Fortryd skal virke). Byg den, hvis den er lille; ellers skriv den i planen under A2.

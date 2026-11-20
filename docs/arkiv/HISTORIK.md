@@ -134,6 +134,7 @@ Flyttet fra `CLAUDE.md` den 20. november 2026 (P8.23 punkt 1b og 1c). **Læs ikk
 | v9.110 | **Analyse sikkerhed (A0, P8.24):** generatoren som facit (6 mønstre, offline), fanen Analyse sikkerhed i Analyse, cirkel med tal i matrixens rækkehoved (grøn, gul, rød, ?), boble og klik til rækken; 99 for ren matematik; resultat gemt med versionsnummer (`rytme-asik`); 4 spor kun under cirka 15 minutter (besked); notat om installation med ét klik (`docs/LOKALT-MODUL-INSTALLATION.md`). Test 97. |
 | v9.111 | **Kolonnenavnene fast øverst i Node-editoren:** en fast linje i kolonnernes rækkefølge, samme størrelse uanset zoom, ingen overlap (`ne61Hoveder` erstattet); test 56 skrevet om. |
 | v9.112 | **Rettelse til v9.111:** efter Tilpas står den øverste node 92 px nede, under linjen med kolonnenavne (test 15, 16 og 17 fandt, at klik ramte et kolonnenavn). |
+| v9.113 | **A1 (P8.26, P8.28):** hele analysen på de 4 spor i baggrunds-trådene (`anaAlt`, 80 lydtræk pr. spor, `stem:SPOR:ana:…`, `stemFeat`), sporenes analyse i cachen (`spor1|filnavn|længde`); Analyse sikkerhed: ét instrument alene (Tonehøjde · Bas, Tonehøjde · Vokal, Taktslag · Trommer), bedste tærskel for sporene, Brug den bedste tærskel, Kopiér rapport, fingeraftryk af lyden. Test 98. |
 
 ## 2 · Noter og lukkede fejl pr. version (flyttet uændret fra CLAUDE.md § 5 "Halvfærdigt og kendte fejl")
 

@@ -10,7 +10,7 @@ node tests/koer-alle.js
 
 En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node tests/92-gitter.js claude-mv-v9_107.html`. Testene bruger Node og Playwright (testbrowser uden grafikkort); test 11 bruger Python med numpy. Hele pakken tager cirka 2 timer; kør aldrig to kørsler samtidig (hukommelsen løber tør). Hver version får sin egen test (trin 4), som bliver i pakken.
 
-## Testene (97)
+## Testene (98)
 
 | Fil | Trin | Hvad |
 | --- | --- | --- |
@@ -35,6 +35,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `93-hele-arbejdet.js` | 4 · Det nye i v9.106 | Gem hele arbejdet (rigtigt klik i Opsætninger) … |
 | `94-paa-scenen.js` | 4 · Det nye i v9.107 | På scenen ved 1920 × 1080 og 2560 × 1440 med Pigernes show … |
 | `95-hylden-effekter.js` | 4 · Det nye i v9.108 | Hylden Effekter: 19 kort, kortet Lys-puls med regel-sæt der passer, Brug lægger reglen på, Ctrl+Z, Skjul på scenen, Lav en kopi, Gem som regel-sæt, valg C hos danseren, klik fra På scenen |
+| `98-spor-hele-analysen.js` | 4 · Det nye i v9.113 | 4 spor: 80 lydtræk pr. spor, siden fryser ikke (ur i siden), navne/type/D2, en regel på Tonehøjde · Vokal i matrixen og Noder; cachen anden gang og efter genstart; Analyse sikkerhed på ét instrument alene; Brug den bedste tærskel (rigtigt klik, Ctrl+Z); rapporten |
 | `97-analyse-sikkerhed.js` | 4 · Det nye i v9.110 | Cirklen i matrixens rækker (plads, farve, boble, rigtigt klik åbner fanen); ▶ Kør testen måler mod generatoren (tallene hænger sammen, gemt med version, intet røres); tabellen, Kun dem i brug, Sortér; 4 spor over 15 minutter giver en besked; tre skærmstørrelser |
 | `96-effekt-i-noder-og-matrix.js` | 4 · Det nye i v9.109 | Mål-noden Lys-puls: Slå fra og øje i kontrolpanelet (rigtige klik), klasser og tekst på noden, Ctrl+Z; matrixens overskrift med øje og ⏻ (rigtige klik); Navne: Til skriver effekterne i hjørnet |
 | `89-navne-i-live-preview.js` | 4 · Det nye i v9.100 | Ved 1920 × 1080 og 2560 × 1440 med Pigernes show … |

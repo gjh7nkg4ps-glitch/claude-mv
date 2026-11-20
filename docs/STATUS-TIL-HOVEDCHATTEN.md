@@ -1,59 +1,51 @@
-# Status til hovedchatten · v9.112 · 20. november 2026
+# Status til hovedchatten · v9.113 · 20. november 2026
 
-*Fra Claude Code. Højst 60 linjer (P8.23 punkt 1g). Den gamle udgave (Node-editoren v9.19–v9.42) ligger i `docs/arkiv/STATUS-TIL-HOVEDCHATTEN-v9_42.md`.*
+*Fra Claude Code. Højst 60 linjer. Skrevet til handover (P8.26 punkt 3).*
 
-**Nyeste version i repoet: v9.112** (`claude-mv-v9_112.html`; v9.110 = A0, v9.111–v9.112 = kolonnenavnene fast øverst i Node-editoren). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer.
+**Nyeste version i repoet: v9.113** (`claude-mv-v9_113.html`). En ny version fra hovedchatten skal bygge på den nyeste fil i repoet og have et højere nummer. Regler og åbne fejl: `CLAUDE.md`. Historik: `docs/arkiv/HISTORIK.md`.
 
-## Nuværende stand
+## Stand
 
-- **Brugerfladen (P8.1–P8.9):** fase 0–7 og pakke 1–7 er bygget: én linje øverst, fire arbejdsområder, docking, matrixen og Noder på samme vilkår, Foreslå regler i stedet for Auto, panelet Automatik, Figurer → På scenen, Biblioteket (shows, figurer, regel-sæt, Mine shows uden loft), fem regel-sæt pr. figur, startskærm, Indlæst, ét tema (Warm Analog), Størrelse, Indstillinger.
-- **Sang og analyse (P8.4):** S0–S6 er bygget: vinduet Analyse (Sang · Spor · Avanceret), analysen i baggrunds-tråde, Lyd over tid, Niveau (LUFS), Stereo, Spor med M/S, Detektion med hit-rate, 4 spor fra en mappe.
-- **På scenen (P8.14 punkt 7, P8.20, P8.23):** PS1–PS3 bygget (v9.107–v9.109): vinduet På scenen med Karakterer, Figurer og Effekter; hylden Effekter i Biblioteket med regel-sæt som *Lys-puls på kick*; øje og Slå fra pr. effekt i Noder og matrixen; effekternes navne i Live preview. **Stoppet efter PS3.**
-- **Testpakken:** 97 testfiler; test 97 (Analyse sikkerhed) er grøn; hele pakken køres på v9.111, og resultatet skrives her.
+- **Brugerfladen** (P8.1–P8.23) er bygget: fire arbejdsområder, docking, matrix og Noder, Biblioteket, På scenen (PS1–PS3; PS4 lukket), Gem hele arbejdet, gitteret. v9.111–v9.112: kolonnenavnene står i en fast linje øverst i Node-editoren.
+- **A0 Analyse sikkerhed (v9.110):** fanen i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker; resultat gemt med versionsnummer. Virker hos brugeren (28,6 s).
+- **A1 (v9.113):** hvert af de 4 spor får hele analysen i baggrunds-trådene (`anaAlt`); kilderne hedder `stem:SPOR:ana:…` (fx Tonehøjde · Vokal) og findes i matrixen, Node-editoren, D2 og Analyse sikkerhed; analysen gemmes i cachen pr. filnavn og længde (filerne skal vælges igen efter genstart, men regnes ikke igen). **Der er 80 lydtræk pr. spor (14 + 66), ikke 98.** Spor kun under cirka 15 minutter.
+- **P8.28:** bedste tærskel vises for alle slag-rækker, også sporenes; knappen *Brug den bedste tærskel* sætter tærsklen i brugerens regler på lydtrækket (Ctrl+Z virker); *Kopiér rapport* giver alle tal, det fundne tempo pr. mønster og browserens version som tekst.
+- **Testpakken:** 98 testfiler; test 97 og 98 er grønne; hele pakken køres på v9.113, og resultatet skrives her.
 
-## A0 · Analyse sikkerhed (v9.110, P8.24): de første målte tal
+## Målte tal (testbrowseren, v9.113; F-mål eller % af tiden)
 
-Facit: generatoren, 6 mønstre på 8 takter med generatorens standard-lyd (ekko 0,25, rum 0,25), regnet offline: House 124 kun trommer · House 124 · Hip-hop 90 · Drum and bass 172 (alle tre med bas og melodi) · Techno 132 med akkord-flade · Breakbeat 140 med støj (12 dB under musikken). Slag: standard-reglen (tærskel 0,30; Hihat 0,35; attack 8 ms, release 120 ms, spærretid 120 ms), ramt inden for ±50 ms; taktslag ±70 ms. Sikkerhed = F-mål i procent. To kørsler giver samme tal (fast frø).
+| Lydtræk | Hele lyden | Ét instrument alene |
+| --- | --- | --- |
+| Kick | 67 (bedste tærskel 0,20–0,25 giver 67) | Trommer: 42 (bedste tærskel 0,45 giver 45) |
+| Snare | 29 | Trommer: 35 |
+| Hihat | 72 | Trommer: 70 |
+| Taktslag | 43 | Trommer: 63 |
+| Takt 1 | 34 | Trommer: 59 |
+| Tonehøjde | 12 (melodien) | melodien alene (står for Vokal): 89 |
+| Basens tone | 47 | Tonehøjde · Bas: 87 |
+| Toneklasse | 79 | Bas 99 · melodien 80 |
+| De 12 toner | 87 | Bas 99 · melodien 92 |
 
-| Lydtræk | Sikkerhed | Rammer | Falske | Oversete | Pr. mønster (i rækkefølgen ovenfor) |
-| --- | --- | --- | --- | --- | --- |
-| Kick | 67 | 116 af 160 | 69 | 44 | 25 · 100 · 75 · 97 · 71 · 55 |
-| Snare (snare og klap) | 29 | 49 af 152 | 140 | 103 | 25 · 18 · 31 · 30 · 0 · 52 |
-| Hihat (lukket og åben) | 72 | 311 af 528 | 22 | 217 | 58 · 55 · 91 · 87 · 78 · 75 |
-| Taktslag (fra filen) | 43 | 78 af 192 | 95 | 114 | 98 · 98 · 0 · 24 · 0 · 28 |
-| Takt 1 (fra filen) | 34 | 16 af 48 | 29 | 32 | 94 · 94 · 0 · 0 · 0 · 0 |
-| Tonehøjde (melodien, hele lyden) | 12 | % af tiden | – | – | – · 7 · 28 · 9 · 0 · 7 |
-| Tonehøjde, kun melodien | 89 | % af tiden | – | – | 93 · 88 · 86 (House, Hip-hop, DnB) |
-| Basens tone, hele lyden (ikke et lydtræk endnu) | 47 | % af tiden | – | – | – · 33 · 54 · 62 · 37 · 32 |
-| Basens tone, kun bassen | 87 | % af tiden | – | – | 68 · 93 · 92 |
-| Toneklasse · de 12 toner (gennemsnit) | 79 · 87 | % af tiden | – | – | |
-| Kun trommerne: Kick · Snare · Hihat | 42 · 35 · 70 | | | | Kick: 25 · 22 · 75 · 89 · 9 · 64 |
+Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbeat): Taktslag 98 98 0 24 0 28; Taktslag · Trommer 98 98 98 45 0 31. Fundet tempo: 123,3 · 123,3 · 90 · 86,3 (det halve) · 132,5 · 112,3 (forkert).
 
-**Det, tallene viser (Codes læsning):**
-- **Ekkoet narrer Kick.** I House kun trommer udløser kickets ekko (3 sekstendedele senere) reglen cirka 100 ms før det næste rigtige kick, og spærretiden på 120 ms blokerer så det rigtige. Med bas i lyden sker det ikke (House 100). Derfor er "kun trommerne" ikke bedre end hele lyden her; et rent Trommer-spor hjælper ikke, når fejlen er tærsklen. En tærskel, der følger niveauet (A3), bør fjerne det.
-- **Snare er det svageste slag:** den åbne hihat og kicket udløser den (140 falske). Høj-mid-båndet alene kan ikke skelne snare fra hihat.
-- **Taktslaget er enten rigtigt eller en halv takt forskudt:** House 98, men Hip-hop og Techno 0, fordi slagene lægges på modslaget (fasen er forkert, tempoet er rigtigt). Takt 1 følger med ned.
-- **Tonehøjde virker på én stemme (89), ikke i en blanding (12).** Det støtter planen om at køre tonehøjden på sporene (A1). Bassens dybeste tone ligger en oktav under det, generatoren kalder tonen (en sinus under); facit er den dybeste.
-- Ren matematik (bånd, styrke, klang, stereo) står som 99. Vokal, afsnit, akkorder og takturet "mens det spiller" har intet facit (?).
+**Det, A1 giver:** tonehøjde er brugbar på et rent spor (87 og 89 mod 47 og 12). Taktslaget bliver bedre på trommerne alene (Hip-hop 0 → 98). Slagene bliver ikke bedre af et rent spor med standard-reglen (ekkoet), og den bedste faste tærskel hjælper kun lidt (42 → 45): det kræver A3.
 
-**Forbehold:** generatorens lyde er rene og ens; rigtig musik giver normalt lavere tal. Slag er målt med standard-reglen, ikke med brugerens regler og ikke med Adaptiv tærskel. Testen tog 42 s i testbrowseren (4 langsomme kerner); tiden hos brugeren er ikke målt.
+## Brugerens tal afviger (P8.28 punkt 1): ikke løst
 
-**Ikke bygget i A0 (står i planen):** cirklen på lydtræk-noderne i Node-editoren og i Foreslå regler. **Punkt e:** `docs/LOKALT-MODUL-INSTALLATION.md` (Pinokio først, et startscript som reserve; om en fil-side kan nå `127.0.0.1` i Chrome skal prøves).
+Brugeren målte på v9.110: Kick 79, Snare 32, Hihat 74, Taktslag 25, Takt 1 0 af 48, Kick · Trommer 55 (to kørsler, samme tal). Testbrowseren: 67, 29, 72, 43, 34, 42.
+- **Udelukket ved forsøg:** generatorens indstillinger (genre, tempo, swing, ekko, rum, lydstyrker, mute), EQ, Normalisering Fast, Adaptiv tærskel, flueben for analysens dele, en indlæst sang der spiller, generatoren startet og stoppet. Alle gav præcis de samme tal. OfflineAudioContext er altid 44,1 kHz.
+- **Fundet:** browseren regner ikke generatorens lyd bit for bit ens fra kørsel til kørsel (melodi og trommer afviger, bassen ikke; også uden rum-klang). I testbrowseren flytter det højst ét slag. Brugerens Chrome (Windows) kan regne lyden mere anderledes; hvor et slag ligger lige ved tærsklen, eller taktslaget lige mellem to faser, tipper tallet.
+- **Næste skridt:** brugeren trykker *Kopiér rapport* i v9.113 og sender teksten. Det fundne tempo og fasen pr. mønster viser, om Takt 1 = 0 skyldes fasen (sandsynligt) eller en fejl.
+- **Forslag (ikke bygget, brugeren vælger):** A) behold generatoren som facit og sammenlign kun tal fra samme pc; B) lad testen lave sin lyd i ren matematik (samme mønstre, egne lyde) i stedet for browserens lydmotor: ens på alle pc'er og hurtigere, men ikke længere præcis generatorens lyd. Code anbefaler B, hvis tallene skal kunne sammenlignes mellem pc'er.
 
-## Åbne spørgsmål til brugeren
+## Rækkefølgen for analysen
 
-1. **Pigernes egenskaber** (`docs/PIGERNES-EGENSKABER.md`): ligger stille til engang i fremtiden (brugeren 20. november).
-2. Hvor lang tid tager ▶ Kør testen på brugerens pc?
+A2 sikkerhedsgrænse og enighed i reglerne → A3 bedre slag (**først** taktslagets halve takt og kickets ekko) → A4 Lydtidslinjen → A5–A6 det lokale modul. Plan: "Den nye analyse P8.19" https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU · kort plan i repoet: `docs/PLAN-SANG-OG-ANALYSE.md`.
 
-## Næste skridt (P8.24 punkt 4)
+## Åbne spørgsmål
 
-1. Brugeren prøver v9.111; fejl rettes først.
-2. A1 hele analysen på sporene i baggrunds-trådene (sporenes analyse gemmes) · A2 sikkerhedsgrænse og enighed i reglerne · A3 bedre slag · A4 Lydtidslinjen · A5–A6 det lokale modul. Ét trin ad gangen, når brugeren siger til.
-3. 6c Figur-generatoren (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til.
-
-## Åbne fejl (kort; listen står i `CLAUDE.md` § 4)
-
-- Konsol-linjen `computeBoundingSphere(): Computed radius is NaN` og den manglende streg fra Lydfil-noden: ikke undersøgt.
-- Lav show hakker og en helt tom Node-editor hos brugeren: kunne ikke genskabes.
-- 4 spor: ikke i cachen, kun 14 lydtræk pr. spor, regnes i hovedtråden.
-- Lydmotoren er ikke lyttet til af et menneske; regel-sættene er Codes skøn.
+1. Pigernes egenskaber (`docs/PIGERNES-EGENSKABER.md`): ligger stille.
+2. Feltfarven D7: ikke valgt.
+3. Det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`): Pinokio først; om en fil-side kan nå `127.0.0.1` (CORS, Local Network Access) skal prøves i brugerens Chrome.
+4. Valg A eller B for testens lyd (ovenfor).
+5. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler. 6c Figur-generatoren venter.

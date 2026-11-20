@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.112 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
+Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.113 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, hvad der er åbent, og hvad der er det næste. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -112,19 +112,19 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 ## 4. Åbne fejl og halvfærdigt (kun det, der stadig er åbent; én linje hver)
 
 - **Konsol-linjen** `computeBoundingSphere(): Computed radius is NaN` (16. november) og den manglende streg fra Lydfil-noden: ikke undersøgt.
-- **Lydmotor** (v9.8) er målt (ingen klip), men lyden er ikke lyttet til af et menneske.
-- **Send til editor** laver ikke tempo-profilen (SHOWPROFIL); kun en lydfil gør det. Akkord-fladen og fill giver ikke klodser.
-- **4 spor:** gemmes ikke i cachen eller i pladserne; hvert spor får kun de 14 lydtræk; regnes i hovedtråden (A1); et spor over cirka 15 minutter læses ikke ind (besked, v9.110; bid for bid i A8).
-- **Hysterese, Hold med tid og Slew** virker ikke på klods-spor; klodser, der forudsiges fra filen, bruger ikke trim, Taktslag Auto og Spor Auto.
+- **Lydmotor** (v9.8): lyden er ikke lyttet til af et menneske.
+- **Send til editor** laver ikke tempo-profilen (SHOWPROFIL). Akkord-fladen og fill giver ikke klodser.
+- **4 spor (A1, v9.113):** hele analysen pr. spor (80 lydtræk: 14 + 66) i baggrunds-trådene, gemt i cachen pr. filnavn og længde; filerne vælges igen efter genstart; spor over cirka 15 minutter læses ikke ind (A8).
+- **Hysterese, Hold med tid og Slew** virker ikke på klods-spor; forudsagte klodser bruger ikke trim, Taktslag Auto og Spor Auto.
 - **three.js:** r128 til Mesh 3D og Øjet, 0.186.1 til Node-editorens linjer (valg A); B (én three.js), når Mesh 3D og Øjet flyttes. WebGPU kan ikke prøves i testbrowseren.
-- **Kort over forbindelserne** kræver internet første gang (Mermaid fra jsDelivr).
+- **Kort over forbindelserne** kræver internet første gang (Mermaid).
 - **Lav show hakker** og **Node-editoren helt tom** hos brugeren (v9.61): kunne ikke genskabes; bed om sangens længde og konsollen, hvis det sker igen.
 - **Oprydning, der stadig mangler:** Generator (fuld, w4) og Lydlag (w15) som skjult kode, `OPS_TEST` (40 test bruger den), `nivAnvend`, sidebjælkens og bundbjælkens kode, de gamle layouts i `lay3Anvend`, de gamle "Nyt i"-afsnit i manualen.
 - **Regel-sættene** (B6, v9.90) og de seks skabeloner er Codes skøn; ikke prøvet på musik af et menneske.
 - **Warm Analog** (v9.72) er en første gennemgang; den levende baggrund er meget diskret (valget er ikke truffet).
 - **Min opstilling 1/2** og egne regel-sæt ligger i `set.ne` (fælles for alle shows); egne regel-sæt kan ikke omdøbes eller slettes.
 - **På scenen:** effekt-rækkerne har ingen ⋯-menu; effekt-regel-sættenes tal er Codes skøn; 6c får adgang til effekterne, når 6c bygges.
-- **Analyse sikkerhed (A0, v9.110):** tallene gælder generatorens lyde, ikke rigtig musik; slag måles med standard-reglen (ikke dine regler, ikke Adaptiv tærskel); takturet "mens det spiller", akkorder, afsnit og Vokal har intet facit (?); cirklen mangler på lydtræk-noderne og i Foreslå regler.
+- **Analyse sikkerhed:** brugerens pc giver andre tal end testbrowseren (Kick 79 mod 67, Takt 1 0 mod 34); årsagen er ikke fundet (indstillinger, EQ og indlæst sang er udelukket); *Kopiér rapport* giver det, der skal sammenlignes. Cirklen mangler på lydtræk-noderne og i Foreslå regler.
 - **Gem hele arbejdet:** analyse-cachen (IndexedDB) er ikke med; Hent kan ikke fortrydes.
 - **Tags:** sessionen må ikke lave eller slette tags og grene. Grenen `v9_11-med-lydkort` kan slettes, når du vil.
 - **Ikke prøvet:** din 43" skærm, berøringsskærm, mikrofon, MIDI-keyboard, rigtig fuld skærm, Unity-udgaven af Mesh 3D.
@@ -134,7 +134,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 Rækkefølgen er brugerens (P8.14 punkt 8, P8.20, P8.23). Planerne: `PLAN-NY-BRUGERFLADE.md` (kun det ubyggede), `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
-2. **Analysen A0 er bygget (v9.110, P8.24; kolonnenavnene fast øverst i v9.111); STOP:** brugeren prøver. Derefter ét trin ad gangen, når brugeren siger til: A1 hele analysen på sporene i baggrunds-trådene (gemmes) · A2 sikkerhedsgrænse og enighed i reglerne · A3 bedre slag · A4 Lydtidslinjen · A5–A6 det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`). A0-tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
+2. **Analysen** (planen "Den nye analyse P8.19": https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skemaet P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). **A0** (v9.110) og **A1** (v9.113) er bygget; **STOP efter A1**. Rækkefølgen: A2 sikkerhedsgrænse og enighed i reglerne → A3 bedre slag (først taktslagets halve takt og kickets ekko) → A4 Lydtidslinjen → A5–A6 det lokale modul (`docs/LOKALT-MODUL-INSTALLATION.md`; Pinokio; CORS fra file:// skal prøves i brugerens Chrome). Ét trin ad gangen. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 3. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); intet fjernes (`docs/PIGERNES-EGENSKABER.md`).
-4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til.
+4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til. **Feltfarven D7** er ikke valgt.
 5. **Senere:** `.stem.mp4`, målervæg, tema med tekstur, Radial Mesh-værksted med rigtig bloom, stregerne i Node-editoren, ét fælles Fortryd (D4), manualen som sidepanel (D5), nye 2D-figurer på et skelet, 3D-scene, S7 og S8. Detaljer i `STATUS.md` og planerne.
