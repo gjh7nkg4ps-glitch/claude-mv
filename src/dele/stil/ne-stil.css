@@ -45,7 +45,7 @@
 .ne-m{font-family:var(--ne-skrift-overskrift-familie),var(--ne-skrift-tekst-familie),sans-serif;font-weight:800;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 5px;border:1px solid var(--ne-grund-svagTekst);border-radius:3px;color:var(--ne-grund-svagTekst);white-space:nowrap}
 .ne-m-adaptiv{border-color:var(--ne-maerker-adaptiv);color:var(--ne-maerker-adaptiv)}
 .ne-m-adv{border-color:var(--ne-taerskelStreg);background:var(--ne-taerskelStreg);color:var(--ne-grund-baggrund-til);font-weight:800;cursor:pointer;border-radius:50%;padding:1px 5px}
-.ne-m-gate{border-color:var(--ne-maerker-gateAaben);color:var(--ne-maerker-gateAaben)}
+.ne-m-gate{border-color:var(--ne-maerker-gateAaben);color:var(--ne-maerker-gateAaben)}.ne-m-sik{border-color:var(--ne-maerker-gateAaben);color:var(--ne-maerker-gateAaben)}.ne-m-sik.ne-m-blok{background:#8a2a2a;border-color:#ff7b7b;color:#fff}.ne-sik{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--ne-grund-tekst);margin:4px 0 6px}.ne-sik small{opacity:.85;line-height:1.35}.a2-blok{color:#ff8a8a}
 .ne-m-gate.ne-lukket{border-color:var(--ne-grund-svagTekst);color:var(--ne-grund-svagTekst)}
 .ne-vaelger{font-family:var(--ne-skrift-overskrift-familie),var(--ne-skrift-tekst-familie),sans-serif;font-weight:800;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ne-taerskelStreg);border-radius:3px;color:var(--ne-taerskelStreg);flex:0 0 auto}
 .ne-maerker:empty+.ne-vaelger{margin-left:auto}

@@ -20,3 +20,14 @@
 
 Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbeat): Kick 17 79 73 100 43 73 · Taktslag 0 0 0 98 0 98 · Takt 1 0 0 0 94 0 94. Fundet tempo: 123 · 123 · 90 · 172,3 · 132,5 · 139,8 (DnB og Breakbeat er nu rigtige). Fase-sikkerhed 0,08–0,24 overalt (lav). **Codes læsning:** testlyden er lidt hårdere end generatorens lyd i House: taktslagene lægges en halv taktslag-længde for sent (0,743 s mod 0,500 s), dvs. på den åbne hihat, også uden bas; kickets falske slag ligger, hvor ekkoet er (0,859 s). Det er A3 punkt a, b og d. Hovedchattens læsning af takt 1 (fasen vælges på næsten ens pladser) passer med den lave fase-sikkerhed.
 
+---
+
+*Flyttet 20. november 2026 (v9.125):*
+
+## Brugerens rapport fra v9.117 (Chrome 157, Windows, 20. november kl. 20.09)
+
+- **Præcis de samme tal som Codes**, både Testlyd (14,8 s; alle 17 fingeraftryk ens) og Rigtige trommer (23 stykker på 11 s). A3 virker ens på begge pc'er.
+- **Fund: fasens sikkerhed er ikke til at stole på endnu.** Den nye værdi (forskellen mellem bedste og næstbedste plads) er høj, også når takt 1 er forkert: House med bas 0,75 (forkert), Techno og Breakbeat i hele lyden 1 (taktslagene ligger ved siden af slagene). Lav værdi ved rigtige faser (House kun trommer 0,23). Den bør rettes, før den bruges i A2 (sikkerhedsgrænse); i dag står den i rækken *Bedre slag og takt (A3)* og i boblen ved Takt 1.
+- **v9.118 (rettelse, fundet af testpakken, test 57):** kick i lineær skala nåede ikke tærsklen i stille stykker af sange over 10 minutter (*Lange sange* måtte højst skrue 4 gange op); for kick nu 16 gange. Korte sange er uændrede.
+- **Ikke målt:** korte sange med et meget stille afsnit (fx en stille intro med svage kick); den lineære kick kan overse dem, fordi hele sangen normaliseres samlet. *Adaptiv tærskel* hjælper.
+
