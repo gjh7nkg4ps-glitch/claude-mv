@@ -9,7 +9,7 @@ let pw; try { pw = require('playwright'); } catch (e) { pw = require('/opt/node-
   for (const f of fs.readdirSync(__dirname)) if (/^kladde-.*\.png$/.test(f)) fs.unlinkSync(path.join(__dirname, f));
   const n = await p.evaluate(() => KLADDER.K.length);
   for (let i = 0; i < n; i++) {
-    const info = await p.evaluate(k => { const v = KLADDER.valg; v.k = k; v.m = v.tone = v.acc = null; KLADDER.tegn(); return { navn: KLADDER.K[k].navn.toLowerCase().replace('æ', 'ae').replace('ø', 'oe'), m: KLADDER.K[k].std[0] }; }, i);
+    const info = await p.evaluate(k => { const v = KLADDER.valg; v.k = k; v.m = v.tone = v.acc = null; KLADDER.tegn(); return { navn: KLADDER.K[k].navn.toLowerCase().replace('æ', 'ae').replace('ø', 'oe').replace(/[^a-z0-9]+/g, '-'), m: KLADDER.K[k].std[0] }; }, i);
     const nr = String(i + 1).padStart(2, '0');
     await p.locator('#kladde').screenshot({ path: path.join(__dirname, `kladde-${nr}-${info.navn}-${info.m}.png`) });
     const anden = info.m === 'moerk' ? 'lys' : 'moerk';

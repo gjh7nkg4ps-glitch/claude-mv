@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rytme Studio · ti kladder</title>
+<title>Rytme Studio · kladder</title>
 <style>
   html, body { margin: 0; height: 100%; background: #0a0a0a; color: #e8e6e1; font: 14px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif; }
   .bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; padding: 10px 16px; background: #141414; border-bottom: 1px solid #2a2a2a; }
@@ -303,6 +303,181 @@ K.push({ navn: 'Lag', std: ['moerk', 'kold', 'turkis'], om: 'Programmet er fem p
   return s.join('') + maerke(10, 'Lag', P);
 } });
 
+/* =====================================================================================================
+   RUNDE 2 · Én samlet stil på tværs af de fem arbejdsområder.
+   Fælles ramme: navn og arbejdsområder øverst, en fast afspiller-stribe nederst. Ingen kasser: tynde linjer,
+   store tal i serif, små mærker med luft mellem bogstaverne. Accentfarven bruges kun på det, der måler,
+   og på det, der er valgt.
+   ===================================================================================================== */
+const lab = (x, y, t, P, o = {}) => T(x, y, t, Object.assign({ s: 12, f: P.gr, ls: 2.4 }, o));
+const num = (x, y, t, P, st = 40, o = {}) => T(x, y, t, Object.assign({ s: st, f: P.ink, ff: SERIF }, o));
+const hl = (x1, y, x2, P, o = 0.14) => L(x1, y, x2, y, P.ink, 1, o);
+function ramme(P, aktiv, sang = 'Demo-lyd, 120 BPM') {
+  let s = R(0, 0, 1920, 1080, P.bg) + defs(P) + T(56, 58, 'Rytme Studio', { s: 23, f: P.ink, ff: SERIF, it: 1 });
+  OMR.forEach((n, i) => { const x = 610 + i * 150; s += T(x, 56, n, { s: 14, f: i === aktiv ? P.ink : P.gr, ls: 2.2 }); if (i === aktiv) s += L(x, 68, x + n.length * 10.4, 68, P.acc, 1.5); });
+  s += C(1640, 51, 4, P.acc) + T(1654, 56, 'Klar', { s: 13, f: P.gr }) + T(1864, 56, sang, { s: 13, f: P.ink, a: 'end' }) + hl(56, 86, 1864, P);
+  /* fast afspiller-stribe */
+  const x0 = 330, w = 1090, xp = x0 + POS / 32 * w, xa = x0 + A / 32 * w, xb = x0 + B / 32 * w;
+  s += hl(56, 992, 1864, P) + C(82, 1034, 22, 'none', P.ink, 1.2) + R(75, 1025, 5, 18, P.ink, 1) + R(84, 1025, 5, 18, P.ink, 1) + T(124, 1044, '0:07,6', { s: 30, f: P.ink, ff: SERIF }) + T(222, 1044, 'af 0:32', { s: 12, f: P.gr, ls: 1 });
+  s += boelge({ x: x0, yc: 1034, w, n: 364, amp: 20, t0: 0, t1: 32, f: P.ink, fs: P.acc, sw: 1 }) + L(xa, 1006, xb, 1006, P.acc, 1.5) + L(xa, 1006, xa, 1012, P.acc) + L(xb, 1006, xb, 1012, P.acc) + L(xp, 1004, xp, 1064, P.ink, 1.5);
+  s += lab(1470, 1030, 'Loop', P) + T(1470, 1052, 'A til B', { s: 14, f: P.ink }) + lab(1570, 1030, 'Snap', P) + T(1570, 1052, 'Takt', { s: 14, f: P.ink }) + lab(1670, 1030, 'Lydstyrke', P) + L(1670, 1047, 1864, 1047, P.ink, 1, 0.25) + L(1670, 1047, 1826, 1047, P.ink, 1.2) + C(1826, 1047, 4.5, P.ink);
+  return s;
+}
+const r2 = (navn, P) => R(1920 - 300, 0, 300, 0, 'none') + T(1864, 980, 'Runde 2 · ' + navn, { s: 11, f: P.gr, a: 'end', ls: 1, o: 0.8 });
+
+/* ---------- R2 · Afspiller: billedet i ramme, stor tidslinje under, tal til højre ---------- */
+K.push({ navn: 'R2 Afspiller', runde: 2, std: ['moerk', 'neutral', 'guld'], om: 'Runde 2, samme stil i alle områder. Afspiller: billedet i ramme (fra Galleri), en stor tidslinje, der kan zoomes, og målingerne som tal til højre. Striben nederst er den samme i alle arbejdsområder.', tegn(P) {
+  froe = 7; let s = ramme(P, 0);
+  s += R(56, 112, 1250, 610, 'url(#scn)', 0, P.ink, 1) + fig(681, 417, 168, P) + lab(72, 138, 'Live preview', P, { f: P.scGr }) + T(1290, 138, 'Fuld skærm', { s: 12, f: P.scGr, a: 'end', ls: 1 });
+  /* stor tidslinje: udsnit 4 til 20 s */
+  const x0 = 56, w = 1250, tx = t => x0 + (t - 4) / 16 * w;
+  s += lab(56, 762, 'Tidslinje', P) + T(160, 762, '0:04 til 0:20', { s: 12, f: P.gr }) + T(1306, 762, 'Følg afspilning  ·  Zoom  −  +  ·  Hele sangen', { s: 12, f: P.ink, a: 'end', ls: 1 });
+  for (let b = 2; b <= 10; b++) { const x = tx(b * 2); s += L(x, 778, x, 962, P.ink, 1, 0.12) + T(x + 5, 792, String(b + 1), { s: 11, f: P.gr }); }
+  s += R(tx(A), 778, tx(B) - tx(A), 184, P.acc, 0, 'none', 0.08) + L(tx(A), 778, tx(A), 962, P.acc, 1.2) + L(tx(B), 778, tx(B), 962, P.acc, 1.2) + T(tx(A) + 6, 956, 'A', { s: 12, f: P.acc, ff: SERIF, it: 1 }) + T(tx(B) - 6, 956, 'B', { s: 12, f: P.acc, a: 'end', ff: SERIF, it: 1 });
+  s += boelge({ x: x0, yc: 876, w, n: 416, amp: 70, t0: 4, t1: 20, f: P.ink, fs: P.acc, sw: 1.6 }) + L(tx(POS), 772, tx(POS), 968, P.ink, 1.8);
+  const hx = 1380;
+  s += lab(hx, 138, 'Niveau', P) + num(hx, 206, '−9,6', P, 64) + T(hx + 160, 206, 'dB RMS', { s: 13, f: P.gr, ls: 1 }) + L(hx, 232, 1864, 232, P.ink, 1, 0.2) + L(hx, 232, hx + 372, 232, P.acc, 2.5) + L(hx + 440, 224, hx + 440, 240, P.ink) + T(1864, 258, 'top −2,4 dB', { s: 12, f: P.gr, a: 'end' });
+  s += lab(hx, 326, 'Loop', P) + T(hx, 370, 'A', { s: 15, f: P.gr, ff: SERIF, it: 1 }) + num(hx + 30, 370, '0:08,00', P, 26) + T(hx + 250, 370, 'B', { s: 15, f: P.gr, ff: SERIF, it: 1 }) + num(hx + 280, 370, '0:12,00', P, 26) + T(hx, 404, 'Fra', { s: 14, f: P.gr, ls: 2 }) + T(hx + 52, 404, 'Hele sangen', { s: 14, f: P.gr, ls: 2 }) + T(hx + 190, 404, 'A til B', { s: 14, f: P.ink, ls: 2 }) + L(hx + 190, 414, hx + 250, 414, P.acc, 1.5) + hl(hx, 436, 1864, P);
+  s += lab(hx, 486, 'Tempo', P) + num(hx, 546, '120', P, 54) + T(hx + 104, 546, 'BPM  ·  4 slag pr. takt', { s: 13, f: P.gr, ls: 1 }) + T(hx, 582, 'Tap', { s: 14, f: P.ink, ls: 2 }) + T(hx + 60, 582, 'Takt 1 her', { s: 14, f: P.ink, ls: 2 }) + T(1864, 582, 'kendt fra demo-lyden', { s: 12, f: P.gr, a: 'end' }) + hl(hx, 612, 1864, P);
+  s += lab(hx, 662, 'Lydfil', P) + num(hx, 700, 'Demo-lyd', P, 26);
+  [['Længde', '0:32,0'], ['Kanaler', 'Stereo'], ['Afspilles ved', '44.100 Hz']].forEach((r, i) => { s += T(hx, 740 + i * 30, r[0], { s: 14, f: P.gr }) + T(1864, 740 + i * 30, r[1], { s: 14, f: P.ink, a: 'end' }) + hl(hx, 750 + i * 30, 1864, P, 0.1); });
+  s += T(hx, 868, 'Vælg lydfil', { s: 14, f: P.ink, ls: 2 }) + L(hx, 878, hx + 96, 878, P.acc, 1.5) + T(hx + 140, 868, 'Prøv demo-lyden', { s: 14, f: P.gr, ls: 2 });
+  return s + r2('Afspiller', P);
+} });
+
+/* ---------- R2 · Analyse: baner på samme tidsakse, sikkerhed til højre ---------- */
+K.push({ navn: 'R2 Analyse', runde: 2, std: ['moerk', 'neutral', 'guld'], om: 'Analyse: alle målinger som baner på samme tidsakse (fra Partitur). Til højre et lille preview og, for hver måling, hvor sikker analysen er, og om den er slået til.', tegn(P) {
+  froe = 7; let s = ramme(P, 1);
+  const x0 = 290, x1 = 1470, w = x1 - x0, tx = t => x0 + t / 16 * w;
+  for (let b = 0; b <= 8; b++) { const x = tx(b * 2); s += L(x, 104, x, 972, P.ink, 1, b % 2 ? 0.07 : 0.14) + T(x + 5, 118, String(b + 1), { s: 11, f: P.gr }); }
+  s += R(tx(A), 104, tx(B) - tx(A), 868, P.acc, 0, 'none', 0.06);
+  const bane = (y, h, navn, under) => { s += hl(56, y + h, x1, P) + num(56, y + 34, navn, P, 22) + T(56, y + 56, under, { s: 12, f: P.gr }); };
+  bane(124, 150, 'Lyd', 'top og RMS'); s += boelge({ x: x0, yc: 199, w, n: 393, amp: 60, t0: 0, t1: 16, f: P.ink, fs: P.acc, sw: 1.5 });
+  bane(274, 110, 'Niveau', '−9,6 dB nu'); let d = ''; for (let i = 0; i <= 240; i++) { const t = i / 240 * 16; d += (i ? 'L' : 'M') + (x0 + i * (w / 240)).toFixed(1) + ' ' + (370 - niv(t) * 78).toFixed(1); } s += `<path d="${d}" fill="none" stroke="${P.acc}" stroke-width="1.6"/>`;
+  bane(384, 126, 'Slag', 'kick, snare, hihat');
+  [['Kick', 414], ['Snare', 448], ['Hihat', 482]].forEach(([n, y], k) => { s += T(x0 - 12, y + 4, n, { s: 11, f: P.gr, a: 'end' }); for (let i = 0; i < 64; i++) { const t = i * 0.25; if (k === 0 && i % 2 === 0) s += C(tx(t), y, 5.5, t < POS ? P.acc : P.ink, 'none', 1, t < POS ? 1 : 0.4); if (k === 1 && i % 4 === 2 && t >= 8) s += C(tx(t), y, 4.5, 'none', P.ink, 1.4, 0.6); if (k === 2) s += L(tx(t), y - 5, tx(t), y + 5, P.ink, 1.2, 0.4); } });
+  bane(510, 118, 'Frekvensbånd', 'sub til brilliance');
+  for (let r = 0; r < 7; r++) for (let i = 0; i < 118; i++) { const t = i / 118 * 16, v = niv(t) * (1 - r * 0.11) * (0.5 + rnd() * 0.5); s += R(x0 + i * (w / 118), 526 + r * 13, w / 118 - 1, 11, t < POS ? P.acc : P.ink, 0, 'none', v * (t < POS ? 0.9 : 0.35)); }
+  bane(628, 176, 'Toneklasser', '12 toner (chroma)');
+  'C C# D D# E F F# G G# A A# H'.split(' ').forEach((n, r) => { s += T(x0 - 12, 648 + r * 12.6 + 4, n, { s: 9, f: P.gr, a: 'end' }); for (let i = 0; i < 32; i++) { const ak = [[9, 0, 4], [5, 9, 0], [0, 4, 7], [7, 11, 2]][Math.floor(i / 4) % 4], v = ak.includes(r) ? 0.75 + rnd() * 0.25 : rnd() * 0.16; s += R(tx(i * 0.5) + 1, 642 + r * 12.6, w / 32 - 2, 10.6, P.ink, 0, 'none', v * (i * 0.5 < POS ? 0.9 : 0.45)); } });
+  bane(804, 150, 'Tempo', '120 BPM, sikkerhed 96 %'); s += L(x0, 878, x1, 878, P.acc, 1.6) + R(x0, 866, w, 24, P.acc, 0, 'none', 0.1) + T(x1 - 6, 862, '120', { s: 11, f: P.acc, a: 'end' }) + L(x0, 836, x1, 836, P.ink, 1, 0.1, 'stroke-dasharray="2 6"') + T(x1 - 6, 832, '240 (dobbelt)', { s: 10, f: P.gr, a: 'end' }) + L(x0, 920, x1, 920, P.ink, 1, 0.1, 'stroke-dasharray="2 6"') + T(x1 - 6, 916, '60 (halv)', { s: 10, f: P.gr, a: 'end' });
+  s += L(tx(POS), 100, tx(POS), 972, P.ink, 1.8);
+  const hx = 1530;
+  s += R(hx, 112, 334, 188, 'url(#scn)', 0, P.ink, 1) + fig(hx + 167, 206, 44, P) + lab(hx, 346, 'Analyse sikkerhed', P);
+  [['Niveau', 99, 1], ['Kick', 94, 1], ['Snare', 81, 1], ['Hihat', 72, 1], ['Frekvensbånd', 97, 1], ['Toneklasser', 64, 1], ['Tonehøjde', 41, 0], ['Tempo', 96, 1], ['Stereo', 90, 1]].forEach((r, i) => { const y = 386 + i * 46;
+    s += `<path d="${bue(hx + 12, y - 5, 10, 0, 359.9)}" fill="none" stroke="${P.ink}" stroke-width="2" opacity=".15"/><path d="${bue(hx + 12, y - 5, 10, 0, r[1] * 3.6)}" fill="none" stroke="${r[1] < 50 ? P.gr : P.acc}" stroke-width="2.4"/>` + T(hx + 36, y, r[0], { s: 15, f: r[2] ? P.ink : P.gr }) + T(hx + 250, y, r[1] + ' %', { s: 15, f: r[2] ? P.ink : P.gr, a: 'end' }) + R(hx + 286, y - 15, 40, 20, r[2] ? P.acc : 'none', 10, r[2] ? P.acc : P.gr) + C(hx + (r[2] ? 316 : 296), y - 5, 7, r[2] ? P.paa : P.gr) + hl(hx, y + 15, hx + 334, P, 0.1); });
+  s += T(hx, 820, 'Analysér igen', { s: 14, f: P.ink, ls: 2 }) + L(hx, 830, hx + 118, 830, P.acc, 1.5) + T(hx, 870, 'Sidst analyseret på 0,8 sekunder', { s: 12, f: P.gr }) + T(hx, 890, 'i 4 baggrunds-tråde.', { s: 12, f: P.gr });
+  return s + r2('Analyse', P);
+} });
+
+/* ---------- R2 · Figurer: scenen øverst, en kanal pr. figur under ---------- */
+K.push({ navn: 'R2 Figurer', runde: 2, std: ['moerk', 'neutral', 'guld'], om: 'Figurer: scenen i fuld bredde øverst og én kanal pr. figur og effekt under (fra Mixerpult), tegnet med tynde linjer i stedet for kasser.', tegn(P) {
+  froe = 11; let s = ramme(P, 2);
+  s += R(56, 112, 1808, 380, 'url(#scn)', 0, P.ink, 1) + fig(600, 302, 78, P) + fig(960, 302, 112, P) + fig(1320, 302, 64, P);
+  for (let k = 0; k < 9; k++) { const p = polar(960, 302, 142, k * 40), q = polar(960, 302, 116, k * 40); s += L(q[0], q[1], p[0], p[1], P.figMidt, 4.5, 0.9, 'stroke-linecap="round"'); }
+  [[600, 'Cirkel'], [960, 'Kugle med pigge'], [1320, 'Discokugle']].forEach(([x, n], i) => { s += T(x, 472, n, { s: 12, f: i === 1 ? P.scInk : P.scGr, a: 'middle', ls: 2 }); });
+  s += L(780, 128, 780, 142, P.acc, 1.5) + L(780, 128, 794, 128, P.acc, 1.5) + L(1140, 128, 1126, 128, P.acc, 1.5) + L(1140, 128, 1140, 142, P.acc, 1.5) + L(780, 476, 780, 462, P.acc, 1.5) + L(1140, 476, 1140, 462, P.acc, 1.5);
+  const kan = [['Cirkel', 'Niveau', .72, .6], ['Kugle med pigge', 'Kick', .9, .85], ['Discokugle', 'Hihat', .55, .4], ['Danser', 'Bas', .64, .5], ['Flash', 'Snare', .8, .2], ['Partikler', 'Diskant', .45, .35], ['Skyer', 'Mellemtone', .3, .25], ['Samlet styrke', '', .82, .7]];
+  kan.forEach((c, i) => { const x = 56 + i * 226, valgt = i === 1, y = 520;
+    if (i) s += L(x - 16, y, x - 16, 972, P.ink, 1, 0.12);
+    if (valgt) s += L(x, y - 4, x + 194, y - 4, P.acc, 2);
+    s += num(x, y + 34, c[0], P, 21, { f: valgt ? P.ink : P.ink }) + (c[1] ? lab(x, y + 62, 'Styres af', P, { s: 10 }) + T(x + 84, y + 62, c[1], { s: 14, f: P.acc }) : lab(x, y + 62, 'Alle figurer', P, { s: 10 }));
+    const fy0 = y + 92, fy1 = y + 330, fy = fy1 - c[2] * (fy1 - fy0);
+    s += L(x + 12, fy0, x + 12, fy1, P.ink, 1, 0.25) + L(x + 12, fy, x + 12, fy1, P.ink, 1.6) + R(x, fy - 3, 24, 6, P.ink, 1);
+    for (let r = 0; r <= 4; r++) s += L(x + 34, fy0 + r * (fy1 - fy0) / 4, x + 40, fy0 + r * (fy1 - fy0) / 4, P.gr, 1, 0.6);
+    const my = fy1 - c[3] * (fy1 - fy0); s += L(x + 64, fy0, x + 64, fy1, P.ink, 1, 0.14) + L(x + 64, my, x + 64, fy1, P.acc, 3) + lab(x + 54, fy1 + 20, 'nu', P, { s: 9 });
+    s += num(x + 96, y + 232, Math.round(c[2] * 100), P, 46) + T(x + 96, y + 256, 'procent styrke', { s: 11, f: P.gr });
+    if (c[1]) s += T(x, y + 396, 'Solo', { s: 13, f: valgt ? P.ink : P.gr, ls: 2 }) + (valgt ? L(x, y + 405, x + 38, y + 405, P.acc, 1.5) : '') + T(x + 70, y + 396, 'Fra', { s: 13, f: i === 6 ? P.ink : P.gr, ls: 2 }) + T(x + 194, y + 396, '6 lag', { s: 12, f: P.gr, a: 'end' });
+  });
+  s += T(1848, 140, 'Tilføj figur  ·  Figur-generator', { s: 12, f: P.scInk, a: 'end', ls: 1 });
+  return s + r2('Figurer', P);
+} });
+
+/* ---------- R2 · Regler: matrix med detaljer til højre ---------- */
+K.push({ navn: 'R2 Regler', runde: 2, std: ['moerk', 'neutral', 'guld'], om: 'Regler: lydtræk ned ad siden og egenskaber hen over (fra Matrix). Hvert kryds er en regel; den valgte regel vises med alle sine tal til højre, og "Styrke brugt" viser hele regnestykket.', tegn(P) {
+  froe = 3; let s = ramme(P, 3);
+  const raek = ['Niveau', 'Kick', 'Snare', 'Hihat', 'Sub', 'Bas', 'Mellemtone', 'Diskant', 'Tonehøjde', 'Taktslag'];
+  const grupper = [['Cirkel', ['størrelse', 'glød', 'farve']], ['Kugle med pigge', ['størrelse', 'pigge', 'rotation', 'glød']], ['Discokugle', ['rotation', 'lys']], ['Flash', ['styrke']], ['Partikler', ['antal', 'fart', 'farve']]];
+  const x0 = 300, y0 = 262, cw = 86, rh = 68; let kol = 0;
+  grupper.forEach(g => { const gx = x0 + kol * cw; s += num(gx + 4, 138, g[0], P, 20) + L(gx + 4, 150, gx + g[1].length * cw - 12, 150, P.ink, 1, 0.5); g[1].forEach((e, j) => { s += T(gx + j * cw + 34, 246, e, { s: 12, f: P.gr, rot: -48, ls: 1 }); }); kol += g[1].length; });
+  const nKol = kol, forb = { '0-0': .8, '0-4': .5, '1-3': .9, '1-11': 1, '2-10': .7, '3-7': .6, '3-12': .5, '5-1': .6, '5-5': .7, '7-11': .5, '8-2': .5, '9-6': .8, '6-8': .45 };
+  s += R(x0, y0 + rh, nKol * cw, rh, P.acc, 0, 'none', 0.07) + R(x0 + 3 * cw, y0, cw, raek.length * rh, P.acc, 0, 'none', 0.07);
+  raek.forEach((n, r) => { const y = y0 + r * rh; s += hl(56, y + rh, x0 + nKol * cw, P, 0.1) + T(56, y + 41, n, { s: 16, f: r === 1 ? P.ink : P.gr, ff: SERIF }) + L(176, y + 36, 276, y + 36, P.ink, 1, 0.18) + L(176, y + 36, 176 + 100 * (0.2 + rnd() * 0.75), y + 36, r === 1 ? P.acc : P.ink, 2); });
+  for (let c = 0; c <= nKol; c++) s += L(x0 + c * cw, y0, x0 + c * cw, y0 + raek.length * rh, P.ink, 1, 0.08);
+  raek.forEach((n, r) => { for (let c = 0; c < nKol; c++) { const v = forb[r + '-' + c], cx = x0 + c * cw + cw / 2, cy = y0 + r * rh + rh / 2, valgt = r === 1 && c === 3; s += v ? C(cx, cy, 5 + v * 17, valgt ? P.acc : P.ink, 'none', 1, valgt ? 1 : 0.82) : C(cx, cy, 1.6, P.ink, 'none', 1, 0.2); } });
+  s += C(x0 + 6 * cw + cw / 2, y0 + 4 * rh + rh / 2, 13, 'none', P.acc, 1.4) + T(x0 + 6 * cw + cw / 2 + 20, y0 + 4 * rh + rh / 2 - 12, 'forslag', { s: 11, f: P.acc }) + T(56, 138, 'Lydtræk', { s: 12, f: P.gr, ls: 2.4 }) + T(56, 246, 'nu', { s: 10, f: P.gr, ls: 2 });
+  s += T(x0, 968, '13 regler  ·  1 forslag  ·  Foreslå regler  ·  Regel-sæt: Energisk', { s: 12, f: P.gr, ls: 1 });
+  const hx = 1500;
+  s += lab(hx, 138, 'Valgt regel', P) + num(hx, 190, 'Kick', P, 40) + T(hx + 96, 186, '→', { s: 22, f: P.acc }) + T(hx, 220, 'Kugle med pigge, størrelse', { s: 16, f: P.ink }) + hl(hx, 246, 1864, P);
+  [['Styrke', '90 %', .9], ['Fra', '0,20', .2], ['Til', '1,00', 1], ['Gate-tærskel', '−40 dB', .33], ['Spærretid', '120 ms', .24], ['Udjævning ned', '250 ms', .4]].forEach((r, i) => { const y = 292 + i * 60; s += T(hx, y, r[0], { s: 14, f: P.gr }) + num(1864, y + 2, r[1], P, 20, { a: 'end' }) + L(hx, y + 18, 1864, y + 18, P.ink, 1, 0.2) + L(hx, y + 18, hx + 364 * r[2], y + 18, P.ink, 1.4) + C(hx + 364 * r[2], y + 18, 5, P.ink); });
+  s += lab(hx, 690, 'Styrke brugt', P) + num(hx, 756, '0,74', P, 60, { f: P.acc }) + T(hx, 786, 'regel 0,90 × figur 1,00 × samlet 0,82', { s: 12, f: P.gr });
+  s += R(hx, 826, 364, 130, 'url(#scn)', 0, P.ink, 1) + fig(hx + 182, 891, 30, P) + T(hx + 12, 846, 'Solo valgt', { s: 11, f: P.scGr, ls: 1 });
+  return s + r2('Regler', P);
+} });
+
+/* ---------- R2 · Show: sangen i afsnit ---------- */
+K.push({ navn: 'R2 Show', runde: 2, std: ['moerk', 'neutral', 'guld'], om: 'Show: sangen i afsnit (fra Filmstrimmel). Stort billede, det valgte afsnits tal til højre, og strimlen med alle afsnit under.', tegn(P) {
+  froe = 5; let s = ramme(P, 4, 'Nordlys (mix 4).mp3, 124 BPM');
+  s += R(56, 112, 1160, 560, 'url(#scn)', 0, P.ink, 1) + fig(636, 392, 134, P);
+  for (let k = 0; k < 14; k++) { const p = polar(636, 392, 262 + (k % 3) * 22, k * 25.7), q = polar(636, 392, 186, k * 25.7); s += L(q[0], q[1], p[0], p[1], P.figMidt, 1.6, 0.55); }
+  s += lab(72, 138, 'Afsnit 4 af 7', P, { f: P.scGr }) + T(1200, 138, 'Fuld skærm  ·  Output-vindue  ·  Optag', { s: 12, f: P.scInk, a: 'end', ls: 1 });
+  const hx = 1280;
+  s += lab(hx, 138, 'Dette afsnit', P) + num(hx, 206, 'Drop', P, 64) + T(hx, 236, 'takt 49 til 64, fra 1:32 til 2:03', { s: 14, f: P.gr }) + hl(hx, 262, 1864, P);
+  [['Energi', '92 %', .92], ['Afsnits-dynamik', '× 1,25', .8], ['Analyse sikkerhed', '81 %', .81]].forEach((r, i) => { const y = 306 + i * 62; s += T(hx, y, r[0], { s: 14, f: P.gr }) + num(1864, y + 2, r[1], P, 22, { a: 'end' }) + L(hx, y + 18, 1864, y + 18, P.ink, 1, 0.2) + L(hx, y + 18, hx + 584 * r[2], y + 18, P.acc, 2); });
+  s += lab(hx, 516, 'Regel-sæt', P); let rx = hx; ['Rolig', 'Energisk', 'På trommerne', 'På vokalen', 'Hele bandet'].forEach((n, i) => { s += T(rx, 548, n, { s: 14, f: i === 1 ? P.ink : P.gr, ls: 1.5 }) + (i === 1 ? L(rx, 558, rx + n.length * 9.4, 558, P.acc, 1.5) : ''); rx += n.length * 9.4 + 34; });
+  s += lab(hx, 612, 'På scenen', P) + T(hx, 644, 'Kugle med pigge  ·  Stråler  ·  Flash på kick', { s: 15, f: P.ink }) + T(hx, 668, 'Partikler er slået fra i dette afsnit', { s: 13, f: P.gr });
+  const afs = [['Intro', 16, .25], ['Vers', 32, .5], ['Opbygning', 16, .7], ['Drop', 32, .95], ['Mellemspil', 24, .35], ['Drop 2', 32, 1], ['Outro', 16, .2]], sum = 168; let x = 56;
+  afs.forEach((a, i) => { const w = a[1] / sum * 1808, nu = i === 3;
+    if (i) s += L(x, 704, x, 972, P.ink, 1, 0.14);
+    if (nu) s += L(x + 10, 702, x + w - 10, 702, P.acc, 2);
+    s += R(x + 10, 714, w - 20, 104, 'url(#scn)') + C(x + w / 2, 766, 12 + a[2] * 28, 'url(#fg)') + num(x + 10, 850, a[0], P, 22, { f: nu ? P.ink : P.gr }) + T(x + w - 10, 850, a[1] + ' takter', { s: 11, f: P.gr, a: 'end' });
+    for (let k = 0; k < Math.floor((w - 20) / 4); k++) { const h = (0.25 + 0.75 * rnd()) * a[2] * 38, spillet = i < 3 || (nu && k < 38); s += L(x + 10 + k * 4, 916 - h, x + 10 + k * 4, 916 + h, spillet ? P.acc : P.ink, 1.6, spillet ? 0.95 : 0.3); }
+    if (nu) s += L(x + 10 + 152, 698, x + 10 + 152, 972, P.ink, 1.8);
+    x += w; });
+  return s + r2('Show', P);
+} });
+
+/* ---------- R2 · Delene: skrift, knapper, skydere, målere, farver og afstande ---------- */
+K.push({ navn: 'R2 Delene', runde: 2, std: ['moerk', 'neutral', 'guld'], om: 'Delene, som alle fem arbejdsområder er bygget af: skrift, knapper, valg, skydere, målere, farver og afstande. Det er dette ark, programmet skal bygges efter.', tegn(P) {
+  froe = 7; let s = R(0, 0, 1920, 1080, P.bg) + defs(P) + T(56, 58, 'Rytme Studio', { s: 23, f: P.ink, ff: SERIF, it: 1 }) + T(230, 57, 'Delene', { s: 14, f: P.gr, ls: 2.2 }) + hl(56, 86, 1864, P);
+  /* Skrift */
+  s += lab(56, 138, 'Skrift', P) + num(56, 236, '−9,6', P, 96) + T(300, 236, 'Store tal: serif, 64 til 96', { s: 13, f: P.gr });
+  s += num(56, 304, 'Kugle med pigge', P, 40) + T(400, 304, 'Navne: serif, 22 til 40', { s: 13, f: P.gr });
+  s += T(56, 350, 'Kugle med pigge, størrelse', { s: 16, f: P.ink }) + T(400, 350, 'Tekst: sans, 14 til 16', { s: 13, f: P.gr });
+  s += lab(56, 390, 'Styrke brugt', P) + T(400, 390, 'Mærker: sans 12, luft 2,4', { s: 13, f: P.gr });
+  s += T(56, 428, 'Rytme Studio', { s: 23, f: P.ink, ff: SERIF, it: 1 }) + T(400, 428, 'Navnet: serif, kursiv', { s: 13, f: P.gr }) + hl(56, 462, 640, P);
+  /* Farver */
+  s += lab(56, 512, 'Farver', P);
+  [['Grund', P.bg], ['Dyb', P.bg2], ['Flade', P.fl], ['Linje', P.k], ['Dæmpet', P.gr], ['Tekst', P.ink], ['Accent', P.acc], ['Scene', P.sc]].forEach((f, i) => { const x = 56 + i * 74; s += R(x, 532, 60, 60, f[1], 0, P.ink, 1) + R(x, 532, 60, 60, 'none', 0, P.ink, 0.25) + T(x, 612, f[0], { s: 11, f: P.gr }); });
+  s += T(56, 652, 'Accent bruges kun på det, der måler, og på det, der er valgt.', { s: 14, f: P.ink }) + T(56, 676, 'Scenen (billedet) er altid mørk, også i lys udgave.', { s: 14, f: P.gr }) + hl(56, 706, 640, P);
+  /* Afstande */
+  s += lab(56, 756, 'Afstande', P);
+  [8, 16, 24, 40, 56].forEach((a, i) => { const x = 56 + i * 110; s += R(x, 780, a, a, P.acc, 0, 'none', 0.8) + T(x, 860, String(a), { s: 14, f: P.ink }) ; });
+  s += T(56, 900, 'Alt står på et gitter på 8 punkter. Kant til vinduet: 56.', { s: 14, f: P.gr }) + T(56, 924, 'Linjer er 1 punkt og 14 % synlige; ingen kasser, ingen skygger.', { s: 14, f: P.gr });
+  /* Knapper og valg */
+  const mx = 740;
+  s += L(690, 112, 690, 1010, P.ink, 1, 0.14) + lab(mx, 138, 'Knapper', P);
+  s += T(mx, 190, 'Vælg lydfil', { s: 14, f: P.ink, ls: 2 }) + L(mx, 200, mx + 96, 200, P.acc, 1.5) + T(mx + 200, 190, 'vigtigste handling: streg under', { s: 12, f: P.gr });
+  s += T(mx, 240, 'Takt 1 her', { s: 14, f: P.ink, ls: 2 }) + T(mx + 200, 240, 'almindelig handling: ren tekst', { s: 12, f: P.gr });
+  s += T(mx, 290, 'Ryd tempo', { s: 14, f: P.gr, ls: 2, o: 0.55 }) + T(mx + 200, 290, 'kan ikke bruges nu: dæmpet', { s: 12, f: P.gr });
+  s += C(mx + 22, 352, 22, 'none', P.ink, 1.2) + R(mx + 15, 343, 5, 18, P.ink, 1) + R(mx + 24, 343, 5, 18, P.ink, 1) + C(mx + 84, 352, 16, 'none', P.ink, 1, 0.5) + R(mx + 78, 346, 12, 12, P.ink, 1, 'none', 0.8) + T(mx + 200, 357, 'afspiller: ringe med tegn', { s: 12, f: P.gr }) + hl(mx, 400, 1250, P);
+  s += lab(mx, 450, 'Valg', P) + T(mx, 494, 'Fra', { s: 14, f: P.gr, ls: 2 }) + T(mx + 52, 494, 'Slag', { s: 14, f: P.gr, ls: 2 }) + T(mx + 116, 494, 'Takt', { s: 14, f: P.ink, ls: 2 }) + L(mx + 116, 504, mx + 156, 504, P.acc, 1.5) + T(mx + 200, 494, 'ét af flere: streg under det valgte', { s: 12, f: P.gr });
+  s += R(mx, 536, 40, 20, P.acc, 10) + C(mx + 30, 546, 7, P.paa) + R(mx + 60, 536, 40, 20, 'none', 10, P.gr) + C(mx + 70, 546, 7, P.gr) + T(mx + 200, 551, 'til og fra', { s: 12, f: P.gr });
+  s += num(mx, 620, '120', P, 40) + L(mx, 632, mx + 80, 632, P.ink, 1, 0.5) + T(mx + 92, 620, 'BPM', { s: 13, f: P.gr, ls: 1 }) + T(mx + 200, 615, 'tal, man kan skrive i: streg under', { s: 12, f: P.gr }) + hl(mx, 672, 1250, P);
+  s += lab(mx, 722, 'Skydere', P) + T(mx, 766, 'Styrke', { s: 14, f: P.gr }) + num(mx + 460, 768, '90 %', P, 20, { a: 'end' }) + L(mx, 784, mx + 460, 784, P.ink, 1, 0.2) + L(mx, 784, mx + 414, 784, P.ink, 1.4) + C(mx + 414, 784, 5, P.ink);
+  s += T(mx, 836, 'Gate-tærskel', { s: 14, f: P.gr }) + num(mx + 460, 838, '−40 dB', P, 20, { a: 'end' }) + L(mx, 854, mx + 460, 854, P.ink, 1, 0.2) + L(mx, 854, mx + 152, 854, P.ink, 1.4) + C(mx + 152, 854, 5, P.ink) + C(mx + 152, 854, 11, 'none', P.acc, 1.2) + T(mx, 884, 'ring = den, der har fokus', { s: 12, f: P.gr });
+  s += L(mx + 12, 920, mx + 12, 1004, P.ink, 1, 0.25) + L(mx + 12, 950, mx + 12, 1004, P.ink, 1.6) + R(mx, 947, 24, 6, P.ink, 1) + T(mx + 44, 968, 'lodret fader til figurernes styrke', { s: 12, f: P.gr });
+  /* Målere */
+  const hx = 1330;
+  s += L(1290, 112, 1290, 1010, P.ink, 1, 0.14) + lab(hx, 138, 'Målere', P);
+  s += num(hx, 206, '−9,6', P, 64) + T(hx + 160, 206, 'dB RMS', { s: 13, f: P.gr, ls: 1 }) + L(hx, 232, 1864, 232, P.ink, 1, 0.2) + L(hx, 232, hx + 400, 232, P.acc, 2.5) + L(hx + 470, 224, hx + 470, 240, P.ink) + T(hx, 262, 'linje-måler med top-streg', { s: 12, f: P.gr });
+  s += `<path d="${bue(hx + 40, 340, 34, 0, 359.9)}" fill="none" stroke="${P.ink}" stroke-width="3" opacity=".15"/><path d="${bue(hx + 40, 340, 34, 0, 292)}" fill="none" stroke="${P.acc}" stroke-width="3.5"/>` + num(hx + 40, 350, '81', P, 26, { a: 'middle' }) + T(hx + 100, 336, 'Analyse sikkerhed', { s: 15, f: P.ink }) + T(hx + 100, 358, 'cirkel med tal, 0 til 100', { s: 12, f: P.gr });
+  s += L(hx + 6, 420, hx + 6, 520, P.ink, 1, 0.14) + L(hx + 6, 452, hx + 6, 520, P.acc, 3) + T(hx + 100, 470, 'Niveau nu', { s: 15, f: P.ink }) + T(hx + 100, 492, 'lodret streg ved hver kanal', { s: 12, f: P.gr }) + hl(hx, 556, 1864, P);
+  s += lab(hx, 606, 'Bølgeform', P) + boelge({ x: hx, yc: 680, w: 534, n: 178, amp: 44, t0: 2, t1: 14, f: P.ink, fs: P.acc, sw: 1.6 }) + L(hx + 250, 628, hx + 250, 732, P.ink, 1.8) + T(hx, 760, 'spillet = accent  ·  ikke spillet = dæmpet  ·  streg = nu', { s: 12, f: P.gr }) + hl(hx, 790, 1864, P);
+  s += lab(hx, 840, 'Billedet', P) + R(hx, 860, 250, 140, 'url(#scn)', 0, P.ink, 1) + fig(hx + 125, 930, 34, P) + T(hx + 280, 900, 'Altid i en tynd ramme,', { s: 14, f: P.ink }) + T(hx + 280, 924, 'altid mørkt indeni.', { s: 14, f: P.ink }) + T(hx + 280, 956, 'Figuren får accentfarven', { s: 12, f: P.gr }) + T(hx + 280, 976, 'som udgangspunkt.', { s: 12, f: P.gr });
+  return s + T(1864, 1050, 'Runde 2 · Delene', { s: 11, f: P.gr, a: 'end', ls: 1 });
+} });
+
 /* ---------- Styring: vælg kladde, lys eller mørk, grundtone og accent ---------- */
 const valg = { k: 0, m: null, tone: null, acc: null };
 const $ = id => document.getElementById(id);
@@ -310,13 +485,13 @@ function nu() { const st = K[valg.k].std; return [valg.m || st[0], valg.tone || 
 function tegn() {
   const [m, tone, acc] = nu(), P = palet(m, tone, acc);
   $('scene').innerHTML = `<svg id="kladde" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">${K[valg.k].tegn(P)}</svg>`;
-  $('tekst').innerHTML = `<b>${valg.k + 1} · ${K[valg.k].navn}.</b> ${K[valg.k].om}`;
+  $('tekst').innerHTML = `<b>${K[valg.k].runde ? K[valg.k].navn.replace('R2 ', 'Runde 2 · ') : (valg.k + 1) + ' · ' + K[valg.k].navn}.</b> ${K[valg.k].om}`;
   document.querySelectorAll('#vKladde button').forEach((b, i) => b.setAttribute('aria-pressed', i === valg.k));
   document.querySelectorAll('#vLys button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === m));
   document.querySelectorAll('#vTone button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === tone));
   document.querySelectorAll('#vAcc button').forEach(b => b.setAttribute('aria-pressed', b.dataset.a === acc));
 }
-K.forEach((k, i) => { const b = document.createElement('button'); b.textContent = (i + 1) + ' ' + k.navn; b.onclick = () => { valg.k = i; tegn(); }; $('vKladde').append(b); });
+K.forEach((k, i) => { if (k.runde === 2 && !K[i - 1].runde) { const sp = document.createElement('span'); sp.textContent = 'Runde 2'; sp.style.marginLeft = '14px'; $('vKladde').append(sp); } const b = document.createElement('button'); b.textContent = k.runde ? k.navn.replace('R2 ', '') : (i + 1) + ' ' + k.navn; b.onclick = () => { valg.k = i; tegn(); }; $('vKladde').append(b); });
 for (const t in TONER) { const b = document.createElement('button'); b.textContent = TONER[t][0]; b.dataset.t = t; b.onclick = () => { valg.tone = t; tegn(); }; $('vTone').append(b); }
 for (const a in ACC) { const b = document.createElement('button'); b.className = 'farve'; b.title = ACC[a][0]; b.dataset.a = a; b.style.background = hsl(ACC[a][1], ACC[a][2], ACC[a][3]); b.onclick = () => { valg.acc = a; tegn(); }; $('vAcc').append(b); }
 document.querySelectorAll('#vLys button').forEach(b => b.onclick = () => { valg.m = b.dataset.m; tegn(); });
