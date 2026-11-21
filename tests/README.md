@@ -10,7 +10,7 @@ node tests/koer-alle.js
 
 En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node tests/92-gitter.js claude-mv-v9_107.html`. Testene bruger Node og Playwright (testbrowser uden grafikkort); test 11 bruger Python med numpy. Hele pakken tager cirka 2 timer; kør aldrig to kørsler samtidig (hukommelsen løber tør). Hver version får sin egen test (trin 4), som bliver i pakken.
 
-## Testene (110)
+## Testene (111)
 
 | Fil | Trin | Hvad |
 | --- | --- | --- |
@@ -35,6 +35,7 @@ En bestemt fil: `node tests/koer-alle.js claude-mv-v9_107.html`. Én test: `node
 | `93-hele-arbejdet.js` | 4 · Det nye i v9.106 | Gem hele arbejdet (rigtigt klik i Opsætninger) … |
 | `94-paa-scenen.js` | 4 · Det nye i v9.107 | På scenen ved 1920 × 1080 og 2560 × 1440 med Pigernes show … |
 | `95-hylden-effekter.js` | 4 · Det nye i v9.108 | Hylden Effekter: 19 kort, kortet Lys-puls med regel-sæt der passer, Brug lægger reglen på, Ctrl+Z, Skjul på scenen, Lav en kopi, Gem som regel-sæt, valg C hos danseren, klik fra På scenen |
+| `111-halv-takt-perkussiv.js` | 4 · Det nye i v9.132 (P8.33 trin 2) | Den perkussive kick er høj på kicket og lav, hvor en bas, der varer ved, begynder; Testlyd 65 og 45 med Perkussiv del, rigtige klik på Hele lyden (49 og 31) og tilbage; rækken efter Taktgitter med 4 spor, grå med A3 fra; en sang regnes i baggrunden og gemmes i cachen (anden gang fra cachen); Breakbeat i "Sådan måles det"; ingen konsolfejl |
 | `110-indstil-og-tjek.js` | 4 · Det nye i v9.130 (P8.33 trin 1) | To faste grupper (12 + 11, ingen fælles, jazz og rock i begge, ét 222 BPM-stykke i hver); den halve takt 1,6 og rampen 0,40 → 0,90; testmappen fra test 99: indstil + tjek = alle i hver række, "tjek N" i cellerne, "Sådan måles" og rapporten; ingen konsolfejl |
 | `109-rigtige-trommer-uden-mappen.js` | 4 · Det nye i v9.129 (valg A) | Testmappen fra test 99: uden facit ingen Mål igen; efter mappen er facit gemt (kun tekst, navn og størrelse); efter genindlæsning giver et rigtigt klik på Mål igen de samme tal uden mappe-vælgeren (4 spor med); mangler en analyse i cachen, måles der ikke; Glem facit (spørger); ingen MDB-filer i repoet; ingen konsolfejl |
 | `108-rettelser-i-reglerne.js` | 4 · Det nye i v9.127 (A4, anden del) | Med testlyden: slettet kick giver 0 i kurven Kick, flyttet kick er væk det gamle sted og findes det nye, nyt snare giver en top, slettet Takt 1 giver 0 i Takt (første slag); urørte slag er uændrede; Hændelser regnes af de urørte kurver; Analyse sikkerhed giver de samme tal; rigtige klik på Rettelser i reglerne (Fra og Til); Normalisering Fast og Adaptiv beholder rettelserne; ingen konsolfejl |

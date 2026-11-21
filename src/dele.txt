@@ -118,6 +118,7 @@ kode/hoved/104-v9-126-lydtidslinjen-a4.js
 kode/hoved/105-v9-127-rettelserne-i-reglerne-a4.js
 kode/hoved/106-v9-129-rigtige-trommer-uden-mappen.js
 kode/hoved/107-v9-130-aerlig-maaling-indstil-og-tjek.js
+kode/hoved/108-v9-132-halv-takt-fra-den-perkussive-del.js
 html/side-04.html
 kode/script-1-v9-16-foreslaa-regler-i-lydkilde-foer-auto-mapping.js
 html/side-05.html

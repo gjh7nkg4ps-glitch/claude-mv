@@ -6,7 +6,7 @@
    Det forrige <script> indeholder Three.js r128 og dets glød-værktøjer (MIT) og motoren Rytme (analyse, kilder, forbindelsernes motor, figurtegning).
    Vigtige tilstande: maps (forbindelserne), fase2.objekter (figurerne), set (indstillinger, rytme-set), scene (bane, klods og Mesh 3D-lys, rytme-scene),
    F, A og SHOWPROFIL (analysen af sangen), M3 (Mesh 3D), OJ (Øjet), FG (samlinger med faner), SC_FANER (Scenens faner), LAY3 (topbarens layouts).
-   Blokke i dette script (152), i den rækkefølge de står:
+   Blokke i dette script (153), i den rækkefølge de står:
      1. FASE 2: MÅLREGISTER
      2. FASE 2: PRESET-MIGRERING
      3. FASE 2: AFSPILNING (robusthed og synlighed)
@@ -159,6 +159,7 @@
    150. v9.127: RETTELSERNE BRUGES I REGLERNE (A4, ANDEN DEL)
    151. v9.129: RIGTIGE TROMMER UDEN MAPPEN (VALG A)
    152. v9.130: ÆRLIG MÅLING · INDSTIL OG TJEK (P8.33 TRIN 1)
+   153. v9.132: DEN HALVE TAKT FRA DEN PERKUSSIVE DEL (P8.33 TRIN 2)
    ====================================================================== */
 
 

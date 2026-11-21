@@ -1,6 +1,6 @@
 # CLAUDE.md · Claude MV
 
-Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.131 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
+Version 3.2 · 20. november 2026 · gælder fra Claude MV v9.132 · skrevet af Claude (chat på claude.ai) som overlevering til Claude Code. Kortet ned efter P8.23 (historik og lukkede fejl ligger i `docs/arkiv/HISTORIK.md`).
 
 Denne fil fortæller det, der **ikke** står i koden: hvad programmet er til, hvordan jeg vil arbejde, hvad vi har besluttet, hvad der er åbent, og hvad der er det næste. Læs koden selv for resten. Øverst i hovedscriptet står en indholdsfortegnelse over alle blokke.
 
@@ -137,7 +137,7 @@ Brug den som tjek af alle ændringer. Automatik må gerne findes, men den skal k
 Rækkefølgen er brugerens. Planerne: `PLAN-NY-BRUGERFLADE.md`, `docs/PLAN-PAA-SCENEN.md`, `docs/PLAN-SANG-OG-ANALYSE.md`, `docs/PLAN-TEKNIK.md`. Alt det byggede står i `docs/arkiv/HISTORIK.md`.
 
 1. **På scenen er færdig** (PS1–PS3, v9.109 prøvet og ok; PS4 lukket: gruppernes øje og Slå fra i Noder bliver).
-2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget til v9.131 (`docs/arkiv/HISTORIK.md`). **STOP.** Mål før og efter på Testlyd og Rigtige trommer (vælg på *indstil*, tjek på *tjek*); det, der skader de rigtige trommer, kommer ikke med. Næste: P8.33 trin 2–4 → rest af A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
+2. **Analysen** (plan P8.19: https://claude.ai/artifact/XEhWRPjamxqHZX7jhV1ESs · skema P8.25: https://claude.ai/artifact/VKviSHX9KRu9f8Rw4Z9QJU). Bygget til v9.132 (`docs/arkiv/HISTORIK.md`). **STOP.** Mål før og efter på Testlyd og Rigtige trommer (vælg på *indstil*, tjek på *tjek*); det, der skader de rigtige trommer, kommer ikke med. Næste: P8.33 trin 3–4 → rest af A4 → A5–A6. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 3. **Pigernes egenskaber:** ligger stille (brugeren, 20. november); intet fjernes (`docs/PIGERNES-EGENSKABER.md`).
 4. **6c Figur-generatoren** (`PLAN-NY-BRUGERFLADE.md` § 4.2), når brugeren siger til. **Feltfarven D7** er ikke valgt.
 5. **Senere:** står i `STATUS.md` (afsnittet Senere) og i planerne.
