@@ -11,13 +11,13 @@
       Rigtige trommer 17 → 47 (kun trommer 6 → 40).
    Kan slås fra under Analyse → Avanceret → Indstillinger for analysen (set.a3 = false; så regnes alt som før). Live (Lyd ind, generatoren) er uændret.
    v9.123: fasens sikkerhed regnes nu som takternes enighed (blokken v9.123: FASENS SIKKERHED); A3.fd gemmer målingerne bag valget af takt 1. */
-const A3={skift:null,fd:null};
+const A3={skift:null,fd:null,HALV:1.6/* v9.130: målt igen på indstil og tjek; 1,6 bliver (se blokken v9.130: ÆRLIG MÅLING) */};
 function a3Til(){return !(typeof set!=='undefined'&&set&&set.a3===false)}
 {const gl=applyNorm;window.applyNorm=function(){if(!a3Til()||!RAW||!RAW.bas)return gl.apply(this,arguments);const g=RAW.kick,b=RAW.bas,n=b.length,x=new Float32Array(n),o=new Float32Array(n);
  for(let i=0;i<n;i++)x[i]=Math.max(0,(Math.pow(10,b[i])-1)/100);for(let i=1;i<n;i++)o[i]=Math.max(0,x[i]-(x[i-1]*.5+(x[i-2]||0)*.5));RAW.kick=o;try{return gl.apply(this,arguments)}finally{RAW.kick=g}}}
 {const gl=Rytme.taktslag;Rytme.taktslag=function(o,dtf,bpm,st){const b=gl(o,dtf,bpm,st);A3.skift=null;if(!a3Til()||b.length<8||typeof F==='undefined'||!F||!F.kick||F.kick.length!==o.length)return b;
  const n=F.kick.length,P=60/bpm/dtf,v=k=>{let m=0;for(let d=-1;d<=1;d++){const j=k+d;if(j>=0&&j<n)m=Math.max(m,F.kick[j]||0)}return m};let s0=0,s1=0;for(const k of b){s0+=v(k);const h=Math.round(k+P/2);if(h<n)s1+=v(h)}
- A3.skift={paa:s0,mellem:s1,flyttet:s1>s0*1.6};return A3.skift.flyttet?b.map(k=>Math.min(n-1,Math.round(k+P/2))):b}}
+ A3.skift={paa:s0,mellem:s1,flyttet:s1>s0*A3.HALV};return A3.skift.flyttet?b.map(k=>Math.min(n-1,Math.round(k+P/2))):b}}
 {const gl=Rytme.taktFase;Rytme.taktFase=function(acc,beats,pt){pt=pt||4;A3.fd=null;if(!a3Til()||typeof F==='undefined'||!F||!F.kick||!F.snare||beats.length<pt*3)return gl(acc,beats,pt);const n=F.kick.length;
  const sum=(a,k)=>{let m=0;for(let d=-1;d<=2;d++){const j=k+d;if(j>=0&&j<n)m+=a[j]||0}return m};
  const har=(typeof A!=='undefined'&&A&&A['ana:c0']&&A['ana:c0'].length===n)?Array.from({length:12},(_,c)=>A['ana:c'+c]):[F.bas,F.mid,F.hmid,F.brill];

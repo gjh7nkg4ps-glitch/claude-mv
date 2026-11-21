@@ -198,3 +198,11 @@ ffmpeg -i sang.stem.mp4 -map 0:a:1 trommer.wav -map 0:a:2 bas.wav -map 0:a:3 res
 - **Gem hele arbejdet / Hent hele arbejdet (v9.106, D6):** én fil med alt under rytme-*; Opsætninger, 💾 Gem ▾ og banneret.
 - **Gitter i Node-editoren (v9.105, P8.12):** faste kolonner, Ret op, A/B/C, Del, skyderne Lodret og Vandret, tre kæmpe opstillinger; pladser og skydere gemmes med showet; Ctrl+Z.
 - **P8.18 D1–D3 er bygget (v9.104):** Gemt ✓ og banner, når gemningen fejler; tasten ?; Hvad er nyt på startskærmen. Svar på D6 i `docs/arkiv/SVAR-P8_18.md`.
+
+---
+
+## Flyttet fra STATUS.md 21. november 2026 (v9.130)
+
+- **v9.114:** rettelser efter hele testpakken på v9.113 (95 af 98 grønne): Analyse sikkerhed gemmer kun gennem lsGem; cirklen i matrixen ændrer ikke rækkens tekst; Tilpas tegner fladen én gang. Brugeren 20. november: v9.112 er fin; "Lav show hakker" og "tom Node-editor" sker ikke mere (lukket).
+- **Kolonnenavnene står fast øverst i Node-editoren (v9.111):** en fast linje, samme størrelse uanset zoom, ingen overlap (brugerens ønske 20. november). v9.112: efter Tilpas står noderne under linjen (hele testpakken fandt, at klik på en node kunne ramme et kolonnenavn).
+- **Analyse sikkerhed (A0, v9.110, P8.24):** fanen Analyse sikkerhed i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker (grøn 75–100, gul 50–74, rød 0–49, ? ikke målt; 99 = ren matematik); resultatet gemmes med versionsnummer. 4 spor kun under cirka 15 minutter (besked). Notat om installation med ét klik: `docs/LOKALT-MODUL-INSTALLATION.md`. **STOP efter A0.** De første tal står i `docs/STATUS-TIL-HOVEDCHATTEN.md`.

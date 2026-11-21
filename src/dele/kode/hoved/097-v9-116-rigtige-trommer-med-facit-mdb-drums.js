@@ -29,7 +29,7 @@ async function mdbLyd(f,toner){const key='mdb'+MDB.VER+'|'+f.name+'|'+f.size,kt=
  const o={R,sr:b.sampleRate,dur:b.duration};if(!har1)cachePut(key,o);if(toner&&!har2)cachePut(kt,{A1});return toner?Object.assign({A1},o):o}
 async function mdbKoer(files){if(MDB.koerer)return null;const L=mdbFind(files);if(!L.length){msg('Fandt ingen stykker med facit i mappen. Vælg mappen "MDB Drums" (den med audio og annotations).');return null}
  MDB.koerer=true;const t00=performance.now(),glFrem=anaFrem,res={mix:{},trom:{}},tempo={},thr={mix:{},trom:{}};let nLyd=0,hentet=0;const alle=L.reduce((a,x)=>a+(x.mix?1:0)+(x.trom?1:0),0);
- const led=(v,k,navn,o)=>{const r=res[v][k]||(res[v][k]={hit:0,n:0,fa:0,ov:0,neu:0,pm:[]});['hit','n','fa','ov','neu'].forEach(x=>r[x]+=o[x]||0);r.pm.push([navn,asF(o)])};
+ const led=(v,k,navn,o)=>{const r=res[v][k]||(res[v][k]={hit:0,n:0,fa:0,ov:0,neu:0,pm:[]});['hit','n','fa','ov','neu'].forEach(x=>r[x]+=o[x]||0);r.pm.push([navn,asF(o)]);mdbGrpLed(r,navn,o)/* v9.130: indstil og tjek */};
  try{anaFrem=function(){};
   for(const st of L){const sub=st.sub?mdbLinjer(await st.sub.text()).map(x=>[+x[0],x[1].toUpperCase()]):null,kl=mdbLinjer(await st.klass.text()).map(x=>[+x[0],x[1].toUpperCase()]),bt=st.beats?mdbLinjer(await st.beats.text()).map(x=>[+x[0],+x[1]]):null,neu=kl.filter(x=>MDB.NEU.includes(x[1])).map(x=>x[0]);
    for(const[v,,suf]of MDB.V){const f=st[v];if(!f)continue;nLyd++;MDB.frem='Rigtige trommer: '+nLyd+' af '+alle+' lydfiler · '+tidTxt((performance.now()-t00)/1000);asTegn();await new Promise(r=>setTimeout(r,0));
@@ -41,7 +41,7 @@ async function mdbKoer(files){if(MDB.koerer)return null;const L=mdbFind(files);i
      led(v,rk,st.navn,mdbMatch(sand,Rytme.slagtider(AS.REGEL[k],N.F[k],N.dtf,1,false),AS.TOL,nu));for(let q=2;q<=18;q++){const z=(thr[v][rk]=thr[v][rk]||{})[q]||(thr[v][rk][q]={hit:0,fa:0,ov:0}),m=mdbMatch(sand,Rytme.slagtider(Object.assign({},AS.REGEL[k],{thr:q*.05}),N.F[k],N.dtf,1,false),AS.TOL,nu);z.hit+=m.hit;z.fa+=m.fa;z.ov+=m.ov}});
     if(bt&&bt.length){led(v,'taktslag',st.navn,mdbMatch(bt.map(x=>x[0]),asSpring(N.A&&N.A['ana:taktslag'],N.dtf,S),AS.TOLT));led(v,'takt',st.navn,mdbMatch(bt.filter(x=>x[1]===1).map(x=>x[0]),asSpring(N.A&&N.A['ana:takt'],N.dtf,S),AS.TOLT));
      const d=[];for(let i=1;i<bt.length;i++)d.push(bt[i][0]-bt[i-1][0]);d.sort((a,b)=>a-b);(tempo[st.navn]=tempo[st.navn]||{})[v]=[N.bpm,d.length?Math.round(600/d[d.length>>1])/10:0,N.faseKonf]}}}
-  for(const[v]of MDB.V)for(const k in res[v]){const r=res[v][k];r.s=asF(r);const T=thr[v][k];if(T){let bq=0,bs=-1;for(const q in T){const s=asF(T[q]);if(s>bs){bs=s;bq=+q}}r.bedst=[Math.round(bq*5)/100,bs]}}
+  for(const[v]of MDB.V)for(const k in res[v]){const r=res[v][k];r.s=asF(r);mdbGrpS(r);const T=thr[v][k];if(T){let bq=0,bs=-1;for(const q in T){const s=asF(T[q]);if(s>bs){bs=s;bq=+q}}r.bedst=[Math.round(bq*5)/100,bs]}}
   const kort={};MDB.V.forEach(([v])=>MDB.R.forEach(([k])=>{if(res[v][k])kort[v+':'+k]=res[v][k].s}));const hist=((MDB.data&&MDB.data.hist)||[]).slice(-19);
   MDB.data={v:asVersion(),dato:Date.now(),ms:Math.round(performance.now()-t00),n:L.length,lyd:alle,hentet,res,tempo,toner:true,hist:hist.concat([{v:asVersion(),dato:Date.now(),s:kort,toner:true}])};
   try{lsGem('rytme-asik-mdb',JSON.stringify(MDB.data))}catch(e){}

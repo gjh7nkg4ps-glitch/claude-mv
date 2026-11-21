@@ -49,3 +49,23 @@ Pr. mønster (House kun trommer · House · Hip-hop · DnB · Techno · Breakbea
 
 Næsten alle stykker er cirka 110 BPM (fundet 110); BebopJazz og Gospel er 222 (fundet 110, det halve). Fase-sikkerheden er 0,05–0,50. **Codes læsning:** Taktslag er godt på rigtig musik, men Takt 1 er dårlig (samme fejl som i testlyden). Kick har mange falske slag, især på trommerne alene (911); Snare overser de fleste (1700–1940): de svage slag (ghost notes) i jazz trækker ned.
 
+---
+
+*Flyttet 21. november 2026 (v9.130):*
+
+## P8.30 trin 3 (v9.117): A3 første del, før → efter
+
+A3 slået til ét skridt ad gangen i P8.31's rækkefølge (Kick · Taktslag · Takt 1; skridt 3 = programmet med A3 til; Snare og Hihat ændres ikke):
+
+| Skridt | Testlyd hele | Testlyd trommer | Rigtige hele mixet | Rigtige trommer |
+| --- | --- | --- | --- | --- |
+| 0 · før | 60 · 33 · 33 | 40 · 33 · 0 | 63 · 81 · 17 | 72 · 77 · 6 |
+| 1 · + Takt 1 | 60 · 33 · 33 | 40 · 33 · 33 | 63 · 81 · 42 | 72 · 77 · 25 |
+| 2 · + halve takt | 60 · 49 · 47 | 40 · 81 · 76 | 63 · 81 · 47 | 72 · 84 · 30 |
+| 3 · + kickets ekko | 92 · 49 · 31 | 94 · 81 · 76 | 70 · 81 · 47 | 75 · 85 · 40 |
+
+- **d) Kick:** stigningen i basbåndet måles i lineær skala, ikke logaritmisk (et ekko i næsten stilhed blev målt som 1,00, det rigtige kick i ekkoets hale som 0,69). Regnes ud fra det gemte basbånd, så cachen virker. En maske efter kraftige slag (hovedchattens forslag: tærskel, der følger niveauet) blev prøvet og gjorde Kick dårligere alle steder (Rigtige 63 → 55–58).
+- **b) Taktslag:** flyttes en halv slaglængde, når kicket mellem de fundne slag er 1,6 gange større end på dem. Andre vægte i anslagsstyrken blev prøvet; de hjalp testlyden, men skadede de rigtige trommer lidt.
+- **a) Takt 1:** kick − ½ × snare (sum over fire rammer, fordi et slag mellem to rammer ellers taber) + skift i klang og toner (12 toner, når de findes; ellers 4 bånd). Hovedchattens læsning passede: accenten alene er næsten ens i House; snare-målingen peger forkert (den reagerer på kickets klik, og klappet ligger i mid).
+- **c) Tempo:** Testlyden finder nu alle 6 tempi; BebopJazz og Gospel (222) findes som 110 (det halve). Står i planen. Kan slås fra: Indstillinger for analysen → *Bedre slag og takt (A3)*; med Fra er alle tal præcis som før (test 100).
+

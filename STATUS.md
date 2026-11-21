@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.129, 21. november 2026)
+## Nu (v9.130, 21. november 2026)
 
+- **v9.130 (P8.33 trin 1, ærlig måling):** Rigtige trommer er delt i *indstil* (12) og *tjek* (11); hver celle viser tjek-tallet. Rampen for fasens sikkerhed er valgt igen på indstil (0,40 → 0,90; tjek klart bedre end et fast tal). Den halve takt bliver 1,6: 1,0 så bedre ud på indstil, men tjek faldt. Uden toner duer rampen ikke (forslag under Venter på brugeren). **STOP efter trin 1.**
 - **v9.129 (dit valg A):** Rigtige trommer kan måles igen uden mappen: Analyse → Analyse sikkerhed → **Mål igen (uden mappen)** (23 stykker på cirka 7 s, samme tal som med mappen). Facit ligger kun i browseren; **Glem facit** sletter det.
 - **v9.128 (rettelser efter hele testpakken på v9.127, 101 af 104 grønne):** Lyd over tid viser igen alle rækker (den nederste blev skåret af efter rækken Hændelser); Node-editorens mærke for en spærret regel bruger temaets farver; test 11 og 72 rettet.
 - **v9.127 (A4, anden del):** dine rettelser i Hændelser bruges nu af reglerne (et slettet kick sætter ikke en regel i gang, et tilføjet slag gør). Knappen *Rettelser i reglerne: Til/Fra* i hovedet af Lyd over tid. Analysen og Analyse sikkerhed røres ikke.
@@ -13,21 +14,15 @@ Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Histo
 - **v9.123 (A3, fasens sikkerhed):** hver takt stemmer for sig; sikkerheden er takternes enighed om takt 1 gennem en rampe målt på Rigtige trommer (med toner 0,20–0,95, uden 0,25–0,65). Rækken *Bedre slag og takt (A3)* og boblen ved Takt 1 siger fx "i 6 af 15 takter peger … på samme takt 1, hvor tilfældigt ville give cirka 4". Rigtige trommer måler nu hele mixet med toner (trin 2), sådan som MV analyserer en rigtig sang: Takt 1 47 → 69. Prøvet og ikke med: snaren til den halve takt (dårligere).
 - **v9.122 (T1, autosikring):** MV lægger selv en kopi af alt i browseren hver dag (IndexedDB, de seneste 7 dage). Opsætninger → *Automatiske kopier*: én række pr. kopi (i dag, i går …) med *Gå tilbage hertil* (spørger to gange, gemmer først det, du har nu, og starter forfra) og *Tag en kopi nu*. Fortryd: rækken "lige før du gik tilbage". Analyse-cachen er ikke med; *Gem hele arbejdet* (en fil på din pc) er stadig den sikreste.
 - **T0 (uden ny version):** koden ligger nu i `src/dele/` (132 filer; én pr. blok i `kode/hoved/`), og `node src/byg.js` bygger programfilen; den giver v9.121 byte for byte (test 102). Fra nu af rettes kun i kilderne.
-
 - **v9.121:** *Testlyden: lyt og gem* ligger foldet sammen bag den lille knap **Testlyden ▸** (efter Kopiér rapport), fordi den næsten aldrig bruges (brugerens ønske).
-
 - **v9.120 (G2, P8.31):** Rigtige trommer viser *Snare · uden svage slag* (SDG og SDD neutrale) og *Hihat · uden pedal* (PHH neutral); alle 21 underklasser står i "Sådan måles rigtige trommer".
 - **v9.119 (valg C):** Analyse sikkerhed → *Testlyden: lyt og gem*: ▶ Lyt / ■ Stop og Gem som WAV pr. mønster (Hele lyden, Kun trommerne, Kun bassen, Kun melodien); samme fingeraftryk som rapporten.
-
 - **v9.118:** rettelse til v9.117 (test 57): kick i stille stykker af sange over 10 minutter (Lange sange må nu skrue kick 16 gange op). Brugeren har prøvet v9.117: Testlyd og Rigtige trommer giver præcis de samme tal som hos Code. Fund: fasens sikkerhed er ikke kalibreret.
 - **P8.30 trin 3 (v9.117, A3 første del):** kick i lineær skala (ekkoet), taktslaget flyttes en halv slaglængde, når kicket ligger mellem slagene, takt 1 ud fra kick, ½ × snare og skift i klang; Til/Fra i Indstillinger for analysen (med "Denne sang: …"). Før → efter står i `docs/STATUS-TIL-HOVEDCHATTEN.md`. **STOP efter trin 3.**
 - **P8.30 trin 2 (v9.116):** Analyse sikkerhed har blokken **Rigtige trommer** (MDB Drums): *Vælg facit-mappe*, kolonnerne *hele mixet* og *kun trommerne*, Kick, Snare, Hihat, Taktslag, Takt 1; bækken og tammer er neutrale; cachen; aldrig blandet med Testlyd. 23 stykker på 16 s, 2 s fra cachen. Tallene: `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 - **Vejledning (MDB Drums):** github.com/CarlSouthall/MDBDrums → **Code** → **Download ZIP** · pak ud (cirka 2,2 GB; audio/multi-tracks, cirka 1,6 GB, kan slettes) · MV: 1 · Analyse → Analyse sikkerhed → **Vælg facit-mappe** → mappen **MDB Drums** · første gang cirka 20 s, derefter 2 s · licens CC BY-NC-SA 4.0.
 - **P8.30 trin 1 (v9.115, prøvet af brugeren 20. november: alle fingeraftryk og tal ens):** testlyden regnes i ren matematik (samme 6 mønstre, ekko, rum, åben hihat, bas; ens på alle pc'er; 15–18 s); "Testlyd" ved alle tal; det samlede tal uden 99; med 4 spor viser cirklen Trommer-tallet og siger det; gamle tal (generatoren) står svagt i historikken med en streg; rapporten har tempoets og fasens sikkerhed og den rigtige fase. **STOP efter trin 1.**
-- **v9.114:** rettelser efter hele testpakken på v9.113 (95 af 98 grønne): Analyse sikkerhed gemmer kun gennem lsGem; cirklen i matrixen ændrer ikke rækkens tekst; Tilpas tegner fladen én gang. Brugeren 20. november: v9.112 er fin; "Lav show hakker" og "tom Node-editor" sker ikke mere (lukket).
 - **A1 (v9.113, P8.26 og P8.28):** hele analysen på de 4 spor (80 lydtræk pr. spor) i baggrunds-trådene, gemt i cachen; Analyse sikkerhed måler ét instrument alene, viser bedste tærskel også for sporene, har *Brug den bedste tærskel* (Ctrl+Z) og *Kopiér rapport*. **STOP efter A1.**
-- **Kolonnenavnene står fast øverst i Node-editoren (v9.111):** en fast linje, samme størrelse uanset zoom, ingen overlap (brugerens ønske 20. november). v9.112: efter Tilpas står noderne under linjen (hele testpakken fandt, at klik på en node kunne ramme et kolonnenavn).
-- **Analyse sikkerhed (A0, v9.110, P8.24):** fanen Analyse sikkerhed i Analyse måler analysen mod generatoren (6 mønstre, offline); cirkel med tal i matrixens rækker (grøn 75–100, gul 50–74, rød 0–49, ? ikke målt; 99 = ren matematik); resultatet gemmes med versionsnummer. 4 spor kun under cirka 15 minutter (besked). Notat om installation med ét klik: `docs/LOKALT-MODUL-INSTALLATION.md`. **STOP efter A0.** De første tal står i `docs/STATUS-TIL-HOVEDCHATTEN.md`.
 
 ## Tal: Testlyd og Rigtige trommer (P8.31; F-mål)
 
@@ -56,6 +51,7 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 ## Venter på brugeren
 
+- **P8.33:** må jeg fortsætte med trin 2 (taktgitter uden spor med den perkussive del, HPSS)? Og fasens sikkerhed **uden toner** (kun trommer) forudsiger ikke takt 1 (tjek-Brier 0,27–0,33, dårligere end at sige 50 %): mit forslag er at vise et fast 0,50 med teksten "uden toner kan takt 1 ikke vurderes". Kun relevant, når en sang ingen toner har.
 - Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
 

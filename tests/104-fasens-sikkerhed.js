@@ -18,11 +18,11 @@ async function kør(arg) {
   try {
     await side.goto('file://' + fil); await side.waitForTimeout(4500);
     const ramp = await side.evaluate(() => [[0, 1], [.1, 1], [.25, 1], [1, 1], [0, 0], [.25, 0], [.5, 0], [1, 0]].map(([e, t]) => Math.round(a3FaseKonf(e, !!t) * 100) / 100));
-    T.tjek(JSON.stringify(ramp) === JSON.stringify([.2, .5, .95, .95, .25, .45, .65, .65]), `rampen: med toner 0,20 → 0,95 (enighed 0 → 0,25), uden toner 0,25 → 0,65 (enighed 0 → 0,5): ${ramp.join(' ')}`, JSON.stringify(ramp));
+    T.tjek(JSON.stringify(ramp) === JSON.stringify([.4, .6, .9, .9, .25, .45, .65, .65]) /* v9.130: rampen med toner er valgt igen på indstil */, `rampen: med toner 0,40 → 0,90 (enighed 0 → 0,25), uden toner 0,25 → 0,65 (enighed 0 → 0,5): ${ramp.join(' ')}`, JSON.stringify(ramp));
     const t = await side.evaluate(async () => { const d = await asKoer(); return { bpm: d.bpm, rap: asRapport() } });
     const fk = Object.values(t.bpm).map(x => x[2]);
-    T.tjek(fk.every(x => x >= .2 && x <= .95) && t.bpm.dnb[2] === .95 && t.bpm.dnb[4] === t.bpm.dnb[1] && t.bpm.hip[2] === .2 && t.bpm.hip[4] === null && /fase-sikkerhed 0\.95/.test(t.rap),
-      `Testlyd: fasens sikkerhed ligger mellem 0,20 og 0,95 (${fk.join(' ')}); Drum and bass (takt 1 rigtig) 0,95; Hip-hop med bas (taktslagene ved siden af) 0,20`, JSON.stringify(t.bpm));
+    T.tjek(fk.every(x => x >= .25 && x <= .9) && t.bpm.dnb[2] === .9 && t.bpm.dnb[4] === t.bpm.dnb[1] && t.bpm.hip[2] === .4 && t.bpm.hip[4] === null && /fase-sikkerhed 0\.9/.test(t.rap),
+      `Testlyd: fasens sikkerhed ligger mellem 0,25 og 0,90 (${fk.join(' ')}); Drum and bass (takt 1 rigtig) 0,90; Hip-hop med bas (taktslagene ved siden af) 0,40`, JSON.stringify(t.bpm));
     const wav = lavTestlyd(path.join(tmp, 'testlyd-120bpm.wav'));
     await side.setInputFiles('#file', wav); await side.waitForFunction(() => F && A && SHOWPROFIL && SHOWPROFIL.faseInfo && !document.getElementById('play').disabled, null, { timeout: 180000 }); await side.waitForTimeout(800);
     await indst();

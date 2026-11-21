@@ -13,7 +13,7 @@
      Techno og Breakbeat med bas).
    - Takternes stemmer gemmes i SHOWPROFIL.faseInfo (ja, nb, toner, stemmer), så A2 kan bruge sikkerheden takt for takt.
    - Med A3 slået fra er alt som før v9.117. */
-const A3F={RAMPE:{toner:[.2,.75,.25,.95],uden:[.25,.4,.5,.65]},sidst:null};
+const A3F={RAMPE:{toner:[.4,.5,.25,.9]/* v9.130: valgt igen på indstil (før .2, .75, .25, .95) */,uden:[.25,.4,.5,.65]},sidst:null};
 function a3FaseKonf(enig,toner){const r=toner?A3F.RAMPE.toner:A3F.RAMPE.uden;return Math.min(r[3],r[0]+r[1]*Math.min(1,Math.max(0,+enig||0)/r[2]))}
 {const gl=Rytme.taktFase;Rytme.taktFase=function(acc,beats,pt){const r=gl(acc,beats,pt),d=A3.fd;A3.fd=null;A3F.sidst=null;if(!d||!r)return r;
  const sd=a=>{a=a.filter(x=>x!=null);if(!a.length)return 1;const m=a.reduce((x,y)=>x+y,0)/a.length;return Math.sqrt(a.reduce((x,y)=>x+(y-m)*(y-m),0)/a.length)||1},sA=sd(d.ac),sN=sd(d.nv),P=d.pt;
