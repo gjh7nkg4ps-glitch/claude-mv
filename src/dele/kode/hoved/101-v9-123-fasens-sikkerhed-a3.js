@@ -13,7 +13,7 @@
      Techno og Breakbeat med bas).
    - Takternes stemmer gemmes i SHOWPROFIL.faseInfo (ja, nb, toner, stemmer), så A2 kan bruge sikkerheden takt for takt.
    - Med A3 slået fra er alt som før v9.117. */
-const A3F={RAMPE:{toner:[.4,.5,.25,.9]/* v9.130: valgt igen på indstil (før .2, .75, .25, .95) */,uden:[.25,.4,.5,.65]},sidst:null};
+const A3F={RAMPE:{toner:[.4,.5,.25,.9]/* v9.130: valgt igen på indstil (før .2, .75, .25, .95) */,uden:[.5,0,1,.5]/* v9.131: fast 0,50 (før .25, .4, .5, .65; tjek viste, at enigheden uden toner ikke forudsiger takt 1) */},sidst:null};
 function a3FaseKonf(enig,toner){const r=toner?A3F.RAMPE.toner:A3F.RAMPE.uden;return Math.min(r[3],r[0]+r[1]*Math.min(1,Math.max(0,+enig||0)/r[2]))}
 {const gl=Rytme.taktFase;Rytme.taktFase=function(acc,beats,pt){const r=gl(acc,beats,pt),d=A3.fd;A3.fd=null;A3F.sidst=null;if(!d||!r)return r;
  const sd=a=>{a=a.filter(x=>x!=null);if(!a.length)return 1;const m=a.reduce((x,y)=>x+y,0)/a.length;return Math.sqrt(a.reduce((x,y)=>x+(y-m)*(y-m),0)/a.length)||1},sA=sd(d.ac),sN=sd(d.nv),P=d.pt;
@@ -25,6 +25,6 @@ function a3FaseKonf(enig,toner){const r=toner?A3F.RAMPE.toner:A3F.RAMPE.uden;ret
 {const gl=showTempoBrug;window.showTempoBrug=function(){const r=gl.apply(this,arguments);if(typeof SHOWPROFIL!=='undefined'&&SHOWPROFIL)SHOWPROFIL.faseInfo=A3F.sidst;return r}}
 /* teksten ved fasens sikkerhed (rækken i Indstillinger for analysen og boblen ved Takt 1) */
 function a3FaseHvorfor(fk,boble){const I=typeof SHOWPROFIL!=='undefined'&&SHOWPROFIL&&SHOWPROFIL.faseInfo,lav=fk<.5;
- const hv=I?'i '+I.ja+' af '+I.nb+' takter peger kick, snare og skift i klang'+(I.toner?' og toner':'')+' på samme takt 1, hvor tilfældigt ville give cirka '+Math.round(I.nb/4):'',lt=lav?'lav: takt 1 kan være forkert'+(boble?'; ret den under Analyse → Sang → Taktslag':''):'';
+ const hv=I?'i '+I.ja+' af '+I.nb+' takter peger kick, snare og skift i klang'+(I.toner?' og toner':'')+' på samme takt 1, hvor tilfældigt ville give cirka '+Math.round(I.nb/4)+(I.toner?'':'; uden toner kan takt 1 ikke vurderes, så sikkerheden er fast 0,5'):'',lt=lav?'lav: takt 1 kan være forkert'+(boble?'; ret den under Analyse → Sang → Taktslag':''):'';
  return hv||lt?' ('+[hv,lt].filter(Boolean).join('; ')+')':''}
 /* ========== SLUT: FASENS SIKKERHED (A3, ANDEN DEL) ========== */

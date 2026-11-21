@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.130, 21. november 2026)
+## Nu (v9.131, 21. november 2026)
 
+- **v9.131 (dit ja):** fasens sikkerhed uden toner er fast 0,50 med teksten "uden toner kan takt 1 ikke vurderes".
 - **v9.130 (P8.33 trin 1, ærlig måling):** Rigtige trommer er delt i *indstil* (12) og *tjek* (11); hver celle viser tjek-tallet. Rampen for fasens sikkerhed er valgt igen på indstil (0,40 → 0,90; tjek klart bedre end et fast tal). Den halve takt bliver 1,6: 1,0 så bedre ud på indstil, men tjek faldt. Uden toner duer rampen ikke (forslag under Venter på brugeren). **STOP efter trin 1.**
 - **v9.129 (dit valg A):** Rigtige trommer kan måles igen uden mappen: Analyse → Analyse sikkerhed → **Mål igen (uden mappen)** (23 stykker på cirka 7 s, samme tal som med mappen). Facit ligger kun i browseren; **Glem facit** sletter det.
 - **v9.128 (rettelser efter hele testpakken på v9.127, 101 af 104 grønne):** Lyd over tid viser igen alle rækker (den nederste blev skåret af efter rækken Hændelser); Node-editorens mærke for en spærret regel bruger temaets farver; test 11 og 72 rettet.
@@ -51,7 +52,6 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 ## Venter på brugeren
 
-- **P8.33:** må jeg fortsætte med trin 2 (taktgitter uden spor med den perkussive del, HPSS)? Og fasens sikkerhed **uden toner** (kun trommer) forudsiger ikke takt 1 (tjek-Brier 0,27–0,33, dårligere end at sige 50 %): mit forslag er at vise et fast 0,50 med teksten "uden toner kan takt 1 ikke vurderes". Kun relevant, når en sang ingen toner har.
 - Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
 
