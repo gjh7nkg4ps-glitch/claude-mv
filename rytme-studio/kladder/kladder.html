@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="da"><head><meta charset="utf-8"><title>Rytme Studio · fem kladder</title>
+<style>
+  body { margin: 0; background: #050505; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  svg { display: block; width: 1920px; height: 1080px; margin: 0 auto 40px; }
+</style></head><body>
+<div id="ud"></div>
+<script>
+/* Fem kladder til Rytme Studio. Hver er én SVG-tegning på 1920 × 1080. Intet her er bygget ind i programmet. */
+'use strict';
+const SERIF = 'Didot, "Bodoni MT", "Playfair Display", "Libre Baskerville", Georgia, "Times New Roman", serif';
+const SANS = '"Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif';
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const T = (x, y, s, o = {}) => `<text x="${x}" y="${y}" font-size="${o.s || 14}" fill="${o.f || '#fff'}" font-weight="${o.w || 400}" text-anchor="${o.a || 'start'}" font-family='${o.ff || SANS}' letter-spacing="${o.ls || 0}" opacity="${o.o == null ? 1 : o.o}" ${o.it ? 'font-style="italic"' : ''} ${o.rot ? `transform="rotate(${o.rot} ${x} ${y})"` : ''}>${esc(s)}</text>`;
+const L = (x1, y1, x2, y2, st, w = 1, o = 1, x = '') => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${st}" stroke-width="${w}" opacity="${o}" ${x}/>`;
+const R = (x, y, w, h, f, rx = 0, st = 'none', o = 1, sw = 1) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}" rx="${rx}" stroke="${st}" stroke-width="${sw}" opacity="${o}"/>`;
+const C = (cx, cy, r, f, st = 'none', sw = 1, o = 1) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${f}" stroke="${st}" stroke-width="${sw}" opacity="${o}"/>`;
+let froe = 7; const rnd = () => { froe = (froe * 1664525 + 1013904223) >>> 0; return froe / 4294967296; };
+/* Styrken i demo-sangen (0 til 1) ved tiden t i sekunder: slag hvert halve sekund, et roligt stykke fra 16 til 24 s. */
+function niv(t) { const p = (t % 0.5) / 0.5, del = t >= 16 && t < 24 ? 0.42 : t < 8 ? 0.72 : 1; return Math.min(1, (0.28 + 0.72 * Math.exp(-4.5 * p)) * del * (0.82 + 0.18 * rnd())); }
+const tid = t => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
+const polar = (cx, cy, r, grader) => { const a = (grader - 90) * Math.PI / 180; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; };
+const bue = (cx, cy, r, a0, a1) => { const p0 = polar(cx, cy, r, a0), p1 = polar(cx, cy, r, a1); return `M${p0[0]} ${p0[1]} A${r} ${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${p1[0]} ${p1[1]}`; };
+const maerke = (n, navn, f, bg) => R(0, 0, 1920, 1080, 'none', 0, 'none') + `<g>${R(1920 - 250, 1080 - 44, 250, 44, bg, 0, 'none', 0.92)}${T(1920 - 20, 1080 - 17, 'Kladde ' + n + ' af 5 · ' + navn, { s: 13, f, a: 'end', ls: 0.5 })}</g>`;
+const POS = 7.6, A = 8, B = 12;
+const ud = [];
+
+/* ============ 1 · GALLERI: billedet hænger som et værk; alt andet er tynde linjer og tekst ============ */
+(() => {
+  const ben = '#ece6da', graa = '#8d877c', s = [];
+  s.push(R(0, 0, 1920, 1080, '#0d0c0b'));
+  s.push(`<defs><radialGradient id="g1" cx="42%" cy="36%"><stop offset="0" stop-color="#fbf8f1"/><stop offset=".45" stop-color="#b9b2a4"/><stop offset="1" stop-color="#3a3731"/></radialGradient>
+    <radialGradient id="g1b"><stop offset="0" stop-color="#ece6da" stop-opacity=".16"/><stop offset="1" stop-color="#ece6da" stop-opacity="0"/></radialGradient>
+    <linearGradient id="g1v" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#171614"/><stop offset="1" stop-color="#0a0a09"/></linearGradient></defs>`);
+  /* top: navn og arbejdsområder som ren tekst */
+  s.push(T(64, 66, 'Rytme Studio', { s: 24, f: ben, ff: SERIF, it: 1 }));
+  ['Afspiller', 'Analyse', 'Figurer', 'Regler', 'Show'].forEach((n, i) => { const x = 1196 + i * 136; s.push(T(x, 64, n, { s: 14, f: i ? graa : ben, ls: 2.2 })); if (!i) s.push(L(x, 76, x + 86, 76, ben, 1)); });
+  s.push(L(64, 96, 1856, 96, ben, 1, 0.14));
+  /* venstre: værkerne (sangene) som et katalog */
+  s.push(T(64, 150, 'Værker', { s: 12, f: graa, ls: 2.4 }));
+  [['Demo-lyd, 120 BPM', '0:32', 1], ['Nordlys (mix 4).mp3', '4:12', 0], ['Trommer alene.wav', '1:48', 0]].forEach((v, i) => {
+    const y = 196 + i * 62;
+    s.push(T(64, y, 'Nr. ' + (i + 1), { s: 12, f: graa, ls: 1 }) + T(64, y + 24, v[0], { s: 16, f: v[2] ? ben : graa, ff: SERIF }) + T(300, y + 24, v[1], { s: 13, f: graa, a: 'end' }) + L(64, y + 40, 300, y + 40, ben, 1, 0.12));
+  });
+  s.push(T(64, 420, 'Hent et værk', { s: 14, f: ben, ls: 1 }) + L(64, 430, 154, 430, ben, 1, 0.6) + T(64, 458, 'eller slip en lydfil i vinduet', { s: 13, f: graa }));
+  /* midten: værket i ramme, med skilt under */
+  s.push(R(372, 138, 1176, 600, 'url(#g1v)', 0, ben, 1) + R(372, 138, 1176, 600, 'none', 0, ben, 0.22));
+  s.push(C(960, 438, 420, 'url(#g1b)') + C(960, 438, 172, 'url(#g1)') + C(960, 438, 214, 'none', ben, 1, 0.35));
+  s.push(T(372, 792, 'Demo-lyd', { s: 40, f: ben, ff: SERIF }) + T(372, 822, '120 BPM  ·  stereo  ·  lavet i programmet', { s: 13, f: graa, ls: 1 }));
+  s.push(T(1548, 792, '0:07,6', { s: 54, f: ben, ff: SERIF, a: 'end' }) + T(1548, 822, 'af 0:32', { s: 13, f: graa, a: 'end', ls: 1 }));
+  /* tidslinjen: hårfine streger i hele bredden */
+  const x0 = 372, w = 1176, yc = 912;
+  for (let i = 0; i < 392; i++) { const t = i / 392 * 32, h = niv(t) * 42, x = x0 + i * 3; s.push(L(x, yc - h, x, yc + h, ben, 1, t < POS ? 0.95 : 0.28)); }
+  const xa = x0 + A / 32 * w, xb = x0 + B / 32 * w, xp = x0 + POS / 32 * w;
+  s.push(L(xa, 858, xb, 858, ben, 1) + L(xa, 858, xa, 866, ben) + L(xb, 858, xb, 866, ben) + T(xa, 850, 'A', { s: 12, f: ben, ff: SERIF, it: 1 }) + T(xb, 850, 'B', { s: 12, f: ben, a: 'end', ff: SERIF, it: 1 }));
+  s.push(L(xp, 850, xp, 974, ben, 1.5));
+  for (let b = 0; b <= 16; b += 4) s.push(T(x0 + b / 16 * w, 992, b === 16 ? '0:32' : 'takt ' + (b + 1), { s: 11, f: graa, a: b === 16 ? 'end' : 'start', ls: 1 }));
+  /* afspiller: tre ord */
+  s.push(T(372, 1042, 'Stop', { s: 14, f: graa, ls: 2 }) + T(452, 1042, 'Pause', { s: 14, f: ben, ls: 2 }) + L(452, 1052, 506, 1052, ben) + T(548, 1042, 'Loop A til B', { s: 14, f: ben, ls: 2 }) + T(1320, 1042, 'Lydstyrke', { s: 14, f: graa, ls: 2 }) + L(1420, 1037, 1548, 1037, ben, 1, 0.25) + L(1420, 1037, 1522, 1037, ben, 1) + C(1522, 1037, 4, ben));
+  /* højre: målinger som tal og tynde streger */
+  const hx = 1620;
+  s.push(T(hx, 150, 'Niveau', { s: 12, f: graa, ls: 2.4 }) + T(hx, 214, '−9,6', { s: 60, f: ben, ff: SERIF }) + T(hx + 150, 214, 'dB RMS', { s: 13, f: graa, ls: 1 }) + L(hx, 240, 1856, 240, ben, 1, 0.2) + L(hx, 240, hx + 178, 240, ben, 2) + L(hx + 214, 232, hx + 214, 248, ben, 1) + T(1856, 266, 'top −2,4 dB', { s: 12, f: graa, a: 'end' }));
+  s.push(T(hx, 340, 'Loop', { s: 12, f: graa, ls: 2.4 }) + T(hx, 384, 'A', { s: 15, f: graa, ff: SERIF, it: 1 }) + T(hx + 30, 384, '0:08,00', { s: 24, f: ben, ff: SERIF }) + T(hx, 420, 'B', { s: 15, f: graa, ff: SERIF, it: 1 }) + T(hx + 30, 420, '0:12,00', { s: 24, f: ben, ff: SERIF }) + L(hx, 446, 1856, 446, ben, 1, 0.14));
+  s.push(T(hx, 510, 'Tempo', { s: 12, f: graa, ls: 2.4 }) + T(hx, 566, '120', { s: 48, f: ben, ff: SERIF }) + T(hx + 92, 566, 'BPM  ·  4 slag pr. takt', { s: 13, f: graa, ls: 1 }) + L(hx, 592, 1856, 592, ben, 1, 0.14) + T(hx, 622, 'Tap', { s: 14, f: ben, ls: 2 }) + T(hx + 60, 622, 'Takt 1 her', { s: 14, f: ben, ls: 2 }));
+  s.push(T(hx, 706, 'Snap', { s: 12, f: graa, ls: 2.4 }) + T(hx, 738, 'Fra', { s: 14, f: graa, ls: 2 }) + T(hx + 52, 738, 'Slag', { s: 14, f: graa, ls: 2 }) + T(hx + 116, 738, 'Takt', { s: 14, f: ben, ls: 2 }) + L(hx + 116, 748, hx + 156, 748, ben));
+  s.push(maerke(1, 'Galleri', ben, '#0d0c0b'));
+  ud.push(s.join(''));
+})();
+
+/* ============ 2 · URVÆRK: tiden er en cirkel; sangen ligger som en ring om billedet ============ */
+(() => {
+  const guld = '#d9a67c', lys = '#f2ede6', graa = '#7f8894', cx = 960, cy = 528, s = [];
+  s.push(`<defs><radialGradient id="g2bg" cx="50%" cy="48%"><stop offset="0" stop-color="#18202b"/><stop offset=".6" stop-color="#0d1219"/><stop offset="1" stop-color="#07090d"/></radialGradient>
+    <radialGradient id="g2" cx="40%" cy="34%"><stop offset="0" stop-color="#fff4e8"/><stop offset=".5" stop-color="#d9a67c"/><stop offset="1" stop-color="#4a2f20"/></radialGradient>
+    <radialGradient id="g2b"><stop offset="0" stop-color="#d9a67c" stop-opacity=".3"/><stop offset="1" stop-color="#d9a67c" stop-opacity="0"/></radialGradient>
+    <radialGradient id="g2s"><stop offset="0" stop-color="#121820"/><stop offset="1" stop-color="#090c11"/></radialGradient></defs>`);
+  s.push(R(0, 0, 1920, 1080, 'url(#g2bg)'));
+  s.push(T(64, 66, 'RYTME STUDIO', { s: 15, f: lys, ls: 6, w: 500 }) + T(64, 90, 'Demo-lyd  ·  120 BPM', { s: 13, f: graa, ls: 1 }));
+  ['Afspiller', 'Analyse', 'Figurer', 'Regler', 'Show'].forEach((n, i) => { s.push(T(64, 470 + i * 38, n, { s: 14, f: i ? graa : lys, ls: 2 })); if (!i) s.push(L(40, 465, 54, 465, guld, 1.5)); });
+  /* ydre ring: hele sangen som stråler */
+  const N = 360, r1 = 372;
+  for (let i = 0; i < N; i++) { const t = i / N * 32, a = i, h = 8 + niv(t) * 56, p0 = polar(cx, cy, r1, a), p1 = polar(cx, cy, r1 + h, a); s.push(L(p0[0], p0[1], p1[0], p1[1], t < POS ? guld : lys, 2.2, t < POS ? 1 : 0.2)); }
+  s.push(C(cx, cy, r1 - 8, 'none', lys, 1, 0.22));
+  for (let b = 0; b < 16; b++) { const a = b / 16 * 360, p0 = polar(cx, cy, r1 - 8, a), p1 = polar(cx, cy, r1 - (b % 4 ? 18 : 26), a), pt = polar(cx, cy, r1 - 42, a); s.push(L(p0[0], p0[1], p1[0], p1[1], lys, b % 4 ? 1 : 1.6, 0.7)); if (b % 2 === 0) s.push(T(pt[0], pt[1] + 4, tid(b * 2), { s: 12, f: graa, a: 'middle', ls: 0.5 })); }
+  /* loop A til B: en bue uden på ringen */
+  s.push(`<path d="${bue(cx, cy, r1 + 78, A / 32 * 360, B / 32 * 360)}" fill="none" stroke="${guld}" stroke-width="3"/>`);
+  [[A, 'A'], [B, 'B']].forEach(([t, n]) => { const p = polar(cx, cy, r1 + 100, t / 32 * 360); s.push(T(p[0], p[1] + 5, n, { s: 14, f: guld, a: 'middle', w: 600 })); });
+  /* indre ring: udsnittet (zoom), her 4 sekunder omkring viseren */
+  const r2 = 286;
+  for (let i = 0; i < 240; i++) { const t = POS - 2 + i / 240 * 4, a = i * 1.5, h = 4 + niv(Math.max(0, t)) * 30, p0 = polar(cx, cy, r2 - h, a), p1 = polar(cx, cy, r2, a); s.push(L(p0[0], p0[1], p1[0], p1[1], i < 120 ? guld : lys, 1.6, i < 120 ? 0.75 : 0.16)); }
+  s.push(C(cx, cy, r2 + 10, 'none', lys, 1, 0.12));
+  /* billedet i midten */
+  s.push(C(cx, cy, 236, 'url(#g2s)', lys, 1, 1) + C(cx, cy, 236, 'none', lys, 1, 0.25) + C(cx, cy, 220, 'url(#g2b)') + C(cx, cy, 104, 'url(#g2)') + C(cx, cy, 132, 'none', lys, 1, 0.3));
+  /* viseren */
+  const pv0 = polar(cx, cy, 240, POS / 32 * 360), pv1 = polar(cx, cy, r1 + 70, POS / 32 * 360);
+  s.push(L(pv0[0], pv0[1], pv1[0], pv1[1], guld, 2.5) + C(pv1[0], pv1[1], 5, guld));
+  s.push(T(cx, cy + 300, '0:07,6', { s: 13, f: guld, a: 'middle', ls: 1 }));
+  /* fire små urskiver i hjørnerne (i ure hedder de komplikationer) */
+  const skive = (x, y, navn, tal, enhed, andel) => {
+    s.push(C(x, y, 92, '#0c1016', lys, 1, 1) + C(x, y, 92, 'none', lys, 1, 0.22));
+    s.push(`<path d="${bue(x, y, 76, 225, 495)}" fill="none" stroke="${lys}" stroke-width="2" opacity=".18"/><path d="${bue(x, y, 76, 225, 225 + 270 * andel)}" fill="none" stroke="${guld}" stroke-width="3" stroke-linecap="round"/>`);
+    for (let i = 0; i <= 9; i++) { const p0 = polar(x, y, 84, 225 + i * 30), p1 = polar(x, y, 89, 225 + i * 30); s.push(L(p0[0], p0[1], p1[0], p1[1], lys, 1, 0.5)); }
+    s.push(T(x, y + 10, tal, { s: 34, f: lys, a: 'middle', w: 300 }) + T(x, y + 34, enhed, { s: 11, f: graa, a: 'middle', ls: 1.5 }) + T(x, y - 112, navn, { s: 12, f: graa, a: 'middle', ls: 3 }));
+  };
+  skive(1560, 250, 'NIVEAU', '−9,6', 'dB RMS', 0.82); skive(1760, 470, 'TEMPO', '120', 'BPM · 4/4', 0.45);
+  skive(1560, 800, 'LYDSTYRKE', '80', 'procent', 0.8);
+  s.push(C(1760, 690, 4, guld) + C(1778, 690, 4, lys, 'none', 1, 0.3) + C(1796, 690, 4, lys, 'none', 1, 0.3) + C(1814, 690, 4, lys, 'none', 1, 0.3) + T(1700, 695, 'slag', { s: 11, f: graa, ls: 1.5 }));
+  /* loop og afspiller */
+  s.push(T(300, 232, 'LOOP', { s: 12, f: graa, ls: 3 }) + T(300, 272, 'A  0:08,00', { s: 20, f: lys, w: 300 }) + T(300, 302, 'B  0:12,00', { s: 20, f: lys, w: 300 }) + L(300, 320, 420, 320, guld, 1.5) + T(300, 344, 'tændt', { s: 12, f: guld, ls: 1.5 }));
+  s.push(T(300, 800, 'SNAP', { s: 12, f: graa, ls: 3 }) + T(300, 832, 'Fra', { s: 14, f: graa, ls: 1 }) + T(344, 832, 'Slag', { s: 14, f: graa, ls: 1 }) + T(396, 832, 'Takt', { s: 14, f: lys, ls: 1 }) + L(396, 842, 430, 842, guld, 1.5));
+  s.push(C(cx, 1010, 30, 'none', guld, 1.5) + R(cx - 8, 998, 6, 24, guld, 1) + R(cx + 2, 998, 6, 24, guld, 1) + C(cx - 84, 1010, 20, 'none', lys, 1, 0.4) + R(cx - 91, 1003, 14, 14, lys, 1, 'none', 0.8) + C(cx + 84, 1010, 20, 'none', guld, 1, 0.9) + T(cx + 84, 1015, 'A–B', { s: 11, f: guld, a: 'middle' }));
+  s.push(T(1856, 66, 'Én omgang = hele sangen (0:32)', { s: 12, f: graa, a: 'end', ls: 1 }) + T(1856, 86, 'Inderste ring = udsnittet (4 s)', { s: 12, f: graa, a: 'end', ls: 1 }));
+  s.push(maerke(2, 'Urværk', lys, '#07090d'));
+  ud.push(s.join(''));
+})();
+
+/* ============ 3 · PARTITUR: alt ligger som baner på samme tidsakse, lyst som nodepapir ============ */
+(() => {
+  const papir = '#f4f1e9', blaek = '#16140f', graa = '#8b867a', roed = '#d8432a', s = [];
+  s.push(R(0, 0, 1920, 1080, papir));
+  s.push(`<defs><radialGradient id="g3" cx="40%" cy="34%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e4573d"/><stop offset="1" stop-color="#5a1a10"/></radialGradient><radialGradient id="g3b"><stop offset="0" stop-color="#e4573d" stop-opacity=".35"/><stop offset="1" stop-color="#e4573d" stop-opacity="0"/></radialGradient>
+    <filter id="sk3" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#16140f" flood-opacity=".28"/></filter></defs>`);
+  s.push(T(56, 62, 'Rytme Studio', { s: 22, f: blaek, w: 700, ls: -0.3 }) + T(210, 62, 'Demo-lyd, 120 BPM', { s: 14, f: graa }));
+  s.push(C(760, 54, 22, blaek) + R(752, 44, 5, 20, papir) + R(763, 44, 5, 20, papir) + R(700, 44, 20, 20, 'none', 2, blaek, 1, 1.5) + T(804, 68, '0:07,6', { s: 40, f: blaek, w: 300, ls: -1 }) + T(940, 68, '/ 0:32', { s: 15, f: graa }));
+  ['Afspiller', 'Analyse', 'Figurer', 'Regler', 'Show'].forEach((n, i) => { const x = 1330 + i * 112; s.push(T(x, 62, n, { s: 14, f: i ? graa : blaek, w: i ? 400 : 700 })); });
+  s.push(L(56, 96, 1864, 96, blaek, 2));
+  const x0 = 300, x1 = 1864, w = x1 - x0, tx = t => x0 + t / 16 * w;   /* udsnittet er 16 sekunder: 0:00 til 0:16 */
+  /* tidsakse med takter */
+  for (let b = 0; b <= 8; b++) { const x = tx(b * 2); s.push(L(x, 110, x, 1010, blaek, 1, b % 2 ? 0.08 : 0.16) + T(x + 6, 126, String(b + 1), { s: 12, f: blaek, w: 700 }) + T(x + 24, 126, tid(b * 2), { s: 11, f: graa })); }
+  /* loop som et bånd gennem alle baner */
+  s.push(R(tx(A), 110, tx(B) - tx(A), 900, roed, 0, 'none', 0.07) + R(tx(A), 110, tx(B) - tx(A), 4, roed) + T(tx(A) + 6, 148, 'Loop A til B', { s: 11, f: roed, w: 700 }));
+  const bane = (y, h, navn, under, klar) => { s.push(L(56, y + h, 1864, y + h, blaek, 1, 0.14) + T(56, y + 30, navn, { s: 17, f: klar ? blaek : graa, w: 700 }) + T(56, y + 52, under, { s: 12, f: graa })); };
+  /* bane 1: lyd */
+  bane(160, 190, 'Lyd', 'Bølgeform, top og RMS', 1);
+  for (let i = 0; i < 520; i++) { const t = i / 520 * 16, h = niv(t) * 78, x = x0 + i * (w / 520); s.push(L(x, 255 - h, x, 255 + h, blaek, 1.6, t < POS ? 1 : 0.32)); }
+  /* bane 2: niveau som kurve */
+  bane(350, 120, 'Niveau', 'RMS i dB  ·  −9,6 nu', 1);
+  let d = ''; for (let i = 0; i <= 260; i++) { const t = i / 260 * 16, y = 456 - niv(t) * 84; d += (i ? 'L' : 'M') + (x0 + i * (w / 260)).toFixed(1) + ' ' + y.toFixed(1); }
+  s.push(`<path d="${d}" fill="none" stroke="${blaek}" stroke-width="1.6"/>` + L(x0, 386, x1, 386, blaek, 1, 0.1, 'stroke-dasharray="2 5"') + T(x1, 382, '0 dB', { s: 10, f: graa, a: 'end' }));
+  /* bane 3: slag (kommer i Run 2) */
+  bane(470, 130, 'Slag', 'Kick · Snare · Hihat', 0);
+  [['Kick', 502, t => t % 0.5 < 0.01 && !(t >= 16)], ['Snare', 536, t => t % 1 > 0.49 && t % 1 < 0.51 && t >= 8], ['Hihat', 570, t => true]].forEach(([n, y, f], k) => {
+    s.push(T(x0 - 14, y + 4, n, { s: 11, f: graa, a: 'end' }));
+    for (let i = 0; i < 64; i++) { const t = i * 0.25; if (k < 2 ? f(t) : true) s.push(k === 2 ? L(tx(t), y - 5, tx(t), y + 5, blaek, 1.5, 0.45) : C(tx(t), y, k ? 5 : 6.5, k ? 'none' : blaek, blaek, 1.6, t < POS ? 1 : 0.4)); }
+  });
+  s.push(T(56, 574, 'Run 2', { s: 11, f: roed, w: 700 }));
+  /* bane 4: bånd */
+  bane(600, 110, 'Frekvensbånd', 'Sub til brilliance', 0);
+  for (let r = 0; r < 7; r++) for (let i = 0; i < 128; i++) { const t = i / 128 * 16, v = niv(t) * (1 - r * 0.11) * (0.5 + rnd() * 0.5); s.push(R(x0 + i * (w / 128), 618 + r * 12, w / 128 - 1, 10, blaek, 0, 'none', v * (t < POS ? 0.9 : 0.4))); }
+  s.push(T(56, 684, 'Run 2', { s: 11, f: roed, w: 700 }));
+  /* bane 5: figur */
+  bane(710, 130, 'Cirkel', 'Størrelse  ←  Niveau × 0,9', 0);
+  d = ''; for (let i = 0; i <= 260; i++) { const t = i / 260 * 16, y = 820 - niv(t) * 70; d += (i ? 'L' : 'M') + (x0 + i * (w / 260)).toFixed(1) + ' ' + y.toFixed(1); }
+  s.push(`<path d="${d} L${x1} 826 L${x0} 826 Z" fill="${roed}" opacity=".16"/><path d="${d}" fill="none" stroke="${roed}" stroke-width="1.8"/>` + T(56, 810, 'Run 3', { s: 11, f: roed, w: 700 }));
+  /* bane 6: regel */
+  bane(840, 110, 'Regel', 'Kick  →  Flash, spærretid 120 ms', 0);
+  for (let i = 0; i < 32; i++) { const t = i * 0.5; s.push(R(tx(t), 872, 26, 44, 'none', 2, blaek, 0.55, 1.4) + R(tx(t), 872, 26 * (0.4 + rnd() * 0.6), 44, blaek, 2, 'none', t < POS ? 0.8 : 0.2)); }
+  s.push(T(56, 924, 'Run 4', { s: 11, f: roed, w: 700 }));
+  /* afspilningsstregen gennem alle baner */
+  s.push(L(tx(POS), 104, tx(POS), 1010, roed, 2) + `<path d="M${tx(POS) - 7} 104 h14 l-7 10 z" fill="${roed}"/>`);
+  /* preview som et løst vindue, der kan flyttes */
+  s.push(`<g filter="url(#sk3)">${R(1404, 150, 440, 268, '#12110e', 6)}</g>` + C(1624, 284, 150, 'url(#g3b)') + C(1624, 284, 62, 'url(#g3)') + C(1624, 284, 80, 'none', '#fff', 1, 0.3) + T(1420, 174, 'Live preview', { s: 11, f: '#bdb8ac', ls: 1 }) + T(1828, 174, 'flyt · størrelse · fuld skærm', { s: 11, f: '#8b867a', a: 'end' }));
+  s.push(L(56, 1022, 1864, 1022, blaek, 2) + T(56, 1050, 'Udsnit 0:00 til 0:16', { s: 12, f: graa }) + T(300, 1050, 'Snap: Takt', { s: 12, f: blaek, w: 700 }) + T(420, 1050, 'Følg afspilning: Til', { s: 12, f: blaek, w: 700 }) + T(1540, 1050, 'Tilføj bane', { s: 12, f: blaek, w: 700 }));
+  s.push(maerke(3, 'Partitur', blaek, papir));
+  ud.push(s.join(''));
+})();
+
+/* ============ 4 · LÆRRED: ingen paneler; alt er ting på ét stort lærred, forbundet med linjer ============ */
+(() => {
+  const bg = '#16171a', kort = '#202226', kant = '#34373e', lys = '#eceef2', graa = '#8a8f9a', blaa = '#6ea8ff', s = [];
+  s.push(`<defs><pattern id="p4" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#2b2e34"/></pattern>
+    <radialGradient id="g4" cx="40%" cy="34%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#6ea8ff"/><stop offset="1" stop-color="#16264a"/></radialGradient><radialGradient id="g4b"><stop offset="0" stop-color="#6ea8ff" stop-opacity=".35"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/></radialGradient>
+    <filter id="gl4" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="sk4" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity=".45"/></filter></defs>`);
+  s.push(R(0, 0, 1920, 1080, bg) + R(0, 0, 1920, 1080, 'url(#p4)'));
+  const node = (x, y, w, h, titel, type, valgt) => `<g filter="url(#sk4)">${R(x, y, w, h, kort, 12, valgt ? blaa : kant, 1, valgt ? 1.6 : 1)}</g>` + T(x + 16, y + 28, titel, { s: 14, f: lys, w: 600 }) + T(x + w - 16, y + 28, type, { s: 11, f: graa, a: 'end', ls: 1 }) + L(x, y + 42, x + w, y + 42, kant);
+  const port = (x, y, f = blaa) => C(x, y, 5.5, bg, f, 2);
+  const kabel = (x1, y1, x2, y2) => { const d = `M${x1} ${y1} C${x1 + 90} ${y1} ${x2 - 90} ${y2} ${x2} ${y2}`; return `<path d="${d}" fill="none" stroke="${blaa}" stroke-width="7" opacity=".35" filter="url(#gl4)"/><path d="${d}" fill="none" stroke="${blaa}" stroke-width="2"/>`; };
+  /* kabler først, så de ligger under kortene */
+  s.push(kabel(438, 250, 540, 250) + kabel(800, 250, 900, 214) + kabel(800, 286, 900, 400) + kabel(1160, 214, 1260, 300) + kabel(1160, 400, 1260, 340));
+  /* Lydfil */
+  s.push(node(138, 180, 300, 150, 'Demo-lyd, 120 BPM', 'LYDFIL'));
+  for (let i = 0; i < 88; i++) { const h = niv(i / 88 * 32) * 26; s.push(L(156 + i * 3, 276 - h, 156 + i * 3, 276 + h, lys, 1.4, i < 21 ? 1 : 0.3)); }
+  s.push(T(154, 318, '0:32  ·  stereo', { s: 11, f: graa }) + port(438, 250));
+  /* Analyse-noder */
+  s.push(node(540, 180, 260, 140, 'Niveau', 'MÅLING', 1) + port(540, 250) + port(800, 250) + port(800, 286));
+  s.push(T(558, 268, '−9,6', { s: 34, f: lys, w: 300 }) + T(644, 268, 'dB RMS', { s: 11, f: graa }) + R(558, 286, 224, 6, '#2c2f36', 3) + R(558, 286, 184, 6, blaa, 3));
+  /* Regler */
+  s.push(node(900, 160, 260, 108, 'Styrke × 0,9', 'REGEL') + port(900, 214) + port(1160, 214) + T(918, 234, 'fra 0,2 til 1,0  ·  gate −40 dB', { s: 12, f: graa }));
+  s.push(node(900, 346, 260, 108, 'Udjævning', 'REGEL') + port(900, 400) + port(1160, 400) + T(918, 420, 'op 30 ms  ·  ned 250 ms', { s: 12, f: graa }));
+  /* Figur + preview i ét */
+  s.push(node(1260, 120, 560, 400, 'Cirkel', 'FIGUR  ·  LIVE PREVIEW') + port(1260, 300) + port(1260, 340) + T(1276, 304, 'størrelse', { s: 11, f: graa }) + T(1276, 344, 'glød', { s: 11, f: graa }));
+  s.push(R(1352, 176, 452, 328, '#0e0f12', 8) + C(1578, 340, 150, 'url(#g4b)') + C(1578, 340, 70, 'url(#g4)') + C(1578, 340, 90, 'none', lys, 1, 0.3));
+  /* tidslinjen som et langt bånd på lærredet */
+  s.push(`<g filter="url(#sk4)">${R(138, 600, 1682, 210, kort, 12, kant)}</g>` + T(154, 628, 'Tidslinje', { s: 14, f: lys, w: 600 }) + T(1804, 628, 'snap: takt  ·  følg: til  ·  0:00 til 0:32', { s: 11, f: graa, a: 'end', ls: 0.5 }) + L(138, 642, 1820, 642, kant));
+  const tx = t => 156 + t / 32 * 1646;
+  s.push(R(tx(A), 652, tx(B) - tx(A), 148, blaa, 4, 'none', 0.1) + L(tx(A), 652, tx(A), 800, blaa, 1.5) + L(tx(B), 652, tx(B), 800, blaa, 1.5) + T(tx(A) + 6, 668, 'A', { s: 11, f: blaa, w: 700 }) + T(tx(B) - 6, 668, 'B', { s: 11, f: blaa, w: 700, a: 'end' }));
+  for (let i = 0; i < 548; i++) { const t = i / 548 * 32, h = niv(t) * 58; s.push(L(156 + i * 3, 730 - h, 156 + i * 3, 730 + h, lys, 1.6, t < POS ? 1 : 0.26)); }
+  for (let b = 0; b < 16; b += 2) s.push(T(tx(b * 2) + 4, 800, String(b + 1), { s: 10, f: graa }));
+  s.push(L(tx(POS), 646, tx(POS), 806, lys, 2));
+  s.push(`<path d="M288 330 C288 460 288 500 288 600" fill="none" stroke="${kant}" stroke-width="1.5" stroke-dasharray="3 5"/>`);
+  /* kommando-pille: afspiller og søgning ét sted */
+  s.push(`<g filter="url(#sk4)">${R(560, 964, 800, 64, '#26292f', 32, kant)}</g>` + C(604, 996, 20, lys) + R(597, 987, 5, 18, bg, 1) + R(606, 987, 5, 18, bg, 1) + T(640, 1002, '0:07,6', { s: 20, f: lys, w: 300 }) + T(716, 1002, '/ 0:32', { s: 13, f: graa }) + L(784, 978, 784, 1014, kant) + T(808, 1001, 'Søg, eller gør noget …', { s: 15, f: graa }) + R(1272, 982, 64, 28, '#16171a', 6, kant) + T(1304, 1001, 'Ctrl K', { s: 12, f: graa, a: 'middle' }));
+  s.push(T(40, 52, 'Rytme Studio', { s: 16, f: lys, w: 700 }) + T(156, 52, '/  Mit show  /  Afspiller', { s: 14, f: graa }));
+  ['Afspiller', 'Analyse', 'Figurer', 'Regler', 'Show'].forEach((n, i) => s.push(R(1300 + i * 112, 30, 100, 32, i ? 'none' : '#26292f', 16, i ? 'none' : kant) + T(1350 + i * 112, 51, n, { s: 13, f: i ? graa : lys, a: 'middle' })));
+  s.push(T(1300, 84, 'Arbejdsområderne er steder på lærredet; et klik flyver derhen', { s: 11, f: graa }));
+  /* minikort og zoom */
+  s.push(R(1640, 880, 240, 150, '#1b1d21', 10, kant) + R(1660, 900, 64, 26, kant, 3) + R(1734, 900, 50, 26, kant, 3) + R(1794, 892, 70, 56, kant, 3) + R(1660, 960, 204, 30, kant, 3) + R(1652, 890, 222, 110, 'none', 4, blaa, 1, 1.5) + T(1652, 1022, '86 %', { s: 11, f: graa }) + T(1872, 1022, 'vis alt', { s: 11, f: graa, a: 'end' }));
+  s.push(maerke(4, 'Lærred', lys, bg));
+  ud.push(s.join(''));
+})();
+
+/* ============ 5 · SPEJL: lyden til venstre (tiden løber lodret), billedet til højre, en smal ryg imellem ============ */
+(() => {
+  const groen = '#0c1814', dyb = '#08110e', elf = '#efe8d8', graa = '#8f9a8e', mess = '#c9a35a', s = [];
+  s.push(`<defs><radialGradient id="g5bg" cx="50%" cy="46%"><stop offset="0" stop-color="#17302a"/><stop offset=".7" stop-color="#0a1612"/><stop offset="1" stop-color="#060d0b"/></radialGradient>
+    <radialGradient id="g5" cx="40%" cy="34%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".5" stop-color="#c9a35a"/><stop offset="1" stop-color="#3c2c10"/></radialGradient><radialGradient id="g5b"><stop offset="0" stop-color="#c9a35a" stop-opacity=".3"/><stop offset="1" stop-color="#c9a35a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="g5f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1814" stop-opacity="1"/><stop offset=".25" stop-color="#0c1814" stop-opacity="0"/></linearGradient></defs>`);
+  s.push(R(0, 0, 1920, 1080, groen));
+  /* venstre: lyden. Tiden løber nedefra og op mod den faste linje, som i et rytmespil */
+  const xm = 330, yNu = 760, pxs = 150;                       /* 150 punkter pr. sekund */
+  const ty = t => yNu - (t - POS) * pxs;
+  s.push(R(0, 0, 660, 1080, dyb));
+  for (let b = 0; b < 16; b++) { const y = ty(b * 2); if (y > 90 && y < 1040) s.push(L(60, y, 600, y, elf, 1, 0.14) + T(52, y + 4, String(b + 1), { s: 12, f: graa, a: 'end' })); for (let k = 1; k < 4; k++) { const yy = ty(b * 2 + k * 0.5); if (yy > 90 && yy < 1040) s.push(L(60, yy, 600, yy, elf, 1, 0.05)); } }
+  s.push(R(60, ty(B), 540, ty(A) - ty(B), mess, 0, 'none', 0.08) + L(60, ty(A), 600, ty(A), mess, 1.5) + L(60, ty(B), 600, ty(B), mess, 1.5) + T(608, ty(A) + 4, 'A', { s: 12, f: mess, w: 700 }) + T(608, ty(B) + 4, 'B', { s: 12, f: mess, w: 700 }));
+  for (let y = 96; y < 1040; y += 3) { const t = POS + (yNu - y) / pxs; if (t < 0 || t > 32) continue; const h = niv(t) * 230; s.push(L(xm - h, y, xm + h, y, t < POS ? mess : elf, 1.8, t < POS ? 0.95 : 0.3)); }
+  s.push(R(0, 90, 660, 300, 'url(#g5f)'));
+  s.push(L(40, yNu, 660, yNu, elf, 2) + T(60, yNu - 12, 'NU', { s: 11, f: elf, ls: 3, w: 700 }) + T(600, yNu - 12, '0:07,6', { s: 13, f: elf, a: 'end' }));
+  s.push(T(60, 58, 'LYD', { s: 13, f: elf, ls: 5, w: 700 }) + T(118, 58, 'det, der måles', { s: 13, f: graa }) + T(600, 58, 'Demo-lyd, 120 BPM', { s: 13, f: graa, a: 'end' }) + L(60, 76, 600, 76, elf, 1, 0.2));
+  s.push(T(600, 1060, 'spillet ↓', { s: 11, f: graa, a: 'end', ls: 1 }));
+  s.push(T(60, 110, 'kommer om 4 s ↓', { s: 11, f: graa, ls: 1 }));
+  /* ryggen: afspiller, tid og niveau lodret */
+  s.push(R(660, 0, 96, 1080, '#11211c') + L(660, 0, 660, 1080, elf, 1, 0.12) + L(756, 0, 756, 1080, elf, 1, 0.12));
+  s.push(T(708, 60, 'RS', { s: 20, f: mess, a: 'middle', ff: SERIF, w: 700 }));
+  s.push(C(708, 150, 28, 'none', mess, 1.5) + R(699, 139, 6, 22, mess, 1) + R(711, 139, 6, 22, mess, 1) + R(696, 212, 24, 24, 'none', 3, elf, 0.6, 1.5) + C(708, 290, 16, 'none', mess, 1.5) + T(708, 294, 'A–B', { s: 9, f: mess, a: 'middle' }));
+  s.push(R(700, 360, 16, 400, dyb, 8) + R(700, 432, 16, 328, mess, 8) + L(692, 386, 724, 386, elf, 2) + T(708, 790, '−9,6', { s: 15, f: elf, a: 'middle' }) + T(708, 808, 'dB', { s: 10, f: graa, a: 'middle', ls: 1 }));
+  ['Show', 'Regler', 'Figurer', 'Analyse', 'Afspiller'].forEach((n, i) => s.push(T(712, 1040 - i * 0, '', {})));
+  s.push(T(713, 1000, 'LYDSTYRKE 80', { s: 10, f: graa, a: 'middle', ls: 2, rot: -90 }) );
+  /* højre: billedet */
+  s.push(R(756, 0, 1164, 1080, 'url(#g5bg)') + C(1338, 520, 440, 'url(#g5b)') + C(1338, 520, 190, 'url(#g5)') + C(1338, 520, 236, 'none', elf, 1, 0.3));
+  s.push(T(1860, 58, 'BILLEDE', { s: 13, f: elf, ls: 5, w: 700, a: 'end' }) + T(1760, 58, 'det, lyden gør', { s: 13, f: graa, a: 'end' }) + L(816, 76, 1860, 76, elf, 1, 0.2));
+  ['Afspiller', 'Analyse', 'Figurer', 'Regler', 'Show'].forEach((n, i) => { s.push(T(816 + i * 118, 58, n, { s: 13, f: i ? graa : elf, ls: 1.5 })); if (!i) s.push(L(816, 68, 884, 68, mess, 1.5)); });
+  /* en linje fra slaget til figuren: årsag og virkning */
+  s.push(`<path d="M${xm + 190} ${yNu} C 760 ${yNu} 900 520 1148 520" fill="none" stroke="${mess}" stroke-width="1.2" stroke-dasharray="2 6" opacity=".8"/>` + T(900, 632, 'Niveau → størrelse', { s: 12, f: mess, ls: 1 }));
+  /* små værktøjer nederst til højre */
+  s.push(L(816, 1000, 1860, 1000, elf, 1, 0.2) + T(816, 1036, 'Tempo', { s: 11, f: graa, ls: 2 }) + T(876, 1038, '120 BPM · 4/4', { s: 15, f: elf }) + T(1060, 1036, 'Loop', { s: 11, f: graa, ls: 2 }) + T(1108, 1038, '0:08,00 til 0:12,00', { s: 15, f: elf }) + T(1340, 1036, 'Snap', { s: 11, f: graa, ls: 2 }) + T(1388, 1038, 'Takt', { s: 15, f: elf }) + T(1500, 1036, 'Fart', { s: 11, f: graa, ls: 2 }) + T(1544, 1038, '150 punkter pr. sekund', { s: 15, f: elf }));
+  s.push(maerke(5, 'Spejl', elf, dyb));
+  ud.push(s.join(''));
+})();
+
+document.getElementById('ud').innerHTML = ud.map((x, i) => `<svg id="k${i + 1}" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">${x}</svg>`).join('');
+</script></body></html>
