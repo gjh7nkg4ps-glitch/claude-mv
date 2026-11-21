@@ -33,4 +33,8 @@ Brugeren skrev "fortsæt" uden at vælge numre, så runde 2 følger Codes anbefa
 | Show | Filmstrimmel (afsnit) | `kladde-15-r2-show-*.png` |
 | Delene | skrift, knapper, valg, skydere, målere, farver, afstande | `kladde-16-r2-delene-*.png` |
 
-**Åbent:** brugeren har ikke valgt. De fire opsætninger og tre stile fra version 0.3 ligger stadig i programmet og ryddes op, når retningen er valgt.
+## Besluttet (brugeren, 21. november 2026)
+
+Runde 2 er godkendt ("ja det er fint"): stilen fra Galleri i alle fem arbejdsområder, serif-tal, ingen kasser, accent kun på det der måler og det der er valgt, billedet altid mørkt i tynd ramme, fælles ramme med fast afspiller-stribe. Arket **Delene** (`kladde-16-r2-delene-*.png`) er det, programmet bygges efter.
+
+**Åbent:** brugeren har ikke valgt farver; indtil videre gælder kladdens egne (mørk, neutral grundtone, guld accent), med lys udgave som valg. Programmet (version 0.3) har stadig de gamle fire opsætninger og tre stile; de erstattes, når brugeren skriver "kør".

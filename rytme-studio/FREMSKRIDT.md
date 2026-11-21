@@ -28,6 +28,10 @@ Rytme Studio er et nyt program, bygget fra bunden efter en specifikation (ikke u
 - **Husker:** lydstyrke, sprog, følg og snap; og pr. sang (navn + længde) loop og tempo. Gemt i browseren (localStorage).
 - **Sprog:** dansk og engelsk. **Genveje:** står i kontrolpanelet under Genveje.
 
+## Udseendet er valgt (21. november 2026)
+
+Brugeren har godkendt **runde 2** i `kladder/` (se `kladder/KLADDER.md`): én samlet stil efter arket *Delene*, og hvert arbejdsområde med sin egen opbygning (Afspiller: billede i ramme · Analyse: baner · Figurer: kanaler · Regler: matrix · Show: afsnit). **Næste skridt, når brugeren skriver "kør":** byg programmet om til den stil (det erstatter de fire opsætninger og tre stile herunder), og fortsæt så med Run 2.
+
 ## Fire opsætninger (version 0.3; brugeren vælger)
 
 Skiftes i topbaren (Opsætning) og huskes. Det er de samme dele, lagt forskelligt med CSS Grid (`html[data-layout="…"]`); ingen kode er dobbelt.
