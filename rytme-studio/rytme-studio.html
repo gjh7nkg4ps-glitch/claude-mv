@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rytme Studio 0.2 (Run 1: afspiller, tidslinje og tre stile)</title>
+<title>Rytme Studio 0.3 (Run 1: afspiller, tidslinje, fire opsætninger og tre stile)</title>
 <!--
   RYTME STUDIO · én fil, der åbnes direkte i browseren (ingen server, intet internet).
 
@@ -314,7 +314,7 @@ html[data-stil="glas"] body {
     radial-gradient(1100px 700px at 6% 108%, rgba(92, 132, 255, .12), transparent 60%),
     radial-gradient(1400px 620px at 60% -12%, #1d2937, transparent 62%), #121820;
 }
-html[data-stil="glas"] .flade {
+html[data-stil="glas"] .flade, html[data-stil="glas"][data-layout="fliser"] .kort {
   background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .022));
   border: 1px solid rgba(255, 255, 255, .08);
   box-shadow: 0 18px 50px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .08);
@@ -345,7 +345,7 @@ html[data-stil="neon"] body {
     radial-gradient(1000px 700px at -4% 104%, rgba(45, 226, 255, .16), transparent 58%),
     radial-gradient(900px 700px at 45% 40%, rgba(122, 92, 255, .10), transparent 65%), var(--grund);
 }
-html[data-stil="neon"] .flade {
+html[data-stil="neon"] .flade, html[data-stil="neon"][data-layout="fliser"] .kort {
   border: 1px solid transparent;
   background: linear-gradient(180deg, #17142e, #110e23) padding-box, linear-gradient(140deg, rgba(45, 226, 255, .55), rgba(122, 92, 255, .18) 40%, rgba(255, 95, 168, .5)) border-box;
   box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
@@ -398,7 +398,7 @@ html[data-stil="analog"] body {
     repeating-linear-gradient(90deg, rgba(255, 240, 210, .016) 0 1px, transparent 1px 3px),
     linear-gradient(180deg, #1c1713, #120f0c);
 }
-html[data-stil="analog"] .flade {
+html[data-stil="analog"] .flade, html[data-stil="analog"][data-layout="fliser"] .kort {
   border: 1px solid #40362a;
   background:
     radial-gradient(circle at 11px 11px, #6a5b46 0 1.6px, #14100c 2px 3.4px, transparent 3.8px),
@@ -458,6 +458,102 @@ html[data-stil="analog"] .pl-titel { font-family: var(--serif); letter-spacing: 
 html[data-stil="analog"] .log { border-radius: 6px; border: 1px solid #4d4132; }
 html[data-stil="analog"] .slip { border-radius: 8px; background: rgba(17, 14, 11, .92); font-family: var(--serif); }
 html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
+
+/* ========== OPSÆTNINGER: fire måder, vinduerne kan ligge på ==========
+   Studie (standard) står øverst i filen. De tre andre flytter de samme dele rundt med CSS Grid.
+   Gælder kun brede vinduer; under 1181 punkter bruges den smalle opsætning for alle. */
+#panelKnap { display: none; }
+@media (max-width: 1180px) { #layoutValg, #layoutEtiket { display: none; } }
+@media (min-width: 1181px) {
+  /* Fælles: Genveje åbner som en lille boks oven på, så den ikke skubber til resten */
+  html[data-layout="tidslinje"] .genveje, html[data-layout="fliser"] .genveje { position: relative; }
+  html[data-layout="tidslinje"] .genveje dl, html[data-layout="fliser"] .genveje dl {
+    position: absolute; z-index: 20; width: max-content; max-width: 460px; max-height: 52vh; overflow: auto; margin: 0;
+    background: var(--flade-2); border-radius: 12px; padding: 14px 16px; box-shadow: 0 18px 50px rgba(0, 0, 0, .5);
+  }
+
+  /* ---------- SCENE: preview fylder hele vinduet; alt andet svæver ovenpå ---------- */
+  html[data-layout="scene"] #panelKnap { display: inline-flex; }
+  html[data-layout="scene"] .app {
+    padding: 0; gap: 0;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "top top top" "side . panel" "tl tl tl" "player player player";
+  }
+  html[data-layout="scene"] .midte { display: contents; }
+  html[data-layout="scene"] .preview { grid-area: 1 / 1 / -1 / -1; border-radius: 0; border: 0; z-index: 0; }
+  html[data-layout="scene"] .top { z-index: 4; padding: 12px 18px 22px; background: linear-gradient(180deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0)); }
+  html[data-layout="scene"] .flade { background: color-mix(in srgb, var(--flade) 80%, transparent); box-shadow: 0 16px 44px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06); }
+  html[data-layout="scene"] .side {
+    grid-area: side; z-index: 3; align-self: center; margin-left: 14px; width: 68px; padding: 10px; gap: 10px; overflow: hidden;
+    transition: width .18s ease;
+  }
+  html[data-layout="scene"] .side:hover, html[data-layout="scene"] .side:focus-within { width: var(--side-b); }
+  html[data-layout="scene"] .nav-punkt { white-space: nowrap; padding: 12px 15px; gap: 16px; }
+  html[data-layout="scene"] .fil { margin-top: 0; }
+  html[data-layout="scene"] .fil .knap { white-space: nowrap; overflow: hidden; justify-content: flex-start; padding-left: 14px; gap: 16px; }
+  html[data-layout="scene"] .side:not(:hover):not(:focus-within) .fil > :not(.knap-fyldt) { display: none; }
+  html[data-layout="scene"] .panel { grid-area: panel; z-index: 3; margin: 0 14px 12px 0; width: var(--panel-b); }
+  html[data-layout="scene"][data-panel="lukket"] .panel { display: none; }
+  html[data-layout="scene"] .tl { grid-area: tl; z-index: 3; margin: 0 14px; padding: 8px 12px 10px; gap: 8px; }
+  html[data-layout="scene"] .tl-oversigt { height: 28px; }
+  html[data-layout="scene"] .tl-laerred { height: clamp(84px, 11vh, 170px); }
+  html[data-layout="scene"] .player { z-index: 3; margin: 10px 14px 14px; padding: 8px 20px; }
+  html[data-layout="scene"] .preview-note { top: 64px; bottom: auto; left: 100px; }
+  html[data-layout="scene"] .preview-fps { top: 64px; bottom: auto; right: 22px; }
+  html[data-layout="scene"] .log { left: 300px; }
+
+  /* ---------- TIDSLINJE: afspiller øverst, stor tidslinje i fuld bredde, resten i et bånd forneden ---------- */
+  html[data-layout="tidslinje"] .app {
+    grid-template-columns: var(--side-b) minmax(0, 1fr) minmax(0, 1.7fr);
+    grid-template-rows: auto auto minmax(0, 1.2fr) minmax(250px, 1fr);
+    grid-template-areas: "top top top" "player player player" "tl tl tl" "side preview panel";
+  }
+  html[data-layout="tidslinje"] .midte { display: contents; }
+  html[data-layout="tidslinje"] .tl { grid-area: tl; min-height: 0; }
+  html[data-layout="tidslinje"] .tl-oversigt { height: 54px; flex: none; }
+  html[data-layout="tidslinje"] .tl-laerred { flex: 1 1 0; height: 0; min-height: 110px; }
+  html[data-layout="tidslinje"] .preview { grid-area: preview; }
+  html[data-layout="tidslinje"] .player { padding-top: 9px; padding-bottom: 9px; }
+  html[data-layout="tidslinje"] .panel {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr) auto; gap: 10px 0; padding: 18px 4px 12px; overflow: visible;
+  }
+  html[data-layout="tidslinje"] .panel section { padding: 0 20px; overflow: auto; min-height: 0; }
+  html[data-layout="tidslinje"] .panel section + section { border-left: 1px solid var(--flade-3); }
+  html[data-layout="tidslinje"] .genveje { grid-column: 1 / 3; padding: 0 20px; }
+  html[data-layout="tidslinje"] .genveje dl { bottom: calc(100% + 8px); left: 20px; }
+  html[data-layout="tidslinje"] .panel-bund { grid-column: 3; margin: 0; padding: 0 20px; justify-self: end; }
+
+  /* ---------- FLISER: hver ting er sin egen flise i et gitter ---------- */
+  html[data-layout="fliser"] .app {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(290px, .6fr) minmax(290px, .6fr);
+    grid-template-rows: auto auto minmax(0, 1fr) minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      "top     top     top    top"
+      "nav     nav     genv   nul"
+      "preview preview niveau fil"
+      "preview preview loop   tempo"
+      "tl      tl      tl     tl"
+      "player  player  player player";
+  }
+  html[data-layout="fliser"] .side, html[data-layout="fliser"] .panel, html[data-layout="fliser"] .midte { display: contents; }
+  html[data-layout="fliser"] .nav { grid-area: nav; flex-direction: row; gap: 6px; }
+  html[data-layout="fliser"] .nav-punkt { width: auto; padding: 8px 16px; }
+  html[data-layout="fliser"] .nav-senere { margin-left: 2px; }
+  html[data-layout="fliser"] .kort { background: var(--flade); border-radius: var(--r-stor); padding: 18px 18px 14px; overflow: auto; min-height: 0; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035); }
+  html[data-layout="fliser"] .fil { grid-area: fil; margin: 0; }
+  html[data-layout="fliser"] .panel section:nth-of-type(1) { grid-area: niveau; }
+  html[data-layout="fliser"] .panel section:nth-of-type(2) { grid-area: loop; }
+  html[data-layout="fliser"] .panel section:nth-of-type(3) { grid-area: tempo; }
+  html[data-layout="fliser"] .preview { grid-area: preview; }
+  html[data-layout="fliser"] .tl { grid-area: tl; }
+  html[data-layout="fliser"] .tl-oversigt { height: 34px; }
+  html[data-layout="fliser"] .tl-laerred { height: clamp(100px, 14vh, 260px); }
+  html[data-layout="fliser"] .genveje { grid-area: genv; justify-self: end; align-self: center; }
+  html[data-layout="fliser"] .genveje dl { top: calc(100% + 8px); right: 0; }
+  html[data-layout="fliser"] .panel-bund { grid-area: nul; margin: 0; justify-self: end; align-self: center; }
+  html[data-layout="fliser"] .player { padding-top: 9px; padding-bottom: 9px; }
+}
 </style>
 </head>
 <body>
@@ -497,6 +593,14 @@ html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
       <span id="statusTekst" role="status" aria-live="polite"></span>
     </button>
     <div class="top-hoejre">
+      <button class="knap knap-lille" id="panelKnap" data-kommando="ui.panel" aria-pressed="false"><span data-i18n="ui.panel"></span></button>
+      <span class="tl-etiket" id="layoutEtiket" data-i18n="layout.titel"></span>
+      <div class="seg" id="layoutValg" role="group" aria-labelledby="layoutEtiket">
+        <button data-layout="studie" data-i18n="layout.studie"></button>
+        <button data-layout="scene" data-i18n="layout.scene"></button>
+        <button data-layout="tidslinje" data-i18n="layout.tidslinje"></button>
+        <button data-layout="fliser" data-i18n="layout.fliser"></button>
+      </div>
       <span class="tl-etiket" id="stilEtiket" data-i18n="stil.titel"></span>
       <div class="seg" id="stilValg" role="group" aria-labelledby="stilEtiket">
         <button data-stil="glas" data-i18n="stil.glas"></button>
@@ -524,7 +628,7 @@ html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
       <button class="nav-punkt" disabled data-senere="5"><svg class="ikon"><use href="#i-show"/></svg><span data-i18n="nav.show"></span><span class="nav-senere">Run 5</span></button>
     </nav>
 
-    <section class="fil">
+    <section class="fil kort">
       <h2 data-i18n="fil.titel"></h2>
       <button class="knap knap-fyldt" data-kommando="fil.aabn"><svg class="ikon"><use href="#i-mappe"/></svg><span data-i18n="fil.aabn"></span></button>
       <button class="knap" data-kommando="fil.demo"><span data-i18n="fil.demo"></span></button>
@@ -585,7 +689,7 @@ html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
 
   <!-- ========== KONTROLPANEL (skifter senere efter valgt figur eller node) ========== -->
   <aside class="panel flade">
-    <section>
+    <section class="kort">
       <h2 data-i18n="niveau.titel"></h2>
       <div class="maaler" id="maaler"><div class="maaler-fyld" id="maalerFyld"></div><div class="maaler-top" id="maalerTop"></div></div>
       <div class="maaler-skala" aria-hidden="true">
@@ -598,7 +702,7 @@ html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
       <p class="hjaelp" data-i18n="niveau.hjaelp"></p>
     </section>
 
-    <section>
+    <section class="kort">
       <h2 data-i18n="loop.titel"></h2>
       <div class="seg seg-bred" id="loopValg" role="group">
         <button data-loop="fra" data-i18n="loop.fra" data-kraever-sang></button>
@@ -611,7 +715,7 @@ html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
       <p class="hjaelp" data-i18n="loop.hjaelp"></p>
     </section>
 
-    <section>
+    <section class="kort">
       <h2 data-i18n="tempo.titel"></h2>
       <div class="raekke-felt">
         <label for="bpmFelt" data-i18n="tempo.bpm"></label>
@@ -678,7 +782,7 @@ html[data-stil="analog"] .raekke-ab b { color: var(--tid); }
 /* ========== KERNE: RS, RS.util, RS.Events ==========
    RS er det eneste globale navn. Alle moduler hænger på RS. */
 'use strict';
-window.RS = { version: '0.2', run: 1 };
+window.RS = { version: '0.3', run: 1 };
 
 RS.util = {
   klem: (v, a, b) => (v < a ? a : v > b ? b : v),
@@ -734,6 +838,8 @@ RS.Events = (() => {
 RS.I18n = (() => {
   const tekster = {
     da: {
+      'layout.titel': 'Opsætning', 'layout.studie': 'Studie', 'layout.scene': 'Scene', 'layout.tidslinje': 'Tidslinje', 'layout.fliser': 'Fliser',
+      'ui.panel': 'Panel', 'kmd.panel': 'Vis eller skjul kontrolpanelet (opsætningen Scene)',
       'sprog.titel': 'Sprog', 'stil.titel': 'Stil', 'stil.glas': 'Glas', 'stil.neon': 'Neon', 'stil.analog': 'Analog',
       'preview.note.neon': 'Ringen følger niveauet (RMS); strålerne er de sidste 20 sekunder. Figurer kommer i Run 3.',
       'preview.note.analog': 'Viseren følger niveauet (RMS). Lampen lyser, når toppen er over −1 dB. Figurer kommer i Run 3.',
@@ -796,6 +902,8 @@ RS.I18n = (() => {
       'status.foelgFra': 'Følg afspilning er slået fra, fordi du selv flyttede udsnittet.'
     },
     en: {
+      'layout.titel': 'Layout', 'layout.studie': 'Studio', 'layout.scene': 'Stage', 'layout.tidslinje': 'Timeline', 'layout.fliser': 'Tiles',
+      'ui.panel': 'Panel', 'kmd.panel': 'Show or hide the control panel (Stage layout)',
       'sprog.titel': 'Language', 'stil.titel': 'Style', 'stil.glas': 'Glass', 'stil.neon': 'Neon', 'stil.analog': 'Analog',
       'preview.note.neon': 'The ring follows the level (RMS); the rays are the last 20 seconds. Figures arrive in run 3.',
       'preview.note.analog': 'The needle follows the level (RMS). The lamp lights when the peak is above −1 dB. Figures arrive in run 3.',
@@ -895,6 +1003,8 @@ RS.State = (() => {
   const STANDARD = {
     version: 1,
     sprog: 'da',
+    layout: 'studie',                              // 'studie' | 'scene' | 'tidslinje' | 'fliser'
+    panelAaben: false,                             // kontrolpanelet i opsætningen Scene
     stil: 'glas',                                  // 'glas' | 'neon' | 'analog'
     lyd: { volumen: 0.8, mute: false },
     tidslinje: { foelg: true, snap: 'fra' },      // snap: 'fra' | 'slag' | 'takt'
@@ -984,7 +1094,7 @@ RS.State = (() => {
   }
   /* Grundlag for presets (Run 4): et øjebliksbillede af indstillingerne, og det modsatte. */
   function snapshot() { const s = klon(data); delete s.sange; return s; }
-  function gendan(s) { for (const k of ['sprog', 'stil', 'lyd', 'tidslinje']) if (s && s[k] !== undefined) saet(k, klon(s[k])); }
+  function gendan(s) { for (const k of ['sprog', 'layout', 'panelAaben', 'stil', 'lyd', 'tidslinje']) if (s && s[k] !== undefined) saet(k, klon(s[k])); }
   function nulstil() { saet('lyd', klon(STANDARD.lyd)); saet('tidslinje', klon(STANDARD.tidslinje)); }
 
   return { hent, saet, lyt, skiftSang, snapshot, gendan, nulstil, gemNu };
@@ -2324,6 +2434,14 @@ RS.UI = (() => {
     el.foelgKnap.setAttribute('aria-pressed', String(tl.foelg));
     el.snapHint.hidden = !(RS.Audio.harSang() && tl.snap !== 'fra' && !g.bpm);   // snap er valgt, men der er intet tempo
   }
+  /* Opsætningen er ren CSS (html[data-layout="…"]); her sættes kun mærket og knapperne. */
+  function tegnLayout() {
+    const l = State.hent('layout'), aaben = !!State.hent('panelAaben');
+    document.documentElement.dataset.layout = ['studie', 'scene', 'tidslinje', 'fliser'].includes(l) ? l : 'studie';
+    document.documentElement.dataset.panel = aaben ? 'aaben' : 'lukket';
+    for (const b of el.layoutValg.children) b.setAttribute('aria-pressed', String(b.dataset.layout === document.documentElement.dataset.layout));
+    el.panelKnap.setAttribute('aria-pressed', String(aaben));
+  }
   function tegnStil() {
     for (const b of el.stilValg.children) b.setAttribute('aria-pressed', String(b.dataset.stil === RS.Stil.id()));
     const n = 'preview.note.' + RS.Stil.id();
@@ -2353,7 +2471,7 @@ RS.UI = (() => {
     }));
   }
   function tegnAlt() {
-    tegnSprog(); tegnStil(); tegnKommandoKnapper(); tegnGenveje(); tegnSang(); tegnAfspiller(); tegnLyd(); tegnLoop(); tegnTempo();
+    tegnSprog(); tegnLayout(); tegnStil(); tegnKommandoKnapper(); tegnGenveje(); tegnSang(); tegnAfspiller(); tegnLyd(); tegnLoop(); tegnTempo();
     tegnTidslinjeValg(); tegnSangliste(); tegnStatus();
   }
 
@@ -2398,6 +2516,7 @@ RS.UI = (() => {
     K.registrer('tempo.tap', { titel: 'kmd.tap', genvej: 'T', kan: har, koer: () => RS.Analyse.tap() });
     K.registrer('tempo.takt1', { titel: 'kmd.takt1', kan: har, koer: () => State.saet('sang.gitter.start', Math.round(A.position() * 1000) / 1000) });
     K.registrer('tempo.ryd', { titel: 'kmd.tempoRyd', kan: har, koer: () => RS.Analyse.saetTempo(null) });
+    K.registrer('ui.panel', { titel: 'kmd.panel', genvej: 'P', koer: () => State.saet('panelAaben', !State.hent('panelAaben')) });
     K.registrer('fil.aabn', { titel: 'kmd.aabn', genvej: 'O', koer: () => el.filValg.click() });
     K.registrer('fil.demo', { titel: 'kmd.demo', koer: aabnDemo });
     K.registrer('indstillinger.nulstil', { titel: 'kmd.nulstil', koer: () => { State.nulstil(); status('info', 'status.nulstillet'); } });
@@ -2405,7 +2524,7 @@ RS.UI = (() => {
 
   /* ---------- Start: find elementerne og sæt lyttere på ---------- */
   function start() {
-    for (const id of ['status', 'statusPrik', 'statusTekst', 'log', 'logListe', 'sprogValg', 'stilValg', 'version', 'filValg', 'filInfo',
+    for (const id of ['status', 'statusPrik', 'statusTekst', 'log', 'logListe', 'sprogValg', 'stilValg', 'layoutValg', 'panelKnap', 'version', 'filValg', 'filInfo',
       'infoLaengde', 'infoKanaler', 'infoRate', 'infoStoerrelse', 'sangBoks', 'sangListe', 'previewTom', 'previewNote', 'fps',
       'tlUdsnit', 'snapHint', 'snapValg', 'foelgKnap', 'zoom', 'maalerFyld', 'maalerTop', 'rmsTal', 'peakTal', 'loopValg',
       'loopATal', 'loopBTal', 'loopRydKnap', 'bpmFelt', 'slagFelt', 'tempoRydKnap', 'tempoInfo', 'genvejListe', 'plTitel',
@@ -2442,6 +2561,11 @@ RS.UI = (() => {
     document.addEventListener('pointerdown', e => { if (!el.log.hidden && !e.target.closest('#log, #status')) visLog(false); });
     Events.on('status', s => status(s.type, s.noegle, s.vars));
     Events.on('fejl', e => status('fejl', 'status.uventet', { besked: (e && e.message) || String(e) }));
+
+    /* Opsætning */
+    el.layoutValg.addEventListener('click', e => { const b = e.target.closest('[data-layout]'); if (b) State.saet('layout', b.dataset.layout); });
+    State.lyt('layout', tegnLayout);
+    State.lyt('panelAaben', tegnLayout);
 
     /* Stil */
     el.stilValg.addEventListener('click', e => { const b = e.target.closest('[data-stil]'); if (b) State.saet('stil', b.dataset.stil); });

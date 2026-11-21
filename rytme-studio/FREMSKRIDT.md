@@ -10,7 +10,7 @@ Rytme Studio er et nyt program, bygget fra bunden efter en specifikation (ikke u
 
 | Run | Indhold | Status |
 | --- | --- | --- |
-| **1** | Layout, afspiller, bølgeform-tidslinje, filer, status, niveau-måler, tre stile | **Færdig** (20. november 2026, version 0.2) |
+| **1** | Layout, afspiller, bølgeform-tidslinje, filer, status, niveau-måler, fire opsætninger, tre stile | **Færdig** (21. november 2026, version 0.3) |
 | 2 | Hele analysen, vist live i preview og kontrolpanel; baggrunds-tråde | Næste |
 | 3 | Figurer (former, lag, egenskaber, generator) og enkel mapping | |
 | 4 | Node-editor, regler og regel-sæt, opsætninger, scene-grundlag | |
@@ -27,6 +27,19 @@ Rytme Studio er et nyt program, bygget fra bunden efter en specifikation (ikke u
 - **Status:** én linje i topbaren; klik viser de seneste beskeder. Alle fejl ender dér.
 - **Husker:** lydstyrke, sprog, følg og snap; og pr. sang (navn + længde) loop og tempo. Gemt i browseren (localStorage).
 - **Sprog:** dansk og engelsk. **Genveje:** står i kontrolpanelet under Genveje.
+
+## Fire opsætninger (version 0.3; brugeren vælger)
+
+Skiftes i topbaren (Opsætning) og huskes. Det er de samme dele, lagt forskelligt med CSS Grid (`html[data-layout="…"]`); ingen kode er dobbelt.
+
+| Opsætning | Sådan ligger vinduerne | God til |
+| --- | --- | --- |
+| **Studie** | sidebar til venstre, preview over tidslinjen i midten, kontrolpanel til højre, playerbar i bunden | alt på én gang |
+| **Scene** | preview fylder hele vinduet; sidebar (folder sig ud under musen), tidslinje, playerbar og kontrolpanel (knappen Panel eller P) svæver ovenpå | at se billedet stort |
+| **Tidslinje** | afspiller øverst, stor tidslinje i fuld bredde, forneden et bånd med sidebar, lille preview og kontrolpanelet i tre søjler | at arbejde i rytmen (loop, snap, senere klodser) |
+| **Fliser** | arbejdsområderne som faner øverst; preview, Niveau, Lydfil, Loop og Tempo-gitter er hver sin flise; tidslinje og playerbar i bunden | overblik; nye ting kan få deres egen flise |
+
+Under 1181 punkters bredde bruges den smalle opsætning for alle. **Åbent:** brugeren har ikke valgt endnu.
 
 ## Tre stile (version 0.2; brugeren vælger)
 

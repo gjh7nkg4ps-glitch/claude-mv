@@ -45,7 +45,7 @@ module.exports = async function run1() {
   /* ---------- A · Opstart ---------- */
   console.log('A · Opstart');
   await aabn();
-  T.tjek((await page.title()).includes('Rytme Studio 0.2'), 'titlen er "Rytme Studio 0.2"');
+  T.tjek((await page.title()).includes('Rytme Studio 0.3'), 'titlen er "Rytme Studio 0.3"');
   T.tjek((await statusTekst()).startsWith('Klar'), 'status siger Klar', await statusTekst());
   T.tjek(await page.locator('#spilKnap').isDisabled(), 'Afspil er slået fra, når der ikke er nogen lydfil');
   T.tjek(await page.locator('#previewTom').isVisible(), 'forsiden "Slip en lydfil her" vises');
