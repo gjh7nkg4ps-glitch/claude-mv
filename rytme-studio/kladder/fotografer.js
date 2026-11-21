@@ -1,12 +1,21 @@
-/* Fotografér de fem kladder. Brug: node rytme-studio/kladder/fotografer.js */
-const path = require('path');
+/* Fotografér de ti kladder: hver i sine egne farver, og i den modsatte (lys eller mørk).
+   Brug: node rytme-studio/kladder/fotografer.js */
+const path = require('path'), fs = require('fs');
 let pw; try { pw = require('playwright'); } catch (e) { pw = require('/opt/node-tools/node_modules/playwright'); }
 (async () => {
-  const b = await pw.chromium.launch(), p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
+  const b = await pw.chromium.launch(), p = await b.newPage({ viewport: { width: 1948, height: 1300 } });
   const fejl = []; p.on('pageerror', e => fejl.push(e.message));
   await p.goto('file://' + path.join(__dirname, 'kladder.html'));
-  const navne = ['galleri', 'urvaerk', 'partitur', 'laerred', 'spejl'];
-  for (let i = 0; i < 5; i++) await p.locator('#k' + (i + 1)).screenshot({ path: path.join(__dirname, 'kladde-' + (i + 1) + '-' + navne[i] + '.png') });
-  console.log(fejl.length ? fejl.join('\n') : 'ok, 5 kladder');
+  for (const f of fs.readdirSync(__dirname)) if (/^kladde-.*\.png$/.test(f)) fs.unlinkSync(path.join(__dirname, f));
+  const n = await p.evaluate(() => KLADDER.K.length);
+  for (let i = 0; i < n; i++) {
+    const info = await p.evaluate(k => { const v = KLADDER.valg; v.k = k; v.m = v.tone = v.acc = null; KLADDER.tegn(); return { navn: KLADDER.K[k].navn.toLowerCase().replace('æ', 'ae').replace('ø', 'oe'), m: KLADDER.K[k].std[0] }; }, i);
+    const nr = String(i + 1).padStart(2, '0');
+    await p.locator('#kladde').screenshot({ path: path.join(__dirname, `kladde-${nr}-${info.navn}-${info.m}.png`) });
+    const anden = info.m === 'moerk' ? 'lys' : 'moerk';
+    await p.evaluate(m => { KLADDER.valg.m = m; KLADDER.tegn(); }, anden);
+    await p.locator('#kladde').screenshot({ path: path.join(__dirname, `kladde-${nr}-${info.navn}-${anden}.png`) });
+  }
+  console.log(fejl.length ? fejl.join('\n') : 'ok, ' + n + ' kladder × 2');
   await b.close();
 })();
