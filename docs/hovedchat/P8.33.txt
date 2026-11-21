@@ -1,0 +1,36 @@
+BESKED TIL CODE · P8.33 · 21. november 2026 · resten af A3 (brugerens valg N1)
+
+Hovedchatten har læst STATUS-TIL-HOVEDCHATTEN v9.129. Flot arbejde med fasens sikkerhed, taktgitteret fra Trommer-sporet, A2 og A4.
+Det, der er tilbage af A3: taktslag uden spor (Hip-hop, Techno, Breakbeat), Snare og det halve tempo (BebopJazz, Gospel).
+Ét trin pr. version, STOP efter hvert. Mål altid før og efter på Testlyd og Rigtige trommer. En ændring, der skader de rigtige trommer, kommer ikke med (som før).
+
+TRIN 1 · Ærlig måling: indstil på den ene halvdel, tjek på den anden (lille)
+ Rampen for fasens sikkerhed (v9.123) og flere vægte i A3 er valgt på de samme 23 stykker, som de måles på. Så kan tallene være for pæne (fagudtryk: overfitting).
+ - Del de 23 stykker i to faste grupper, fx efter navn: "indstil" (12) og "tjek" (11). Bland genrerne, så jazz og rock er i begge.
+ - Analyse sikkerhed viser for Rigtige trommer et ekstra tal pr. række: "tjek-gruppen alene". Rapporten får begge.
+ - Mål rampen fra v9.123 og den halve takt fra v9.117 igen: vælg tallene på "indstil", og skriv i STATUS, hvad "tjek" giver. Hvis "tjek" er meget lavere, så skriv det og foreslå et enklere valg.
+ - Fra nu af: nye vægte og tærskler vælges kun på "indstil".
+
+TRIN 2 · Taktgitter uden spor: perkussiv del (S7, HPSS)
+ Med 4 spor er Taktslag 78 på testlyden, uden spor 49. Fejlen er bassen og den åbne hihat mellem slagene. Brugeren har ikke altid 4 spor.
+ Forslag: S7 fra planen. Harmonisk og perkussiv deling (fagudtryk: HPSS, Fitzgerald 2010: medianfilter på tværs af tid giver det harmoniske, på tværs af frekvens det perkussive). Den kører i browseren i baggrunds-trådene på få sekunder for en sang (dit skøn er vigtigere end mit).
+ - Uden 4 spor: anslagsstyrke, tempo, taktslag og den halve takt regnes på den perkussive del i stedet for hele lyden. Takt 1 bruger stadig hele lydens toner (som i v9.124).
+ - Valg i Indstillinger for analysen: Taktgitter uden spor: Perkussiv del / Hele lyden. Standard afhænger af målingen.
+ - Mål Taktslag og Takt 1 på Testlyd (hele lyden) og Rigtige trommer (hele mixet). Det er den rigtige sammenligning, fordi de rigtige trommer allerede er gode (81).
+ - Hvis det hjælper: gør "Perkussiv" og "Harmonisk" til to nye kilder (S7 i planen), men kun hvis det er lille. Ellers til planen.
+ - Breakbeat: hvis kicket mest ligger på modslaget, kan det være musikken og ikke en fejl. Skriv det i "Sådan måles det", og brug ikke tid på at rette det.
+
+TRIN 3 · Snare
+ Snare er det svageste slag: 34 / 46 (alle slag), 36 / 57 (uden svage slag). Bedste faste tærskel hjælper næsten ikke. Så det er metoden, ikke tærsklen: et bånd med flux kan ikke kende snare fra hihat og kickets klik.
+ To forslag. Mål begge på "indstil", tag den bedste, og skriv tallene for "tjek":
+ a) Snare kræver to ting på samme tid: en stigning i snarens krop (cirka 150–300 Hz) og en stigning i støj (cirka 1–5 kHz), mens hihat-båndet (over cirka 7 kHz) ikke står alene for stigningen. Lille og hurtig.
+ b) NMF med faste skabeloner (fagudtryk: non-negative matrix factorization, en klassisk metode til trommetransskription, fx Dittmar og Gärtner 2014). Tre spektrale skabeloner (kick, snare, hihat) startes generisk og tilpasses hver sang; hvert instrument får sin egen kurve. Større, men kan også hjælpe Kick og Hihat.
+ Skabeloner eller vægte, der er regnet ud fra MDB Drums, må ikke ligge i repoet, hvis de er en kopi af lyden. Små tal (fx tre frekvenser og en vægt) er fine.
+ Med 4 spor: regn på Trommer-sporet som i dag.
+
+TRIN 4 · Det halve tempo (lille, eller til planen)
+ BebopJazz og Gospel (222 BPM) findes som 110. Til billeder kan det halve tempo være fint, men facit siger 222.
+ - Foreslå selv en løsning, hvis den er lille, og mål den på "indstil".
+ - Ellers: vis "Tempo ×2 / ÷2" som et valg i Lydtidslinjen (brugeren retter selv). Det kræver brugerens ja; spørg i STATUS.
+
+Når alle fire trin er bygget eller lagt i planen: skriv kort i STATUS, hvad der er tilbage af A3. Næste i planen er derefter sikkerhed pr. hændelse målt mod facit (A4) og så A5–A6.
