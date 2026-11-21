@@ -2,8 +2,9 @@
 
 Kort status (højst cirka 80 linjer; reglen står i `CLAUDE.md` afsnit 2). Historikken ligger i `docs/arkiv/HISTORIK.md` (én linje pr. version) og `docs/arkiv/STATUS-historik.md`. Planerne: `PLAN-NY-BRUGERFLADE.md` (brugerfladen), `docs/PLAN-SANG-OG-ANALYSE.md` (analysen), `docs/PLAN-PAA-SCENEN.md` (udkast, P8.14 punkt 7).
 
-## Nu (v9.128, 20. november 2026)
+## Nu (v9.129, 21. november 2026)
 
+- **v9.129 (dit valg A):** Rigtige trommer kan måles igen uden mappen: Analyse → Analyse sikkerhed → **Mål igen (uden mappen)** (23 stykker på cirka 7 s, samme tal som med mappen). Facit ligger kun i browseren; **Glem facit** sletter det.
 - **v9.128 (rettelser efter hele testpakken på v9.127, 101 af 104 grønne):** Lyd over tid viser igen alle rækker (den nederste blev skåret af efter rækken Hændelser); Node-editorens mærke for en spærret regel bruger temaets farver; test 11 og 72 rettet.
 - **v9.127 (A4, anden del):** dine rettelser i Hændelser bruges nu af reglerne (et slettet kick sætter ikke en regel i gang, et tilføjet slag gør). Knappen *Rettelser i reglerne: Til/Fra* i hovedet af Lyd over tid. Analysen og Analyse sikkerhed røres ikke.
 - **v9.126 (A4, Lydtidslinjen, første del):** Lyd over tid har rækken *Hændelser* (Kick, Snare, Hihat og Takt 1); hver streg er et slag, jo kraftigere, jo mere sikkert. Klik vælger; Slet, træk eller ← → flytter; dobbeltklik tilføjer; rettelserne gemmes pr. sang. *Hør analysen* klikker på hvert slag, mens sangen spiller. *Gem tidslinje* og *Hent tidslinje* (JSON).
@@ -49,13 +50,11 @@ Svage slag (G2, Rigtige trommer, A3 til): Snare alle slag 34 / 46 (hele mixet / 
 
 **Rækkefølgen for analysen (brugerens valg): A3 før A2:** resten af A3 → A2 → A4 → A5–A6.
 
-1. Brugeren prøver v9.122–v9.125 (Opsætninger → Automatiske kopier; Analyse sikkerhed → ▶ Kør testen og Vælg facit-mappe (nye rækker for 4 spor); Indstillinger for analysen → Taktgitter med 4 spor; en regel → Kræv sikkerhed; Lyd over tid → Hændelser og ▶ Hør analysen). Brugeren vælger, om MV skal kunne måle Rigtige trommer igen uden at vælge mappen (forslag A: facit gemmes i cachen; B: MV husker mappen). Rest af A3 (i planen): taktslag i Hip-hop og Techno med bas uden spor, tempoets halve, Snare.
+1. Brugeren prøver v9.122–v9.125 (Opsætninger → Automatiske kopier; Analyse sikkerhed → ▶ Kør testen og Vælg facit-mappe (nye rækker for 4 spor); Indstillinger for analysen → Taktgitter med 4 spor; en regel → Kræv sikkerhed; Lyd over tid → Hændelser og ▶ Hør analysen). Rigtige trommer uden mappen er bygget (dit valg A, v9.129). Rest af A3 (i planen): taktslag i Hip-hop og Techno med bas uden spor, tempoets halve, Snare.
 2. A2 (v9.125) og A4 første del (v9.126) er bygget. Næste: hændelser fra en fil (det lokale modul skriver formatet lydtidslinje), så A5–A6 det lokale modul. Rest fra A0: cirklen på lydtræk-noderne og i Foreslå regler.
 3. **6c Figur-generatoren** efter skitsen P8.11 (beslutningerne står i `PLAN-NY-BRUGERFLADE.md` afsnit 4.2).
 
 ## Venter på brugeren
-
-- Rigtige trommer uden at vælge mappen igen: A facit gemmes i cachen (Codes anbefaling), B MV husker mappen, C som nu.
 
 - Valg i `docs/PIGERNES-EGENSKABER.md` engang i fremtiden (brugeren 20. november: ligger stille; P8.20: intet fjernes; hovedchattens forslag står i planen under Senere).
 - Lyt til sangen vs. Lav show: Lyt til sangen er fjernet i v9.97 (dit valg 3e); Lav show bliver.
